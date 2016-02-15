@@ -1,0 +1,10 @@
+node_modules
+coverage
+dist
+*.log
+.*
+!.gitignore
+!.npmignore
+!.babelrc
+!.travis.yml
+!.README
