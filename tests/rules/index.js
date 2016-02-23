@@ -11,10 +11,10 @@ import {
 const ruleTester = new RuleTester();
 
 _.forEach([
-    'require-parameter-type',
+    // 'require-parameter-type',
     'require-return-type',
-    'space-after-type-colon',
-    'space-before-type-colon'
+    // 'space-after-type-colon',
+    // 'space-before-type-colon'
 ], (ruleName) => {
     const parser = require.resolve('babel-eslint');
 

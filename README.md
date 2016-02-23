@@ -48,8 +48,14 @@ npm install eslint-plugin-flowtype
     "rules": {
         "flowtype/require-parameter-type": 1,
         "flowtype/require-return-type": 1,
-        "flowtype/space-after-type-colon": 1,
-        "flowtype/space-before-type-colon": 1
+        "flowtype/space-after-type-colon": [
+            1,
+            "always"
+        ],
+        "flowtype/space-before-type-colon": [
+            1,
+            "never"
+        ]
     }
 }
 ```
@@ -96,14 +102,59 @@ Requires that functions have return type annotation.
 The following patterns are considered problems:
 
 ```js
-(foo) => {}
+(foo) => { return "foo"; }
 // Message: Missing return type annotation.
+
+// Options: ["always"]
+(foo) => { return "foo"; }
+// Message: Missing return type annotation.
+
+(foo): undefined => { return; }
+// Message: Must not annotate undefined return type.
+
+(foo): undefined => { return undefined; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo): undefined => { return; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo) => { return; }
+// Message: Must annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo): undefined => { return undefined; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo) => { return undefined; }
+// Message: Must annotate undefined return type.
 ```
 
 The following patterns are not considered problems:
 
 ```js
 (foo): string => {}
+
+// Options: ["always"]
+(foo): string => {}
+
+(foo) => { return; }
+
+(foo) => { return undefined; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo): undefined => { return; }
+
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo) => { return; }
+
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo) => { return undefined; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo): undefined => { return undefined; }
 ```
 
 
