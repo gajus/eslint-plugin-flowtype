@@ -31,6 +31,14 @@ export default {
                     message: 'Missing "{foo}" parameter type annotation.'
                 }
             ]
+        },
+        {
+            code: '([foo]) => {}',
+            errors: [
+                {
+                    message: 'Missing "[foo]" parameter type annotation.'
+                }
+            ]
         }
     ],
     valid: [
@@ -45,6 +53,9 @@ export default {
         },
         {
             code: '({foo}: {foo: string}) => {}'
+        },
+        {
+            code: '([foo]: Array) => {}'
         }
     ]
 };

@@ -47,7 +47,13 @@ npm install eslint-plugin-flowtype
     ],
     "rules": {
         "flowtype/require-parameter-type": 1,
-        "flowtype/require-return-type": 1,
+        "flowtype/require-return-type": [
+            1,
+            "always",
+            {
+                "annotateUndefined": "never"
+            }
+        ],
         "flowtype/space-after-type-colon": [
             1,
             "always"
@@ -80,6 +86,9 @@ The following patterns are considered problems:
 
 ({foo}) => {}
 // Message: Missing "{foo}" parameter type annotation.
+
+([foo]) => {}
+// Message: Missing "[foo]" parameter type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -92,6 +101,8 @@ The following patterns are not considered problems:
 (...foo: string) => {}
 
 ({foo}: {foo: string}) => {}
+
+([foo]: Array) => {}
 ```
 
 

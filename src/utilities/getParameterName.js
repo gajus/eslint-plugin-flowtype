@@ -13,7 +13,7 @@ export default (identifierNode, context) => {
         return identifierNode.argument.name;
     }
 
-    if (identifierNode.type === 'ObjectPattern') {
+    if (identifierNode.type === 'ObjectPattern' || identifierNode.type === 'ArrayPattern') {
         return context.getSourceCode().getText(identifierNode);
     }
 
