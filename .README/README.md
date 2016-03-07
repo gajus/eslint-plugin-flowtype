@@ -38,7 +38,13 @@ npm install eslint-plugin-flowtype
     ],
     "rules": {
         "flowtype/require-parameter-type": 1,
-        "flowtype/require-return-type": 1,
+        "flowtype/require-return-type": [
+            1,
+            "always",
+            {
+                "annotateUndefined": "never"
+            }
+        ],
         "flowtype/space-after-type-colon": [
             1,
             "always"
