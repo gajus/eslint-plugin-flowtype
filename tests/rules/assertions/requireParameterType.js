@@ -39,6 +39,14 @@ export default {
                     message: 'Missing "[foo]" parameter type annotation.'
                 }
             ]
+        },
+        {
+            code: '({foo = 1} = {}) => {}',
+            errors: [
+                {
+                    message: 'Missing "{foo = 1}" parameter type annotation.'
+                }
+            ]
         }
     ],
     valid: [
