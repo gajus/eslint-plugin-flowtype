@@ -14,7 +14,8 @@ _.forEach([
     'require-parameter-type',
     'require-return-type',
     'space-after-type-colon',
-    'space-before-type-colon'
+    'space-before-type-colon',
+    'type-id-match'
 ], (ruleName) => {
     const parser = require.resolve('babel-eslint');
 

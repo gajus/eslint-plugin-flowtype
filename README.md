@@ -182,6 +182,14 @@ The following patterns are considered problems:
 (foo: string) => {}
 // Message: There must be no space after "foo" parameter type annotation colon.
 
+// Options: ["never"]
+export default function (foo: string) {}
+// Message: There must be no space after "foo" parameter type annotation colon.
+
+// Options: ["never"]
+function foo (foo: string) {}
+// Message: There must be no space after "foo" parameter type annotation colon.
+
 // Options: ["always"]
 (foo:string) => {}
 // Message: There must be a space after "foo" parameter type annotation colon.
