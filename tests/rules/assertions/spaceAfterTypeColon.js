@@ -12,6 +12,28 @@ export default {
             ]
         },
         {
+            code: 'export default function (foo: string) {}',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'function foo (foo: string) {}',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
             code: '(foo:string) => {}',
             errors: [
                 {
