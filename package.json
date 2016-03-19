@@ -27,8 +27,9 @@
   "scripts": {
     "lint": "pragmatist lint",
     "test": "pragmatist test --type-assertions",
-    "watch-test": "pragmatist watch-test --type-assertions",
     "build": "pragmatist build --es5",
+    "watch-test": "pragmatist watch-test --type-assertions",
+    "watch-build": "pragmatist watch-build --es5",
     "readme-add-assertions": "babel-node --presets es2015 ./bin/readmeAssertions",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md; npm run readme-add-assertions",
     "create-index": "create-index ./src --update-index"
