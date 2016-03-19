@@ -11,7 +11,7 @@ This rule needs a text RegExp to operate with Its signature is as follows:
     "rules": {
         "flowtype/type-id-match": [
             2,
-            '^([A-Z][a-z0-9]+)+Type$'
+            "^([A-Z][a-z0-9]+)+Type$"
         ]
     }
 }
