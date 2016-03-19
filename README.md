@@ -15,7 +15,6 @@
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
-        * [Options](#eslint-plugin-flowtype-rules-options)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -260,7 +259,7 @@ The following patterns are not considered problems:
 
 Enforces a consistent naming pattern for type aliases.
 
-<h3 id="eslint-plugin-flowtype-rules-options">Options</h3>
+<h4 id="eslint-plugin-flowtype-rules-type-id-match-options">Options</h4>
 
 This rule needs a text RegExp to operate with Its signature is as follows:
 
