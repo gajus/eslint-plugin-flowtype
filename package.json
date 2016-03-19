@@ -25,13 +25,9 @@
     "lodash": "^4.6.1"
   },
   "scripts": {
-    "pragmatist": "pragmatist --es5",
-    "lint": "npm run pragmatist lint",
-    "test": "npm run pragmatist test",
-    "build": "npm run pragmatist build",
-    "watch": "npm run pragmatist watch",
-    "watch-lint": "npm run pragmatist watch-lint",
-    "watch-test": "npm run pragmatist watch-test",
+    "lint": "pragmatist lint",
+    "test": "pragmatist test --type-assertions",
+    "build": "pragmatist build --es5",
     "readme-add-assertions": "babel-node --presets es2015 ./bin/readmeAssertions",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md; npm run readme-add-assertions",
     "create-index": "create-index ./src --update-index"
