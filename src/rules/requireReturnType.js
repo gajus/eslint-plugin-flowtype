@@ -1,8 +1,4 @@
 import _ from 'lodash';
-import {
-    getParameterName,
-    iterateFunctionNodes
-} from './../utilities';
 
 export default (context) => {
     const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
@@ -50,7 +46,7 @@ export default (context) => {
         'ArrowFunctionExpression:exit': evaluateFunction,
         ClassDeclaration: registerFunction,
         'ClassDeclaration:exit': evaluateNoise,
-         ClassExpression: registerFunction,
+        ClassExpression: registerFunction,
         'ClassExpression:exit': evaluateNoise,
         FunctionDeclaration: registerFunction,
         'FunctionDeclaration:exit': evaluateFunction,

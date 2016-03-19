@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export const schema = [
     {
         type: 'string'
@@ -17,7 +15,7 @@ export default (context) => {
                 context.report(typeAliasNode, 'Type identifier \'{{name}}\' does not match pattern \'{{pattern}}\'.', {
                     name: typeIdentifierName,
                     pattern: pattern.toString()
-                })
+                });
             }
         }
     };

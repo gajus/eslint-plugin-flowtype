@@ -7,7 +7,7 @@ import typeIdMatch from './rules/typeIdMatch';
 export default {
     rules: {
         'require-parameter-type': requireParameterType,
-        'require-return-type' : requireReturnType,
+        'require-return-type': requireReturnType,
         'space-after-type-colon': spaceAfterTypeColon,
         'space-before-type-colon': spaceBeforeTypeColon,
         'type-id-match': typeIdMatch
