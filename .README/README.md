@@ -52,6 +52,10 @@ npm install eslint-plugin-flowtype
         "flowtype/space-before-type-colon": [
             1,
             "never"
+        ],
+        "flowtype/type-id-match": [
+            1,
+            "^([A-Z][a-z0-9]+)+Type$"
         ]
     }
 }
@@ -63,15 +67,4 @@ npm install eslint-plugin-flowtype
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
-
-## `eslint-plugin-flowtype` v1
-
-`eslint-plugin-flowtype` v1 served a different purpose:
-
-> A plugin for ESLint that strips FlowType type annonations before linting the files.
-
-You can find the source code for v1 at:
-
-https://github.com/gcazaciuc/eslint-plugin-flowtype
-
-Reference to the original codebase included for historical reference purposes.
+{"gitdown": "include", "file": "./rules/type-id-match.md"}

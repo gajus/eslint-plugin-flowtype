@@ -14,7 +14,8 @@
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
-    * [`eslint-plugin-flowtype` v1](#eslint-plugin-flowtype-eslint-plugin-flowtype-v1)
+        * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+        * [Options](#eslint-plugin-flowtype-rules-options)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -61,6 +62,10 @@ npm install eslint-plugin-flowtype
         "flowtype/space-before-type-colon": [
             1,
             "never"
+        ],
+        "flowtype/type-id-match": [
+            1,
+            "^([A-Z][a-z0-9]+)+Type$"
         ]
     }
 }
@@ -251,15 +256,47 @@ The following patterns are not considered problems:
 ```
 
 
+<h3 id="eslint-plugin-flowtype-rules-type-id-match"><code>type-id-match</code></h3>
 
-<h2 id="eslint-plugin-flowtype-eslint-plugin-flowtype-v1"><code>eslint-plugin-flowtype</code> v1</h2>
+Enforces a consistent naming pattern for type aliases.
 
-`eslint-plugin-flowtype` v1 served a different purpose:
+<h3 id="eslint-plugin-flowtype-rules-options">Options</h3>
 
-> A plugin for ESLint that strips FlowType type annonations before linting the files.
+This rule needs a text RegExp to operate with Its signature is as follows:
 
-You can find the source code for v1 at:
+```js
+{
+    "rules": {
+        "flowtype/type-id-match": [
+            2,
+            '^([A-Z][a-z0-9]+)+Type
 
-https://github.com/gcazaciuc/eslint-plugin-flowtype
+        ]
+    }
+}
+```
 
-Reference to the original codebase included for historical reference purposes.
+`'^([A-Z][a-z0-9]+)+Type
+` is the default pattern.
+
+The following patterns are considered problems:
+
+```js
+type foo = {};
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]+)+Type$/'.
+
+// Options: ["^foo$"]
+type FooType = {};
+// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
+```
+
+The following patterns are not considered problems:
+
+```js
+type FooType = {};
+
+// Options: ["^foo$"]
+type foo = {};
+```
+
+
