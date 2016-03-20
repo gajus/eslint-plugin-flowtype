@@ -16,6 +16,9 @@ export default (identifierNode, context) => {
     if (identifierNode.type === 'ObjectPattern' || identifierNode.type === 'ArrayPattern') {
         return context.getSourceCode().getText(identifierNode);
     }
+    if (_.get(identifierNode, 'left.type') === 'ObjectPattern' && _.get(identifierNode, 'right.type') === 'ObjectExpression') {
+        return context.getSourceCode().getText(identifierNode.left);
+    }
 
     throw new Error('Unsupported function signature.');
 };
