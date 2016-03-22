@@ -5,7 +5,7 @@ export const schema = [
 ];
 
 export default (context) => {
-    const pattern = new RegExp(context.options[0] || '^([A-Z][a-z0-9]+)+Type$');
+    const pattern = new RegExp(context.options[0] || '^Type([A-Z][a-z0-9]+)+$');
 
     return {
         TypeAlias (typeAliasNode) {

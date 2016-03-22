@@ -93,6 +93,9 @@ The following patterns are considered problems:
 
 ([foo]) => {}
 // Message: Missing "[foo]" parameter type annotation.
+
+({foo = 1} = {}) => {}
+// Message: Missing "{foo = 1}" parameter type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -281,17 +284,17 @@ The following patterns are considered problems:
 
 ```js
 type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]+)+Type$/'.
+// Message: Type identifier 'foo' does not match pattern '/^Type([A-Z][a-z0-9]+)+$/'.
 
 // Options: ["^foo$"]
-type FooType = {};
-// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
+type TypeFoo = {};
+// Message: Type identifier 'TypeFoo' does not match pattern '/^foo$/'.
 ```
 
 The following patterns are not considered problems:
 
 ```js
-type FooType = {};
+type TypeFoo = {};
 
 // Options: ["^foo$"]
 type foo = {};

@@ -4,15 +4,15 @@ export default {
             code: 'type foo = {};',
             errors: [
                 {
-                    message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]+)+Type$/\'.'
+                    message: 'Type identifier \'foo\' does not match pattern \'/^Type([A-Z][a-z0-9]+)+$/\'.'
                 }
             ]
         },
         {
-            code: 'type FooType = {};',
+            code: 'type TypeFoo = {};',
             errors: [
                 {
-                    message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/\'.'
+                    message: 'Type identifier \'TypeFoo\' does not match pattern \'/^foo$/\'.'
                 }
             ],
             options: [
@@ -22,7 +22,7 @@ export default {
     ],
     valid: [
         {
-            code: 'type FooType = {};'
+            code: 'type TypeFoo = {};'
         },
         {
             code: 'type foo = {};',
