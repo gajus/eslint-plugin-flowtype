@@ -134,6 +134,38 @@ export default {
                     annotateUndefined: 'always'
                 }
             ]
+        },
+        {
+            code: '// @flow\n(foo) => { return 1; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            }
+        },
+        {
+            code: '// @flow\n (foo) => { return undefined; }',
+            errors: [
+                {
+                    message: 'Must annotate undefined return type.'
+                }
+            ],
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            },
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
         }
     ],
     valid: [
@@ -211,6 +243,31 @@ export default {
         },
         {
             code: '(foo): void => { return void 0; }',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '(foo) => { return 1; }',
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            },
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo) => { return undefined; }',
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            },
             options: [
                 'always',
                 {

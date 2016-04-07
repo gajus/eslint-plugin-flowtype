@@ -47,6 +47,19 @@ export default {
                     message: 'Missing "{foo = 1}" parameter type annotation.'
                 }
             ]
+        },
+        {
+            code: '// @flow\n(foo) => {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ],
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            }
         }
     ],
     valid: [
@@ -64,6 +77,14 @@ export default {
         },
         {
             code: '([foo]: Array) => {}'
+        },
+        {
+            code: '(foo) => {}',
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            }
         }
     ]
 };
