@@ -9,7 +9,7 @@ export default iterateFunctionNodes((context) => {
     const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
 
     if (!checkThisFile) {
-        return () => {}
+        return () => {};
     }
 
     return (functionNode) => {

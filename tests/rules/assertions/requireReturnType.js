@@ -155,17 +155,17 @@ export default {
                     message: 'Must annotate undefined return type.'
                 }
             ],
-            settings: {
-                flowtype: {
-                    onlyFilesWithFlowAnnotation: true
-                }
-            },
             options: [
                 'always',
                 {
                     annotateUndefined: 'always'
                 }
-            ]
+            ],
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            }
         }
     ],
     valid: [
@@ -252,28 +252,28 @@ export default {
         },
         {
             code: '(foo) => { return 1; }',
+            options: [
+                'always'
+            ],
             settings: {
                 flowtype: {
                     onlyFilesWithFlowAnnotation: true
                 }
-            },
-            options: [
-                'always'
-            ]
+            }
         },
         {
             code: '(foo) => { return undefined; }',
-            settings: {
-                flowtype: {
-                    onlyFilesWithFlowAnnotation: true
-                }
-            },
             options: [
                 'always',
                 {
                     annotateUndefined: 'always'
                 }
-            ]
+            ],
+            settings: {
+                flowtype: {
+                    onlyFilesWithFlowAnnotation: true
+                }
+            }
         }
     ]
 };
