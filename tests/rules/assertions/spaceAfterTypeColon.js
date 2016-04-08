@@ -54,6 +54,37 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: '():Object => {}',
+            errors: [
+                {
+                    message: 'There must be a space after return type colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        }, {
+            code: '(): Object => {}',
+            errors: [
+                {
+                    message: 'There must be no space after return type colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        }, {
+            code: '():  Object => {}',
+            errors: [
+                {
+                    message: 'There must be 1 space after return type colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
         }
     ],
     valid: [
@@ -71,6 +102,17 @@ export default {
         },
         {
             code: '(foo: string) => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '():Object => {}',
+            options: [
+                'never'
+            ]
+        }, {
+            code: '(): Object => {}',
             options: [
                 'always'
             ]
