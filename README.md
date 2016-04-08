@@ -15,6 +15,8 @@
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+    * [Settings](#eslint-plugin-flowtype-settings)
+        * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyFilesWithFlowAnnotation)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -66,6 +68,11 @@ npm install eslint-plugin-flowtype
             1,
             "^([A-Z][a-z0-9]+)+Type$"
         ]
+    },
+    "settings": {
+        "flowtype": {
+           "onlyFilesWithFlowAnnotation": false
+        }
     }
 }
 ```
@@ -300,4 +307,18 @@ type TypeFoo = {};
 type foo = {};
 ```
 
+<h2 id="eslint-plugin-flowtype-settings">Settings</h2>
 
+<h3 id="eslint-plugin-flowtype-settings-onlyFilesWithFlowAnnotation"><code>onlyFilesWithFlowAnnotation</code></h3>
+
+When true, only checks files with a `@flow` annotation in the first comment.
+
+```js
+{
+    "settings": {
+        "flowtype": {
+            "onlyFilesWithFlowAnnotation": true
+        }
+    }
+}
+```
