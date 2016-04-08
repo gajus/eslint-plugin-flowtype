@@ -13,7 +13,7 @@ export default (context) => {
     };
 
     const isUndefinedReturnType = (returnNode) => {
-        return returnNode.argument === null || returnNode.argument.name === 'undefined';
+        return returnNode.argument === null || returnNode.argument.name === 'undefined' || returnNode.argument.operator === 'void';
     };
 
     const evaluateFunction = (functionNode) => {
@@ -24,7 +24,8 @@ export default (context) => {
         }
 
         const isFunctionReturnUndefined = !targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode);
-        const isReturnTypeAnnotationUndefined = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'GenericTypeAnnotation';
+        const returnTypeTypeAnnotationType = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type');
+        const isReturnTypeAnnotationUndefined = returnTypeTypeAnnotationType === 'GenericTypeAnnotation' || returnTypeTypeAnnotationType === 'VoidTypeAnnotation';
 
         if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
             context.report(functionNode, 'Must not annotate undefined return type.');

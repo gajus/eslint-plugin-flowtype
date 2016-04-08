@@ -28,6 +28,14 @@ export default {
             ]
         },
         {
+            code: '(foo): void => { return; }',
+            errors: [
+                {
+                    message: 'Must not annotate undefined return type.'
+                }
+            ]
+        },
+        {
             code: '(foo): undefined => { return undefined; }',
             errors: [
                 {
@@ -36,7 +44,29 @@ export default {
             ]
         },
         {
+            code: '(foo): void => { return void 0; }',
+            errors: [
+                {
+                    message: 'Must not annotate undefined return type.'
+                }
+            ]
+        },
+        {
             code: '(foo): undefined => { return; }',
+            errors: [
+                {
+                    message: 'Must not annotate undefined return type.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'never'
+                }
+            ]
+        },
+        {
+            code: '(foo): void => { return; }',
             errors: [
                 {
                     message: 'Must not annotate undefined return type.'
@@ -79,6 +109,20 @@ export default {
         },
         {
             code: '(foo) => { return undefined; }',
+            errors: [
+                {
+                    message: 'Must annotate undefined return type.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '(foo) => { return void 0; }',
             errors: [
                 {
                     message: 'Must annotate undefined return type.'
@@ -109,7 +153,19 @@ export default {
             code: '(foo) => { return undefined; }'
         },
         {
+            code: '(foo) => { return void 0; }'
+        },
+        {
             code: '(foo): undefined => { return; }',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '(foo): void => { return; }',
             options: [
                 'always',
                 {
@@ -136,7 +192,25 @@ export default {
             ]
         },
         {
+            code: '(foo) => { return void 0; }',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'never'
+                }
+            ]
+        },
+        {
             code: '(foo): undefined => { return undefined; }',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '(foo): void => { return void 0; }',
             options: [
                 'always',
                 {
