@@ -57,9 +57,30 @@ npm install eslint-plugin-flowtype
             1,
             "^([A-Z][a-z0-9]+)+Type$"
         ]
+    },
+    "settings": {
+        "flowtype": {
+            "onlyFilesWithFlowAnnotation": false
+        }
     }
 }
 ```
+
+## Settings
+
+### `onlyFilesWithFlowAnnotation`
+
+When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/docs/about-flow.html#gradual) in the first comment.
+
+```js
+{
+    "settings": {
+        "flowtype": {
+            "onlyFilesWithFlowAnnotation": true
+        }
+    }
+}
+ ```
 
 ## Rules
 

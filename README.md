@@ -9,14 +9,8 @@
 * [eslint-plugin-flowtype](#eslint-plugin-flowtype)
     * [Installation](#eslint-plugin-flowtype-installation)
     * [Configuration](#eslint-plugin-flowtype-configuration)
-    * [Rules](#eslint-plugin-flowtype-rules)
-        * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
-        * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
-        * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
-        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
-        * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
     * [Settings](#eslint-plugin-flowtype-settings)
-        * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyFilesWithFlowAnnotation)
+        * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -71,15 +65,31 @@ npm install eslint-plugin-flowtype
     },
     "settings": {
         "flowtype": {
-           "onlyFilesWithFlowAnnotation": false
+            "onlyFilesWithFlowAnnotation": false
         }
     }
 }
 ```
 
-<h2 id="eslint-plugin-flowtype-rules">Rules</h2>
+<h2 id="eslint-plugin-flowtype-settings">Settings</h2>
 
-<h3 id="eslint-plugin-flowtype-rules-require-parameter-type"><code>require-parameter-type</code></h3>
+<h3 id="eslint-plugin-flowtype-settings-onlyfileswithflowannotation"><code>onlyFilesWithFlowAnnotation</code></h3>
+
+When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/docs/about-flow.html#gradual) in the first comment.
+
+```js
+{
+    "settings": {
+        "flowtype": {
+            "onlyFilesWithFlowAnnotation": true
+        }
+    }
+}
+ ```
+
+## Rules
+
+### `require-parameter-type`
 
 Requires that all function parameters have type annotations.
 
@@ -103,6 +113,10 @@ The following patterns are considered problems:
 
 ({foo = 1} = {}) => {}
 // Message: Missing "{foo = 1}" parameter type annotation.
+
+// @flow
+(foo) => {}
+// Message: Missing "foo" parameter type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -117,10 +131,12 @@ The following patterns are not considered problems:
 ({foo}: {foo: string}) => {}
 
 ([foo]: Array) => {}
+
+(foo) => {}
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-require-return-type"><code>require-return-type</code></h3>
+### `require-return-type`
 
 Requires that functions have return type annotation.
 
@@ -137,11 +153,21 @@ The following patterns are considered problems:
 (foo): undefined => { return; }
 // Message: Must not annotate undefined return type.
 
+(foo): void => { return; }
+// Message: Must not annotate undefined return type.
+
 (foo): undefined => { return undefined; }
+// Message: Must not annotate undefined return type.
+
+(foo): void => { return void 0; }
 // Message: Must not annotate undefined return type.
 
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo): undefined => { return; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo): void => { return; }
 // Message: Must not annotate undefined return type.
 
 // Options: ["always",{"annotateUndefined":"always"}]
@@ -154,6 +180,19 @@ The following patterns are considered problems:
 
 // Options: ["always",{"annotateUndefined":"always"}]
 (foo) => { return undefined; }
+// Message: Must annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo) => { return void 0; }
+// Message: Must annotate undefined return type.
+
+// @flow
+(foo) => { return 1; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+// @flow
+ (foo) => { return undefined; }
 // Message: Must annotate undefined return type.
 ```
 
@@ -169,8 +208,13 @@ The following patterns are not considered problems:
 
 (foo) => { return undefined; }
 
+(foo) => { return void 0; }
+
 // Options: ["always",{"annotateUndefined":"always"}]
 (foo): undefined => { return; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo): void => { return; }
 
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return; }
@@ -178,12 +222,24 @@ The following patterns are not considered problems:
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return undefined; }
 
+// Options: ["always",{"annotateUndefined":"never"}]
+(foo) => { return void 0; }
+
 // Options: ["always",{"annotateUndefined":"always"}]
 (foo): undefined => { return undefined; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo): void => { return void 0; }
+
+// Options: ["always"]
+(foo) => { return 1; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+(foo) => { return undefined; }
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-space-after-type-colon"><code>space-after-type-colon</code></h3>
+### `space-after-type-colon`
 
 Enforces consistent spacing after the type annotation colon.
 
@@ -211,6 +267,18 @@ function foo (foo: string) {}
 // Options: ["always"]
 (foo:  string) => {}
 // Message: There must be 1 space after "foo" parameter type annotation colon.
+
+// Options: ["always"]
+():Object => {}
+// Message: There must be a space after return type colon.
+
+// Options: ["never"]
+(): Object => {}
+// Message: There must be no space after return type colon.
+
+// Options: ["always"]
+():  Object => {}
+// Message: There must be 1 space after return type colon.
 ```
 
 The following patterns are not considered problems:
@@ -225,10 +293,16 @@ The following patterns are not considered problems:
 
 // Options: ["always"]
 (foo: string) => {}
+
+// Options: ["never"]
+():Object => {}
+
+// Options: ["always"]
+(): Object => {}
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-space-before-type-colon"><code>space-before-type-colon</code></h3>
+### `space-before-type-colon`
 
 Enforces consistent spacing before the type annotation colon.
 
@@ -265,11 +339,11 @@ The following patterns are not considered problems:
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-type-id-match"><code>type-id-match</code></h3>
+### `type-id-match`
 
 Enforces a consistent naming pattern for type aliases.
 
-<h4 id="eslint-plugin-flowtype-rules-type-id-match-options">Options</h4>
+#### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
 
@@ -307,18 +381,4 @@ type TypeFoo = {};
 type foo = {};
 ```
 
-<h2 id="eslint-plugin-flowtype-settings">Settings</h2>
 
-<h3 id="eslint-plugin-flowtype-settings-onlyFilesWithFlowAnnotation"><code>onlyFilesWithFlowAnnotation</code></h3>
-
-When true, only checks files with a `@flow` annotation in the first comment.
-
-```js
-{
-    "settings": {
-        "flowtype": {
-            "onlyFilesWithFlowAnnotation": true
-        }
-    }
-}
-```
