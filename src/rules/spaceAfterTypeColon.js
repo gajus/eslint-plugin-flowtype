@@ -24,5 +24,17 @@ export default iterateFunctionNodes((context) => {
                 }
             }
         });
+
+        if (functionNode.returnType) {
+            const spaceAfter = functionNode.returnType.typeAnnotation.start - functionNode.returnType.start - 1;
+
+            if (always && spaceAfter > 1) {
+                context.report(functionNode, 'There must be 1 space after return type colon.');
+            } else if (always && spaceAfter === 0) {
+                context.report(functionNode, 'There must be a space after return type colon.');
+            } else if (!always && spaceAfter > 0) {
+                context.report(functionNode, 'There must be no space after return type colon.');
+            }
+        }
     };
 });
