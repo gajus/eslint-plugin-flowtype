@@ -32,7 +32,8 @@ export default (context) => {
             throw new Error('Mismatch.');
         }
 
-        const isFunctionReturnUndefined = !targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode);
+        const isArrowFunctionExpression = functionNode.expression;
+        const isFunctionReturnUndefined = !isArrowFunctionExpression && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
         const returnTypeTypeAnnotationType = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type');
         const isReturnTypeAnnotationUndefined = returnTypeTypeAnnotationType === 'GenericTypeAnnotation' || returnTypeTypeAnnotationType === 'VoidTypeAnnotation';
 
