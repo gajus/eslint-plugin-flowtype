@@ -20,6 +20,17 @@ export default {
             ]
         },
         {
+            code: '(foo) => "foo"',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
             code: '(foo): undefined => { return; }',
             errors: [
                 {
