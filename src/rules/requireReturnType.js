@@ -25,6 +25,13 @@ export default (context) => {
         return returnNode.argument === null || returnNode.argument.name === 'undefined' || returnNode.argument.operator === 'void';
     };
 
+    const getIsReturnTypeAnnotationUndefined = (targetNode) => {
+        const isReturnTypeAnnotationLiteralUndefined = _.get(targetNode, 'functionNode.returnType.typeAnnotation.id.name') === 'undefined' && _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'GenericTypeAnnotation';
+        const isReturnTypeAnnotationVoid = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'VoidTypeAnnotation';
+
+        return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid;
+    };
+
     const evaluateFunction = (functionNode) => {
         const targetNode = targetNodes.pop();
 
@@ -32,9 +39,9 @@ export default (context) => {
             throw new Error('Mismatch.');
         }
 
-        const isFunctionReturnUndefined = !targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode);
-        const returnTypeTypeAnnotationType = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type');
-        const isReturnTypeAnnotationUndefined = returnTypeTypeAnnotationType === 'GenericTypeAnnotation' || returnTypeTypeAnnotationType === 'VoidTypeAnnotation';
+        const isArrowFunctionExpression = functionNode.expression;
+        const isFunctionReturnUndefined = !isArrowFunctionExpression && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
+        const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
         if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
             context.report(functionNode, 'Must not annotate undefined return type.');

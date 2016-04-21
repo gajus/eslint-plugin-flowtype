@@ -20,6 +20,25 @@ export default {
             ]
         },
         {
+            code: '(foo) => "foo"',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo) => ({})',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ]
+        },
+        {
             code: '(foo): undefined => { return; }',
             errors: [
                 {
@@ -180,6 +199,9 @@ export default {
         },
         {
             code: '(foo) => { return; }'
+        },
+        {
+            code: '(foo): Object => ( {} )'
         },
         {
             code: '(foo) => { return undefined; }'
