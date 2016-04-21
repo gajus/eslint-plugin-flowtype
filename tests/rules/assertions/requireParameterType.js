@@ -9,6 +9,20 @@ export default {
             ]
         },
         {
+            code: '(_, foo) => {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    ignoreParameterNames: ['_']
+                }
+            ]
+        },
+        {
             code: '(foo = \'FOO\') => {}',
             errors: [
                 {
@@ -65,6 +79,24 @@ export default {
     valid: [
         {
             code: '(foo: string) => {}'
+        },
+        {
+            code: '(_) => {}',
+            options: [
+                'always',
+                {
+                    ignoreParameterNames: ['_']
+                }
+            ]
+        },
+        {
+            code: '(_, foo: string) => {}',
+            options: [
+                'always',
+                {
+                    ignoreParameterNames: ['_']
+                }
+            ]
         },
         {
             code: '(foo: string = \'FOO\') => {}'
