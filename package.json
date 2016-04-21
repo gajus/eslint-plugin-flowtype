@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-flowtype",
   "description": "Flowtype linting rules for ESLint.",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
