@@ -150,6 +150,13 @@ The following patterns are considered problems:
 (foo) => { return "foo"; }
 // Message: Missing return type annotation.
 
+// Options: ["always"]
+(foo) => "foo"
+// Message: Missing return type annotation.
+
+(foo) => ({})
+// Message: Missing return type annotation.
+
 (foo): undefined => { return; }
 // Message: Must not annotate undefined return type.
 
@@ -205,6 +212,8 @@ The following patterns are not considered problems:
 (foo): string => {}
 
 (foo) => { return; }
+
+(foo): Object => ( {} )
 
 (foo) => { return undefined; }
 
