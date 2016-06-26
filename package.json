@@ -27,8 +27,8 @@
   "scripts": {
     "lint": "eslint ./src ./tests",
     "test": "pragmatist test --type-assertions",
-    "readme-add-assertions": "babel-node --presets es2015 ./bin/readmeAssertions",
     "build": "babel ./src --out-dir ./dist",
+    "readme-add-assertions": "babel-node ./bin/readmeAssertions",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md; npm run readme-add-assertions",
     "create-index": "create-index ./src --update-index"
   },
