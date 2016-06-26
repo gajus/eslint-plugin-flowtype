@@ -26,7 +26,7 @@
   },
   "scripts": {
     "lint": "eslint ./src ./tests",
-    "test": "pragmatist test --type-assertions",
+    "test": "mocha --compilers js:babel-register ./tests/rules/index.js",
     "build": "babel ./src --out-dir ./dist",
     "readme-add-assertions": "babel-node ./bin/readmeAssertions",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md; npm run readme-add-assertions",
@@ -42,6 +42,7 @@
     "create-index": "^0.1.2",
     "eslint": "^2.13.1",
     "eslint-config-canonical": "^1.7.12",
-    "gitdown": "^2.4.8"
+    "gitdown": "^2.4.8",
+    "mocha": "^2.5.3"
   }
 }
