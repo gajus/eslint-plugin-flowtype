@@ -42,7 +42,5 @@
     "eslint": "^2.13.1",
     "eslint-config-canonical": "^1.7.12",
     "gitdown": "^2.4.8",
-    "globby": "^4.0.0",
-    "mocha": "^2.4.5",
   }
 }
