@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import {
     isFlowFile,
-    isFlowFileAnnotation,
+    isFlowFileAnnotation
 } from './../utilities';
 
-function looksLikeFlowFileAnnotation(comment) {
+const looksLikeFlowFileAnnotation = (comment) => {
     return /@flow/i.test(comment);
-}
-
+};
 
 export const schema = [
     {
@@ -25,7 +24,7 @@ export default (context) => {
     const always = context.options[0] === 'always';
 
     return {
-        Program(node) {
+        Program (node) {
             const firstToken = node.tokens[0];
 
             const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {

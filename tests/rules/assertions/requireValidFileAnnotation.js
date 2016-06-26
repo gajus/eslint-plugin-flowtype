@@ -6,7 +6,7 @@ export default {
                 {
                     message: 'Flow file annotation not at the top of the file.'
                 }
-            ],
+            ]
         },
         {
             code: ';\n// @flow',
@@ -14,7 +14,7 @@ export default {
                 {
                     message: 'Flow file annotation not at the top of the file.'
                 }
-            ],
+            ]
         },
         {
             code: '// @Flow',
@@ -34,11 +34,13 @@ export default {
         },
         {
             code: 'a;',
-            options: ['always'],
             errors: [
                 {
                     message: 'Flow file annotation is missing.'
                 }
+            ],
+            options: [
+                'always'
             ]
         }
     ],
