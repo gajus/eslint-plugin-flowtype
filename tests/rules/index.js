@@ -6,16 +6,18 @@ import plugin from './../../src';
 
 const ruleTester = new RuleTester();
 
-_.forEach([
+const rules = [
     'require-parameter-type',
     'require-return-type',
     'require-valid-file-annotation',
     'space-after-type-colon',
     'space-before-type-colon',
     'type-id-match'
-], (ruleName) => {
-    const parser = require.resolve('babel-eslint');
+];
 
+const parser = require.resolve('babel-eslint');
+
+for (const ruleName of rules) {
     /* eslint-disable global-require */
     const assertions = require('./assertions/' + _.camelCase(ruleName));
     /* eslint-enable global-require */
@@ -33,4 +35,4 @@ _.forEach([
     });
 
     ruleTester.run(ruleName, plugin.rules[ruleName], assertions);
-});
+}
