@@ -13,6 +13,7 @@ const ruleTester = new RuleTester();
 _.forEach([
     'require-parameter-type',
     'require-return-type',
+    'require-valid-file-annotation',
     'space-after-type-colon',
     'space-before-type-colon',
     'type-id-match'
