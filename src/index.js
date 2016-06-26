@@ -1,5 +1,6 @@
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
+import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
 import typeIdMatch from './rules/typeIdMatch';
@@ -8,6 +9,7 @@ export default {
     rules: {
         'require-parameter-type': requireParameterType,
         'require-return-type': requireReturnType,
+        'require-valid-file-annotation': requireValidFileAnnotation,
         'space-after-type-colon': spaceAfterTypeColon,
         'space-before-type-colon': spaceBeforeTypeColon,
         'type-id-match': typeIdMatch

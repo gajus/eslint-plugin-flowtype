@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import isFlowFileAnnotation from './isFlowFileAnnotation.js';
 
 export default (context) => {
     const comments = context.getAllComments();
@@ -9,5 +9,5 @@ export default (context) => {
 
     const firstComment = comments[0];
 
-    return _.includes(firstComment.value, '@flow');
+    return isFlowFileAnnotation(firstComment.value);
 };

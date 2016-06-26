@@ -239,6 +239,76 @@ The following patterns are not considered problems:
 ```
 
 
+### `require-valid-file-annotation`
+
+Makes sure that files have a valid `@flow` annotation. It will report annotations with typos (such as `// @floww`) or not placed at the top of the file, and optionaly missing annotations.
+
+#### Options
+
+By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
+
+```js
+{
+    "rules": {
+        "flowtype/require-valid-file-annotation": [
+            2,
+            "always"
+        ]
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+;// @flow
+// Message: Flow file annotation not at the top of the file.
+
+;
+// @flow
+// Message: Flow file annotation not at the top of the file.
+
+// @Flow
+// Message: Malformed flow file annotation.
+
+// @floweeeeeee
+// Message: Malformed flow file annotation.
+
+// Options: ["always"]
+a;
+// Message: Flow file annotation is missing.
+```
+
+The following patterns are not considered problems:
+
+```js
+a;
+
+// @flow
+a;
+
+//@flow
+a;
+
+//**@flow
+a;
+
+/* foo @flow bar */
+a;
+
+
+
+// @flow
+a;
+
+// @flow
+// @FLow
+
+// Options: ["always"]
+a;
+```
+
+
 ### `space-after-type-colon`
 
 Enforces consistent spacing after the type annotation colon.
