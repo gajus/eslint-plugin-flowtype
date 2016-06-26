@@ -1,12 +1,8 @@
 import _ from 'lodash';
-
 import {
     RuleTester
 } from 'eslint';
-
-import {
-    rules
-} from './../../src/';
+import plugin from './../../src';
 
 const ruleTester = new RuleTester();
 
@@ -35,5 +31,5 @@ _.forEach([
         return assertion;
     });
 
-    ruleTester.run(ruleName, rules[ruleName], assertions);
+    ruleTester.run(ruleName, plugin.rules[ruleName], assertions);
 });
