@@ -41,6 +41,6 @@
     "create-index": "^0.1.2",
     "eslint": "^2.13.1",
     "eslint-config-canonical": "^1.7.12",
-    "gitdown": "^2.4.8",
+    "gitdown": "^2.4.8"
   }
 }
