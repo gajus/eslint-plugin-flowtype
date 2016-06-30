@@ -17,6 +17,6 @@ This rule needs a text RegExp to operate with Its signature is as follows:
 }
 ```
 
-`'^([A-Z][a-z0-9]+)+Type$'` is the default pattern.
+`'^([A-Z][a-z0-9]+)+Type$$'` is the default pattern.
 
 <!-- assertions typeIdMatch -->
