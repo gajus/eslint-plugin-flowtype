@@ -437,24 +437,23 @@ This rule needs a text RegExp to operate with Its signature is as follows:
 }
 ```
 
-`'^([A-Z][a-z0-9]+)+Type
-` is the default pattern.
+`'^([A-Z][a-z0-9]+)+Type$'` is the default pattern.
 
 The following patterns are considered problems:
 
 ```js
 type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^Type([A-Z][a-z0-9]+)+$/'.
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]+)+Type$/'.
 
 // Options: ["^foo$"]
-type TypeFoo = {};
-// Message: Type identifier 'TypeFoo' does not match pattern '/^foo$/'.
+type FooType = {};
+// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
 ```
 
 The following patterns are not considered problems:
 
 ```js
-type TypeFoo = {};
+type FooType = {};
 
 // Options: ["^foo$"]
 type foo = {};
