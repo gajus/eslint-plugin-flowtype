@@ -348,6 +348,18 @@ function foo (foo: string) {}
 // Message: There must be 1 space after "foo" parameter type annotation colon.
 
 // Options: ["always"]
+(foo:(() => void)) => {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+// Options: ["never"]
+(foo: (() => void)) => {}
+// Message: There must be no space after "foo" parameter type annotation colon.
+
+// Options: ["always"]
+(foo:  (() => void)) => {}
+// Message: There must be 1 space after "foo" parameter type annotation colon.
+
+// Options: ["always"]
 ():Object => {}
 // Message: There must be a space after return type colon.
 
@@ -358,6 +370,18 @@ function foo (foo: string) {}
 // Options: ["always"]
 ():  Object => {}
 // Message: There must be 1 space after return type colon.
+
+// Options: ["always"]
+():(() => void) => {}
+// Message: There must be a space after return type colon.
+
+// Options: ["never"]
+(): (() => void) => {}
+// Message: There must be no space after return type colon.
+
+// Options: ["always"]
+():  (() => void) => {}
+// Message: There must be 1 space after return type colon.
 ```
 
 The following patterns are not considered problems:
@@ -367,6 +391,8 @@ The following patterns are not considered problems:
 
 (foo: string) => {}
 
+(foo: (string|number)) => {}
+
 // Options: ["never"]
 (foo:string) => {}
 
@@ -374,10 +400,40 @@ The following patterns are not considered problems:
 (foo: string) => {}
 
 // Options: ["never"]
+(foo:(() => void)) => {}
+
+// Options: ["always"]
+(foo: (() => void)) => {}
+
+// Options: ["never"]
 ():Object => {}
 
 // Options: ["always"]
 (): Object => {}
+
+// Options: ["never"]
+():(number | string) => {}
+
+// Options: ["always"]
+(): (number | string) => {}
+
+// Options: ["never"]
+():number|string => {}
+
+// Options: ["always"]
+(): number|string => {}
+
+// Options: ["never"]
+():(() => void) => {}
+
+// Options: ["always"]
+(): (() => void) => {}
+
+// Options: ["never"]
+():( () => void ) => {}
+
+// Options: ["always"]
+(): ( () => void ) => {}
 ```
 
 

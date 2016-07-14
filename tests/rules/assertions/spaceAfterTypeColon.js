@@ -56,6 +56,39 @@ export default {
             ]
         },
         {
+            code: '(foo:(() => void)) => {}',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo: (() => void)) => {}',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: '(foo:  (() => void)) => {}',
+            errors: [
+                {
+                    message: 'There must be 1 space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
             code: '():Object => {}',
             errors: [
                 {
@@ -85,6 +118,37 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: '():(() => void) => {}',
+            errors: [
+                {
+                    message: 'There must be a space after return type colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        }, {
+            code: '(): (() => void) => {}',
+            errors: [
+                {
+                    message: 'There must be no space after return type colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        }, {
+            code: '():  (() => void) => {}',
+            errors: [
+                {
+                    message: 'There must be 1 space after return type colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
         }
     ],
     valid: [
@@ -93,6 +157,9 @@ export default {
         },
         {
             code: '(foo: string) => {}'
+        },
+        {
+            code: '(foo: (string|number)) => {}'
         },
         {
             code: '(foo:string) => {}',
@@ -107,12 +174,70 @@ export default {
             ]
         },
         {
+            code: '(foo:(() => void)) => {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: '(foo: (() => void)) => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
             code: '():Object => {}',
             options: [
                 'never'
             ]
-        }, {
+        },
+        {
             code: '(): Object => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '():(number | string) => {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: '(): (number | string) => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '():number|string => {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: '(): number|string => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '():(() => void) => {}',
+            options: [
+                'never'
+            ]
+        }, {
+            code: '(): (() => void) => {}',
+            options: [
+                'always'
+            ]
+        }, {
+            code: '():( () => void ) => {}',
+            options: [
+                'never'
+            ]
+        }, {
+            code: '(): ( () => void ) => {}',
             options: [
                 'always'
             ]
