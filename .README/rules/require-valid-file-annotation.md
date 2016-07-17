@@ -4,7 +4,7 @@ Makes sure that files have a valid `@flow` annotation. It will report annotation
 
 #### Options
 
-By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
+By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well, and additionally with `@no-flow` we can blacklist some files for this option.
 
 ```js
 {
