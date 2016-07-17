@@ -52,16 +52,28 @@ export default {
             code: '// @flow\na;'
         },
         {
+            code: '// @no-flow\na;'
+        },
+        {
             code: '//@flow\na;'
         },
         {
+            code: '//@no-flow\na;'
+        },
+        {
             code: '//**@flow\na;'
+        },
+        {
+            code: '//**@no-flow\na;'
         },
         {
             code: '/* foo @flow bar */\na;'
         },
         {
             code: '\n\n// @flow\na;'
+        },
+        {
+            code: '\n\n// @no-flow\na;'
         },
         {
             code: '// @flow\n// @FLow'
@@ -77,5 +89,3 @@ export default {
         }
     ]
 };
-
-
