@@ -42,6 +42,7 @@ npm install eslint-plugin-flowtype
         "flowtype"
     ],
     "rules": {
+        "flowtype/define-flow-type": 1,
         "flowtype/require-parameter-type": 1,
         "flowtype/require-return-type": [
             1,
@@ -61,7 +62,8 @@ npm install eslint-plugin-flowtype
         "flowtype/type-id-match": [
             1,
             "^([A-Z][a-z0-9]+)+Type$"
-        ]
+        ],
+        "flowtype/use-flow-type": 1,
     },
     "settings": {
         "flowtype": {
@@ -87,7 +89,10 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 }
  ```
 
-## Rules
+## Rules (reporting)
+
+These are rules that report problems.
+
 
 ### `require-parameter-type`
 
@@ -515,4 +520,61 @@ type FooType = {};
 type foo = {};
 ```
 
+## Rules (suppressing)
 
+These are rules that suppress problems.
+
+
+### `define-flow-type`
+
+Marks type identifiers as defined. Useful when using flow library definitions and `no-undef`.
+
+The following patterns _are_ considered problems _without_ this rule when `no-undef` is enabled:
+
+```js
+/* eslint-enable no-undef */
+
+type foo = FooType
+// Message: 'FooType' is not defined.
+
+(foo: FooType): BarType  => {}
+// Message: 'FooType' is not defined.
+// Message: 'BarType' is not defined.
+
+class Foo implements FooType {}
+// Message: 'FooType' is not defined.
+
+interface FooType {}
+// Message: 'FooType' is not defined.
+```
+
+
+### `use-flow-type`
+
+Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
+
+The following patterns _are_ considered problems _without_ this rule when `no-unused-vars` is enabled:
+
+```js
+/* eslint-enable no-unused-vars */
+
+declare class Foo {}
+// Message: 'Foo' is defined but never used.
+
+declare function Foo {}
+// Message: 'Foo' is defined but never used.
+
+declare module Foo {}
+// Message: 'Foo' is defined but never used.
+
+declare var Foo = {}
+// Message: 'Foo' is defined but never used.
+
+import type FooType from "a"
+function f<T: FooType>(): T {}
+// Message: 'FooType' is defined but never used.
+
+type FooType = BarType
+function f<T: FooType>(): T {}
+// Message: 'FooType' is defined but never used.
+```

@@ -6,7 +6,7 @@ import plugin from './../../src';
 
 const ruleTester = new RuleTester();
 
-const rules = [
+const reportingRules = [
     'require-parameter-type',
     'require-return-type',
     'require-valid-file-annotation',
@@ -15,9 +15,14 @@ const rules = [
     'type-id-match'
 ];
 
+const suppressionRules = [
+    'define-flow-type',
+    'use-flow-type'
+];
+
 const parser = require.resolve('babel-eslint');
 
-for (const ruleName of rules) {
+for (const ruleName of reportingRules) {
     /* eslint-disable global-require */
     const assertions = require('./assertions/' + _.camelCase(ruleName));
     /* eslint-enable global-require */
@@ -35,4 +40,9 @@ for (const ruleName of rules) {
     });
 
     ruleTester.run(ruleName, plugin.rules[ruleName], assertions);
+}
+
+for (const ruleName of suppressionRules) {
+    // eslint-disable-next-line global-require
+    require('./assertions/' + _.camelCase(ruleName));
 }
