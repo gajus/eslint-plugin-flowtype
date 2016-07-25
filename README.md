@@ -11,6 +11,16 @@
     * [Configuration](#eslint-plugin-flowtype-configuration)
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
+    * [Rules (reporting)](#eslint-plugin-flowtype-rules-reporting)
+        * [`require-parameter-type`](#eslint-plugin-flowtype-rules-reporting-require-parameter-type)
+        * [`require-return-type`](#eslint-plugin-flowtype-rules-reporting-require-return-type)
+        * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation)
+        * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-reporting-space-after-type-colon)
+        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-reporting-space-before-type-colon)
+        * [`type-id-match`](#eslint-plugin-flowtype-rules-reporting-type-id-match)
+    * [Rules (suppressing)](#eslint-plugin-flowtype-rules-suppressing)
+        * [`define-flow-type`](#eslint-plugin-flowtype-rules-suppressing-define-flow-type)
+        * [`use-flow-type`](#eslint-plugin-flowtype-rules-suppressing-use-flow-type)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -63,7 +73,7 @@ npm install eslint-plugin-flowtype
             1,
             "^([A-Z][a-z0-9]+)+Type$"
         ],
-        "flowtype/use-flow-type": 1,
+        "flowtype/use-flow-type": 1
     },
     "settings": {
         "flowtype": {
@@ -87,14 +97,13 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
         }
     }
 }
- ```
+```
 
-## Rules (reporting)
+<h2 id="eslint-plugin-flowtype-rules-reporting">Rules (reporting)</h2>
 
 These are rules that report problems.
 
-
-### `require-parameter-type`
+<h3 id="eslint-plugin-flowtype-rules-reporting-require-parameter-type"><code>require-parameter-type</code></h3>
 
 Requires that all function parameters have type annotations.
 
@@ -141,7 +150,7 @@ The following patterns are not considered problems:
 ```
 
 
-### `require-return-type`
+<h3 id="eslint-plugin-flowtype-rules-reporting-require-return-type"><code>require-return-type</code></h3>
 
 Requires that functions have return type annotation.
 
@@ -253,11 +262,11 @@ The following patterns are not considered problems:
 ```
 
 
-### `require-valid-file-annotation`
+<h3 id="eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation"><code>require-valid-file-annotation</code></h3>
 
 Makes sure that files have a valid `@flow` annotation. It will report annotations with typos (such as `// @floww`) or not placed at the top of the file, and optionaly missing annotations.
 
-#### Options
+<h4 id="eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation-options">Options</h4>
 
 By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
 
@@ -323,7 +332,7 @@ a;
 ```
 
 
-### `space-after-type-colon`
+<h3 id="eslint-plugin-flowtype-rules-reporting-space-after-type-colon"><code>space-after-type-colon</code></h3>
 
 Enforces consistent spacing after the type annotation colon.
 
@@ -442,7 +451,7 @@ The following patterns are not considered problems:
 ```
 
 
-### `space-before-type-colon`
+<h3 id="eslint-plugin-flowtype-rules-reporting-space-before-type-colon"><code>space-before-type-colon</code></h3>
 
 Enforces consistent spacing before the type annotation colon.
 
@@ -479,11 +488,11 @@ The following patterns are not considered problems:
 ```
 
 
-### `type-id-match`
+<h3 id="eslint-plugin-flowtype-rules-reporting-type-id-match"><code>type-id-match</code></h3>
 
 Enforces a consistent naming pattern for type aliases.
 
-#### Options
+<h4 id="eslint-plugin-flowtype-rules-reporting-type-id-match-options">Options</h4>
 
 This rule needs a text RegExp to operate with Its signature is as follows:
 
@@ -520,61 +529,17 @@ type FooType = {};
 type foo = {};
 ```
 
-## Rules (suppressing)
+
+
+<h2 id="eslint-plugin-flowtype-rules-suppressing">Rules (suppressing)</h2>
 
 These are rules that suppress problems.
 
+<h3 id="eslint-plugin-flowtype-rules-suppressing-define-flow-type"><code>define-flow-type</code></h3>
 
-### `define-flow-type`
+Marks flow type identifiers as defined. Useful when using flow library definitions and `no-undef`.
 
-Marks type identifiers as defined. Useful when using flow library definitions and `no-undef`.
-
-The following patterns _are_ considered problems _without_ this rule when `no-undef` is enabled:
-
-```js
-/* eslint-enable no-undef */
-
-type foo = FooType
-// Message: 'FooType' is not defined.
-
-(foo: FooType): BarType  => {}
-// Message: 'FooType' is not defined.
-// Message: 'BarType' is not defined.
-
-class Foo implements FooType {}
-// Message: 'FooType' is not defined.
-
-interface FooType {}
-// Message: 'FooType' is not defined.
-```
-
-
-### `use-flow-type`
+<h3 id="eslint-plugin-flowtype-rules-suppressing-use-flow-type"><code>use-flow-type</code></h3>
 
 Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
 
-The following patterns _are_ considered problems _without_ this rule when `no-unused-vars` is enabled:
-
-```js
-/* eslint-enable no-unused-vars */
-
-declare class Foo {}
-// Message: 'Foo' is defined but never used.
-
-declare function Foo {}
-// Message: 'Foo' is defined but never used.
-
-declare module Foo {}
-// Message: 'Foo' is defined but never used.
-
-declare var Foo = {}
-// Message: 'Foo' is defined but never used.
-
-import type FooType from "a"
-function f<T: FooType>(): T {}
-// Message: 'FooType' is defined but never used.
-
-type FooType = BarType
-function f<T: FooType>(): T {}
-// Message: 'FooType' is defined but never used.
-```
