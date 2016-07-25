@@ -37,6 +37,7 @@ npm install eslint-plugin-flowtype
         "flowtype"
     ],
     "rules": {
+        "flowtype/define-flow-type": 1,
         "flowtype/require-parameter-type": 1,
         "flowtype/require-return-type": [
             1,
@@ -56,7 +57,8 @@ npm install eslint-plugin-flowtype
         "flowtype/type-id-match": [
             1,
             "^([A-Z][a-z0-9]+)+Type$"
-        ]
+        ],
+        "flowtype/use-flow-type": 1
     },
     "settings": {
         "flowtype": {
@@ -80,9 +82,11 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
         }
     }
 }
- ```
+```
 
-## Rules
+## Rules (reporting)
+
+These are rules that report problems.
 
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
@@ -90,3 +94,10 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/type-id-match.md"}
+
+## Rules (suppressing)
+
+These are rules that suppress problems.
+
+{"gitdown": "include", "file": "./rules/define-flow-type.md"}
+{"gitdown": "include", "file": "./rules/use-flow-type.md"}
