@@ -1,10 +1,3 @@
-/**
- * This rule is tested differently than the rest because `RuleTester` is
- * designed to test rule reporting and define-flow-type doesn't report
- * anything. define-flow-type suppresses reports from no-undef. So we're
- * actually testing no-undef's reporting with define-flow-type enabled.
- */
-
 import {
     RuleTester
 } from 'eslint';
@@ -171,43 +164,39 @@ const ALWAYS_VALID = [
     'declare module A { declare var a: AType }'
 ];
 
-// Test that no-undef errors actually occur without define-flow-type.
-new RuleTester({
-    parser: 'babel-eslint'
-}).run('no-undef', noUndefRule, {
-    invalid: [].concat(
-        ALWAYS_INVALID,
-        VALID_WITH_DEFINE_FLOW_TYPE
-    ),
-    valid: ALWAYS_VALID
-});
+/**
+ * This rule is tested differently than the rest because `RuleTester` is
+ * designed to test rule reporting and define-flow-type doesn't report
+ * anything. define-flow-type suppresses reports from no-undef. So we're
+ * actually testing no-undef's reporting with define-flow-type enabled.
+ */
+{
+    {
+        const ruleTester = new RuleTester({
+            parser: 'babel-eslint'
+        });
 
-// Test that no-undef no longer reports "not defined" errors for flow types.
-new RuleTester({
-    parser: 'babel-eslint',
-    rules: {'define-flow-type': 1}
-}).run('no-undef', noUndefRule, {
-    invalid: ALWAYS_INVALID,
-    valid: [].concat(
-        ALWAYS_VALID,
-        VALID_WITH_DEFINE_FLOW_TYPE.map((item) => { return item.code; })
-    )
-});
-
-// Test compatibility with no-use-before-define.
-new RuleTester({
-    parser: 'babel-eslint',
-    rules: {
-        'define-flow-type': 1,
-        'no-use-before-define': [2, 'nofunc']
+        ruleTester.run('no-under must not trigger an error in these cases', noUndefRule, {
+            invalid: [],
+            valid: ALWAYS_VALID
+        });
     }
-}).run('no-undef', noUndefRule, {
-    invalid: ALWAYS_INVALID,
-    valid: [].concat(
-        ALWAYS_VALID,
-        VALID_WITH_DEFINE_FLOW_TYPE.map((item) => { return item.code; })
-    )
-});
+
+    {
+        const ruleTester = new RuleTester({
+            parser: 'babel-eslint'
+        });
+
+        ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {
+            invalid: [
+                // ...ALWAYS_INVALID,
+                ...VALID_WITH_DEFINE_FLOW_TYPE
+            ],
+            valid: []
+        });
+    }
+}
+
 export default {
     invalid: [],
     valid: [

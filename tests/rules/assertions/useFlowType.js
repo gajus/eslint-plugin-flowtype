@@ -1,10 +1,3 @@
-/**
- * This rule is tested differently than the rest because `RuleTester` is
- * designed to test rule reporting and use-flow-type doesn't report
- * anything. use-flow-type suppresses reports from no-unused-vars. So we're
- * actually testing no-unused-vars's reporting with use-flow-type enabled.
- */
-
 import {
     RuleTester
 } from 'eslint';
@@ -137,28 +130,53 @@ const ALWAYS_VALID = [
     'declare type A = {}'
 ];
 
-// Test that no-unused-vars errors actually occur without use-flow-type.
-new RuleTester({
-    parser: 'babel-eslint'
-}).run('no-unused-vars', noUnusedVarsRule, {
-    invalid: [].concat(
-        ALWAYS_INVALID,
-        VALID_WITH_USE_FLOW_TYPE
-    ),
-    valid: ALWAYS_VALID
-});
+/**
+ * This rule is tested differently than the rest because `RuleTester` is
+ * designed to test rule reporting and use-flow-type doesn't report
+ * anything. use-flow-type suppresses reports from no-unused-vars. So we're
+ * actually testing no-unused-vars's reporting with use-flow-type enabled.
+ */
+{
+    {
+        const ruleTester = new RuleTester({
+            parser: 'babel-eslint'
+        });
 
-// Test that no-unused-vars no longer reports flow declaration "never used" errors.
-new RuleTester({
-    parser: 'babel-eslint',
-    rules: {'use-flow-type': 1}
-}).run('no-unused-vars', noUnusedVarsRule, {
-    invalid: ALWAYS_INVALID,
-    valid: [].concat(
-        ALWAYS_VALID,
-        VALID_WITH_USE_FLOW_TYPE.map((item) => { return item.code; })
-    )
-});
+        ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
+            invalid: [],
+            valid: ALWAYS_VALID
+        });
+    }
+
+    {
+        const ruleTester = new RuleTester({
+            parser: 'babel-eslint'
+        });
+
+        ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
+            invalid: [
+                ...ALWAYS_INVALID,
+                ...VALID_WITH_USE_FLOW_TYPE
+            ],
+            valid: []
+        });
+    }
+
+    {
+        const ruleTester = new RuleTester({
+            parser: 'babel-eslint',
+            rules: {
+                'use-flow-type': 1
+            }
+        });
+        ruleTester.defineRule('use-flow-type', useFlowType);
+        ruleTester.run('use-flow-type must not affect no-unused-vars behavior in these cases', noUnusedVarsRule, {
+            invalid: ALWAYS_INVALID,
+            valid: ALWAYS_VALID
+        });
+    }
+}
+
 export default {
     invalid: [],
     valid: [
