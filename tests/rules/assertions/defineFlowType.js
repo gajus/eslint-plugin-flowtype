@@ -4,8 +4,6 @@ import {
 import noUndefRule from 'eslint/lib/rules/no-undef';
 import defineFlowType from '../../../src/rules/defineFlowType';
 
-RuleTester.prototype.defineRule('define-flow-type', defineFlowType);
-
 const VALID_WITH_DEFINE_FLOW_TYPE = [
     {
         code: 'var a: AType',

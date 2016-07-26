@@ -2,8 +2,6 @@ import {
     RuleTester
 } from 'eslint';
 import noUnusedVarsRule from 'eslint/lib/rules/no-unused-vars';
-
-RuleTester.prototype.defineRule('use-flow-type', useFlowType);
 import useFlowType from './../../../src/rules/useFlowType';
 
 const VALID_WITH_USE_FLOW_TYPE = [
