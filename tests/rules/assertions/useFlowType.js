@@ -14,76 +14,110 @@ RuleTester.prototype.defineRule('use-flow-type', useFlowType);
 const VALID_WITH_USE_FLOW_TYPE = [
     {
         code: 'declare class A {}',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'declare function A(): Y',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'declare module A {}',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'declare module A { declare var a: Y }',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'declare var A: Y',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'import type A from "a"; (function<T: A>(): T {})',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: '(function<T: A>(): T {}); import type A from "a"',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'import type {A} from "a"; (function<T: A>(): T {})',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: '(function<T: A>(): T {}); import type {A} from "a"',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: '(function<T: A>(): T {}); import type {a as A} from "a"',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'type A = {}; function x<Y: A>(i: Y) { i }; x()',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'function x<Y: A>(i: Y) { i }; type A = {}; x()',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()',
         // QualifiedTypeIdentifier -------^
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()',
         //                   ^- QualifiedTypeIdentifier
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     }
 ];
 
 const ALWAYS_INVALID = [
     {
         code: 'type A = Y',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'function x<A>() {}; x()',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     },
     {
         code: 'import type A from "a";',
-        errors: ['\'A\' is defined but never used']
+        errors: [
+            '\'A\' is defined but never used'
+        ]
     }
 ];
 

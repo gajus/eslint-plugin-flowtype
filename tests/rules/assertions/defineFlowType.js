@@ -14,96 +14,146 @@ RuleTester.prototype.defineRule('define-flow-type', defineFlowType);
 const VALID_WITH_DEFINE_FLOW_TYPE = [
     {
         code: 'var a: AType',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'var a: AType; var b: AType',
-        errors: ['\'AType\' is not defined.', '\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'var a; (a: AType)',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'var a: AType<BType>',
-        errors: ['\'AType\' is not defined.', '\'BType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'BType\' is not defined.'
+        ]
     },
     {
         code: 'type A = AType',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'function f(a: AType) {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'function f(a: AType.a) {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'function f(a: AType.a.b) {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'function f(a): AType {}; var a: AType',
-        errors: ['\'AType\' is not defined.', '\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'function f(a): AType {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'class C { a: AType }',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'class C { a: AType.a }',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'class C { a: AType.a.b }',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'class C implements AType {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'interface AType {}',
-        errors: ['\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: '({ a: ({b() {}}: AType) })',
         // `AType` appears twice in `globalScope.through` as distinct
         // references, this may be a babel-eslint bug.
-        errors: ['\'AType\' is not defined.', '\'AType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'AType\' is not defined.'
+        ]
     },
     {
         code: 'type X = {Y<AType>(): BType}',
-        errors: ['\'AType\' is not defined.', '\'BType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'BType\' is not defined.'
+        ]
     },
     {
         code: 'interface AType<BType> {}',
-        errors: ['\'AType\' is not defined.', '\'BType\' is not defined.']
+        errors: [
+            '\'AType\' is not defined.',
+            '\'BType\' is not defined.'
+        ]
     }
 ];
 
 const ALWAYS_INVALID = [
     {
         code: 'var a = b',
-        errors: ['\'b\' is not defined.']
+        errors: [
+            '\'b\' is not defined.'
+        ]
     },
     {
         code: 'function f(a = b) {}',
-        errors: ['\'b\' is not defined.']
+        errors: [
+            '\'b\' is not defined.'
+        ]
     },
     {
         code: 'class C extends b {}',
-        errors: ['\'b\' is not defined.']
+        errors: [
+            '\'b\' is not defined.'
+        ]
     },
     {
         code: 'class C { static S = b }',
-        errors: ['\'b\' is not defined.']
+        errors: [
+            '\'b\' is not defined.'
+        ]
     }
 ];
 
