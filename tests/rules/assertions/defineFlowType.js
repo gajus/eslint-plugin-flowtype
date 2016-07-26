@@ -208,3 +208,28 @@ new RuleTester({
         VALID_WITH_DEFINE_FLOW_TYPE.map((item) => { return item.code; })
     )
 });
+export default {
+    invalid: [],
+    valid: [
+        ...VALID_WITH_DEFINE_FLOW_TYPE.map((subject) => {
+            return {
+                code: subject.code,
+                rules: {
+                    'no-undef': 2
+                }
+            };
+        }),
+        ...VALID_WITH_DEFINE_FLOW_TYPE.map((subject) => {
+            return {
+                code: subject.code,
+                rules: {
+                    'no-undef': 2,
+                    'no-use-before-define': [
+                        2,
+                        'nofunc'
+                    ]
+                }
+            };
+        })
+    ]
+};

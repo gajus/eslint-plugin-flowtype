@@ -159,4 +159,17 @@ new RuleTester({
         VALID_WITH_USE_FLOW_TYPE.map((item) => { return item.code; })
     )
 });
+export default {
+    invalid: [],
+    valid: [
+        ...VALID_WITH_USE_FLOW_TYPE.map((subject) => {
+            return {
+                code: subject.code,
+                rules: {
+                    'no-unused-vars': 1
+                }
+            };
+        })
+    ]
+};
 
