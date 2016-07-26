@@ -537,7 +537,10 @@ These are rules that suppress problems.
 
 <h3 id="eslint-plugin-flowtype-rules-suppressing-define-flow-type"><code>define-flow-type</code></h3>
 
-Marks flow type identifiers as defined. Useful when using flow library definitions and `no-undef`.
+Marks Flow type identifiers as defined.
+
+Used to suppress [`no-undef`](http://eslint.org/docs/rules/no-undef) reporting of type identifiers.
+
 The following patterns are not considered problems:
 
 ```js
@@ -654,7 +657,10 @@ interface AType<BType> {}
 
 <h3 id="eslint-plugin-flowtype-rules-suppressing-use-flow-type"><code>use-flow-type</code></h3>
 
-Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
+Marks Flow [type alias](https://flowtype.org/docs/type-aliases.html) declarations as used.
+
+Used to suppress [`no-unused-vars`](http://eslint.org/docs/rules/no-unused-vars) errors that are triggered by type aliases.
+
 The following patterns are not considered problems:
 
 ```js
