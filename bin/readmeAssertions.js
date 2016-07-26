@@ -16,7 +16,10 @@ const formatCodeSnippet = (setup) => {
     paragraphs.push(setup.code);
 
     if (setup.errors) {
-        paragraphs.push('// Message: ' + setup.errors[0].message);
+        setup.errors.forEach((message) => {
+            paragraphs.push('// Message: ' + message.message);
+        });
+    }
     }
 
     return paragraphs.join('\n');
