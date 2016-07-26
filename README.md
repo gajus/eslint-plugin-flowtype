@@ -12,13 +12,13 @@
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
     * [Rules](#eslint-plugin-flowtype-rules)
+        * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
-        * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
 
 
@@ -99,6 +99,126 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 ```
 
 <h2 id="eslint-plugin-flowtype-rules">Rules</h2>
+
+<h3 id="eslint-plugin-flowtype-rules-define-flow-type"><code>define-flow-type</code></h3>
+
+Marks Flow type identifiers as defined.
+
+Used to suppress [`no-undef`](http://eslint.org/docs/rules/no-undef) reporting of type identifiers.
+
+The following patterns are not considered problems:
+
+```js
+var a: AType
+// Additional rules: {"no-undef":2}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2}
+
+type A = AType
+// Additional rules: {"no-undef":2}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2}
+
+interface AType {}
+// Additional rules: {"no-undef":2}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2}
+
+var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type A = AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+```
+
+
 
 <h3 id="eslint-plugin-flowtype-rules-require-parameter-type"><code>require-parameter-type</code></h3>
 
@@ -529,126 +649,6 @@ type FooType = {};
 
 // Options: ["^foo$"]
 type foo = {};
-```
-
-
-
-<h3 id="eslint-plugin-flowtype-rules-define-flow-type"><code>define-flow-type</code></h3>
-
-Marks Flow type identifiers as defined.
-
-Used to suppress [`no-undef`](http://eslint.org/docs/rules/no-undef) reporting of type identifiers.
-
-The following patterns are not considered problems:
-
-```js
-var a: AType
-// Additional rules: {"no-undef":2}
-
-var a: AType; var b: AType
-// Additional rules: {"no-undef":2}
-
-var a; (a: AType)
-// Additional rules: {"no-undef":2}
-
-var a: AType<BType>
-// Additional rules: {"no-undef":2}
-
-type A = AType
-// Additional rules: {"no-undef":2}
-
-function f(a: AType) {}
-// Additional rules: {"no-undef":2}
-
-function f(a: AType.a) {}
-// Additional rules: {"no-undef":2}
-
-function f(a: AType.a.b) {}
-// Additional rules: {"no-undef":2}
-
-function f(a): AType {}; var a: AType
-// Additional rules: {"no-undef":2}
-
-function f(a): AType {}
-// Additional rules: {"no-undef":2}
-
-class C { a: AType }
-// Additional rules: {"no-undef":2}
-
-class C { a: AType.a }
-// Additional rules: {"no-undef":2}
-
-class C { a: AType.a.b }
-// Additional rules: {"no-undef":2}
-
-class C implements AType {}
-// Additional rules: {"no-undef":2}
-
-interface AType {}
-// Additional rules: {"no-undef":2}
-
-({ a: ({b() {}}: AType) })
-// Additional rules: {"no-undef":2}
-
-type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2}
-
-interface AType<BType> {}
-// Additional rules: {"no-undef":2}
-
-var a: AType
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-var a: AType; var b: AType
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-var a; (a: AType)
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-var a: AType<BType>
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-type A = AType
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-function f(a: AType) {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-function f(a: AType.a) {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-function f(a: AType.a.b) {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-function f(a): AType {}; var a: AType
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-function f(a): AType {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-class C { a: AType }
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-class C { a: AType.a }
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-class C { a: AType.a.b }
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-class C implements AType {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-interface AType {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-({ a: ({b() {}}: AType) })
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-interface AType<BType> {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 ```
 
 
