@@ -5,7 +5,9 @@
  * actually testing no-unused-vars's reporting with use-flow-type enabled.
  */
 
-import {RuleTester} from 'eslint';
+import {
+    RuleTester
+} from 'eslint';
 import noUnusedVarsRule from 'eslint/lib/rules/no-unused-vars';
 import useFlowType from '../../../src/rules/useFlowType';
 

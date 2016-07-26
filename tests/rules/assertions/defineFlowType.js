@@ -5,7 +5,9 @@
  * actually testing no-undef's reporting with define-flow-type enabled.
  */
 
-import {RuleTester} from 'eslint';
+import {
+    RuleTester
+} from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
 import defineFlowType from '../../../src/rules/defineFlowType';
 
