@@ -47,12 +47,11 @@ const updateDocuments = (assertions) => {
     let documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
 
     documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
-        let ruleName,
-            ruleAssertions;
+        let exampleBody;
 
-        ruleName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
+        const ruleName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
 
-        ruleAssertions = assertions[ruleName];
+        const ruleAssertions = assertions[ruleName];
 
         if (!ruleAssertions) {
             throw new Error('No assertions available for rule "' + ruleName + '".');
@@ -60,7 +59,17 @@ const updateDocuments = (assertions) => {
             return assertionsBlock;
         }
 
-        return 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') + '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n';
+        exampleBody = '';
+
+        if (ruleAssertions.invalid.length) {
+            exampleBody += 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') + '\n```\n\n';
+        }
+
+        if (ruleAssertions.valid.length) {
+            exampleBody += 'The following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n\n';
+        }
+
+        return exampleBody;
     });
 
     fs.writeFileSync(readmeDocumentPath, documentBody);
