@@ -20,6 +20,9 @@ const formatCodeSnippet = (setup) => {
             paragraphs.push('// Message: ' + message.message);
         });
     }
+
+    if (setup.rules) {
+        paragraphs.push('// Additional rules: ' + JSON.stringify(setup.rules));
     }
 
     return paragraphs.join('\n');
