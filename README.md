@@ -538,8 +538,168 @@ These are rules that suppress problems.
 <h3 id="eslint-plugin-flowtype-rules-suppressing-define-flow-type"><code>define-flow-type</code></h3>
 
 Marks flow type identifiers as defined. Useful when using flow library definitions and `no-undef`.
+The following patterns are not considered problems:
+
+```js
+var a: AType
+// Additional rules: {"no-undef":2}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2}
+
+type A = AType
+// Additional rules: {"no-undef":2}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2}
+
+interface AType {}
+// Additional rules: {"no-undef":2}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2}
+
+var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type A = AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+```
+
+
 
 <h3 id="eslint-plugin-flowtype-rules-suppressing-use-flow-type"><code>use-flow-type</code></h3>
 
 Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
+The following patterns are not considered problems:
+
+```js
+declare class A {}
+// Additional rules: {"no-unused-vars":1}
+
+declare function A(): Y
+// Additional rules: {"no-unused-vars":1}
+
+declare module A {}
+// Additional rules: {"no-unused-vars":1}
+
+declare module A { declare var a: Y }
+// Additional rules: {"no-unused-vars":1}
+
+declare var A: Y
+// Additional rules: {"no-unused-vars":1}
+
+import type A from "a"; (function<T: A>(): T {})
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type A from "a"
+// Additional rules: {"no-unused-vars":1}
+
+import type {A} from "a"; (function<T: A>(): T {})
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type {A} from "a"
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type {a as A} from "a"
+// Additional rules: {"no-unused-vars":1}
+
+type A = {}; function x<Y: A>(i: Y) { i }; x()
+// Additional rules: {"no-unused-vars":1}
+
+function x<Y: A>(i: Y) { i }; type A = {}; x()
+// Additional rules: {"no-unused-vars":1}
+
+type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()
+// Additional rules: {"no-unused-vars":1}
+
+function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
+// Additional rules: {"no-unused-vars":1}
+```
+
+
 
