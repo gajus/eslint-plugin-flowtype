@@ -7,16 +7,13 @@ import plugin from './../../src';
 const ruleTester = new RuleTester();
 
 const reportingRules = [
+    'define-flow-type',
     'require-parameter-type',
     'require-return-type',
     'require-valid-file-annotation',
     'space-after-type-colon',
     'space-before-type-colon',
-    'type-id-match'
-];
-
-const suppressionRules = [
-    'define-flow-type',
+    'type-id-match',
     'use-flow-type'
 ];
 
@@ -40,9 +37,4 @@ for (const ruleName of reportingRules) {
     });
 
     ruleTester.run(ruleName, plugin.rules[ruleName], assertions);
-}
-
-for (const ruleName of suppressionRules) {
-    // eslint-disable-next-line global-require
-    require('./assertions/' + _.camelCase(ruleName));
 }
