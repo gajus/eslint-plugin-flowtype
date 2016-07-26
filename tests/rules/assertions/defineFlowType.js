@@ -2,7 +2,6 @@ import {
     RuleTester
 } from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
-import defineFlowType from '../../../src/rules/defineFlowType';
 
 const VALID_WITH_DEFINE_FLOW_TYPE = [
     {
