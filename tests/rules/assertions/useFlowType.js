@@ -135,44 +135,43 @@ const ALWAYS_VALID = [
  * actually testing no-unused-vars's reporting with use-flow-type enabled.
  */
 {
-    {
-        const ruleTester = new RuleTester({
-            parser: 'babel-eslint'
-        });
+    const ruleTester = new RuleTester({
+        parser: 'babel-eslint'
+    });
 
-        ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
-            invalid: [],
-            valid: ALWAYS_VALID
-        });
-    }
+    ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
+        invalid: [],
+        valid: ALWAYS_VALID
+    });
+}
 
-    {
-        const ruleTester = new RuleTester({
-            parser: 'babel-eslint'
-        });
+{
+    const ruleTester = new RuleTester({
+        parser: 'babel-eslint'
+    });
 
-        ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
-            invalid: [
-                ...ALWAYS_INVALID,
-                ...VALID_WITH_USE_FLOW_TYPE
-            ],
-            valid: []
-        });
-    }
+    ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
+        invalid: [
+            ...ALWAYS_INVALID,
+            ...VALID_WITH_USE_FLOW_TYPE
+        ],
+        valid: []
+    });
+}
 
-    {
-        const ruleTester = new RuleTester({
-            parser: 'babel-eslint',
-            rules: {
-                'use-flow-type': 1
-            }
-        });
-        ruleTester.defineRule('use-flow-type', useFlowType);
-        ruleTester.run('use-flow-type must not affect no-unused-vars behavior in these cases', noUnusedVarsRule, {
-            invalid: ALWAYS_INVALID,
-            valid: ALWAYS_VALID
-        });
-    }
+{
+    const ruleTester = new RuleTester({
+        parser: 'babel-eslint',
+        rules: {
+            'use-flow-type': 1
+        }
+    });
+
+    ruleTester.defineRule('use-flow-type', useFlowType);
+    ruleTester.run('use-flow-type must not affect no-unused-vars behavior in these cases', noUnusedVarsRule, {
+        invalid: ALWAYS_INVALID,
+        valid: ALWAYS_VALID
+    });
 }
 
 export default {

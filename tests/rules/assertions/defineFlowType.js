@@ -168,30 +168,28 @@ const ALWAYS_VALID = [
  * actually testing no-undef's reporting with define-flow-type enabled.
  */
 {
-    {
-        const ruleTester = new RuleTester({
-            parser: 'babel-eslint'
-        });
+    const ruleTester = new RuleTester({
+        parser: 'babel-eslint'
+    });
 
-        ruleTester.run('no-under must not trigger an error in these cases', noUndefRule, {
-            invalid: [],
-            valid: ALWAYS_VALID
-        });
-    }
+    ruleTester.run('no-under must not trigger an error in these cases', noUndefRule, {
+        invalid: [],
+        valid: ALWAYS_VALID
+    });
+}
 
-    {
-        const ruleTester = new RuleTester({
-            parser: 'babel-eslint'
-        });
+{
+    const ruleTester = new RuleTester({
+        parser: 'babel-eslint'
+    });
 
-        ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {
-            invalid: [
-                // ...ALWAYS_INVALID,
-                ...VALID_WITH_DEFINE_FLOW_TYPE
-            ],
-            valid: []
-        });
-    }
+    ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {
+        invalid: [
+            ...ALWAYS_INVALID,
+            ...VALID_WITH_DEFINE_FLOW_TYPE
+        ],
+        valid: []
+    });
 }
 
 export default {
