@@ -6,18 +6,20 @@ import plugin from './../../src';
 
 const ruleTester = new RuleTester();
 
-const rules = [
+const reportingRules = [
+    'define-flow-type',
     'require-parameter-type',
     'require-return-type',
     'require-valid-file-annotation',
     'space-after-type-colon',
     'space-before-type-colon',
-    'type-id-match'
+    'type-id-match',
+    'use-flow-type'
 ];
 
 const parser = require.resolve('babel-eslint');
 
-for (const ruleName of rules) {
+for (const ruleName of reportingRules) {
     /* eslint-disable global-require */
     const assertions = require('./assertions/' + _.camelCase(ruleName));
     /* eslint-enable global-require */
