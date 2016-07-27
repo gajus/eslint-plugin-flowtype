@@ -1,3 +1,7 @@
 ### `use-flow-type`
 
-Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
+Marks Flow [type alias](https://flowtype.org/docs/type-aliases.html) declarations as used.
+
+Used to suppress [`no-unused-vars`](http://eslint.org/docs/rules/no-unused-vars) errors that are triggered by type aliases.
+
+<!-- assertions useFlowType -->

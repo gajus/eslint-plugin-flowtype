@@ -84,20 +84,13 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 }
 ```
 
-## Rules (reporting)
+## Rules
 
-These are rules that report problems.
-
+{"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/type-id-match.md"}
-
-## Rules (suppressing)
-
-These are rules that suppress problems.
-
-{"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/use-flow-type.md"}

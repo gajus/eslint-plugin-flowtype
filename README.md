@@ -11,16 +11,15 @@
     * [Configuration](#eslint-plugin-flowtype-configuration)
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
-    * [Rules (reporting)](#eslint-plugin-flowtype-rules-reporting)
-        * [`require-parameter-type`](#eslint-plugin-flowtype-rules-reporting-require-parameter-type)
-        * [`require-return-type`](#eslint-plugin-flowtype-rules-reporting-require-return-type)
-        * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation)
-        * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-reporting-space-after-type-colon)
-        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-reporting-space-before-type-colon)
-        * [`type-id-match`](#eslint-plugin-flowtype-rules-reporting-type-id-match)
-    * [Rules (suppressing)](#eslint-plugin-flowtype-rules-suppressing)
-        * [`define-flow-type`](#eslint-plugin-flowtype-rules-suppressing-define-flow-type)
-        * [`use-flow-type`](#eslint-plugin-flowtype-rules-suppressing-use-flow-type)
+    * [Rules](#eslint-plugin-flowtype-rules)
+        * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
+        * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
+        * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
+        * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
+        * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
+        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
+        * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+        * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -99,11 +98,129 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 }
 ```
 
-<h2 id="eslint-plugin-flowtype-rules-reporting">Rules (reporting)</h2>
+<h2 id="eslint-plugin-flowtype-rules">Rules</h2>
 
-These are rules that report problems.
+<h3 id="eslint-plugin-flowtype-rules-define-flow-type"><code>define-flow-type</code></h3>
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-require-parameter-type"><code>require-parameter-type</code></h3>
+Marks Flow type identifiers as defined.
+
+Used to suppress [`no-undef`](http://eslint.org/docs/rules/no-undef) reporting of type identifiers.
+
+The following patterns are not considered problems:
+
+```js
+var a: AType
+// Additional rules: {"no-undef":2}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2}
+
+type A = AType
+// Additional rules: {"no-undef":2}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2}
+
+interface AType {}
+// Additional rules: {"no-undef":2}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2}
+
+var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType; var b: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a; (a: AType)
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+var a: AType<BType>
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type A = AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a: AType.a.b) {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}; var a: AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+function f(a): AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C { a: AType.a.b }
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+class C implements AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+({ a: ({b() {}}: AType) })
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+interface AType<BType> {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+```
+
+
+
+<h3 id="eslint-plugin-flowtype-rules-require-parameter-type"><code>require-parameter-type</code></h3>
 
 Requires that all function parameters have type annotations.
 
@@ -150,7 +267,8 @@ The following patterns are not considered problems:
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-require-return-type"><code>require-return-type</code></h3>
+
+<h3 id="eslint-plugin-flowtype-rules-require-return-type"><code>require-return-type</code></h3>
 
 Requires that functions have return type annotation.
 
@@ -262,11 +380,12 @@ The following patterns are not considered problems:
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation"><code>require-valid-file-annotation</code></h3>
+
+<h3 id="eslint-plugin-flowtype-rules-require-valid-file-annotation"><code>require-valid-file-annotation</code></h3>
 
 Makes sure that files have a valid `@flow` annotation. It will report annotations with typos (such as `// @floww`) or not placed at the top of the file, and optionaly missing annotations.
 
-<h4 id="eslint-plugin-flowtype-rules-reporting-require-valid-file-annotation-options">Options</h4>
+<h4 id="eslint-plugin-flowtype-rules-require-valid-file-annotation-options">Options</h4>
 
 By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
 
@@ -332,7 +451,8 @@ a;
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-space-after-type-colon"><code>space-after-type-colon</code></h3>
+
+<h3 id="eslint-plugin-flowtype-rules-space-after-type-colon"><code>space-after-type-colon</code></h3>
 
 Enforces consistent spacing after the type annotation colon.
 
@@ -451,7 +571,8 @@ The following patterns are not considered problems:
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-space-before-type-colon"><code>space-before-type-colon</code></h3>
+
+<h3 id="eslint-plugin-flowtype-rules-space-before-type-colon"><code>space-before-type-colon</code></h3>
 
 Enforces consistent spacing before the type annotation colon.
 
@@ -488,11 +609,12 @@ The following patterns are not considered problems:
 ```
 
 
-<h3 id="eslint-plugin-flowtype-rules-reporting-type-id-match"><code>type-id-match</code></h3>
+
+<h3 id="eslint-plugin-flowtype-rules-type-id-match"><code>type-id-match</code></h3>
 
 Enforces a consistent naming pattern for type aliases.
 
-<h4 id="eslint-plugin-flowtype-rules-reporting-type-id-match-options">Options</h4>
+<h4 id="eslint-plugin-flowtype-rules-type-id-match-options">Options</h4>
 
 This rule needs a text RegExp to operate with Its signature is as follows:
 
@@ -531,15 +653,57 @@ type foo = {};
 
 
 
-<h2 id="eslint-plugin-flowtype-rules-suppressing">Rules (suppressing)</h2>
+<h3 id="eslint-plugin-flowtype-rules-use-flow-type"><code>use-flow-type</code></h3>
 
-These are rules that suppress problems.
+Marks Flow [type alias](https://flowtype.org/docs/type-aliases.html) declarations as used.
 
-<h3 id="eslint-plugin-flowtype-rules-suppressing-define-flow-type"><code>define-flow-type</code></h3>
+Used to suppress [`no-unused-vars`](http://eslint.org/docs/rules/no-unused-vars) errors that are triggered by type aliases.
 
-Marks flow type identifiers as defined. Useful when using flow library definitions and `no-undef`.
+The following patterns are not considered problems:
 
-<h3 id="eslint-plugin-flowtype-rules-suppressing-use-flow-type"><code>use-flow-type</code></h3>
+```js
+declare class A {}
+// Additional rules: {"no-unused-vars":1}
 
-Marks type declarations as used. Useful in flow library definitions with `no-unused-vars`.
+declare function A(): Y
+// Additional rules: {"no-unused-vars":1}
+
+declare module A {}
+// Additional rules: {"no-unused-vars":1}
+
+declare module A { declare var a: Y }
+// Additional rules: {"no-unused-vars":1}
+
+declare var A: Y
+// Additional rules: {"no-unused-vars":1}
+
+import type A from "a"; (function<T: A>(): T {})
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type A from "a"
+// Additional rules: {"no-unused-vars":1}
+
+import type {A} from "a"; (function<T: A>(): T {})
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type {A} from "a"
+// Additional rules: {"no-unused-vars":1}
+
+(function<T: A>(): T {}); import type {a as A} from "a"
+// Additional rules: {"no-unused-vars":1}
+
+type A = {}; function x<Y: A>(i: Y) { i }; x()
+// Additional rules: {"no-unused-vars":1}
+
+function x<Y: A>(i: Y) { i }; type A = {}; x()
+// Additional rules: {"no-unused-vars":1}
+
+type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()
+// Additional rules: {"no-unused-vars":1}
+
+function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
+// Additional rules: {"no-unused-vars":1}
+```
+
+
 
