@@ -185,6 +185,67 @@ export default {
                     onlyFilesWithFlowAnnotation: true
                 }
             }
+        },
+        {
+            code: 'async () => { return 2; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'async () => {}',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: 'async function x() {}',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: 'async () => { return; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'function* x() {}',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always'
+            ]
         }
     ],
     valid: [
@@ -314,6 +375,9 @@ export default {
                     annotateUndefined: 'always'
                 }
             ]
+        },
+        {
+            code: 'async (foo): Promise<number> => { return 3; }'
         }
     ]
 };

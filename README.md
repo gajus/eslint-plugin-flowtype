@@ -343,6 +343,26 @@ The following patterns are considered problems:
 // @flow
  (foo) => { return undefined; }
 // Message: Must annotate undefined return type.
+
+// Options: ["always"]
+async () => { return 2; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+async () => {}
+// Message: Missing return type annotation.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+async function x() {}
+// Message: Missing return type annotation.
+
+// Options: ["always"]
+async () => { return; }
+// Message: Missing return type annotation.
+
+// Options: ["always"]
+function* x() {}
+// Message: Missing return type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -393,6 +413,8 @@ async function doThing(): Promise<void> {}
 
 // Options: ["always",{"annotateUndefined":"always"}]
 function* doThing(): Generator<number, void, void> { yield 2; }
+
+async (foo): Promise<number> => { return 3; }
 ```
 
 
