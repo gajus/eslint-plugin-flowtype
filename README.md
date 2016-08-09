@@ -230,6 +230,13 @@ The following patterns are considered problems:
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
 
+function x(foo) {}
+// Message: Missing "foo" parameter type annotation.
+
+// Options: [{"excludeArrowFunctions":true}]
+function x(foo) {}
+// Message: Missing "foo" parameter type annotation.
+
 (foo = 'FOO') => {}
 // Message: Missing "foo" parameter type annotation.
 
@@ -263,6 +270,9 @@ The following patterns are not considered problems:
 
 ([foo]: Array) => {}
 
+(foo) => {}
+
+// Options: [{"excludeArrowFunctions":true}]
 (foo) => {}
 ```
 
