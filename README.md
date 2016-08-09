@@ -224,6 +224,36 @@ interface AType<BType> {}
 
 Requires that all function parameters have type annotations.
 
+<h4 id="eslint-plugin-flowtype-rules-require-parameter-type-options">Options</h4>
+
+You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
+
+Alternatively, you can want to exclude only function expressions (e.g. `x => x * 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this. 
+
+```js
+{
+    "rules": {
+        "flowtype/require-parameter-type": [
+            2,
+            {
+              "excludeArrowFunctions": true
+            }
+        ]
+    }
+}
+
+{
+    "rules": {
+        "flowtype/require-parameter-type": [
+            2,
+            {
+              "excludeArrowFunctions": "expressionsOnly"
+            }
+        ]
+    }
+}
+```
+
 The following patterns are considered problems:
 
 ```js
@@ -255,6 +285,14 @@ function x(foo) {}
 // @flow
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
+
+// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+(foo) => {}
+// Message: Missing "foo" parameter type annotation.
+
+// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+function x(foo) {}
+// Message: Missing "foo" parameter type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -274,6 +312,9 @@ The following patterns are not considered problems:
 
 // Options: [{"excludeArrowFunctions":true}]
 (foo) => {}
+
+// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+(foo) => 3
 ```
 
 
@@ -281,6 +322,38 @@ The following patterns are not considered problems:
 <h3 id="eslint-plugin-flowtype-rules-require-return-type"><code>require-return-type</code></h3>
 
 Requires that functions have return type annotation.
+
+<h4 id="eslint-plugin-flowtype-rules-require-return-type-options">Options</h4>
+
+You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
+
+Alternatively, you can want to exclude only function expressions (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this. 
+
+```js
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "excludeArrowFunctions": true
+            }
+        ]
+    }
+}
+
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "excludeArrowFunctions": "expressionsOnly"
+            }
+        ]
+    }
+}
+```
 
 The following patterns are considered problems:
 
@@ -363,6 +436,14 @@ async () => { return; }
 // Options: ["always"]
 function* x() {}
 // Message: Missing return type annotation.
+
+// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+() => { return 3; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+async () => { return 4; }
+// Message: Missing return type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -415,6 +496,27 @@ async function doThing(): Promise<void> {}
 function* doThing(): Generator<number, void, void> { yield 2; }
 
 async (foo): Promise<number> => { return 3; }
+
+// Options: ["always",{"excludeArrowFunctions":true}]
+() => 3
+
+// Options: ["always",{"excludeArrowFunctions":true}]
+() => { return 4; }
+
+// Options: ["always",{"excludeArrowFunctions":true}]
+() => undefined
+
+// Options: ["always",{"excludeArrowFunctions":true,"annotateUndefined":"always"}]
+() => undefined
+
+// Options: ["always",{"excludeArrowFunctions":true,"annotateUndefined":"always"}]
+() => { return undefined; }
+
+// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+() => 3
+
+// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+async () => 3
 ```
 
 
