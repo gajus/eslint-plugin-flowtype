@@ -45,6 +45,14 @@ export default {
             ]
         },
         {
+            code: 'function foo (foo:string) {}',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
             code: '(foo:  string) => {}',
             errors: [
                 {
@@ -159,10 +167,28 @@ export default {
             code: '(foo: string) => {}'
         },
         {
+            code: 'function x(foo: string) {}'
+        },
+        {
+            code: 'class Foo { constructor(foo: string) {} }'
+        },
+        {
             code: '(foo: (string|number)) => {}'
         },
         {
             code: '(foo:string) => {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'function x(foo:string) {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'class Foo { constructor(foo:string) {} }',
             options: [
                 'never'
             ]
