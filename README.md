@@ -477,6 +477,9 @@ function foo (foo: string) {}
 (foo:string) => {}
 // Message: There must be a space after "foo" parameter type annotation colon.
 
+function foo (foo:string) {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
 // Options: ["always"]
 (foo:  string) => {}
 // Message: There must be 1 space after "foo" parameter type annotation colon.
@@ -525,10 +528,20 @@ The following patterns are not considered problems:
 
 (foo: string) => {}
 
+function x(foo: string) {}
+
+class Foo { constructor(foo: string) {} }
+
 (foo: (string|number)) => {}
 
 // Options: ["never"]
 (foo:string) => {}
+
+// Options: ["never"]
+function x(foo:string) {}
+
+// Options: ["never"]
+class Foo { constructor(foo:string) {} }
 
 // Options: ["always"]
 (foo: string) => {}
@@ -604,6 +617,27 @@ The following patterns are considered problems:
 // Options: ["always"]
 (foo  ?: string) => {}
 // Message: There must be 1 space before "foo" parameter type annotation colon.
+
+function x(foo : string) {}
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+function x(foo: string) {}
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+var x = function (foo : string) {}
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+var x = function (foo: string) {}
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+class Foo { constructor(foo : string ) {} }
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+class Foo { constructor(foo: string ) {} }
+// Message: There must be a space before "foo" parameter type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -623,6 +657,21 @@ The following patterns are not considered problems:
 
 // Options: ["always"]
 (foo ?: string) => {}
+
+function x(foo: string) {}
+
+// Options: ["always"]
+function x(foo : string) {}
+
+var x = function (foo: string) {}
+
+// Options: ["always"]
+var x = function (foo : string) {}
+
+class Foo { constructor(foo: string ) {} }
+
+// Options: ["always"]
+class Foo { constructor(foo : string ) {} }
 ```
 
 
