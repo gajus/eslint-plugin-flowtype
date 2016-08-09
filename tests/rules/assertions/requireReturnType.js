@@ -378,6 +378,53 @@ export default {
         },
         {
             code: 'async (foo): Promise<number> => { return 3; }'
+        },
+        {
+            code: '() => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => { return 4; }',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => undefined',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => undefined',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true,
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '() => { return undefined; }',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true,
+                    annotateUndefined: 'always'
+                }
+            ]
         }
     ]
 };

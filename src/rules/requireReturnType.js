@@ -12,6 +12,7 @@ export default (context) => {
 
     const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
     const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
+    const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
 
     const targetNodes = [];
 
@@ -39,10 +40,15 @@ export default (context) => {
             throw new Error('Mismatch.');
         }
 
+        const isArrow = functionNode.type === 'ArrowFunctionExpression';
         const isArrowFunctionExpression = functionNode.expression;
         const hasImplicitReturnType = functionNode.async || functionNode.generator;
         const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
         const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
+
+        if (skipArrows && isArrow) {
+            return;
+        }
 
         if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
             context.report(functionNode, 'Must not annotate undefined return type.');
