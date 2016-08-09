@@ -246,6 +246,34 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: '() => { return 3; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: 'async () => { return 4; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
         }
     ],
     valid: [
@@ -378,6 +406,71 @@ export default {
         },
         {
             code: 'async (foo): Promise<number> => { return 3; }'
+        },
+        {
+            code: '() => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => { return 4; }',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => undefined',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
+            code: '() => undefined',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true,
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '() => { return undefined; }',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: true,
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: '() => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: 'async () => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
         }
     ]
 };
