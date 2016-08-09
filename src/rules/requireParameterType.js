@@ -18,9 +18,15 @@ export default iterateFunctionNodes((context) => {
         _.forEach(functionNode.params, (identifierNode) => {
             const parameterName = getParameterName(identifierNode, context);
             const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
-            const shouldSkip = functionNode.type === 'ArrowFunctionExpression' && skipArrows;
 
-            if (!typeAnnotation && !shouldSkip) {
+            const isArrow = functionNode.type === 'ArrowFunctionExpression';
+            const isArrowFunctionExpression = functionNode.expression;
+
+            if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+                return;
+            }
+
+            if (!typeAnnotation) {
                 context.report(identifierNode, 'Missing "' + parameterName + '" parameter type annotation.');
             }
         });
