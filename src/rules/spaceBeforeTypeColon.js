@@ -7,13 +7,15 @@ import {
 export default iterateFunctionNodes((context) => {
     const always = context.options[0] === 'always';
 
+    const sourceCode = context.getSourceCode();
+
     return (functionNode) => {
         _.forEach(functionNode.params, (identifierNode) => {
             const parameterName = getParameterName(identifierNode, context);
             const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
             if (typeAnnotation) {
-                const spaceBefore = typeAnnotation.start - identifierNode.end - (identifierNode.optional ? 1 : 0);
+                const spaceBefore = typeAnnotation.start - sourceCode.getFirstToken(identifierNode, 0).end - (identifierNode.optional ? 1 : 0);
 
                 if (always && spaceBefore > 1) {
                     context.report(identifierNode, 'There must be 1 space before "' + parameterName + '" parameter type annotation colon.');
