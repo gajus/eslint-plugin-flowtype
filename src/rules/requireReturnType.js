@@ -45,7 +45,7 @@ export default (context) => {
 
         if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
             context.report(functionNode, 'Must not annotate undefined return type.');
-        } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
+        } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined && !(functionNode.async || functionNode.generator)) {
             context.report(functionNode, 'Must annotate undefined return type.');
         } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
             if (annotateReturn && !functionNode.returnType) {

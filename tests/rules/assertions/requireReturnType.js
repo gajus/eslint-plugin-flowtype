@@ -296,6 +296,24 @@ export default {
                     onlyFilesWithFlowAnnotation: true
                 }
             }
+        },
+        {
+            code: 'async function doThing(): Promise<void> {}',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
+        },
+        {
+            code: 'function* doThing(): Generator<number, void, void> { yield 2; }',
+            options: [
+                'always',
+                {
+                    annotateUndefined: 'always'
+                }
+            ]
         }
     ]
 };
