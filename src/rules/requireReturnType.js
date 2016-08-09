@@ -46,7 +46,7 @@ export default (context) => {
         const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
         const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
-        if (skipArrows && isArrow) {
+        if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
             return;
         }
 
