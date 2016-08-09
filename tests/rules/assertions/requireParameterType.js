@@ -9,6 +9,27 @@ export default {
             ]
         },
         {
+            code: 'function x(foo) {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ]
+        },
+        {
+            code: 'function x(foo) {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ],
+            options: [
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
+        },
+        {
             code: '(foo = \'FOO\') => {}',
             errors: [
                 {
@@ -85,6 +106,14 @@ export default {
                     onlyFilesWithFlowAnnotation: true
                 }
             }
+        },
+        {
+            code: '(foo) => {}',
+            options: [
+                {
+                    excludeArrowFunctions: true
+                }
+            ]
         }
     ]
 };
