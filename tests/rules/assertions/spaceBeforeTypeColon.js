@@ -12,6 +12,17 @@ export default {
             ]
         },
         {
+            code: '(foo ?: string) => {}',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
             code: '(foo: string) => {}',
             errors: [
                 {
@@ -32,6 +43,28 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: '(foo?: string) => {}',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo  ?: string) => {}',
+            errors: [
+                {
+                    message: 'There must be 1 space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
         }
     ],
     valid: [
@@ -42,6 +75,9 @@ export default {
             code: '(foo: string) => {}'
         },
         {
+            code: '(foo?: string) => {}'
+        },
+        {
             code: '(foo: string) => {}',
             options: [
                 'never'
@@ -49,6 +85,12 @@ export default {
         },
         {
             code: '(foo : string) => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo ?: string) => {}',
             options: [
                 'always'
             ]

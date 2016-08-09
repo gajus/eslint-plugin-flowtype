@@ -585,12 +585,24 @@ The following patterns are considered problems:
 (foo : string) => {}
 // Message: There must be no space before "foo" parameter type annotation colon.
 
+// Options: ["never"]
+(foo ?: string) => {}
+// Message: There must be no space before "foo" parameter type annotation colon.
+
 // Options: ["always"]
 (foo: string) => {}
 // Message: There must be a space before "foo" parameter type annotation colon.
 
 // Options: ["always"]
 (foo  : string) => {}
+// Message: There must be 1 space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+(foo?: string) => {}
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+(foo  ?: string) => {}
 // Message: There must be 1 space before "foo" parameter type annotation colon.
 ```
 
@@ -601,11 +613,16 @@ The following patterns are not considered problems:
 
 (foo: string) => {}
 
+(foo?: string) => {}
+
 // Options: ["never"]
 (foo: string) => {}
 
 // Options: ["always"]
 (foo : string) => {}
+
+// Options: ["always"]
+(foo ?: string) => {}
 ```
 
 
