@@ -40,12 +40,13 @@ export default (context) => {
         }
 
         const isArrowFunctionExpression = functionNode.expression;
-        const isFunctionReturnUndefined = !isArrowFunctionExpression && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
+        const hasImplicitReturnType = functionNode.async || functionNode.generator;
+        const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
         const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
         if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
             context.report(functionNode, 'Must not annotate undefined return type.');
-        } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined && !(functionNode.async || functionNode.generator)) {
+        } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
             context.report(functionNode, 'Must annotate undefined return type.');
         } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
             if (annotateReturn && !functionNode.returnType) {
