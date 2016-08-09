@@ -377,6 +377,12 @@ The following patterns are not considered problems:
 
 // Options: ["always",{"annotateUndefined":"always"}]
 (foo) => { return undefined; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+async function doThing(): Promise<void> {}
+
+// Options: ["always",{"annotateUndefined":"always"}]
+function* doThing(): Generator<number, void, void> { yield 2; }
 ```
 
 
