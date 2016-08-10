@@ -9,6 +9,10 @@ export default (identifierNode, context) => {
         return identifierNode.left.name;
     }
 
+    if (_.has(identifierNode, 'key.name')) {
+        return identifierNode.key.name;
+    }
+
     if (identifierNode.type === 'RestElement') {
         return identifierNode.argument.name;
     }

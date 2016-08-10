@@ -69,9 +69,34 @@ const objectTypePropertyEvaluator = (context) => {
     };
 };
 
+const classPropertyEvaluator = (context) => {
+    const always = context.options[0] === 'always';
+
+    const sourceCode = context.getSourceCode();
+
+    return (classProperty) => {
+        const parameterName = getParameterName(classProperty, context);
+        const typeAnnotation = _.get(classProperty, 'typeAnnotation') || _.get(classProperty, 'left.typeAnnotation');
+
+        if (typeAnnotation) {
+            const tokenBeforeType = sourceCode.getTokenBefore(typeAnnotation, classProperty.optional ? 1 : 0);
+            const spaceBefore = typeAnnotation.start - tokenBeforeType.end - (classProperty.optional ? 1 : 0);
+
+            if (always && spaceBefore > 1) {
+                context.report(classProperty, 'There must be 1 space before "' + parameterName + '" class property type annotation colon.');
+            } else if (always && spaceBefore === 0) {
+                context.report(classProperty, 'There must be a space before "' + parameterName + '" class property type annotation colon.');
+            } else if (!always && spaceBefore > 0) {
+                context.report(classProperty, 'There must be no space before "' + parameterName + '" class property type annotation colon.');
+            }
+        }
+    };
+};
+
 export default (context) => {
     return {
         ...functionEvaluators(context),
-        ObjectTypeProperty: objectTypePropertyEvaluator(context)
+        ObjectTypeProperty: objectTypePropertyEvaluator(context),
+        ClassProperty: classPropertyEvaluator(context)
     };
 };

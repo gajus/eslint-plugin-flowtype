@@ -272,6 +272,44 @@ export default {
                     message: 'There must be 1 space after "foo" type annotation colon.'
                 }
             ]
+        },
+        {
+            code: 'class X { foo:string }',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" class property type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'class X { foo: string }',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" class property type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'class X { foo:?string }',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" class property type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'class X { foo: ?string }',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" class property type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
         }
     ],
     valid: [
@@ -427,6 +465,30 @@ export default {
         },
         {
             code: 'type X = { foo?:?string }',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'class Foo { bar }'
+        },
+        {
+            code: 'class Foo { bar = 3 }'
+        },
+        {
+            code: 'class Foo { bar: string }'
+        },
+        {
+            code: 'class Foo { bar: ?string }'
+        },
+        {
+            code: 'class Foo { bar:string }',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'class Foo { bar:?string }',
             options: [
                 'never'
             ]
