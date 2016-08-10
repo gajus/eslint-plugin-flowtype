@@ -659,6 +659,21 @@ function foo (foo:string) {}
 // Options: ["always"]
 ():  (() => void) => {}
 // Message: There must be 1 space after return type colon.
+
+async function foo({ lorem, ipsum, dolor }:SomeType) {}
+// Message: There must be a space after "{ lorem, ipsum, dolor }:SomeType" parameter type annotation colon.
+
+({ lorem, ipsum, dolor } :   SomeType) => {}
+// Message: There must be 1 space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
+
+(foo:{ a: string, b: number }) => {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+({ a, b } :{ a: string, b: number }) => {}
+// Message: There must be a space after "{ a, b }" parameter type annotation colon.
+
+([ a, b ] :string[]) => {}
+// Message: There must be a space after "[ a, b ]" parameter type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -721,6 +736,23 @@ class Foo { constructor(foo:string) {} }
 
 // Options: ["always"]
 (): ( () => void ) => {}
+
+async function foo({ lorem, ipsum, dolor }: SomeType) {}
+
+({ lorem, ipsum, dolor }: SomeType) => {}
+
+(foo: { a: string, b: number }) => {}
+
+({ a, b }: ?{ a: string, b: number }) => {}
+
+function x({ a, b }: { a: string, b: number }) {}
+
+(): { a: number, b: string } => {}
+
+// Options: ["never"]
+() :{ a: number, b: string } => {}
+
+([ a, b ]: string[]) => {}
 ```
 
 
@@ -778,6 +810,21 @@ class Foo { constructor(foo : string ) {} }
 // Options: ["always"]
 class Foo { constructor(foo: string ) {} }
 // Message: There must be a space before "foo" parameter type annotation colon.
+
+async function foo({ lorem, ipsum, dolor } : SomeType) {}
+// Message: There must be no space before "{ lorem, ipsum, dolor } : SomeType" parameter type annotation colon.
+
+({ lorem, ipsum, dolor } : SomeType) => {}
+// Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
+
+(foo : { a: string, b: number }) => {}
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+({ a, b } : { a: string, b: number }) => {}
+// Message: There must be no space before "{ a, b }" parameter type annotation colon.
+
+([ a, b ] : string[]) => {}
+// Message: There must be no space before "[ a, b ]" parameter type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -812,6 +859,23 @@ class Foo { constructor(foo: string ) {} }
 
 // Options: ["always"]
 class Foo { constructor(foo : string ) {} }
+
+async function foo({ lorem, ipsum, dolor }: SomeType) {}
+
+({ lorem, ipsum, dolor }: SomeType) => {}
+
+(foo: { a: string, b: number }) => {}
+
+({ a, b }: ?{ a: string, b: number }) => {}
+
+function x({ a, b }: { a: string, b: number }) {}
+
+(): { a: number, b: string } => {}
+
+// Options: ["always"]
+() : { a: number, b: string } => {}
+
+([ a, b ]: string[]) => {}
 ```
 
 

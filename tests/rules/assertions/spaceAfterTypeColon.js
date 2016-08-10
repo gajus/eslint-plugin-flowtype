@@ -157,6 +157,48 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: 'async function foo({ lorem, ipsum, dolor }:SomeType) {}',
+            errors: [
+                {
+                    message: 'There must be a space after "{ lorem, ipsum, dolor }:SomeType" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: '({ lorem, ipsum, dolor } :   SomeType) => {}',
+            errors: [
+                {
+                    // NOTE: this message is different because of a Babylon parser bug with arrow functions
+                    // where the param ranges don't include the type annotation like other functions do
+                    message: 'There must be 1 space after "{ lorem, ipsum, dolor }" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: '(foo:{ a: string, b: number }) => {}',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: '({ a, b } :{ a: string, b: number }) => {}',
+            errors: [
+                {
+                    message: 'There must be a space after "{ a, b }" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: '([ a, b ] :string[]) => {}',
+            errors: [
+                {
+                    message: 'There must be a space after "[ a, b ]" parameter type annotation colon.'
+                }
+            ]
         }
     ],
     valid: [
@@ -267,6 +309,33 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: 'async function foo({ lorem, ipsum, dolor }: SomeType) {}'
+        },
+        {
+            code: '({ lorem, ipsum, dolor }: SomeType) => {}'
+        },
+        {
+            code: '(foo: { a: string, b: number }) => {}'
+        },
+        {
+            code: '({ a, b }: ?{ a: string, b: number }) => {}'
+        },
+        {
+            code: 'function x({ a, b }: { a: string, b: number }) {}'
+        },
+        {
+            code: '(): { a: number, b: string } => {}'
+        },
+        {
+            code: '() :{ a: number, b: string } => {}',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: '([ a, b ]: string[]) => {}'
         }
     ]
 };
