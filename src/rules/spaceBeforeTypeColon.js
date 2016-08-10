@@ -15,7 +15,8 @@ export default iterateFunctionNodes((context) => {
             const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
             if (typeAnnotation) {
-                const spaceBefore = typeAnnotation.start - sourceCode.getFirstToken(identifierNode, 0).end - (identifierNode.optional ? 1 : 0);
+                const tokenBeforeType = sourceCode.getTokenBefore(typeAnnotation, identifierNode.optional ? 1 : 0);
+                const spaceBefore = typeAnnotation.start - tokenBeforeType.end - (identifierNode.optional ? 1 : 0);
 
                 if (always && spaceBefore > 1) {
                     context.report(identifierNode, 'There must be 1 space before "' + parameterName + '" parameter type annotation colon.');
