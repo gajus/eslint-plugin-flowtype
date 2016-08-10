@@ -439,8 +439,8 @@ export default {
             options: [
                 'always',
                 {
-                    excludeArrowFunctions: true,
-                    annotateUndefined: 'always'
+                    annotateUndefined: 'always',
+                    excludeArrowFunctions: true
                 }
             ]
         },
@@ -449,8 +449,8 @@ export default {
             options: [
                 'always',
                 {
-                    excludeArrowFunctions: true,
-                    annotateUndefined: 'always'
+                    annotateUndefined: 'always',
+                    excludeArrowFunctions: true
                 }
             ]
         },
