@@ -17,6 +17,10 @@ export default (identifierNode, context) => {
         return identifierNode.argument.name;
     }
 
+    if (identifierNode.type === 'ObjectTypeProperty') {
+        return context.getSourceCode().getFirstToken(identifierNode).value;
+    }
+
     if (identifierNode.type === 'ObjectPattern' || identifierNode.type === 'ArrayPattern') {
         return context.getSourceCode().getText(identifierNode);
     }
