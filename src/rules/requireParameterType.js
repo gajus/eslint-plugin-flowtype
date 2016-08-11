@@ -5,6 +5,10 @@ import {
     iterateFunctionNodes
 } from './../utilities';
 
+const skipConciseArrows = (skipArrowsOption) => {
+    return ['expressionsOnly', 'conciseOnly'].indexOf(skipArrowsOption) !== -1;
+};
+
 export default iterateFunctionNodes((context) => {
     const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
 
@@ -20,9 +24,9 @@ export default iterateFunctionNodes((context) => {
             const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
             const isArrow = functionNode.type === 'ArrowFunctionExpression';
-            const isArrowFunctionExpression = functionNode.expression;
+            const isArrowFunctionExpression = isArrow && functionNode.expression;
 
-            if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+            if (skipConciseArrows(skipArrows) && isArrowFunctionExpression || skipArrows === true && isArrow) {
                 return;
             }
 

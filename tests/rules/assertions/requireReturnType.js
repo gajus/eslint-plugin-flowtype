@@ -249,6 +249,7 @@ export default {
         },
         {
             code: '() => { return 3; }',
+            deprecated: true,
             errors: [
                 {
                     message: 'Missing return type annotation.'
@@ -263,6 +264,7 @@ export default {
         },
         {
             code: 'async () => { return 4; }',
+            deprecated: true,
             errors: [
                 {
                     message: 'Missing return type annotation.'
@@ -272,6 +274,34 @@ export default {
                 'always',
                 {
                     excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: '() => { return 3; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'conciseOnly'
+                }
+            ]
+        },
+        {
+            code: 'async () => { return 4; }',
+            errors: [
+                {
+                    message: 'Missing return type annotation.'
+                }
+            ],
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'conciseOnly'
                 }
             ]
         }
@@ -456,6 +486,7 @@ export default {
         },
         {
             code: '() => 3',
+            deprecated: true,
             options: [
                 'always',
                 {
@@ -465,10 +496,29 @@ export default {
         },
         {
             code: 'async () => 3',
+            deprecated: true,
             options: [
                 'always',
                 {
                     excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: '() => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'conciseOnly'
+                }
+            ]
+        },
+        {
+            code: 'async () => 3',
+            options: [
+                'always',
+                {
+                    excludeArrowFunctions: 'conciseOnly'
                 }
             ]
         }

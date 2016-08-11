@@ -28,6 +28,10 @@ const formatCodeSnippet = (setup) => {
     return paragraphs.join('\n');
 };
 
+const formatCodeSnippets = (snippets) => {
+    return snippets.filter((snippet) => !snippet.deprecated).map(formatCodeSnippet);
+};
+
 const getAssertions = () => {
     const assertionFiles = glob.sync(path.resolve(__dirname, './../tests/rules/assertions/*.js'));
 
@@ -39,8 +43,8 @@ const getAssertions = () => {
         const codes = require(filePath);
 
         return {
-            valid: _.map(codes.valid, formatCodeSnippet),
-            invalid: _.map(codes.invalid, formatCodeSnippet)
+            valid: formatCodeSnippets(codes.valid),
+            invalid: formatCodeSnippets(codes.invalid)
         };
     });
 
