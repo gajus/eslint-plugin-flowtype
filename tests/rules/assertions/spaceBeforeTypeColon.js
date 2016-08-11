@@ -284,6 +284,63 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: 'type X = (foo :string) => string;',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = (foo:string) => string;',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = (foo  :string) => string;',
+            errors: [
+                {
+                    message: 'There must be 1 space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = (foo? :string) => string;',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = (foo?:string) => string;',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = (foo? :?string) => string;',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" parameter type annotation colon.'
+                }
+            ]
         }
     ],
     valid: [
@@ -403,6 +460,33 @@ export default {
         },
         {
             code: 'class Foo { bar : string }',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = (foo:string) => number;'
+        },
+        {
+            code: 'type X = (foo: string) => number;'
+        },
+        {
+            code: 'type X = (foo: ?string) => number;'
+        },
+        {
+            code: 'type X = (foo?: string) => number;'
+        },
+        {
+            code: 'type X = (foo?: ?string) => number;'
+        },
+        {
+            code: 'type X = (foo? : string) => number',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = (foo? : ?string) => number',
             options: [
                 'always'
             ]

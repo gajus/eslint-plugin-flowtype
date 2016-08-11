@@ -15,13 +15,24 @@ const propertyEvaluator = (context, typeForMessage) => {
 
     const sourceCode = context.getSourceCode();
 
+    const getSpacesAfterColon = (node, typeAnnotation) => {
+        if (node.type === 'FunctionTypeParam') {
+            const colon = sourceCode.getTokenBefore(typeAnnotation);
+
+            return typeAnnotation.start - colon.end;
+        } else {
+            const token = sourceCode.getFirstToken(typeAnnotation, 1);
+
+            return token.start - typeAnnotation.start - 1;
+        }
+    };
+
     return (node) => {
         const parameterName = getParameterName(node, context);
         const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
 
         if (typeAnnotation) {
-            const token = sourceCode.getFirstToken(typeAnnotation, 1);
-            const spaceAfter = token.start - typeAnnotation.start - 1;
+            const spaceAfter = getSpacesAfterColon(node, typeAnnotation);
 
             if (always && spaceAfter > 1) {
                 context.report(node, 'There must be 1 space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.');
@@ -40,7 +51,10 @@ const returnTypeEvaluator = (context) => {
     const sourceCode = context.getSourceCode();
 
     return (functionNode) => {
-        if (functionNode.returnType) {
+        // skip FunctionTypeAnnotation, possibly another rule as it's an arrow, not a colon?
+        // (foo: number) => string
+        //              ^^^^
+        if (functionNode.returnType && functionNode.type !== 'FunctionTypeAnnotation') {
             const token = sourceCode.getFirstToken(functionNode.returnType, 1);
             const spaceAfter = token.start - functionNode.returnType.start - 1;
 

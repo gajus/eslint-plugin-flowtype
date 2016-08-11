@@ -310,6 +310,41 @@ export default {
             options: [
                 'never'
             ]
+        },
+        {
+            code: 'type X = (foo:number) => string',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = (foo: number) => string',
+            errors: [
+                {
+                    message: 'There must be no space after "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'type X = (foo:  number) => string',
+            errors: [
+                {
+                    message: 'There must be 1 space after "foo" parameter type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = (foo:?number) => string',
+            errors: [
+                {
+                    message: 'There must be a space after "foo" parameter type annotation colon.'
+                }
+            ]
         }
     ],
     valid: [
@@ -489,6 +524,33 @@ export default {
         },
         {
             code: 'class Foo { bar:?string }',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'type X = (foo: number) => string;'
+        },
+        {
+            code: 'type X = (foo : number) => string;'
+        },
+        {
+            code: 'type X = (foo: ?number) => string;'
+        },
+        {
+            code: 'type X = (foo? : ?number) => string;'
+        },
+        {
+            code: 'type X = (foo: ?{ x: number }) => string;'
+        },
+        {
+            code: 'type X = (foo:number) => string;',
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'type X = (foo:?{ x:number }) => string;',
             options: [
                 'never'
             ]

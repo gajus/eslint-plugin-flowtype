@@ -508,10 +508,10 @@ async (foo): Promise<number> => { return 3; }
 // Options: ["always",{"excludeArrowFunctions":true}]
 () => undefined
 
-// Options: ["always",{"excludeArrowFunctions":true,"annotateUndefined":"always"}]
+// Options: ["always",{"annotateUndefined":"always","excludeArrowFunctions":true}]
 () => undefined
 
-// Options: ["always",{"excludeArrowFunctions":true,"annotateUndefined":"always"}]
+// Options: ["always",{"annotateUndefined":"always","excludeArrowFunctions":true}]
 () => { return undefined; }
 
 // Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
@@ -717,6 +717,19 @@ class X { foo:?string }
 // Options: ["never"]
 class X { foo: ?string }
 // Message: There must be no space after "foo" class property type annotation colon.
+
+type X = (foo:number) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+// Options: ["never"]
+type X = (foo: number) => string
+// Message: There must be no space after "foo" parameter type annotation colon.
+
+type X = (foo:  number) => string
+// Message: There must be 1 space after "foo" parameter type annotation colon.
+
+type X = (foo:?number) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -822,6 +835,22 @@ class Foo { bar:string }
 
 // Options: ["never"]
 class Foo { bar:?string }
+
+type X = (foo: number) => string;
+
+type X = (foo : number) => string;
+
+type X = (foo: ?number) => string;
+
+type X = (foo? : ?number) => string;
+
+type X = (foo: ?{ x: number }) => string;
+
+// Options: ["never"]
+type X = (foo:number) => string;
+
+// Options: ["never"]
+type X = (foo:?{ x:number }) => string;
 ```
 
 
@@ -938,6 +967,27 @@ class X { foo :?string }
 // Options: ["always"]
 class X { foo: ?string }
 // Message: There must be a space before "foo" class property type annotation colon.
+
+type X = (foo :string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+type X = (foo:string) => string;
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+type X = (foo  :string) => string;
+// Message: There must be 1 space before "foo" parameter type annotation colon.
+
+type X = (foo? :string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+type X = (foo?:string) => string;
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+type X = (foo? :?string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -1012,6 +1062,22 @@ class Foo { bar:?string }
 
 // Options: ["always"]
 class Foo { bar : string }
+
+type X = (foo:string) => number;
+
+type X = (foo: string) => number;
+
+type X = (foo: ?string) => number;
+
+type X = (foo?: string) => number;
+
+type X = (foo?: ?string) => number;
+
+// Options: ["always"]
+type X = (foo? : string) => number
+
+// Options: ["always"]
+type X = (foo? : ?string) => number
 ```
 
 
