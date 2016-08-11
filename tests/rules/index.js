@@ -14,7 +14,8 @@ const reportingRules = [
     'space-after-type-colon',
     'space-before-type-colon',
     'type-id-match',
-    'use-flow-type'
+    'use-flow-type',
+    'valid-syntax'
 ];
 
 const parser = require.resolve('babel-eslint');

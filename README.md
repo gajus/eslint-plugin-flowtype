@@ -20,6 +20,7 @@
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
+        * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
 
 
 <h2 id="eslint-plugin-flowtype-installation">Installation</h2>
@@ -72,7 +73,8 @@ npm install eslint-plugin-flowtype
             1,
             "^([A-Z][a-z0-9]+)+Type$"
         ],
-        "flowtype/use-flow-type": 1
+        "flowtype/use-flow-type": 1,
+        "flowtype/valid-syntax": 1
     },
     "settings": {
         "flowtype": {
@@ -973,6 +975,31 @@ type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()
 
 function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 // Additional rules: {"no-unused-vars":1}
+```
+
+
+
+<h3 id="eslint-plugin-flowtype-rules-valid-syntax"><code>valid-syntax</code></h3>
+
+Checks for simple Flow syntax errors.
+
+The following patterns are considered problems:
+
+```js
+function x(foo = "1": string) {}
+// Message: "foo" parameter type annotation must be placed on left-hand side of assignment.
+
+function x(foo = bar(): Type, baz = []: []) {}
+// Message: "foo" parameter type annotation must be placed on left-hand side of assignment.
+// Message: "baz" parameter type annotation must be placed on left-hand side of assignment.
+```
+
+The following patterns are not considered problems:
+
+```js
+function x(foo: string = "1") {}
+
+function x(foo: Type = bar()) {}
 ```
 
 
