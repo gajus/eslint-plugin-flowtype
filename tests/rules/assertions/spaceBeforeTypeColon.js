@@ -164,6 +164,126 @@ export default {
                     message: 'There must be no space before "[ a, b ]" parameter type annotation colon.'
                 }
             ]
+        },
+        {
+            code: 'type X = { foo : string }',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = { foo : string }',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        },
+        {
+            code: 'type X = { foo: string }',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = { foo  : string }',
+            errors: [
+                {
+                    message: 'There must be 1 space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = { foo? : string }',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'type X = { foo?: string }',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = { foo?  : string }',
+            errors: [
+                {
+                    message: 'There must be 1 space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = { foo   ?: string }',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'class X { foo :string }',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" class property type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'class X { foo: string }',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" class property type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'class X { foo :?string }',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" class property type annotation colon.'
+                }
+            ]
+        },
+        {
+            code: 'class X { foo: ?string }',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" class property type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ]
         }
     ],
     valid: [
@@ -240,13 +360,52 @@ export default {
             code: '(): { a: number, b: string } => {}'
         },
         {
-            code: '() : { a: number, b: string } => {}',
+            code: '() : { a : number, b : string } => {}',
             options: [
                 'always'
             ]
         },
         {
             code: '([ a, b ]: string[]) => {}'
+        },
+        {
+            code: 'type X = { foo: string }'
+        },
+        {
+            code: 'type X = { foo : string }',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'type X = { foo?: string }'
+        },
+        {
+            code: 'type X = { foo? : string }',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: 'class Foo { bar }'
+        },
+        {
+            code: 'class Foo { bar = 3 }'
+        },
+        {
+            code: 'class Foo { bar: string }'
+        },
+        {
+            code: 'class Foo { bar: ?string }'
+        },
+        {
+            code: 'class Foo { bar:?string }'
+        },
+        {
+            code: 'class Foo { bar : string }',
+            options: [
+                'always'
+            ]
         }
     ]
 };

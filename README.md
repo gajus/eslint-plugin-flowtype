@@ -676,6 +676,47 @@ async function foo({ lorem, ipsum, dolor }:SomeType) {}
 
 ([ a, b ] :string[]) => {}
 // Message: There must be a space after "[ a, b ]" parameter type annotation colon.
+
+type X = { foo:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { foo: string }
+// Message: There must be no space after "foo" type annotation colon.
+
+type X = { foo:  string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+type X = { foo?:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { foo?: string }
+// Message: There must be no space after "foo" type annotation colon.
+
+type X = { foo?:?string }
+// Message: There must be a space after "foo" type annotation colon.
+
+type X = { foo?:  ?string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+class X { foo:string }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { foo: string }
+// Message: There must be no space after "foo" class property type annotation colon.
+
+class X { foo:?string }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { foo: ?string }
+// Message: There must be no space after "foo" class property type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -752,9 +793,35 @@ function x({ a, b }: { a: string, b: number }) {}
 (): { a: number, b: string } => {}
 
 // Options: ["never"]
-() :{ a: number, b: string } => {}
+() :{ a:number, b:string } => {}
 
 ([ a, b ]: string[]) => {}
+
+type X = { foo: string }
+
+// Options: ["never"]
+type X = { foo:string }
+
+type X = { foo?: string }
+
+type X = { foo?: ?string }
+
+// Options: ["never"]
+type X = { foo?:?string }
+
+class Foo { bar }
+
+class Foo { bar = 3 }
+
+class Foo { bar: string }
+
+class Foo { bar: ?string }
+
+// Options: ["never"]
+class Foo { bar:string }
+
+// Options: ["never"]
+class Foo { bar:?string }
 ```
 
 
@@ -827,6 +894,50 @@ async function foo({ lorem, ipsum, dolor } : SomeType) {}
 
 ([ a, b ] : string[]) => {}
 // Message: There must be no space before "[ a, b ]" parameter type annotation colon.
+
+type X = { foo : string }
+// Message: There must be no space before "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { foo : string }
+// Message: There must be no space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo: string }
+// Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo  : string }
+// Message: There must be 1 space before "foo" type annotation colon.
+
+type X = { foo? : string }
+// Message: There must be no space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo?: string }
+// Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo?  : string }
+// Message: There must be 1 space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo   ?: string }
+// Message: There must be a space before "foo" type annotation colon.
+
+class X { foo :string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { foo: string }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+class X { foo :?string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { foo: ?string }
+// Message: There must be a space before "foo" class property type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -875,9 +986,32 @@ function x({ a, b }: { a: string, b: number }) {}
 (): { a: number, b: string } => {}
 
 // Options: ["always"]
-() : { a: number, b: string } => {}
+() : { a : number, b : string } => {}
 
 ([ a, b ]: string[]) => {}
+
+type X = { foo: string }
+
+// Options: ["always"]
+type X = { foo : string }
+
+type X = { foo?: string }
+
+// Options: ["always"]
+type X = { foo? : string }
+
+class Foo { bar }
+
+class Foo { bar = 3 }
+
+class Foo { bar: string }
+
+class Foo { bar: ?string }
+
+class Foo { bar:?string }
+
+// Options: ["always"]
+class Foo { bar : string }
 ```
 
 
