@@ -15,14 +15,27 @@ const propertyEvaluator = (context, typeForMessage) => {
 
     const sourceCode = context.getSourceCode();
 
+    const getSpacesBeforeColon = (node, typeAnnotation) => {
+        if (node.type === 'FunctionTypeParam') {
+            // the colon isn't included in the typeAnnotation node here...
+            const colon = sourceCode.getTokenBefore(typeAnnotation);
+            const tokenBeforeColon = sourceCode.getTokenBefore(colon);
+
+            return colon.start - tokenBeforeColon.end;
+        } else {
+            // tokenBeforeColon can be the identifier or the closing } token of a destructuring
+            const tokenBeforeColon = sourceCode.getTokenBefore(typeAnnotation, node.optional ? 1 : 0);
+
+            return typeAnnotation.start - tokenBeforeColon.end - (node.optional ? 1 : 0);
+        }
+    };
+
     return (node) => {
         const parameterName = getParameterName(node, context);
         const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
 
         if (typeAnnotation) {
-            // tokenBeforeType can be the identifier or the closing } token of a destructuring
-            const tokenBeforeType = sourceCode.getTokenBefore(typeAnnotation, node.optional ? 1 : 0);
-            const spaceBefore = typeAnnotation.start - tokenBeforeType.end - (node.optional ? 1 : 0);
+            const spaceBefore = getSpacesBeforeColon(node, typeAnnotation);
 
             if (always && spaceBefore > 1) {
                 context.report(node, 'There must be 1 space before "' + parameterName + '" ' + typeForMessage + ' type annotation colon.');
