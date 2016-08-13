@@ -1,31 +1,14 @@
 import _ from 'lodash';
 import {
     getParameterName,
-    iterateFunctionNodes
+    iterateFunctionNodes,
+    spacingFixers
 } from './../utilities';
 
 const parseOptions = (context) => {
     return {
         always: (context.options[0] || 'always') === 'always'
     };
-};
-
-const FIXERS = {
-    ensureNoSpaces: (colon, spaceAfter) => {
-        return (fixer) => {
-            return fixer.removeRange([colon.end, colon.end + spaceAfter]);
-        };
-    },
-    ensureOneSpace: (colon, spaceAfter) => {
-        return (fixer) => {
-            return fixer.removeRange([colon.end, colon.end + spaceAfter - 1]);
-        };
-    },
-    ensureSpace: (colon) => {
-        return (fixer) => {
-            return fixer.insertTextAfter(colon, ' ');
-        };
-    }
 };
 
 const propertyEvaluator = (context, typeForMessage) => {
@@ -60,19 +43,19 @@ const propertyEvaluator = (context, typeForMessage) => {
 
             if (always && spaceAfter > 1) {
                 context.report({
-                    fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                    fix: spacingFixers.stripSpacesAfter(colon, spaceAfter - 1),
                     message: 'There must be 1 space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
                     node
                 });
             } else if (always && spaceAfter === 0) {
                 context.report({
-                    fix: FIXERS.ensureSpace(colon),
+                    fix: spacingFixers.addSpaceAfter(colon),
                     message: 'There must be a space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
                     node
                 });
             } else if (!always && spaceAfter > 0) {
                 context.report({
-                    fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                    fix: spacingFixers.stripSpacesAfter(colon, spaceAfter),
                     message: 'There must be no space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
                     node
                 });
@@ -92,23 +75,23 @@ const returnTypeEvaluator = (context) => {
         //              ^^^^
         if (functionNode.returnType && functionNode.type !== 'FunctionTypeAnnotation') {
             const [colon, token] = sourceCode.getFirstTokens(functionNode.returnType, 2);
-            const spaceAfter = token.start - functionNode.returnType.start - 1;
+            const spaces = token.start - functionNode.returnType.start - 1;
 
-            if (always && spaceAfter > 1) {
+            if (always && spaces > 1) {
                 context.report({
-                    fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                    fix: spacingFixers.stripSpacesAfter(colon, spaces - 1),
                     message: 'There must be 1 space after return type colon.',
                     node: functionNode
                 });
-            } else if (always && spaceAfter === 0) {
+            } else if (always && spaces === 0) {
                 context.report({
-                    fix: FIXERS.ensureSpace(colon),
+                    fix: spacingFixers.addSpaceAfter(colon),
                     message: 'There must be a space after return type colon.',
                     node: functionNode
                 });
-            } else if (!always && spaceAfter > 0) {
+            } else if (!always && spaces > 0) {
                 context.report({
-                    fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                    fix: spacingFixers.stripSpacesAfter(colon, spaces),
                     message: 'There must be no space after return type colon.',
                     node: functionNode
                 });
@@ -137,23 +120,23 @@ const objectTypePropertyEvaluator = (context) => {
         const typeAnnotation = objectTypeProperty.value;
         const name = getParameterName(objectTypeProperty, context);
 
-        const spaceAfter = typeAnnotation.start - colon.end;
+        const spaces = typeAnnotation.start - colon.end;
 
-        if (always && spaceAfter > 1) {
+        if (always && spaces > 1) {
             context.report({
-                fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                fix: spacingFixers.stripSpacesAfter(colon, spaces - 1),
                 message: 'There must be 1 space after "' + name + '" type annotation colon.',
                 node: objectTypeProperty
             });
-        } else if (always && spaceAfter === 0) {
+        } else if (always && spaces === 0) {
             context.report({
-                fix: FIXERS.ensureSpace(colon),
+                fix: spacingFixers.addSpaceAfter(colon),
                 message: 'There must be a space after "' + name + '" type annotation colon.',
                 node: objectTypeProperty
             });
-        } else if (!always && spaceAfter > 0) {
+        } else if (!always && spaces > 0) {
             context.report({
-                fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                fix: spacingFixers.stripSpacesAfter(colon, spaces),
                 message: 'There must be no space after "' + name + '" type annotation colon.',
                 node: objectTypeProperty
             });
