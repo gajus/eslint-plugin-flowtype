@@ -10,6 +10,24 @@ const parseOptions = (context) => {
     };
 };
 
+const FIXERS = {
+    ensureNoSpaces: (colon, spaceAfter) => {
+        return (fixer) => {
+            return fixer.removeRange([colon.end, colon.end + spaceAfter]);
+        };
+    },
+    ensureOneSpace: (colon, spaceAfter) => {
+        return (fixer) => {
+            return fixer.removeRange([colon.end, colon.end + spaceAfter - 1]);
+        };
+    },
+    ensureSpace: (colon) => {
+        return (fixer) => {
+            return fixer.insertTextAfter(colon, ' ');
+        };
+    }
+};
+
 const propertyEvaluator = (context, typeForMessage) => {
     const {always} = parseOptions(context);
 
@@ -19,11 +37,17 @@ const propertyEvaluator = (context, typeForMessage) => {
         if (node.type === 'FunctionTypeParam') {
             const colon = sourceCode.getTokenBefore(typeAnnotation);
 
-            return typeAnnotation.start - colon.end;
+            return {
+                colon,
+                spaceAfter: typeAnnotation.start - colon.end
+            };
         } else {
-            const token = sourceCode.getFirstToken(typeAnnotation, 1);
+            const [colon, token] = sourceCode.getFirstTokens(typeAnnotation, 2);
 
-            return token.start - typeAnnotation.start - 1;
+            return {
+                colon,
+                spaceAfter: token.start - typeAnnotation.start - 1
+            };
         }
     };
 
@@ -32,14 +56,26 @@ const propertyEvaluator = (context, typeForMessage) => {
         const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
 
         if (typeAnnotation) {
-            const spaceAfter = getSpacesAfterColon(node, typeAnnotation);
+            const {colon, spaceAfter} = getSpacesAfterColon(node, typeAnnotation);
 
             if (always && spaceAfter > 1) {
-                context.report(node, 'There must be 1 space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.');
+                context.report({
+                    fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                    message: 'There must be 1 space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    node
+                });
             } else if (always && spaceAfter === 0) {
-                context.report(node, 'There must be a space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.');
+                context.report({
+                    fix: FIXERS.ensureSpace(colon),
+                    message: 'There must be a space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    node
+                });
             } else if (!always && spaceAfter > 0) {
-                context.report(node, 'There must be no space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.');
+                context.report({
+                    fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                    message: 'There must be no space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    node
+                });
             }
         }
     };
@@ -55,15 +91,27 @@ const returnTypeEvaluator = (context) => {
         // (foo: number) => string
         //              ^^^^
         if (functionNode.returnType && functionNode.type !== 'FunctionTypeAnnotation') {
-            const token = sourceCode.getFirstToken(functionNode.returnType, 1);
+            const [colon, token] = sourceCode.getFirstTokens(functionNode.returnType, 2);
             const spaceAfter = token.start - functionNode.returnType.start - 1;
 
             if (always && spaceAfter > 1) {
-                context.report(functionNode, 'There must be 1 space after return type colon.');
+                context.report({
+                    fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                    message: 'There must be 1 space after return type colon.',
+                    node: functionNode
+                });
             } else if (always && spaceAfter === 0) {
-                context.report(functionNode, 'There must be a space after return type colon.');
+                context.report({
+                    fix: FIXERS.ensureSpace(colon),
+                    message: 'There must be a space after return type colon.',
+                    node: functionNode
+                });
             } else if (!always && spaceAfter > 0) {
-                context.report(functionNode, 'There must be no space after return type colon.');
+                context.report({
+                    fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                    message: 'There must be no space after return type colon.',
+                    node: functionNode
+                });
             }
         }
     };
@@ -92,11 +140,23 @@ const objectTypePropertyEvaluator = (context) => {
         const spaceAfter = typeAnnotation.start - colon.end;
 
         if (always && spaceAfter > 1) {
-            context.report(objectTypeProperty, 'There must be 1 space after "' + name + '" type annotation colon.');
+            context.report({
+                fix: FIXERS.ensureOneSpace(colon, spaceAfter),
+                message: 'There must be 1 space after "' + name + '" type annotation colon.',
+                node: objectTypeProperty
+            });
         } else if (always && spaceAfter === 0) {
-            context.report(objectTypeProperty, 'There must be a space after "' + name + '" type annotation colon.');
+            context.report({
+                fix: FIXERS.ensureSpace(colon),
+                message: 'There must be a space after "' + name + '" type annotation colon.',
+                node: objectTypeProperty
+            });
         } else if (!always && spaceAfter > 0) {
-            context.report(objectTypeProperty, 'There must be no space after "' + name + '" type annotation colon.');
+            context.report({
+                fix: FIXERS.ensureNoSpaces(colon, spaceAfter),
+                message: 'There must be no space after "' + name + '" type annotation colon.',
+                node: objectTypeProperty
+            });
         }
     };
 };
