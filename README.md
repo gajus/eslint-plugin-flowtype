@@ -596,6 +596,8 @@ a;
 
 <h3 id="eslint-plugin-flowtype-rules-space-after-type-colon"><code>space-after-type-colon</code></h3>
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces consistent spacing after the type annotation colon.
 
 This rule takes one argument. If it is `'always'` then a problem is raised when there is no space after the type annotation colon. If it is `'never'` then a problem is raised when there is a space after the type annotation colon. The default value is `'always'`.
@@ -857,6 +859,8 @@ type X = (foo:?{ x:number }) => string;
 
 <h3 id="eslint-plugin-flowtype-rules-space-before-type-colon"><code>space-before-type-colon</code></h3>
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces consistent spacing before the type annotation colon.
 
 This rule takes one argument. If it is `'always'` then a problem is raised when there is no space before the type annotation colon. If it is `'never'` then a problem is raised when there is a space before the type annotation colon. The default value is `'never'`.
@@ -869,7 +873,7 @@ The following patterns are considered problems:
 // Message: There must be no space before "foo" parameter type annotation colon.
 
 // Options: ["never"]
-(foo ?: string) => {}
+(foo ? : string) => {}
 // Message: There must be no space before "foo" parameter type annotation colon.
 
 // Options: ["always"]
@@ -885,8 +889,12 @@ The following patterns are considered problems:
 // Message: There must be a space before "foo" parameter type annotation colon.
 
 // Options: ["always"]
-(foo  ?: string) => {}
+(foo ?  : string) => {}
 // Message: There must be 1 space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+(foo  ?: string) => {}
+// Message: There must be a space before "foo" parameter type annotation colon.
 
 function x(foo : string) {}
 // Message: There must be no space before "foo" parameter type annotation colon.
@@ -982,6 +990,9 @@ type X = (foo  :string) => string;
 type X = (foo? :string) => string;
 // Message: There must be no space before "foo" parameter type annotation colon.
 
+type X = (foo?     :string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
 // Options: ["always"]
 type X = (foo?:string) => string;
 // Message: There must be a space before "foo" parameter type annotation colon.
@@ -999,6 +1010,8 @@ The following patterns are not considered problems:
 
 (foo?: string) => {}
 
+(foo ?: string) => {}
+
 // Options: ["never"]
 (foo: string) => {}
 
@@ -1006,7 +1019,13 @@ The following patterns are not considered problems:
 (foo : string) => {}
 
 // Options: ["always"]
-(foo ?: string) => {}
+(foo? : string) => {}
+
+// Options: ["always"]
+(foo ? : string) => {}
+
+// Options: ["always"]
+(foo  ? : string) => {}
 
 function x(foo: string) {}
 
@@ -1047,6 +1066,8 @@ type X = { foo : string }
 
 type X = { foo?: string }
 
+type X = { foo   ?: string }
+
 // Options: ["always"]
 type X = { foo? : string }
 
@@ -1072,6 +1093,8 @@ type X = (foo: ?string) => number;
 type X = (foo?: string) => number;
 
 type X = (foo?: ?string) => number;
+
+type X = (foo   ?: string) => number;
 
 // Options: ["always"]
 type X = (foo? : string) => number
