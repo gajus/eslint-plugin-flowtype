@@ -9,10 +9,11 @@ export default {
             ],
             options: [
                 'never'
-            ]
+            ],
+            output: '(foo: string) => {}'
         },
         {
-            code: '(foo ?: string) => {}',
+            code: '(foo ? : string) => {}',
             errors: [
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
@@ -20,7 +21,8 @@ export default {
             ],
             options: [
                 'never'
-            ]
+            ],
+            output: '(foo ?: string) => {}'
         },
         {
             code: '(foo: string) => {}',
@@ -31,7 +33,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: '(foo : string) => {}'
         },
         {
             code: '(foo  : string) => {}',
@@ -42,7 +45,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: '(foo : string) => {}'
         },
         {
             code: '(foo?: string) => {}',
@@ -53,10 +57,11 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: '(foo? : string) => {}'
         },
         {
-            code: '(foo  ?: string) => {}',
+            code: '(foo ?  : string) => {}',
             errors: [
                 {
                     message: 'There must be 1 space before "foo" parameter type annotation colon.'
@@ -64,7 +69,20 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: '(foo ? : string) => {}'
+        },
+        {
+            code: '(foo  ?: string) => {}',
+            errors: [
+                {
+                    message: 'There must be a space before "foo" parameter type annotation colon.'
+                }
+            ],
+            options: [
+                'always'
+            ],
+            output: '(foo  ? : string) => {}'
         },
         {
             code: 'function x(foo : string) {}',
@@ -72,7 +90,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'function x(foo: string) {}'
         },
         {
             code: 'function x(foo: string) {}',
@@ -83,7 +102,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'function x(foo : string) {}'
         },
         {
             code: 'var x = function (foo : string) {}',
@@ -91,7 +111,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'var x = function (foo: string) {}'
         },
         {
             code: 'var x = function (foo: string) {}',
@@ -102,7 +123,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'var x = function (foo : string) {}'
         },
         {
             code: 'class Foo { constructor(foo : string ) {} }',
@@ -110,7 +132,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'class Foo { constructor(foo: string ) {} }'
         },
         {
             code: 'class Foo { constructor(foo: string ) {} }',
@@ -121,7 +144,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'class Foo { constructor(foo : string ) {} }'
         },
         {
             code: 'async function foo({ lorem, ipsum, dolor } : SomeType) {}',
@@ -129,7 +153,8 @@ export default {
                 {
                     message: 'There must be no space before "{ lorem, ipsum, dolor } : SomeType" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'async function foo({ lorem, ipsum, dolor }: SomeType) {}'
         },
         {
             code: '({ lorem, ipsum, dolor } : SomeType) => {}',
@@ -139,7 +164,8 @@ export default {
                     // where the param ranges don't include the type annotation like other functions do
                     message: 'There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: '({ lorem, ipsum, dolor }: SomeType) => {}'
         },
         {
             code: '(foo : { a: string, b: number }) => {}',
@@ -147,7 +173,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: '(foo: { a: string, b: number }) => {}'
         },
         {
             code: '({ a, b } : { a: string, b: number }) => {}',
@@ -155,7 +182,8 @@ export default {
                 {
                     message: 'There must be no space before "{ a, b }" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: '({ a, b }: { a: string, b: number }) => {}'
         },
         {
             code: '([ a, b ] : string[]) => {}',
@@ -163,7 +191,8 @@ export default {
                 {
                     message: 'There must be no space before "[ a, b ]" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: '([ a, b ]: string[]) => {}'
         },
         {
             code: 'type X = { foo : string }',
@@ -171,7 +200,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" type annotation colon.'
                 }
-            ]
+            ],
+            output: 'type X = { foo: string }'
         },
         {
             code: 'type X = { foo : string }',
@@ -182,7 +212,8 @@ export default {
             ],
             options: [
                 'never'
-            ]
+            ],
+            output: 'type X = { foo: string }'
         },
         {
             code: 'type X = { foo: string }',
@@ -193,7 +224,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = { foo : string }'
         },
         {
             code: 'type X = { foo  : string }',
@@ -204,7 +236,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = { foo : string }'
         },
         {
             code: 'type X = { foo? : string }',
@@ -212,7 +245,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" type annotation colon.'
                 }
-            ]
+            ],
+            output: 'type X = { foo?: string }'
         },
         {
             code: 'type X = { foo?: string }',
@@ -223,7 +257,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = { foo? : string }'
         },
         {
             code: 'type X = { foo?  : string }',
@@ -234,7 +269,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = { foo? : string }'
         },
         {
             code: 'type X = { foo   ?: string }',
@@ -245,7 +281,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = { foo   ? : string }'
         },
         {
             code: 'class X { foo :string }',
@@ -253,7 +290,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" class property type annotation colon.'
                 }
-            ]
+            ],
+            output: 'class X { foo:string }'
         },
         {
             code: 'class X { foo: string }',
@@ -264,7 +302,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'class X { foo : string }'
         },
         {
             code: 'class X { foo :?string }',
@@ -272,7 +311,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" class property type annotation colon.'
                 }
-            ]
+            ],
+            output: 'class X { foo:?string }'
         },
         {
             code: 'class X { foo: ?string }',
@@ -283,7 +323,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'class X { foo : ?string }'
         },
         {
             code: 'type X = (foo :string) => string;',
@@ -291,7 +332,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'type X = (foo:string) => string;'
         },
         {
             code: 'type X = (foo:string) => string;',
@@ -302,7 +344,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = (foo :string) => string;'
         },
         {
             code: 'type X = (foo  :string) => string;',
@@ -313,7 +356,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = (foo :string) => string;'
         },
         {
             code: 'type X = (foo? :string) => string;',
@@ -321,7 +365,17 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'type X = (foo?:string) => string;'
+        },
+        {
+            code: 'type X = (foo?     :string) => string;',
+            errors: [
+                {
+                    message: 'There must be no space before "foo" parameter type annotation colon.'
+                }
+            ],
+            output: 'type X = (foo?:string) => string;'
         },
         {
             code: 'type X = (foo?:string) => string;',
@@ -332,7 +386,8 @@ export default {
             ],
             options: [
                 'always'
-            ]
+            ],
+            output: 'type X = (foo? :string) => string;'
         },
         {
             code: 'type X = (foo? :?string) => string;',
@@ -340,7 +395,8 @@ export default {
                 {
                     message: 'There must be no space before "foo" parameter type annotation colon.'
                 }
-            ]
+            ],
+            output: 'type X = (foo?:?string) => string;'
         }
     ],
     valid: [
@@ -352,6 +408,9 @@ export default {
         },
         {
             code: '(foo?: string) => {}'
+        },
+        {
+            code: '(foo ?: string) => {}'
         },
         {
             code: '(foo: string) => {}',
@@ -366,10 +425,20 @@ export default {
             ]
         },
         {
-            code: '(foo ?: string) => {}',
+            code: '(foo? : string) => {}',
             options: [
                 'always'
             ]
+        },
+        {
+            code: '(foo ? : string) => {}',
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: '(foo  ? : string) => {}',
+            options: ['always']
         },
         {
             code: 'function x(foo: string) {}'
@@ -438,6 +507,9 @@ export default {
             code: 'type X = { foo?: string }'
         },
         {
+            code: 'type X = { foo   ?: string }'
+        },
+        {
             code: 'type X = { foo? : string }',
             options: [
                 'always'
@@ -478,6 +550,9 @@ export default {
         },
         {
             code: 'type X = (foo?: ?string) => number;'
+        },
+        {
+            code: 'type X = (foo   ?: string) => number;'
         },
         {
             code: 'type X = (foo? : string) => number',
