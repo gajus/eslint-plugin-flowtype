@@ -151,7 +151,7 @@ export default {
             code: 'async function foo({ lorem, ipsum, dolor } : SomeType) {}',
             errors: [
                 {
-                    message: 'There must be no space before "{ lorem, ipsum, dolor } : SomeType" parameter type annotation colon.'
+                    message: 'There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.'
                 }
             ],
             output: 'async function foo({ lorem, ipsum, dolor }: SomeType) {}'
@@ -160,8 +160,6 @@ export default {
             code: '({ lorem, ipsum, dolor } : SomeType) => {}',
             errors: [
                 {
-                    // NOTE: this message is different because of a Babylon parser bug with arrow functions
-                    // where the param ranges don't include the type annotation like other functions do
                     message: 'There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.'
                 }
             ],
