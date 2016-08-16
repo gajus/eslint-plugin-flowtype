@@ -665,7 +665,7 @@ function foo (foo:string) {}
 // Message: There must be 1 space after return type colon.
 
 async function foo({ lorem, ipsum, dolor }:SomeType) {}
-// Message: There must be a space after "{ lorem, ipsum, dolor }:SomeType" parameter type annotation colon.
+// Message: There must be a space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
 
 ({ lorem, ipsum, dolor } :   SomeType) => {}
 // Message: There must be 1 space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
@@ -956,7 +956,7 @@ class Foo { constructor(foo: string ) {} }
 // Message: There must be a space before "foo" parameter type annotation colon.
 
 async function foo({ lorem, ipsum, dolor } : SomeType) {}
-// Message: There must be no space before "{ lorem, ipsum, dolor } : SomeType" parameter type annotation colon.
+// Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
 
 ({ lorem, ipsum, dolor } : SomeType) => {}
 // Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
@@ -1102,6 +1102,8 @@ var x = function (foo: string) {}
 
 // Options: ["always"]
 var x = function (foo : string) {}
+
+class X { foo({ bar }: Props = this.props) {} }
 
 class Foo { constructor(foo: string ) {} }
 
