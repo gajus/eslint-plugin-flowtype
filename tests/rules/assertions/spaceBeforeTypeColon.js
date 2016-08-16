@@ -459,6 +459,9 @@ export default {
             ]
         },
         {
+            code: 'class X { foo({ bar }: Props = this.props) {} }'
+        },
+        {
             code: 'class Foo { constructor(foo: string ) {} }'
         },
         {
