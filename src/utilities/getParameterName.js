@@ -32,5 +32,5 @@ export default (identifierNode, context) => {
         return context.getSourceCode().getText(identifierNode.left);
     }
 
-    throw new Error('Unsupported function signature.');
+    return null;
 };

@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import {
     getParameterName,
-    iterateFunctionNodes
+    iterateFunctionNodes,
+    quoteName
 } from './../utilities';
 
 export default iterateFunctionNodes((context) => {
@@ -15,9 +16,9 @@ export default iterateFunctionNodes((context) => {
             if (isAssignmentPattern && hasTypeAnnotation && !leftAnnotated) {
                 context.report({
                     data: {
-                        name: getParameterName(identifierNode, context)
+                        name: quoteName(getParameterName(identifierNode, context))
                     },
-                    message: '"{{name}}" parameter type annotation must be placed on left-hand side of assignment.',
+                    message: '{{name}}parameter type annotation must be placed on left-hand side of assignment.',
                     node: identifierNode
                 });
             }

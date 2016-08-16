@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
     getParameterName,
     isFlowFile,
-    iterateFunctionNodes
+    iterateFunctionNodes,
+    quoteName
 } from './../utilities';
 
 export default iterateFunctionNodes((context) => {
@@ -28,9 +29,9 @@ export default iterateFunctionNodes((context) => {
             if (!typeAnnotation) {
                 context.report({
                     data: {
-                        name: getParameterName(identifierNode, context)
+                        name: quoteName(getParameterName(identifierNode, context))
                     },
-                    message: 'Missing "{{name}}" parameter type annotation.',
+                    message: 'Missing {{name}}parameter type annotation.',
                     node: identifierNode
                 });
             }

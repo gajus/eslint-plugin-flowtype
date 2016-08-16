@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
     getParameterName,
     iterateFunctionNodes,
-    spacingFixers
+    spacingFixers,
+    quoteName
 } from './../utilities';
 
 const parseOptions = (context) => {
@@ -41,7 +42,7 @@ const propertyEvaluator = (context, typeForMessage) => {
             const {colon, spaceAfter} = getSpacesAfterColon(node, typeAnnotation);
 
             const data = {
-                name: getParameterName(node, context),
+                name: quoteName(getParameterName(node, context)),
                 type: typeForMessage
             };
 
@@ -49,21 +50,21 @@ const propertyEvaluator = (context, typeForMessage) => {
                 context.report({
                     data,
                     fix: spacingFixers.stripSpacesAfter(colon, spaceAfter - 1),
-                    message: 'There must be 1 space after "{{name}}" {{type}} type annotation colon.',
+                    message: 'There must be 1 space after {{name}}{{type}} type annotation colon.',
                     node
                 });
             } else if (always && spaceAfter === 0) {
                 context.report({
                     data,
                     fix: spacingFixers.addSpaceAfter(colon),
-                    message: 'There must be a space after "{{name}}" {{type}} type annotation colon.',
+                    message: 'There must be a space after {{name}}{{type}} type annotation colon.',
                     node
                 });
             } else if (!always && spaceAfter > 0) {
                 context.report({
                     data,
                     fix: spacingFixers.stripSpacesAfter(colon, spaceAfter),
-                    message: 'There must be no space after "{{name}}" {{type}} type annotation colon.',
+                    message: 'There must be no space after {{name}}{{type}} type annotation colon.',
                     node
                 });
             }
@@ -137,28 +138,28 @@ const objectTypePropertyEvaluator = (context) => {
         const spaces = typeAnnotation.start - colon.end;
 
         const data = {
-            name: getParameterName(objectTypeProperty, context)
+            name: quoteName(getParameterName(objectTypeProperty, context))
         };
 
         if (always && spaces > 1) {
             context.report({
                 data,
                 fix: spacingFixers.stripSpacesAfter(colon, spaces - 1),
-                message: 'There must be 1 space after "{{name}}" type annotation colon.',
+                message: 'There must be 1 space after {{name}}type annotation colon.',
                 node: objectTypeProperty
             });
         } else if (always && spaces === 0) {
             context.report({
                 data,
                 fix: spacingFixers.addSpaceAfter(colon),
-                message: 'There must be a space after "{{name}}" type annotation colon.',
+                message: 'There must be a space after {{name}}type annotation colon.',
                 node: objectTypeProperty
             });
         } else if (!always && spaces > 0) {
             context.report({
                 data,
                 fix: spacingFixers.stripSpacesAfter(colon, spaces),
-                message: 'There must be no space after "{{name}}" type annotation colon.',
+                message: 'There must be no space after {{name}}type annotation colon.',
                 node: objectTypeProperty
             });
         }
