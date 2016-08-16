@@ -84,7 +84,7 @@ const objectTypePropertyEvaluator = (context) => {
     const getFirstTokens = (objectTypeProperty) => {
         const tokens = sourceCode.getFirstTokens(objectTypeProperty, 3);
 
-        if (objectTypeProperty.optional) {
+        if (objectTypeProperty.optional || objectTypeProperty.static) {
             return [tokens[1], tokens[2]];
         } else {
             return [tokens[0], tokens[1]];

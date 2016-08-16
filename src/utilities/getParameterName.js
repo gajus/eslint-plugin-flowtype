@@ -17,7 +17,11 @@ export default (identifierNode, context) => {
         return identifierNode.argument.name;
     }
 
-    if (identifierNode.type === 'ObjectTypeProperty' || identifierNode.type === 'FunctionTypeParam') {
+    if (identifierNode.type === 'ObjectTypeProperty') {
+        return context.getSourceCode().getFirstToken(identifierNode, identifierNode.static ? 1 : 0).value;
+    }
+
+    if (identifierNode.type === 'FunctionTypeParam') {
         return context.getSourceCode().getFirstToken(identifierNode).value;
     }
 

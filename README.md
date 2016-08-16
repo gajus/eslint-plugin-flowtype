@@ -732,6 +732,34 @@ type X = (foo:  number) => string
 
 type X = (foo:?number) => string
 // Message: There must be a space after "foo" parameter type annotation colon.
+
+class X { static foo:number }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { static foo: number }
+// Message: There must be no space after "foo" class property type annotation colon.
+
+class X { static foo :number }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { static foo : number }
+// Message: There must be no space after "foo" class property type annotation colon.
+
+declare class X { static foo:number }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+declare class X { static foo: number }
+// Message: There must be no space after "foo" type annotation colon.
+
+declare class X { static foo :number }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+declare class X { static foo : number }
+// Message: There must be no space after "foo" type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -853,6 +881,16 @@ type X = (foo:number) => string;
 
 // Options: ["never"]
 type X = (foo:?{ x:number }) => string;
+
+class X { static foo : number }
+
+// Options: ["never"]
+class X { static foo :number }
+
+declare class X { static foo : number }
+
+// Options: ["never"]
+declare class X { static foo :number }
 ```
 
 
@@ -999,6 +1037,34 @@ type X = (foo?:string) => string;
 
 type X = (foo? :?string) => string;
 // Message: There must be no space before "foo" parameter type annotation colon.
+
+class X { static foo : number }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+class X { static foo :number }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static foo: number }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static foo:number }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+declare class Foo { static bar :number; }
+// Message: There must be no space before "bar" type annotation colon.
+
+declare class Foo { static bar : number; }
+// Message: There must be no space before "bar" type annotation colon.
+
+// Options: ["always"]
+declare class Foo { static bar:number; }
+// Message: There must be a space before "bar" type annotation colon.
+
+// Options: ["always"]
+declare class Foo { static bar: number; }
+// Message: There must be a space before "bar" type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -1101,6 +1167,26 @@ type X = (foo? : string) => number
 
 // Options: ["always"]
 type X = (foo? : ?string) => number
+
+class X { static foo:number }
+
+class X { static foo: number }
+
+// Options: ["always"]
+class X { static foo :number }
+
+// Options: ["always"]
+class X { static foo : number }
+
+declare class Foo { static bar:number; }
+
+// Options: ["always"]
+declare class Foo { static bar :number; }
+
+declare class Foo { static bar: number; }
+
+// Options: ["always"]
+declare class Foo { static bar : number; }
 ```
 
 

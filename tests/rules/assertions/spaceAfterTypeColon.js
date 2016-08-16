@@ -381,6 +381,50 @@ export default {
                 }
             ],
             output: 'type X = (foo: ?number) => string'
+        },
+        {
+            code: 'class X { static foo:number }',
+            errors: [{message: 'There must be a space after "foo" class property type annotation colon.'}],
+            output: 'class X { static foo: number }'
+        },
+        {
+            code: 'class X { static foo: number }',
+            errors: [{message: 'There must be no space after "foo" class property type annotation colon.'}],
+            options: ['never'],
+            output: 'class X { static foo:number }'
+        },
+        {
+            code: 'class X { static foo :number }',
+            errors: [{message: 'There must be a space after "foo" class property type annotation colon.'}],
+            output: 'class X { static foo : number }'
+        },
+        {
+            code: 'class X { static foo : number }',
+            errors: [{message: 'There must be no space after "foo" class property type annotation colon.'}],
+            options: ['never'],
+            output: 'class X { static foo :number }'
+        },
+        {
+            code: 'declare class X { static foo:number }',
+            errors: [{message: 'There must be a space after "foo" type annotation colon.'}],
+            output: 'declare class X { static foo: number }'
+        },
+        {
+            code: 'declare class X { static foo: number }',
+            errors: [{message: 'There must be no space after "foo" type annotation colon.'}],
+            options: ['never'],
+            output: 'declare class X { static foo:number }'
+        },
+        {
+            code: 'declare class X { static foo :number }',
+            errors: [{message: 'There must be a space after "foo" type annotation colon.'}],
+            output: 'declare class X { static foo : number }'
+        },
+        {
+            code: 'declare class X { static foo : number }',
+            errors: [{message: 'There must be no space after "foo" type annotation colon.'}],
+            options: ['never'],
+            output: 'declare class X { static foo :number }'
         }
     ],
     valid: [
@@ -590,6 +634,20 @@ export default {
             options: [
                 'never'
             ]
+        },
+        {
+            code: 'class X { static foo : number }'
+        },
+        {
+            code: 'class X { static foo :number }',
+            options: ['never']
+        },
+        {
+            code: 'declare class X { static foo : number }'
+        },
+        {
+            code: 'declare class X { static foo :number }',
+            options: ['never']
         }
     ]
 };

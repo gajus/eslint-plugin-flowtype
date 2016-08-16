@@ -115,8 +115,16 @@ const objectTypePropertyEvaluator = (context) => {
 
     const sourceCode = context.getSourceCode();
 
+    const getColon = (objectTypeProperty) => {
+        if (objectTypeProperty.optional || objectTypeProperty.static) {
+            return sourceCode.getFirstToken(objectTypeProperty, 2);
+        } else {
+            return sourceCode.getFirstToken(objectTypeProperty, 1);
+        }
+    };
+
     return (objectTypeProperty) => {
-        const colon = sourceCode.getFirstToken(objectTypeProperty, objectTypeProperty.optional ? 2 : 1);
+        const colon = getColon(objectTypeProperty);
         const typeAnnotation = objectTypeProperty.value;
         const name = getParameterName(objectTypeProperty, context);
 
