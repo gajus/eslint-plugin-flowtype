@@ -35,28 +35,35 @@ const propertyEvaluator = (context, typeForMessage) => {
     };
 
     return (node) => {
-        const parameterName = getParameterName(node, context);
         const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
 
         if (typeAnnotation) {
             const {colon, spaceAfter} = getSpacesAfterColon(node, typeAnnotation);
 
+            const data = {
+                name: getParameterName(node, context),
+                type: typeForMessage
+            };
+
             if (always && spaceAfter > 1) {
                 context.report({
+                    data,
                     fix: spacingFixers.stripSpacesAfter(colon, spaceAfter - 1),
-                    message: 'There must be 1 space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    message: 'There must be 1 space after "{{name}}" {{type}} type annotation colon.',
                     node
                 });
             } else if (always && spaceAfter === 0) {
                 context.report({
+                    data,
                     fix: spacingFixers.addSpaceAfter(colon),
-                    message: 'There must be a space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    message: 'There must be a space after "{{name}}" {{type}} type annotation colon.',
                     node
                 });
             } else if (!always && spaceAfter > 0) {
                 context.report({
+                    data,
                     fix: spacingFixers.stripSpacesAfter(colon, spaceAfter),
-                    message: 'There must be no space after "' + parameterName + '" ' + typeForMessage + ' type annotation colon.',
+                    message: 'There must be no space after "{{name}}" {{type}} type annotation colon.',
                     node
                 });
             }
@@ -126,26 +133,32 @@ const objectTypePropertyEvaluator = (context) => {
     return (objectTypeProperty) => {
         const colon = getColon(objectTypeProperty);
         const typeAnnotation = objectTypeProperty.value;
-        const name = getParameterName(objectTypeProperty, context);
 
         const spaces = typeAnnotation.start - colon.end;
 
+        const data = {
+            name: getParameterName(objectTypeProperty, context)
+        };
+
         if (always && spaces > 1) {
             context.report({
+                data,
                 fix: spacingFixers.stripSpacesAfter(colon, spaces - 1),
-                message: 'There must be 1 space after "' + name + '" type annotation colon.',
+                message: 'There must be 1 space after "{{name}}" type annotation colon.',
                 node: objectTypeProperty
             });
         } else if (always && spaces === 0) {
             context.report({
+                data,
                 fix: spacingFixers.addSpaceAfter(colon),
-                message: 'There must be a space after "' + name + '" type annotation colon.',
+                message: 'There must be a space after "{{name}}" type annotation colon.',
                 node: objectTypeProperty
             });
         } else if (!always && spaces > 0) {
             context.report({
+                data,
                 fix: spacingFixers.stripSpacesAfter(colon, spaces),
-                message: 'There must be no space after "' + name + '" type annotation colon.',
+                message: 'There must be no space after "{{name}}" type annotation colon.',
                 node: objectTypeProperty
             });
         }
