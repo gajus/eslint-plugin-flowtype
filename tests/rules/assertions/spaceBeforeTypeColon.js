@@ -397,6 +397,50 @@ export default {
                 }
             ],
             output: 'type X = (foo?:?string) => string;'
+        },
+        {
+            code: 'class X { static foo : number }',
+            errors: [{message: 'There must be no space before "foo" class property type annotation colon.'}],
+            output: 'class X { static foo: number }'
+        },
+        {
+            code: 'class X { static foo :number }',
+            errors: [{message: 'There must be no space before "foo" class property type annotation colon.'}],
+            output: 'class X { static foo:number }'
+        },
+        {
+            code: 'class X { static foo: number }',
+            errors: [{message: 'There must be a space before "foo" class property type annotation colon.'}],
+            options: ['always'],
+            output: 'class X { static foo : number }'
+        },
+        {
+            code: 'class X { static foo:number }',
+            errors: [{message: 'There must be a space before "foo" class property type annotation colon.'}],
+            options: ['always'],
+            output: 'class X { static foo :number }'
+        },
+        {
+            code: 'declare class Foo { static bar :number; }',
+            errors: [{message: 'There must be no space before "bar" type annotation colon.'}],
+            output: 'declare class Foo { static bar:number; }'
+        },
+        {
+            code: 'declare class Foo { static bar : number; }',
+            errors: [{message: 'There must be no space before "bar" type annotation colon.'}],
+            output: 'declare class Foo { static bar: number; }'
+        },
+        {
+            code: 'declare class Foo { static bar:number; }',
+            errors: [{message: 'There must be a space before "bar" type annotation colon.'}],
+            options: ['always'],
+            output: 'declare class Foo { static bar :number; }'
+        },
+        {
+            code: 'declare class Foo { static bar: number; }',
+            errors: [{message: 'There must be a space before "bar" type annotation colon.'}],
+            options: ['always'],
+            output: 'declare class Foo { static bar : number; }'
         }
     ],
     valid: [
@@ -565,6 +609,34 @@ export default {
             options: [
                 'always'
             ]
+        },
+        {
+            code: 'class X { static foo:number }'
+        },
+        {
+            code: 'class X { static foo: number }'
+        },
+        {
+            code: 'class X { static foo :number }',
+            options: ['always']
+        },
+        {
+            code: 'class X { static foo : number }',
+            options: ['always']
+        },
+        {
+            code: 'declare class Foo { static bar:number; }'
+        },
+        {
+            code: 'declare class Foo { static bar :number; }',
+            options: ['always']
+        },
+        {
+            code: 'declare class Foo { static bar: number; }'
+        },
+        {
+            code: 'declare class Foo { static bar : number; }',
+            options: ['always']
         }
     ]
 };
