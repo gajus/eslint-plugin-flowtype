@@ -84,6 +84,7 @@ export default {
         },
         {
             code: '(foo) => {}',
+            deprecated: true,
             errors: [
                 {
                     message: 'Missing "foo" parameter type annotation.'
@@ -97,6 +98,7 @@ export default {
         },
         {
             code: 'function x(foo) {}',
+            deprecated: true,
             errors: [
                 {
                     message: 'Missing "foo" parameter type annotation.'
@@ -105,6 +107,32 @@ export default {
             options: [
                 {
                     excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: '(foo) => {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ],
+            options: [
+                {
+                    excludeArrowFunctions: 'conciseOnly'
+                }
+            ]
+        },
+        {
+            code: 'function x(foo) {}',
+            errors: [
+                {
+                    message: 'Missing "foo" parameter type annotation.'
+                }
+            ],
+            options: [
+                {
+                    excludeArrowFunctions: 'conciseOnly'
                 }
             ]
         }
@@ -143,9 +171,18 @@ export default {
         },
         {
             code: '(foo) => 3',
+            deprecated: true,
             options: [
                 {
                     excludeArrowFunctions: 'expressionsOnly'
+                }
+            ]
+        },
+        {
+            code: '(foo) => 3',
+            options: [
+                {
+                    excludeArrowFunctions: 'conciseOnly'
                 }
             ]
         }

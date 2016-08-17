@@ -3,6 +3,10 @@ import {
     isFlowFile
 } from './../utilities';
 
+const skipConciseArrows = (skipArrowsOption) => {
+    return ['expressionsOnly', 'conciseOnly'].indexOf(skipArrowsOption) !== -1;
+};
+
 export default (context) => {
     const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
 
@@ -41,12 +45,12 @@ export default (context) => {
         }
 
         const isArrow = functionNode.type === 'ArrowFunctionExpression';
-        const isArrowFunctionExpression = functionNode.expression;
+        const isArrowFunctionExpression = isArrow && functionNode.expression;
         const hasImplicitReturnType = functionNode.async || functionNode.generator;
         const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
         const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
-        if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+        if (skipConciseArrows(skipArrows) && isArrowFunctionExpression || skipArrows === true && isArrow) {
             return;
         }
 

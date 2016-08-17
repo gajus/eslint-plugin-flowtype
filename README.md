@@ -230,7 +230,7 @@ Requires that all function parameters have type annotations.
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only function expressions (e.g. `x => x * 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this. 
+Alternatively, you can want to exclude only concise arrow functions (e.g. `x => x * 2`). Provide `excludeArrowFunctions` with `conciseOnly` for this.
 
 ```js
 {
@@ -249,7 +249,7 @@ Alternatively, you can want to exclude only function expressions (e.g. `x => x *
         "flowtype/require-parameter-type": [
             2,
             {
-              "excludeArrowFunctions": "expressionsOnly"
+              "excludeArrowFunctions": "conciseOnly"
             }
         ]
     }
@@ -288,11 +288,11 @@ function x(foo) {}
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
 
-// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: [{"excludeArrowFunctions":"conciseOnly"}]
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
 
-// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: [{"excludeArrowFunctions":"conciseOnly"}]
 function x(foo) {}
 // Message: Missing "foo" parameter type annotation.
 ```
@@ -315,7 +315,7 @@ The following patterns are not considered problems:
 // Options: [{"excludeArrowFunctions":true}]
 (foo) => {}
 
-// Options: [{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: [{"excludeArrowFunctions":"conciseOnly"}]
 (foo) => 3
 ```
 
@@ -329,7 +329,7 @@ Requires that functions have return type annotation.
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only function expressions (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this. 
+Alternatively, you can want to exclude only concise arrow functions (e.g. `() => 2`). Provide `excludeArrowFunctions` with `conciseOnly` for this.
 
 ```js
 {
@@ -350,7 +350,7 @@ Alternatively, you can want to exclude only function expressions (e.g. `() => 2`
             2,
             "always",
             {
-              "excludeArrowFunctions": "expressionsOnly"
+              "excludeArrowFunctions": "conciseOnly"
             }
         ]
     }
@@ -439,11 +439,11 @@ async () => { return; }
 function* x() {}
 // Message: Missing return type annotation.
 
-// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: ["always",{"excludeArrowFunctions":"conciseOnly"}]
 () => { return 3; }
 // Message: Missing return type annotation.
 
-// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: ["always",{"excludeArrowFunctions":"conciseOnly"}]
 async () => { return 4; }
 // Message: Missing return type annotation.
 ```
@@ -514,10 +514,10 @@ async (foo): Promise<number> => { return 3; }
 // Options: ["always",{"annotateUndefined":"always","excludeArrowFunctions":true}]
 () => { return undefined; }
 
-// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: ["always",{"excludeArrowFunctions":"conciseOnly"}]
 () => 3
 
-// Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
+// Options: ["always",{"excludeArrowFunctions":"conciseOnly"}]
 async () => 3
 ```
 
