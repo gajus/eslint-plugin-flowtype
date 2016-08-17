@@ -26,7 +26,13 @@ export default (identifierNode, context) => {
     }
 
     if (identifierNode.type === 'ObjectPattern' || identifierNode.type === 'ArrayPattern') {
-        return context.getSourceCode().getText(identifierNode);
+        const text = context.getSourceCode().getText(identifierNode);
+
+        if (identifierNode.typeAnnotation) {
+            return text.replace(context.getSourceCode().getText(identifierNode.typeAnnotation), '').trim();
+        } else {
+            return text;
+        }
     }
     if (_.get(identifierNode, 'left.type') === 'ObjectPattern') {
         return context.getSourceCode().getText(identifierNode.left);
