@@ -133,7 +133,7 @@ const objectTypePropertyEvaluator = (context) => {
 
     return (objectTypeProperty) => {
         const colon = getColon(objectTypeProperty);
-        const typeAnnotation = objectTypeProperty.value;
+        const typeAnnotation = sourceCode.getTokenAfter(colon);
 
         const spaces = typeAnnotation.start - colon.end;
 

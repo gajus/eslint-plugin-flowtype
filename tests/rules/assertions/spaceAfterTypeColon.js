@@ -448,6 +448,32 @@ const OBJECT_TYPE_PROPERTIES = {
             code: 'type X = { foo?:  ?string }',
             errors: [{message: 'There must be 1 space after "foo" type annotation colon.'}],
             output: 'type X = { foo?: ?string }'
+        },
+        {
+            code: 'type Foo = { barType:(string | () => void) }',
+            errors: [{message: 'There must be a space after "barType" type annotation colon.'}],
+            output: 'type Foo = { barType: (string | () => void) }'
+        },
+        {
+            code: 'type Foo = { barType:(((string | () => void))) }',
+            errors: [{message: 'There must be a space after "barType" type annotation colon.'}],
+            output: 'type Foo = { barType: (((string | () => void))) }'
+        },
+        {
+            code: 'type Foo = { barType: (string | () => void) }',
+            errors: [{message: 'There must be no space after "barType" type annotation colon.'}],
+            options: ['never'],
+            output: 'type Foo = { barType:(string | () => void) }'
+        },
+        {
+            code: 'type Foo = { barType:  (string | () => void) }',
+            errors: [{message: 'There must be 1 space after "barType" type annotation colon.'}],
+            output: 'type Foo = { barType: (string | () => void) }'
+        },
+        {
+            code: 'type Foo = { barType:  ((string | () => void)) }',
+            errors: [{message: 'There must be 1 space after "barType" type annotation colon.'}],
+            output: 'type Foo = { barType: ((string | () => void)) }'
         }
     ],
     valid: [
@@ -466,6 +492,20 @@ const OBJECT_TYPE_PROPERTIES = {
         },
         {
             code: 'type X = { foo?:?string }',
+            options: ['never']
+        },
+        {
+            code: 'type Foo = { barType: (string | () => void) }'
+        },
+        {
+            code: 'type Foo = { barType: ((string | () => void)) }'
+        },
+        {
+            code: 'type Foo = { barType:(string | () => void) }',
+            options: ['never']
+        },
+        {
+            code: 'type Foo = { barType:((string | () => void)) }',
             options: ['never']
         }
     ]
