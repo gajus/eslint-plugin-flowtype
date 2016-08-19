@@ -19,11 +19,11 @@ const propertyEvaluator = (context, typeForMessage) => {
 
     const getSpacesAfterColon = (node, typeAnnotation) => {
         if (node.type === 'FunctionTypeParam') {
-            const colon = sourceCode.getTokenBefore(typeAnnotation);
+            const colon = sourceCode.getFirstToken(node, 1);
 
             return {
                 colon,
-                spaceAfter: typeAnnotation.start - colon.end
+                spaceAfter: sourceCode.getTokenAfter(colon).start - colon.end
             };
         } else {
             const [colon, token] = sourceCode.getFirstTokens(typeAnnotation, 2);
@@ -133,7 +133,7 @@ const objectTypePropertyEvaluator = (context) => {
 
     return (objectTypeProperty) => {
         const colon = getColon(objectTypeProperty);
-        const typeAnnotation = objectTypeProperty.value;
+        const typeAnnotation = sourceCode.getTokenAfter(colon);
 
         const spaces = typeAnnotation.start - colon.end;
 
