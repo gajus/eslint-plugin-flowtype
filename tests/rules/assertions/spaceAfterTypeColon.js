@@ -268,6 +268,32 @@ const FUNCTION_TYPE_PARAMS = {
             code: 'type X = (foo:?number) => string',
             errors: [{message: 'There must be a space after "foo" parameter type annotation colon.'}],
             output: 'type X = (foo: ?number) => string'
+        },
+        {
+            code: 'type X = (foo:(number)) => string',
+            errors: [{message: 'There must be a space after "foo" parameter type annotation colon.'}],
+            output: 'type X = (foo: (number)) => string'
+        },
+        {
+            code: 'type X = (foo:((number))) => string',
+            errors: [{message: 'There must be a space after "foo" parameter type annotation colon.'}],
+            output: 'type X = (foo: ((number))) => string'
+        },
+        {
+            code: 'type X = (foo:  ((number))) => string',
+            errors: [{message: 'There must be 1 space after "foo" parameter type annotation colon.'}],
+            output: 'type X = (foo: ((number))) => string'
+        },
+        {
+            code: 'type X = (foo: ((number))) => string',
+            errors: [{message: 'There must be no space after "foo" parameter type annotation colon.'}],
+            options: ['never'],
+            output: 'type X = (foo:((number))) => string'
+        },
+        {
+            code: 'type X = (foo:?(number)) => string',
+            errors: [{message: 'There must be a space after "foo" parameter type annotation colon.'}],
+            output: 'type X = (foo: ?(number)) => string'
         }
     ],
     valid: [
@@ -292,6 +318,23 @@ const FUNCTION_TYPE_PARAMS = {
         },
         {
             code: 'type X = (foo:?{ x:number }) => string;',
+            options: ['never']
+        },
+        {
+            code: 'type X = (foo: (number)) => string'
+        },
+        {
+            code: 'type X = (foo: ((number))) => string'
+        },
+        {
+            code: 'type X = (foo:((number))) => string',
+            options: ['never']
+        },
+        {
+            code: 'type X = ?(foo: ((number))) => string'
+        },
+        {
+            code: 'type X = ?(foo:((number))) => string',
             options: ['never']
         }
     ]
