@@ -6,7 +6,7 @@ Requires that all function parameters have type annotations.
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only function expressions (e.g. `x => x * 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this. 
+Alternatively, you can want to exclude only concise arrow functions (e.g. `x => x * 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
 
 ```js
 {
