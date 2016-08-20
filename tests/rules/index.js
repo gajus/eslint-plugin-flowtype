@@ -13,6 +13,7 @@ const reportingRules = [
     'require-valid-file-annotation',
     'space-after-type-colon',
     'space-before-type-colon',
+    'space-before-generic-bracket',
     'type-id-match',
     'use-flow-type',
     'valid-syntax'
