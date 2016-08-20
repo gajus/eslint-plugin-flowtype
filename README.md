@@ -18,6 +18,7 @@
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
+        * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
@@ -1252,6 +1253,49 @@ type X = { foo   ?: string }
 
 // Options: ["always"]
 type X = { foo? : string }
+```
+
+
+
+<h3 id="eslint-plugin-flowtype-rules-space-before-generic-bracket"><code>space-before-generic-bracket</code></h3>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent spacing before the opening `<` of generic type annotation parameters.
+
+This rule takes one argument. If it is `'never'` then a problem is raised when there is a space before the `<`. If it is `'always'` then a problem is raised when there is no space before the `<`.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = Promise <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+// Options: ["never"]
+type X = Promise <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+type X = Promise  <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+// Options: ["always"]
+type X = Promise<string>
+// Message: There must be a space before "Promise" generic type annotation bracket
+
+// Options: ["always"]
+type X = Promise  <string>
+// Message: There must be one space before "Promise" generic type annotation bracket
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Promise<string>
+
+// Options: ["always"]
+type X = Promise <string>
 ```
 
 
