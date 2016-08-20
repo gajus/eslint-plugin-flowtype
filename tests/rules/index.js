@@ -14,6 +14,7 @@ const reportingRules = [
     'space-after-type-colon',
     'space-before-type-colon',
     'space-before-generic-bracket',
+    'union-intersection-spacing',
     'type-id-match',
     'use-flow-type',
     'valid-syntax'

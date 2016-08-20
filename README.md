@@ -19,6 +19,7 @@
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
+        * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
@@ -1296,6 +1297,152 @@ type X = Promise<string>
 
 // Options: ["always"]
 type X = Promise <string>
+```
+
+
+
+<h3 id="eslint-plugin-flowtype-rules-union-intersection-spacing"><code>union-intersection-spacing</code></h3>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent spacing around union and intersection type separators (`|` and `&`).
+
+This rule takes one argument. If it is `'always'` then a problem is raised when there is no space around the separator. If it is `'never'` then a problem is raised when there is a space around the separator.
+
+The default value is `'always'`.
+
+The following patterns are considered problems:
+
+```js
+type X = string| number;
+// Message: There must be a space before union type annotation separator
+
+// Options: ["always"]
+type X = string| number;
+// Message: There must be a space before union type annotation separator
+
+type X = string |number;
+// Message: There must be a space after union type annotation separator
+
+type X = string|number;
+// Message: There must be a space before union type annotation separator
+// Message: There must be a space after union type annotation separator
+
+type X = {x: string}|{y: number};
+// Message: There must be a space before union type annotation separator
+// Message: There must be a space after union type annotation separator
+
+type X = string | number |boolean;
+// Message: There must be a space after union type annotation separator
+
+type X = string|number|boolean;
+// Message: There must be a space before union type annotation separator
+// Message: There must be a space after union type annotation separator
+// Message: There must be a space before union type annotation separator
+// Message: There must be a space after union type annotation separator
+
+type X = (string)| number;
+// Message: There must be a space before union type annotation separator
+
+type X = ((string))|(number | foo);
+// Message: There must be a space before union type annotation separator
+// Message: There must be a space after union type annotation separator
+
+// Options: ["never"]
+type X = string |number;
+// Message: There must be no space before union type annotation separator
+
+// Options: ["never"]
+type X = string| number;
+// Message: There must be no space after union type annotation separator
+
+type X = string& number;
+// Message: There must be a space before intersection type annotation separator
+
+// Options: ["always"]
+type X = string& number;
+// Message: There must be a space before intersection type annotation separator
+
+type X = string &number;
+// Message: There must be a space after intersection type annotation separator
+
+type X = {x: string}&{y: number};
+// Message: There must be a space before intersection type annotation separator
+// Message: There must be a space after intersection type annotation separator
+
+type X = string&number;
+// Message: There must be a space before intersection type annotation separator
+// Message: There must be a space after intersection type annotation separator
+
+type X = string & number &boolean;
+// Message: There must be a space after intersection type annotation separator
+
+type X = string&number&boolean;
+// Message: There must be a space before intersection type annotation separator
+// Message: There must be a space after intersection type annotation separator
+// Message: There must be a space before intersection type annotation separator
+// Message: There must be a space after intersection type annotation separator
+
+type X = (string)& number;
+// Message: There must be a space before intersection type annotation separator
+
+type X = ((string))&(number & foo);
+// Message: There must be a space before intersection type annotation separator
+// Message: There must be a space after intersection type annotation separator
+
+// Options: ["never"]
+type X = string &number;
+// Message: There must be no space before intersection type annotation separator
+
+// Options: ["never"]
+type X = string& number;
+// Message: There must be no space after intersection type annotation separator
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = string | number;
+
+type X = string | number | boolean;
+
+type X = (string) | number;
+
+type X = ((string)) | (number | foo);
+
+// Options: ["never"]
+type X = string|number
+
+type X =
+| string
+| number
+
+function x() {
+	type X =
+	| string
+	| number
+}
+
+type X = string & number;
+
+type X = string & number & boolean;
+
+type X = (string) & number;
+
+type X = ((string)) & (number & foo);
+
+// Options: ["never"]
+type X = string&number
+
+type X =
+& string
+& number
+
+function x() {
+	type X =
+	& string
+	& number
+}
 ```
 
 
