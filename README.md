@@ -558,6 +558,12 @@ The following patterns are considered problems:
 // @floweeeeeee
 // Message: Malformed flow file annotation.
 
+// @NoFlow
+// Message: Malformed flow file annotation.
+
+// @nofloweeeeeee
+// Message: Malformed flow file annotation.
+
 // Options: ["always"]
 a;
 // Message: Flow file annotation is missing.
@@ -588,6 +594,9 @@ a;
 // @flow
 // @FLow
 
+// @noflow
+a;
+
 // Options: ["always"]
 a;
 ```
@@ -609,21 +618,6 @@ The following patterns are considered problems:
 (foo: string) => {}
 // Message: There must be no space after "foo" parameter type annotation colon.
 
-// Options: ["never"]
-export default function (foo: string) {}
-// Message: There must be no space after "foo" parameter type annotation colon.
-
-// Options: ["never"]
-function foo (foo: string) {}
-// Message: There must be no space after "foo" parameter type annotation colon.
-
-// Options: ["always"]
-(foo:string) => {}
-// Message: There must be a space after "foo" parameter type annotation colon.
-
-function foo (foo:string) {}
-// Message: There must be a space after "foo" parameter type annotation colon.
-
 // Options: ["always"]
 (foo:  string) => {}
 // Message: There must be 1 space after "foo" parameter type annotation colon.
@@ -639,6 +633,18 @@ function foo (foo:string) {}
 // Options: ["always"]
 (foo:  (() => void)) => {}
 // Message: There must be 1 space after "foo" parameter type annotation colon.
+
+({ lorem, ipsum, dolor } :   SomeType) => {}
+// Message: There must be 1 space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
+
+(foo:{ a: string, b: number }) => {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+({ a, b } :{ a: string, b: number }) => {}
+// Message: There must be a space after "{ a, b }" parameter type annotation colon.
+
+([ a, b ] :string[]) => {}
+// Message: There must be a space after "[ a, b ]" parameter type annotation colon.
 
 // Options: ["always"]
 ():Object => {}
@@ -664,47 +670,52 @@ function foo (foo:string) {}
 ():  (() => void) => {}
 // Message: There must be 1 space after return type colon.
 
+// Options: ["never"]
+export default function (foo: string) {}
+// Message: There must be no space after "foo" parameter type annotation colon.
+
+// Options: ["never"]
+function foo (foo: string) {}
+// Message: There must be no space after "foo" parameter type annotation colon.
+
+// Options: ["always"]
+(foo:string) => {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+function foo (foo:string) {}
+// Message: There must be a space after "foo" parameter type annotation colon.
+
 async function foo({ lorem, ipsum, dolor }:SomeType) {}
 // Message: There must be a space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
 
-({ lorem, ipsum, dolor } :   SomeType) => {}
-// Message: There must be 1 space after "{ lorem, ipsum, dolor }" parameter type annotation colon.
-
-(foo:{ a: string, b: number }) => {}
+type X = (foo:number) => string
 // Message: There must be a space after "foo" parameter type annotation colon.
 
-({ a, b } :{ a: string, b: number }) => {}
-// Message: There must be a space after "{ a, b }" parameter type annotation colon.
+// Options: ["never"]
+type X = (foo: number) => string
+// Message: There must be no space after "foo" parameter type annotation colon.
 
-([ a, b ] :string[]) => {}
-// Message: There must be a space after "[ a, b ]" parameter type annotation colon.
+type X = (foo:  number) => string
+// Message: There must be 1 space after "foo" parameter type annotation colon.
 
-type X = { foo:string }
-// Message: There must be a space after "foo" type annotation colon.
+type X = (foo:?number) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
 
-// Options: ["always"]
-type X = { foo:string }
-// Message: There must be a space after "foo" type annotation colon.
+type X = (foo:(number)) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+type X = (foo:((number))) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
+
+type X = (foo:  ((number))) => string
+// Message: There must be 1 space after "foo" parameter type annotation colon.
 
 // Options: ["never"]
-type X = { foo: string }
-// Message: There must be no space after "foo" type annotation colon.
+type X = (foo: ((number))) => string
+// Message: There must be no space after "foo" parameter type annotation colon.
 
-type X = { foo:  string }
-// Message: There must be 1 space after "foo" type annotation colon.
-
-type X = { foo?:string }
-// Message: There must be a space after "foo" type annotation colon.
-
-// Options: ["never"]
-type X = { foo?: string }
-// Message: There must be no space after "foo" type annotation colon.
-
-type X = { foo?:?string }
-// Message: There must be a space after "foo" type annotation colon.
-
-type X = { foo?:  ?string }
-// Message: There must be 1 space after "foo" type annotation colon.
+type X = (foo:?(number)) => string
+// Message: There must be a space after "foo" parameter type annotation colon.
 
 class X { foo:string }
 // Message: There must be a space after "foo" class property type annotation colon.
@@ -719,19 +730,6 @@ class X { foo:?string }
 // Options: ["never"]
 class X { foo: ?string }
 // Message: There must be no space after "foo" class property type annotation colon.
-
-type X = (foo:number) => string
-// Message: There must be a space after "foo" parameter type annotation colon.
-
-// Options: ["never"]
-type X = (foo: number) => string
-// Message: There must be no space after "foo" parameter type annotation colon.
-
-type X = (foo:  number) => string
-// Message: There must be 1 space after "foo" parameter type annotation colon.
-
-type X = (foo:?number) => string
-// Message: There must be a space after "foo" parameter type annotation colon.
 
 class X { static foo:number }
 // Message: There must be a space after "foo" class property type annotation colon.
@@ -760,6 +758,49 @@ declare class X { static foo :number }
 // Options: ["never"]
 declare class X { static foo : number }
 // Message: There must be no space after "foo" type annotation colon.
+
+type X = { foo:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { foo:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { foo: string }
+// Message: There must be no space after "foo" type annotation colon.
+
+type X = { foo:  string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+type X = { foo?:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { foo?: string }
+// Message: There must be no space after "foo" type annotation colon.
+
+type X = { foo?:?string }
+// Message: There must be a space after "foo" type annotation colon.
+
+type X = { foo?:  ?string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+type Foo = { barType:(string | () => void) }
+// Message: There must be a space after "barType" type annotation colon.
+
+type Foo = { barType:(((string | () => void))) }
+// Message: There must be a space after "barType" type annotation colon.
+
+// Options: ["never"]
+type Foo = { barType: (string | () => void) }
+// Message: There must be no space after "barType" type annotation colon.
+
+type Foo = { barType:  (string | () => void) }
+// Message: There must be 1 space after "barType" type annotation colon.
+
+type Foo = { barType:  ((string | () => void)) }
+// Message: There must be 1 space after "barType" type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -769,20 +810,10 @@ The following patterns are not considered problems:
 
 (foo: string) => {}
 
-function x(foo: string) {}
-
-class Foo { constructor(foo: string) {} }
-
 (foo: (string|number)) => {}
 
 // Options: ["never"]
 (foo:string) => {}
-
-// Options: ["never"]
-function x(foo:string) {}
-
-// Options: ["never"]
-class Foo { constructor(foo:string) {} }
 
 // Options: ["always"]
 (foo: string) => {}
@@ -792,6 +823,14 @@ class Foo { constructor(foo:string) {} }
 
 // Options: ["always"]
 (foo: (() => void)) => {}
+
+({ lorem, ipsum, dolor }: SomeType) => {}
+
+(foo: { a: string, b: number }) => {}
+
+({ a, b }: ?{ a: string, b: number }) => {}
+
+([ a, b ]: string[]) => {}
 
 // Options: ["never"]
 ():Object => {}
@@ -823,48 +862,24 @@ class Foo { constructor(foo:string) {} }
 // Options: ["always"]
 (): ( () => void ) => {}
 
-async function foo({ lorem, ipsum, dolor }: SomeType) {}
-
-({ lorem, ipsum, dolor }: SomeType) => {}
-
-(foo: { a: string, b: number }) => {}
-
-({ a, b }: ?{ a: string, b: number }) => {}
-
-function x({ a, b }: { a: string, b: number }) {}
-
 (): { a: number, b: string } => {}
 
 // Options: ["never"]
 () :{ a:number, b:string } => {}
 
-([ a, b ]: string[]) => {}
+function x(foo: string) {}
 
-type X = { foo: string }
-
-// Options: ["never"]
-type X = { foo:string }
-
-type X = { foo?: string }
-
-type X = { foo?: ?string }
+class Foo { constructor(foo: string) {} }
 
 // Options: ["never"]
-type X = { foo?:?string }
-
-class Foo { bar }
-
-class Foo { bar = 3 }
-
-class Foo { bar: string }
-
-class Foo { bar: ?string }
+function x(foo:string) {}
 
 // Options: ["never"]
-class Foo { bar:string }
+class Foo { constructor(foo:string) {} }
 
-// Options: ["never"]
-class Foo { bar:?string }
+async function foo({ lorem, ipsum, dolor }: SomeType) {}
+
+function x({ a, b }: { a: string, b: number }) {}
 
 type X = (foo: number) => string;
 
@@ -882,6 +897,32 @@ type X = (foo:number) => string;
 // Options: ["never"]
 type X = (foo:?{ x:number }) => string;
 
+type X = (foo: (number)) => string
+
+type X = (foo: ((number))) => string
+
+// Options: ["never"]
+type X = (foo:((number))) => string
+
+type X = ?(foo: ((number))) => string
+
+// Options: ["never"]
+type X = ?(foo:((number))) => string
+
+class Foo { bar }
+
+class Foo { bar = 3 }
+
+class Foo { bar: string }
+
+class Foo { bar: ?string }
+
+// Options: ["never"]
+class Foo { bar:string }
+
+// Options: ["never"]
+class Foo { bar:?string }
+
 class X { static foo : number }
 
 // Options: ["never"]
@@ -891,6 +932,28 @@ declare class X { static foo : number }
 
 // Options: ["never"]
 declare class X { static foo :number }
+
+type X = { foo: string }
+
+// Options: ["never"]
+type X = { foo:string }
+
+type X = { foo?: string }
+
+type X = { foo?: ?string }
+
+// Options: ["never"]
+type X = { foo?:?string }
+
+type Foo = { barType: (string | () => void) }
+
+type Foo = { barType: ((string | () => void)) }
+
+// Options: ["never"]
+type Foo = { barType:(string | () => void) }
+
+// Options: ["never"]
+type Foo = { barType:((string | () => void)) }
 ```
 
 
@@ -934,6 +997,18 @@ The following patterns are considered problems:
 (foo  ?: string) => {}
 // Message: There must be a space before "foo" parameter type annotation colon.
 
+({ lorem, ipsum, dolor } : SomeType) => {}
+// Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
+
+(foo : { a: string, b: number }) => {}
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+({ a, b } : { a: string, b: number }) => {}
+// Message: There must be no space before "{ a, b }" parameter type annotation colon.
+
+([ a, b ] : string[]) => {}
+// Message: There must be no space before "[ a, b ]" parameter type annotation colon.
+
 function x(foo : string) {}
 // Message: There must be no space before "foo" parameter type annotation colon.
 
@@ -958,17 +1033,71 @@ class Foo { constructor(foo: string ) {} }
 async function foo({ lorem, ipsum, dolor } : SomeType) {}
 // Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
 
-({ lorem, ipsum, dolor } : SomeType) => {}
-// Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
-
-(foo : { a: string, b: number }) => {}
+type X = (foo :string) => string;
 // Message: There must be no space before "foo" parameter type annotation colon.
 
-({ a, b } : { a: string, b: number }) => {}
-// Message: There must be no space before "{ a, b }" parameter type annotation colon.
+// Options: ["always"]
+type X = (foo:string) => string;
+// Message: There must be a space before "foo" parameter type annotation colon.
 
-([ a, b ] : string[]) => {}
-// Message: There must be no space before "[ a, b ]" parameter type annotation colon.
+// Options: ["always"]
+type X = (foo  :string) => string;
+// Message: There must be 1 space before "foo" parameter type annotation colon.
+
+type X = (foo? :string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+type X = (foo?     :string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+// Options: ["always"]
+type X = (foo?:string) => string;
+// Message: There must be a space before "foo" parameter type annotation colon.
+
+type X = (foo? :?string) => string;
+// Message: There must be no space before "foo" parameter type annotation colon.
+
+class X { foo :string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { foo: string }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+class X { foo :?string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { foo: ?string }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+class X { static foo : number }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+class X { static foo :number }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static foo: number }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static foo:number }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+declare class Foo { static bar :number; }
+// Message: There must be no space before "bar" type annotation colon.
+
+declare class Foo { static bar : number; }
+// Message: There must be no space before "bar" type annotation colon.
+
+// Options: ["always"]
+declare class Foo { static bar:number; }
+// Message: There must be a space before "bar" type annotation colon.
+
+// Options: ["always"]
+declare class Foo { static bar: number; }
+// Message: There must be a space before "bar" type annotation colon.
 
 type X = { foo : string }
 // Message: There must be no space before "foo" type annotation colon.
@@ -999,72 +1128,6 @@ type X = { foo?  : string }
 // Options: ["always"]
 type X = { foo   ?: string }
 // Message: There must be a space before "foo" type annotation colon.
-
-class X { foo :string }
-// Message: There must be no space before "foo" class property type annotation colon.
-
-// Options: ["always"]
-class X { foo: string }
-// Message: There must be a space before "foo" class property type annotation colon.
-
-class X { foo :?string }
-// Message: There must be no space before "foo" class property type annotation colon.
-
-// Options: ["always"]
-class X { foo: ?string }
-// Message: There must be a space before "foo" class property type annotation colon.
-
-type X = (foo :string) => string;
-// Message: There must be no space before "foo" parameter type annotation colon.
-
-// Options: ["always"]
-type X = (foo:string) => string;
-// Message: There must be a space before "foo" parameter type annotation colon.
-
-// Options: ["always"]
-type X = (foo  :string) => string;
-// Message: There must be 1 space before "foo" parameter type annotation colon.
-
-type X = (foo? :string) => string;
-// Message: There must be no space before "foo" parameter type annotation colon.
-
-type X = (foo?     :string) => string;
-// Message: There must be no space before "foo" parameter type annotation colon.
-
-// Options: ["always"]
-type X = (foo?:string) => string;
-// Message: There must be a space before "foo" parameter type annotation colon.
-
-type X = (foo? :?string) => string;
-// Message: There must be no space before "foo" parameter type annotation colon.
-
-class X { static foo : number }
-// Message: There must be no space before "foo" class property type annotation colon.
-
-class X { static foo :number }
-// Message: There must be no space before "foo" class property type annotation colon.
-
-// Options: ["always"]
-class X { static foo: number }
-// Message: There must be a space before "foo" class property type annotation colon.
-
-// Options: ["always"]
-class X { static foo:number }
-// Message: There must be a space before "foo" class property type annotation colon.
-
-declare class Foo { static bar :number; }
-// Message: There must be no space before "bar" type annotation colon.
-
-declare class Foo { static bar : number; }
-// Message: There must be no space before "bar" type annotation colon.
-
-// Options: ["always"]
-declare class Foo { static bar:number; }
-// Message: There must be a space before "bar" type annotation colon.
-
-// Options: ["always"]
-declare class Foo { static bar: number; }
-// Message: There must be a space before "bar" type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -1093,6 +1156,19 @@ The following patterns are not considered problems:
 // Options: ["always"]
 (foo  ? : string) => {}
 
+({ lorem, ipsum, dolor }: SomeType) => {}
+
+(foo: { a: string, b: number }) => {}
+
+({ a, b }: ?{ a: string, b: number }) => {}
+
+(): { a: number, b: string } => {}
+
+// Options: ["always"]
+() : { a : number, b : string } => {}
+
+([ a, b ]: string[]) => {}
+
 function x(foo: string) {}
 
 // Options: ["always"]
@@ -1112,45 +1188,7 @@ class Foo { constructor(foo : string ) {} }
 
 async function foo({ lorem, ipsum, dolor }: SomeType) {}
 
-({ lorem, ipsum, dolor }: SomeType) => {}
-
-(foo: { a: string, b: number }) => {}
-
-({ a, b }: ?{ a: string, b: number }) => {}
-
 function x({ a, b }: { a: string, b: number }) {}
-
-(): { a: number, b: string } => {}
-
-// Options: ["always"]
-() : { a : number, b : string } => {}
-
-([ a, b ]: string[]) => {}
-
-type X = { foo: string }
-
-// Options: ["always"]
-type X = { foo : string }
-
-type X = { foo?: string }
-
-type X = { foo   ?: string }
-
-// Options: ["always"]
-type X = { foo? : string }
-
-class Foo { bar }
-
-class Foo { bar = 3 }
-
-class Foo { bar: string }
-
-class Foo { bar: ?string }
-
-class Foo { bar:?string }
-
-// Options: ["always"]
-class Foo { bar : string }
 
 type X = (foo:string) => number;
 
@@ -1169,6 +1207,19 @@ type X = (foo? : string) => number
 
 // Options: ["always"]
 type X = (foo? : ?string) => number
+
+class Foo { bar }
+
+class Foo { bar = 3 }
+
+class Foo { bar: string }
+
+class Foo { bar: ?string }
+
+class Foo { bar:?string }
+
+// Options: ["always"]
+class Foo { bar : string }
 
 class X { static foo:number }
 
@@ -1189,6 +1240,18 @@ declare class Foo { static bar: number; }
 
 // Options: ["always"]
 declare class Foo { static bar : number; }
+
+type X = { foo: string }
+
+// Options: ["always"]
+type X = { foo : string }
+
+type X = { foo?: string }
+
+type X = { foo   ?: string }
+
+// Options: ["always"]
+type X = { foo? : string }
 ```
 
 
