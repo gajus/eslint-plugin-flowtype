@@ -95,6 +95,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-generic-bracket.md"}
 {"gitdown": "include", "file": "./rules/union-intersection-spacing.md"}
+{"gitdown": "include", "file": "./rules/generic-spacing.md"}
 {"gitdown": "include", "file": "./rules/type-id-match.md"}
 {"gitdown": "include", "file": "./rules/use-flow-type.md"}
 {"gitdown": "include", "file": "./rules/valid-syntax.md"}
