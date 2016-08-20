@@ -33,6 +33,22 @@ export default {
             ]
         },
         {
+            code: '// @NoFlow',
+            errors: [
+                {
+                    message: 'Malformed flow file annotation.'
+                }
+            ]
+        },
+        {
+            code: '// @nofloweeeeeee',
+            errors: [
+                {
+                    message: 'Malformed flow file annotation.'
+                }
+            ]
+        },
+        {
             code: 'a;',
             errors: [
                 {
@@ -65,6 +81,9 @@ export default {
         },
         {
             code: '// @flow\n// @FLow'
+        },
+        {
+            code: '// @noflow\na;'
         },
         {
             code: 'a;',

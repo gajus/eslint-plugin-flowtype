@@ -5,7 +5,7 @@ import {
 } from './../utilities';
 
 const looksLikeFlowFileAnnotation = (comment) => {
-    return /@flow/i.test(comment);
+    return /@(?:no)?flow/i.test(comment);
 };
 
 export const schema = [
