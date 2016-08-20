@@ -8,6 +8,7 @@ const ruleTester = new RuleTester();
 
 const reportingRules = [
     'define-flow-type',
+    'generic-spacing',
     'require-parameter-type',
     'require-return-type',
     'require-valid-file-annotation',

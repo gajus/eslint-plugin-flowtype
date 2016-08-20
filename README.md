@@ -18,6 +18,7 @@
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
+        * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
@@ -1189,6 +1190,90 @@ declare class Foo { static bar: number; }
 
 // Options: ["always"]
 declare class Foo { static bar : number; }
+```
+
+
+
+<h3 id="eslint-plugin-flowtype-rules-generic-spacing"><code>generic-spacing</code></h3>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent spacing within generic type annotation parameters.
+
+This rule takes one argument. If it is `'never'` then a problem is raised when there is a space surrounding the generic type parameters. If it is `'always'` then a problem is raised when there is no space surrounding the generic type parameters.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = Promise< string>
+// Message: There must be no space at start of "Promise" generic type annotation
+
+// Options: ["never"]
+type X = Promise<  string>
+// Message: There must be no space at start of "Promise" generic type annotation
+
+type X = FooBar<string >
+// Message: There must be no space at end of "FooBar" generic type annotation
+
+type X = Promise< string >
+// Message: There must be no space at start of "Promise" generic type annotation
+// Message: There must be no space at end of "Promise" generic type annotation
+
+type X = Promise< (foo), bar, (((baz))) >
+// Message: There must be no space at start of "Promise" generic type annotation
+// Message: There must be no space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = Promise<string >
+// Message: There must be a space at start of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = FooBar< string>
+// Message: There must be a space at end of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = Promise<string>
+// Message: There must be a space at start of "Promise" generic type annotation
+// Message: There must be a space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = Promise<(foo), bar, (((baz)))>
+// Message: There must be a space at start of "Promise" generic type annotation
+// Message: There must be a space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = FooBar<  string >
+// Message: There must be one space at start of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = FooBar< string  >
+// Message: There must be one space at end of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = Promise<  (foo), bar, (((baz)))  >
+// Message: There must be one space at start of "Promise" generic type annotation
+// Message: There must be one space at end of "Promise" generic type annotation
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Promise<string>
+
+type X = Promise<(string)>
+
+type X = Promise<(foo), bar, (((baz)))>
+
+// Options: ["always"]
+type X = Promise< string >
+
+// Options: ["always"]
+type X = Promise< (string) >
+
+// Options: ["always"]
+type X = Promise< (foo), bar, (((baz))) >
 ```
 
 
