@@ -19,7 +19,7 @@ const propertyEvaluator = (context, typeForMessage) => {
 
     const getSpacesAfterColon = (node, typeAnnotation) => {
         if (node.type === 'FunctionTypeParam') {
-            const colon = sourceCode.getFirstToken(node, 1);
+            const colon = sourceCode.getFirstToken(node, node.optional ? 2 : 1);
 
             return {
                 colon,
