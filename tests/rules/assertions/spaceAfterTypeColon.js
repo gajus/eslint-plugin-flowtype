@@ -294,6 +294,17 @@ const FUNCTION_TYPE_PARAMS = {
             code: 'type X = (foo:?(number)) => string',
             errors: [{message: 'There must be a space after "foo" parameter type annotation colon.'}],
             output: 'type X = (foo: ?(number)) => string'
+        },
+        {
+            code: 'type TArrayPredicate = (el: T, i?:number) => boolean',
+            errors: [{message: 'There must be a space after "i" parameter type annotation colon.'}],
+            output: 'type TArrayPredicate = (el: T, i?: number) => boolean'
+        },
+        {
+            code: 'type TArrayPredicate = (el:T, i?: number) => boolean',
+            errors: [{message: 'There must be no space after "i" parameter type annotation colon.'}],
+            options: ['never'],
+            output: 'type TArrayPredicate = (el:T, i?:number) => boolean'
         }
     ],
     valid: [
@@ -335,6 +346,13 @@ const FUNCTION_TYPE_PARAMS = {
         },
         {
             code: 'type X = ?(foo:((number))) => string',
+            options: ['never']
+        },
+        {
+            code: 'type TArrayPredicate = (el: T, i?: number) => boolean'
+        },
+        {
+            code: 'type TArrayPredicate = (el:T, i?:number) => boolean',
             options: ['never']
         }
     ]
