@@ -51,6 +51,22 @@ const ARROW_FUNCTION_PARAMS = {
             code: '([ a, b ] :string[]) => {}',
             errors: [{message: 'There must be a space after "[ a, b ]" parameter type annotation colon.'}],
             output: '([ a, b ] : string[]) => {}'
+        },
+        {
+            code: '(i?:number) => {}',
+            errors: [{message: 'There must be a space after "i" parameter type annotation colon.'}],
+            output: '(i?: number) => {}'
+        },
+        {
+            code: '(i?:  number) => {}',
+            errors: [{message: 'There must be 1 space after "i" parameter type annotation colon.'}],
+            output: '(i?: number) => {}'
+        },
+        {
+            code: '(i?: number) => {}',
+            errors: [{message: 'There must be no space after "i" parameter type annotation colon.'}],
+            options: ['never'],
+            output: '(i?:number) => {}'
         }
     ],
     valid: [
@@ -90,6 +106,13 @@ const ARROW_FUNCTION_PARAMS = {
         },
         {
             code: '([ a, b ]: string[]) => {}'
+        },
+        {
+            code: '(i?: number) => {}'
+        },
+        {
+            code: '(i?:number) => {}',
+            options: ['never']
         }
     ]
 };
@@ -213,6 +236,22 @@ const FUNCTION_PARAMS = {
             code: 'async function foo({ lorem, ipsum, dolor }:SomeType) {}',
             errors: [{message: 'There must be a space after "{ lorem, ipsum, dolor }" parameter type annotation colon.'}],
             output: 'async function foo({ lorem, ipsum, dolor }: SomeType) {}'
+        },
+        {
+            code: 'function x(i?:number) {}',
+            errors: [{message: 'There must be a space after "i" parameter type annotation colon.'}],
+            output: 'function x(i?: number) {}'
+        },
+        {
+            code: 'function x(i?:  number) {}',
+            errors: [{message: 'There must be 1 space after "i" parameter type annotation colon.'}],
+            output: 'function x(i?: number) {}'
+        },
+        {
+            code: 'function x(i?: number) {}',
+            errors: [{message: 'There must be no space after "i" parameter type annotation colon.'}],
+            options: ['never'],
+            output: 'function x(i?:number) {}'
         }
     ],
     valid: [
@@ -235,6 +274,13 @@ const FUNCTION_PARAMS = {
         },
         {
             code: 'function x({ a, b }: { a: string, b: number }) {}'
+        },
+        {
+            code: 'function x(i?: number) {}'
+        },
+        {
+            code: 'function x(i?:number) {}',
+            options: ['never']
         }
     ]
 };
@@ -298,6 +344,11 @@ const FUNCTION_TYPE_PARAMS = {
         {
             code: 'type TArrayPredicate = (el: T, i?:number) => boolean',
             errors: [{message: 'There must be a space after "i" parameter type annotation colon.'}],
+            output: 'type TArrayPredicate = (el: T, i?: number) => boolean'
+        },
+        {
+            code: 'type TArrayPredicate = (el: T, i?:  number) => boolean',
+            errors: [{message: 'There must be 1 space after "i" parameter type annotation colon.'}],
             output: 'type TArrayPredicate = (el: T, i?: number) => boolean'
         },
         {
