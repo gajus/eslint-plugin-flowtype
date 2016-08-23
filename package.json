@@ -44,6 +44,6 @@
     "eslint": "^3.3.1",
     "eslint-config-canonical": "1.7.12",
     "gitdown": "^2.4.8",
-    "mocha": "^2.5.3"
+    "mocha": "^3.0.2"
   }
 }
