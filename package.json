@@ -44,6 +44,8 @@
     "eslint": "^3.3.1",
     "eslint-config-canonical": "1.7.16",
     "gitdown": "^2.4.10",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "standard-version": "^2.4.0",
+    "travis-after-all": "^1.4.4"
   }
 }
