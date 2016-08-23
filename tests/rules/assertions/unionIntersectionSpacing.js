@@ -88,9 +88,9 @@ const UNION = {
     {
       code: [
         'function x() {',
-        '	type X =',
-        '	| string',
-        '	| number',
+        'type X =',
+        '| string',
+        '| number',
         '}'
       ].join('\n')
     }
@@ -187,9 +187,9 @@ const INTERSECTION = {
     {
       code: [
         'function x() {',
-        '	type X =',
-        '	& string',
-        '	& number',
+        'type X =',
+        '& string',
+        '& number',
         '}'
       ].join('\n')
     }
