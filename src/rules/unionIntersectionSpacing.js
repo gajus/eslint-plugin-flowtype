@@ -1,79 +1,79 @@
 import {spacingFixers} from '../utilities';
 
 export default (context) => {
-    const sourceCode = context.getSourceCode();
+  const sourceCode = context.getSourceCode();
 
-    const always = (context.options[0] || 'always') === 'always';
+  const always = (context.options[0] || 'always') === 'always';
 
-    const getTokenAfterParens = (node) => {
-        let sep;
+  const getTokenAfterParens = (node) => {
+    let sep;
 
-        sep = sourceCode.getTokenAfter(node);
+    sep = sourceCode.getTokenAfter(node);
 
-        while (sep.type === 'Punctuator' && sep.value === ')') {
-            sep = sourceCode.getTokenAfter(sep);
+    while (sep.type === 'Punctuator' && sep.value === ')') {
+      sep = sourceCode.getTokenAfter(sep);
+    }
+
+    return sep;
+  };
+
+  const check = (node) => {
+    node.types.forEach((type, index) => {
+      if (index + 1 === node.types.length) {
+        return;
+      }
+
+      const separator = getTokenAfterParens(type);
+      const endOfType = sourceCode.getTokenBefore(separator);
+      const nextType = sourceCode.getTokenAfter(separator);
+
+      const spaceBefore = separator.start - endOfType.end;
+      const spaceAfter = nextType.start - separator.end;
+
+      const data = {type: node.type === 'UnionTypeAnnotation' ? 'union' : 'intersection'};
+
+      if (always) {
+        if (!spaceBefore) {
+          context.report({
+            data,
+            fix: spacingFixers.addSpaceAfter(endOfType),
+            message: 'There must be a space before {{type}} type annotation separator',
+            node
+          });
         }
 
-        return sep;
-    };
+        if (!spaceAfter) {
+          context.report({
+            data,
+            fix: spacingFixers.addSpaceAfter(separator),
+            message: 'There must be a space after {{type}} type annotation separator',
+            node
+          });
+        }
+      } else {
+        if (spaceBefore) {
+          context.report({
+            data,
+            fix: spacingFixers.stripSpacesAfter(endOfType, spaceBefore),
+            message: 'There must be no space before {{type}} type annotation separator',
+            node
+          });
+        }
 
-    const check = (node) => {
-        node.types.forEach((type, index) => {
-            if (index + 1 === node.types.length) {
-                return;
-            }
+        if (spaceAfter) {
+          context.report({
+            data,
+            fix: spacingFixers.stripSpacesAfter(separator, spaceAfter),
+            message: 'There must be no space after {{type}} type annotation separator',
+            node
+          });
+        }
+      }
+    });
+  };
 
-            const separator = getTokenAfterParens(type);
-            const endOfType = sourceCode.getTokenBefore(separator);
-            const nextType = sourceCode.getTokenAfter(separator);
-
-            const spaceBefore = separator.start - endOfType.end;
-            const spaceAfter = nextType.start - separator.end;
-
-            const data = {type: node.type === 'UnionTypeAnnotation' ? 'union' : 'intersection'};
-
-            if (always) {
-                if (!spaceBefore) {
-                    context.report({
-                        data,
-                        fix: spacingFixers.addSpaceAfter(endOfType),
-                        message: 'There must be a space before {{type}} type annotation separator',
-                        node
-                    });
-                }
-
-                if (!spaceAfter) {
-                    context.report({
-                        data,
-                        fix: spacingFixers.addSpaceAfter(separator),
-                        message: 'There must be a space after {{type}} type annotation separator',
-                        node
-                    });
-                }
-            } else {
-                if (spaceBefore) {
-                    context.report({
-                        data,
-                        fix: spacingFixers.stripSpacesAfter(endOfType, spaceBefore),
-                        message: 'There must be no space before {{type}} type annotation separator',
-                        node
-                    });
-                }
-
-                if (spaceAfter) {
-                    context.report({
-                        data,
-                        fix: spacingFixers.stripSpacesAfter(separator, spaceAfter),
-                        message: 'There must be no space after {{type}} type annotation separator',
-                        node
-                    });
-                }
-            }
-        });
-    };
-
-    return {
-        IntersectionTypeAnnotation: check,
-        UnionTypeAnnotation: check
-    };
+  return {
+    IntersectionTypeAnnotation: check,
+    UnionTypeAnnotation: check
+  };
 };

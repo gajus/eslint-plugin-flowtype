@@ -7,136 +7,136 @@ import {
 } from './../utilities';
 
 const parseOptions = (context) => {
-    return {
-        always: context.options[0] === 'always'
-    };
+  return {
+    always: context.options[0] === 'always'
+  };
 };
 
 const propertyEvaluator = (context, typeForMessage) => {
-    const {always} = parseOptions(context);
+  const {always} = parseOptions(context);
 
-    const sourceCode = context.getSourceCode();
+  const sourceCode = context.getSourceCode();
 
-    const getSpacesBeforeColon = (node, typeAnnotation) => {
-        if (node.type === 'FunctionTypeParam') {
+  const getSpacesBeforeColon = (node, typeAnnotation) => {
+    if (node.type === 'FunctionTypeParam') {
             // the colon isn't included in the typeAnnotation node here...
-            const colon = sourceCode.getTokenBefore(typeAnnotation);
-            const tokenBeforeColon = sourceCode.getTokenBefore(colon);
+      const colon = sourceCode.getTokenBefore(typeAnnotation);
+      const tokenBeforeColon = sourceCode.getTokenBefore(colon);
 
-            return {
-                spaces: colon.start - tokenBeforeColon.end,
-                tokenBeforeType: tokenBeforeColon
-            };
-        } else {
+      return {
+        spaces: colon.start - tokenBeforeColon.end,
+        tokenBeforeType: tokenBeforeColon
+      };
+    } else {
             // tokenBeforeColon can be the identifier or the closing } token of a destructuring
-            const tokenBeforeColon = sourceCode.getTokenBefore(typeAnnotation);
+      const tokenBeforeColon = sourceCode.getTokenBefore(typeAnnotation);
 
-            return {
-                spaces: typeAnnotation.start - tokenBeforeColon.end,
-                tokenBeforeType: tokenBeforeColon
-            };
-        }
-    };
+      return {
+        spaces: typeAnnotation.start - tokenBeforeColon.end,
+        tokenBeforeType: tokenBeforeColon
+      };
+    }
+  };
 
-    return (node) => {
-        const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
+  return (node) => {
+    const typeAnnotation = _.get(node, 'typeAnnotation') || _.get(node, 'left.typeAnnotation');
 
-        if (typeAnnotation) {
+    if (typeAnnotation) {
             // tokenBeforeType can be the identifier or the closing } token of a destructuring
-            const {spaces, tokenBeforeType} = getSpacesBeforeColon(node, typeAnnotation);
+      const {spaces, tokenBeforeType} = getSpacesBeforeColon(node, typeAnnotation);
 
-            const data = {
-                name: quoteName(getParameterName(node, context)),
-                type: typeForMessage
-            };
+      const data = {
+        name: quoteName(getParameterName(node, context)),
+        type: typeForMessage
+      };
 
-            if (always && spaces > 1) {
-                context.report({
-                    data,
-                    fix: spacingFixers.stripSpacesAfter(tokenBeforeType, spaces - 1),
-                    message: 'There must be 1 space before {{name}}{{type}} type annotation colon.',
-                    node
-                });
-            } else if (always && spaces === 0) {
-                context.report({
-                    data,
-                    fix: spacingFixers.addSpaceAfter(tokenBeforeType),
-                    message: 'There must be a space before {{name}}{{type}} type annotation colon.',
-                    node
-                });
-            } else if (!always && spaces > 0) {
-                context.report({
-                    data,
-                    fix: spacingFixers.stripSpacesAfter(tokenBeforeType, spaces),
-                    message: 'There must be no space before {{name}}{{type}} type annotation colon.',
-                    node
-                });
-            }
-        }
-    };
+      if (always && spaces > 1) {
+        context.report({
+          data,
+          fix: spacingFixers.stripSpacesAfter(tokenBeforeType, spaces - 1),
+          message: 'There must be 1 space before {{name}}{{type}} type annotation colon.',
+          node
+        });
+      } else if (always && spaces === 0) {
+        context.report({
+          data,
+          fix: spacingFixers.addSpaceAfter(tokenBeforeType),
+          message: 'There must be a space before {{name}}{{type}} type annotation colon.',
+          node
+        });
+      } else if (!always && spaces > 0) {
+        context.report({
+          data,
+          fix: spacingFixers.stripSpacesAfter(tokenBeforeType, spaces),
+          message: 'There must be no space before {{name}}{{type}} type annotation colon.',
+          node
+        });
+      }
+    }
+  };
 };
 
 const functionEvaluators = iterateFunctionNodes((context) => {
-    const checkParam = propertyEvaluator(context, 'parameter');
+  const checkParam = propertyEvaluator(context, 'parameter');
 
-    return (functionNode) => {
-        _.forEach(functionNode.params, checkParam);
-    };
+  return (functionNode) => {
+    _.forEach(functionNode.params, checkParam);
+  };
 });
 
 const objectTypePropertyEvaluator = (context) => {
-    const {always} = parseOptions(context);
+  const {always} = parseOptions(context);
 
-    const sourceCode = context.getSourceCode();
+  const sourceCode = context.getSourceCode();
 
-    const getFirstTokens = (objectTypeProperty) => {
-        const tokens = sourceCode.getFirstTokens(objectTypeProperty, 3);
+  const getFirstTokens = (objectTypeProperty) => {
+    const tokens = sourceCode.getFirstTokens(objectTypeProperty, 3);
 
-        if (objectTypeProperty.optional || objectTypeProperty.static) {
-            return [tokens[1], tokens[2]];
-        } else {
-            return [tokens[0], tokens[1]];
-        }
-    };
+    if (objectTypeProperty.optional || objectTypeProperty.static) {
+      return [tokens[1], tokens[2]];
+    } else {
+      return [tokens[0], tokens[1]];
+    }
+  };
 
-    return (objectTypeProperty) => {
+  return (objectTypeProperty) => {
         // tokenBeforeColon can be identifier, or a ? token if is optional
-        const [tokenBeforeColon, colon] = getFirstTokens(objectTypeProperty);
-        const spaces = colon.start - tokenBeforeColon.end;
+    const [tokenBeforeColon, colon] = getFirstTokens(objectTypeProperty);
+    const spaces = colon.start - tokenBeforeColon.end;
 
-        const data = {
-            name: quoteName(getParameterName(objectTypeProperty, context))
-        };
-
-        if (always && spaces > 1) {
-            context.report({
-                data,
-                fix: spacingFixers.stripSpacesAfter(tokenBeforeColon, spaces - 1),
-                message: 'There must be 1 space before {{name}}type annotation colon.',
-                node: objectTypeProperty
-            });
-        } else if (always && spaces === 0) {
-            context.report({
-                data,
-                fix: spacingFixers.addSpaceAfter(tokenBeforeColon),
-                message: 'There must be a space before {{name}}type annotation colon.',
-                node: objectTypeProperty
-            });
-        } else if (!always && spaces > 0) {
-            context.report({
-                data,
-                fix: spacingFixers.stripSpacesAfter(tokenBeforeColon, spaces),
-                message: 'There must be no space before {{name}}type annotation colon.',
-                node: objectTypeProperty
-            });
-        }
+    const data = {
+      name: quoteName(getParameterName(objectTypeProperty, context))
     };
+
+    if (always && spaces > 1) {
+      context.report({
+        data,
+        fix: spacingFixers.stripSpacesAfter(tokenBeforeColon, spaces - 1),
+        message: 'There must be 1 space before {{name}}type annotation colon.',
+        node: objectTypeProperty
+      });
+    } else if (always && spaces === 0) {
+      context.report({
+        data,
+        fix: spacingFixers.addSpaceAfter(tokenBeforeColon),
+        message: 'There must be a space before {{name}}type annotation colon.',
+        node: objectTypeProperty
+      });
+    } else if (!always && spaces > 0) {
+      context.report({
+        data,
+        fix: spacingFixers.stripSpacesAfter(tokenBeforeColon, spaces),
+        message: 'There must be no space before {{name}}type annotation colon.',
+        node: objectTypeProperty
+      });
+    }
+  };
 };
 
 export default (context) => {
-    return {
-        ...functionEvaluators(context),
-        ClassProperty: propertyEvaluator(context, 'class property'),
-        ObjectTypeProperty: objectTypePropertyEvaluator(context)
-    };
+  return {
+    ...functionEvaluators(context),
+    ClassProperty: propertyEvaluator(context, 'class property'),
+    ObjectTypeProperty: objectTypePropertyEvaluator(context)
+  };
 };
