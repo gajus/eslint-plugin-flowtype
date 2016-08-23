@@ -32,40 +32,40 @@ npm install eslint-plugin-flowtype
 
 ```json
 {
-    "parser": "babel-eslint",
-    "plugins": [
-        "flowtype"
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "flowtype/define-flow-type": 1,
+    "flowtype/require-parameter-type": 1,
+    "flowtype/require-return-type": [
+      1,
+      "always",
+      {
+        "annotateUndefined": "never"
+      }
     ],
-    "rules": {
-        "flowtype/define-flow-type": 1,
-        "flowtype/require-parameter-type": 1,
-        "flowtype/require-return-type": [
-            1,
-            "always",
-            {
-                "annotateUndefined": "never"
-            }
-        ],
-        "flowtype/space-after-type-colon": [
-            1,
-            "always"
-        ],
-        "flowtype/space-before-type-colon": [
-            1,
-            "never"
-        ],
-        "flowtype/type-id-match": [
-            1,
-            "^([A-Z][a-z0-9]+)+Type$"
-        ],
-        "flowtype/use-flow-type": 1,
-        "flowtype/valid-syntax": 1
-    },
-    "settings": {
-        "flowtype": {
-            "onlyFilesWithFlowAnnotation": false
-        }
+    "flowtype/space-after-type-colon": [
+      1,
+      "always"
+    ],
+    "flowtype/space-before-type-colon": [
+      1,
+      "never"
+    ],
+    "flowtype/type-id-match": [
+      1,
+      "^([A-Z][a-z0-9]+)+Type$"
+    ],
+    "flowtype/use-flow-type": 1,
+    "flowtype/valid-syntax": 1
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
     }
+  }
 }
 ```
 
@@ -77,11 +77,11 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 ```js
 {
-    "settings": {
-        "flowtype": {
-            "onlyFilesWithFlowAnnotation": true
-        }
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
     }
+  }
 }
 ```
 
