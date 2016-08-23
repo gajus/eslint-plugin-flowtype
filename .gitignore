@@ -10,3 +10,4 @@ dist
 !.babelrc
 !.travis.yml
 !.README
+!.scripts
