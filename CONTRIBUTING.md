@@ -11,7 +11,7 @@ A CI service will build and publish the new documentation.
 ## To add documentation for a rule:
 
 1. Create new file in `./README/rules/[rule-name].md`.
-  * Use [.README/rules/require-valid-file-annotation.md] as a template.
+  * Use [./.README/rules/require-valid-file-annotation.md](./.README/rules/require-valid-file-annotation.md) as a template.
   * Ensure that rule documentation document includes `<!-- assertions spaceAfterTypeColon -->` declaration.
 1. Update [./.README/README.md](/.README/README.md) to include the new rule.
 
