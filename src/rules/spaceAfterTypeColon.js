@@ -118,6 +118,14 @@ const functionEvaluators = iterateFunctionNodes((context) => {
   };
 });
 
+// 1) type X = { foo(): A; }
+// 2) type X = { foo: () => A; }
+// the above have identical ASTs (save for their ranges)
+// case 1 doesn't have a type annotation colon and should be ignored
+const isShortPropertyFunction = (objectTypeProperty) => {
+  return objectTypeProperty.value.type === 'FunctionTypeAnnotation' && objectTypeProperty.start === objectTypeProperty.value.start;
+};
+
 const objectTypePropertyEvaluator = (context) => {
   const {always} = parseOptions(context);
 
@@ -132,6 +140,10 @@ const objectTypePropertyEvaluator = (context) => {
   };
 
   return (objectTypeProperty) => {
+    if (isShortPropertyFunction(objectTypeProperty)) {
+      return;
+    }
+
     const colon = getColon(objectTypeProperty);
     const typeAnnotation = sourceCode.getTokenAfter(colon);
 

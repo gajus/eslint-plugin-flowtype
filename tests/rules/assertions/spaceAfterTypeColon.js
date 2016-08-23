@@ -586,6 +586,38 @@ const OBJECT_TYPE_PROPERTIES = {
       code: 'type Foo = { barType:  ((string | () => void)) }',
       errors: [{message: 'There must be 1 space after "barType" type annotation colon.'}],
       output: 'type Foo = { barType: ((string | () => void)) }'
+    },
+    {
+      code: 'type X = { get:() => A; }',
+      errors: [{message: 'There must be a space after "get" type annotation colon.'}],
+      output: 'type X = { get: () => A; }'
+    },
+    {
+      code: 'type X = { get:<X>() => A; }',
+      errors: [{message: 'There must be a space after "get" type annotation colon.'}],
+      output: 'type X = { get: <X>() => A; }'
+    },
+    {
+      code: 'type X = { get: () => A; }',
+      errors: [{message: 'There must be no space after "get" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { get:() => A; }'
+    },
+    {
+      code: 'type X = { get: <X>() => A; }',
+      errors: [{message: 'There must be no space after "get" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { get:<X>() => A; }'
+    },
+    {
+      code: 'type X = { get:  () => A; }',
+      errors: [{message: 'There must be 1 space after "get" type annotation colon.'}],
+      output: 'type X = { get: () => A; }'
+    },
+    {
+      code: 'type X = { get:  <X>() => A; }',
+      errors: [{message: 'There must be 1 space after "get" type annotation colon.'}],
+      output: 'type X = { get: <X>() => A; }'
     }
   ],
   valid: [
@@ -618,6 +650,34 @@ const OBJECT_TYPE_PROPERTIES = {
     },
     {
       code: 'type Foo = { barType:((string | () => void)) }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { get(): A; }'
+    },
+    {
+      code: 'type X = { get<X>(): A; }'
+    },
+    {
+      code: 'type X = { get(): A; }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { get<X>(): A; }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { get: () => A; }'
+    },
+    {
+      code: 'type X = { get: <X>() => A; }'
+    },
+    {
+      code: 'type X = { get:() => A; }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { get:<X>() => A; }',
       options: ['never']
     }
   ]
