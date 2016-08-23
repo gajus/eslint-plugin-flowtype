@@ -41,7 +41,7 @@
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
     "create-index": "^0.1.2",
-    "eslint": "^2.13.1",
+    "eslint": "^3.3.1",
     "eslint-config-canonical": "1.7.12",
     "gitdown": "^2.4.8",
     "mocha": "^2.5.3"
