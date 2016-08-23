@@ -834,6 +834,26 @@ type Foo = { barType:  (string | () => void) }
 
 type Foo = { barType:  ((string | () => void)) }
 // Message: There must be 1 space after "barType" type annotation colon.
+
+type X = { get:() => A; }
+// Message: There must be a space after "get" type annotation colon.
+
+type X = { get:<X>() => A; }
+// Message: There must be a space after "get" type annotation colon.
+
+// Options: ["never"]
+type X = { get: () => A; }
+// Message: There must be no space after "get" type annotation colon.
+
+// Options: ["never"]
+type X = { get: <X>() => A; }
+// Message: There must be no space after "get" type annotation colon.
+
+type X = { get:  () => A; }
+// Message: There must be 1 space after "get" type annotation colon.
+
+type X = { get:  <X>() => A; }
+// Message: There must be 1 space after "get" type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -1002,6 +1022,26 @@ type Foo = { barType:(string | () => void) }
 
 // Options: ["never"]
 type Foo = { barType:((string | () => void)) }
+
+type X = { get(): A; }
+
+type X = { get<X>(): A; }
+
+// Options: ["never"]
+type X = { get(): A; }
+
+// Options: ["never"]
+type X = { get<X>(): A; }
+
+type X = { get: () => A; }
+
+type X = { get: <X>() => A; }
+
+// Options: ["never"]
+type X = { get:() => A; }
+
+// Options: ["never"]
+type X = { get:<X>() => A; }
 ```
 
 
