@@ -31,6 +31,7 @@
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "documentation": "gitdown ./.README/README.md --output-file ./README.md; npm run documentation-add-assertions",
     "create-index": "create-index ./src --update-index",
+    "precommit": "npm run lint && npm run test",
     "commitmsg": "conventional-changelog-lint -e"
   },
   "devDependencies": {
