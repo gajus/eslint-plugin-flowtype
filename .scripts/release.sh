@@ -52,6 +52,6 @@ git commit -m 'docs: update documentation' ./README.md
 # 2. update CHANGELOG.md
 # 3. commit package.json and CHANGELOG.md
 # 4. tag the release
-standard-version --message "chore: release %s"
+standard-version --no-verify --message "chore: release %s"
 
 git push --follow-tags origin master
