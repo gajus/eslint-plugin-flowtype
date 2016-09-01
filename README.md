@@ -1706,19 +1706,19 @@ This rule needs a text RegExp to operate with Its signature is as follows:
     "rules": {
         "flowtype/type-id-match": [
             2,
-            "^([A-Z][a-z0-9]+)+Type$"
+            "^([A-Z][a-z0-9]*)+Type$"
         ]
     }
 }
 ```
 
-`'^([A-Z][a-z0-9]+)+Type$'` is the default pattern.
+`'^([A-Z][a-z0-9]*)+Type$'` is the default pattern.
 
 The following patterns are considered problems:
 
 ```js
 type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]+)+Type$/'.
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
 
 // Options: ["^foo$"]
 type FooType = {};
