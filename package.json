@@ -30,7 +30,8 @@
     "build": "babel ./src --out-dir ./dist",
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "documentation": "gitdown ./.README/README.md --output-file ./README.md; npm run documentation-add-assertions",
-    "create-index": "create-index ./src --update-index"
+    "create-index": "create-index ./src --update-index",
+    "commitmsg": "conventional-changelog-lint -e"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -45,6 +46,7 @@
     "eslint": "^3.3.1",
     "eslint-config-canonical": "1.7.16",
     "gitdown": "^2.4.10",
+    "husky": "^0.11.6",
     "mocha": "^3.0.2",
     "standard-version": "^2.4.0",
     "travis-after-all": "^1.4.4"
