@@ -17,6 +17,7 @@
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
+        * [`semi`](#eslint-plugin-flowtype-rules-semi)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
@@ -66,6 +67,10 @@ npm install eslint-plugin-flowtype
       {
         "annotateUndefined": "never"
       }
+    ],
+    "flowtype/semi": [
+      1,
+      "always"
     ],
     "flowtype/space-after-type-colon": [
       1,
@@ -615,6 +620,57 @@ a;
 
 // Options: ["always"]
 a;
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-semi"></a>
+### <code>semi</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent use of semicolons after type aliases.
+
+This rule takes one argument. If it is `'never'` then a problem is raised when there is a semicolon after a type alias. If it is `'always'` then a problem is raised when there is no semicolon after a type alias.
+
+The default value is `'always'`.
+
+The following patterns are considered problems:
+
+```js
+// Options: []
+type FooType = {}
+// Message: Missing semicolon.
+
+// Options: ["always"]
+type FooType = {}
+// Message: Missing semicolon.
+
+// Options: ["never"]
+type FooType = {};
+// Message: Extra semicolon.
+```
+
+The following patterns are not considered problems:
+
+```js
+type FooType = {};
+
+// Options: ["always"]
+type FooType = {};
+
+// Options: ["always"]
+type FooType = { a: number;
+ b: string;
+ };
+
+// Options: ["never"]
+type FooType = { a: number;
+ b: string;
+ }
+
+// Options: ["never"]
+type FooType = {}
 ```
 
 
