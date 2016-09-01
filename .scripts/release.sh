@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ev
 
-if [[ $TRAVIS_PULL_REQUEST = "true" ]]; then
+if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
   echo 'This is a pull request. Exiting the release script.'
 
   exit 0
