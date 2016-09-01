@@ -4,7 +4,7 @@ export default {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]+)+Type$/\'.'
+          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.'
         }
       ]
     },
