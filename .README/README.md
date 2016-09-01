@@ -38,6 +38,7 @@ npm install eslint-plugin-flowtype
   ],
   "rules": {
     "flowtype/define-flow-type": 1,
+    "flowtype/no-weak-types": 1,
     "flowtype/require-parameter-type": 1,
     "flowtype/require-return-type": [
       1,
@@ -88,6 +89,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 ## Rules
 
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
+{"gitdown": "include", "file": "./rules/no-weak-types.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
