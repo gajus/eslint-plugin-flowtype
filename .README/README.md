@@ -46,6 +46,10 @@ npm install eslint-plugin-flowtype
         "annotateUndefined": "never"
       }
     ],
+    "flowtype/semi": [
+      1,
+      "always"
+    ],
     "flowtype/space-after-type-colon": [
       1,
       "always"
@@ -91,6 +95,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
+{"gitdown": "include", "file": "./rules/semi.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-generic-bracket.md"}

@@ -12,6 +12,7 @@ const reportingRules = [
   'require-parameter-type',
   'require-return-type',
   'require-valid-file-annotation',
+  'semi',
   'space-after-type-colon',
   'space-before-type-colon',
   'space-before-generic-bracket',
