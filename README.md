@@ -1,4 +1,5 @@
-<h1 id="eslint-plugin-flowtype">eslint-plugin-flowtype</h1>
+<a name="eslint-plugin-flowtype"></a>
+# eslint-plugin-flowtype
 
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-flowtype.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-flowtype)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-flowtype/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-flowtype)
@@ -26,7 +27,8 @@
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
 
 
-<h2 id="eslint-plugin-flowtype-installation">Installation</h2>
+<a name="eslint-plugin-flowtype-installation"></a>
+## Installation
 
 1. Install [ESLint](https://www.github.com/eslint/eslint).
 1. Install [`babel-eslint`](https://github.com/babel/babel-eslint) parser (ESLint parser [does not support type annotations](https://github.com/eslint/eslint/issues/2157)).
@@ -40,7 +42,8 @@ npm install babel-eslint
 npm install eslint-plugin-flowtype
 ```
 
-<h2 id="eslint-plugin-flowtype-configuration">Configuration</h2>
+<a name="eslint-plugin-flowtype-configuration"></a>
+## Configuration
 
 1. Set `parser` property to `babel-eslint`.
 1. Add `plugins` section and specify `eslint-plugin-flowtype` as a plugin.
@@ -87,9 +90,11 @@ npm install eslint-plugin-flowtype
 }
 ```
 
-<h2 id="eslint-plugin-flowtype-settings">Settings</h2>
+<a name="eslint-plugin-flowtype-settings"></a>
+## Settings
 
-<h3 id="eslint-plugin-flowtype-settings-onlyfileswithflowannotation"><code>onlyFilesWithFlowAnnotation</code></h3>
+<a name="eslint-plugin-flowtype-settings-onlyfileswithflowannotation"></a>
+### <code>onlyFilesWithFlowAnnotation</code>
 
 When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/docs/about-flow.html#gradual) in the first comment.
 
@@ -103,9 +108,11 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 }
 ```
 
-<h2 id="eslint-plugin-flowtype-rules">Rules</h2>
+<a name="eslint-plugin-flowtype-rules"></a>
+## Rules
 
-<h3 id="eslint-plugin-flowtype-rules-define-flow-type"><code>define-flow-type</code></h3>
+<a name="eslint-plugin-flowtype-rules-define-flow-type"></a>
+### <code>define-flow-type</code>
 
 Marks Flow type identifiers as defined.
 
@@ -225,11 +232,13 @@ interface AType<BType> {}
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-require-parameter-type"><code>require-parameter-type</code></h3>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type"></a>
+### <code>require-parameter-type</code>
 
 Requires that all function parameters have type annotations.
 
-<h4 id="eslint-plugin-flowtype-rules-require-parameter-type-options">Options</h4>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options"></a>
+#### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
@@ -324,11 +333,13 @@ The following patterns are not considered problems:
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-require-return-type"><code>require-return-type</code></h3>
+<a name="eslint-plugin-flowtype-rules-require-return-type"></a>
+### <code>require-return-type</code>
 
 Requires that functions have return type annotation.
 
-<h4 id="eslint-plugin-flowtype-rules-require-return-type-options">Options</h4>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options"></a>
+#### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
@@ -526,11 +537,13 @@ async () => 3
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-require-valid-file-annotation"><code>require-valid-file-annotation</code></h3>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation"></a>
+### <code>require-valid-file-annotation</code>
 
 Makes sure that files have a valid `@flow` annotation. It will report annotations with typos (such as `// @floww`) or not placed at the top of the file, and optionaly missing annotations.
 
-<h4 id="eslint-plugin-flowtype-rules-require-valid-file-annotation-options">Options</h4>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
+#### Options
 
 By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
 
@@ -606,7 +619,8 @@ a;
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-space-after-type-colon"><code>space-after-type-colon</code></h3>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon"></a>
+### <code>space-after-type-colon</code>
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -1046,7 +1060,8 @@ type X = { get:<X>() => A; }
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-space-before-type-colon"><code>space-before-type-colon</code></h3>
+<a name="eslint-plugin-flowtype-rules-space-before-type-colon"></a>
+### <code>space-before-type-colon</code>
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -1344,7 +1359,8 @@ type X = { foo? : string }
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-space-before-generic-bracket"><code>space-before-generic-bracket</code></h3>
+<a name="eslint-plugin-flowtype-rules-space-before-generic-bracket"></a>
+### <code>space-before-generic-bracket</code>
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -1387,7 +1403,8 @@ type X = Promise <string>
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-union-intersection-spacing"><code>union-intersection-spacing</code></h3>
+<a name="eslint-plugin-flowtype-rules-union-intersection-spacing"></a>
+### <code>union-intersection-spacing</code>
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -1533,7 +1550,8 @@ type X =
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-generic-spacing"><code>generic-spacing</code></h3>
+<a name="eslint-plugin-flowtype-rules-generic-spacing"></a>
+### <code>generic-spacing</code>
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -1617,11 +1635,13 @@ type X = Promise< (foo), bar, (((baz))) >
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-type-id-match"><code>type-id-match</code></h3>
+<a name="eslint-plugin-flowtype-rules-type-id-match"></a>
+### <code>type-id-match</code>
 
 Enforces a consistent naming pattern for type aliases.
 
-<h4 id="eslint-plugin-flowtype-rules-type-id-match-options">Options</h4>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options"></a>
+#### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
 
@@ -1660,7 +1680,8 @@ type foo = {};
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-use-flow-type"><code>use-flow-type</code></h3>
+<a name="eslint-plugin-flowtype-rules-use-flow-type"></a>
+### <code>use-flow-type</code>
 
 Marks Flow [type alias](https://flowtype.org/docs/type-aliases.html) declarations as used.
 
@@ -1714,7 +1735,8 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 
 
 
-<h3 id="eslint-plugin-flowtype-rules-valid-syntax"><code>valid-syntax</code></h3>
+<a name="eslint-plugin-flowtype-rules-valid-syntax"></a>
+### <code>valid-syntax</code>
 
 Checks for simple Flow syntax errors.
 
