@@ -13,6 +13,7 @@
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
     * [Rules](#eslint-plugin-flowtype-rules)
+        * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
@@ -115,6 +116,48 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 <a name="eslint-plugin-flowtype-rules"></a>
 ## Rules
+
+<a name="eslint-plugin-flowtype-rules-boolean-style"></a>
+### <code>boolean-style</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular style for boolean type annotations. This rule takes one argument.
+
+If it is `'boolean'` then a problem is raised when using `bool` instead of `boolean`.
+
+If it is `'bool'` then a problem is raised when using `boolean` instead of `bool`.
+
+The default value is `'boolean'`.
+
+The following patterns are considered problems:
+
+```js
+type X = bool
+// Message: Use "boolean", not "bool"
+
+// Options: ["boolean"]
+type X = bool
+// Message: Use "boolean", not "bool"
+
+// Options: ["bool"]
+type X = boolean
+// Message: Use "bool", not "boolean"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = boolean
+
+// Options: ["boolean"]
+type X = boolean
+
+// Options: ["bool"]
+type X = bool
+```
+
+
 
 <a name="eslint-plugin-flowtype-rules-define-flow-type"></a>
 ### <code>define-flow-type</code>
