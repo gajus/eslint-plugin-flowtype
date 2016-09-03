@@ -11,9 +11,11 @@ import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import typeIdMatch from './rules/typeIdMatch';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
+import booleanStyle from './rules/booleanStyle';
 
 export default {
   rules: {
+    'boolean-style': booleanStyle,
     'define-flow-type': defineFlowType,
     'generic-spacing': genericSpacing,
     'require-parameter-type': requireParameterType,
@@ -29,6 +31,7 @@ export default {
     'valid-syntax': validSyntax
   },
   rulesConfig: {
+    'boolean-style': 0,
     'define-flow-type': 0,
     'generic-spacing': 0,
     'require-parameter-type': 0,

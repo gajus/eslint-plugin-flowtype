@@ -7,6 +7,7 @@ import plugin from './../../src';
 const ruleTester = new RuleTester();
 
 const reportingRules = [
+  'boolean-style',
   'define-flow-type',
   'generic-spacing',
   'require-parameter-type',
