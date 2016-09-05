@@ -11,7 +11,9 @@ if [[ -n $TRAVIS_TAG ]]; then
   echo 'This is a tag release.'
 
   # Use NPM_TOKEN to enable NPM authentication
+  set +x
   echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+  set -x
 
   NODE_ENV=development npm install
   NODE_ENV=production npm run build
@@ -37,7 +39,9 @@ git config --global user.email 'continuous-deployment@travis'
 
 # Use GITHUB_TOKEN to enable GitHub authentication
 git config credential.helper "store --file=.git/credentials"
+set +x
 echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+set -x
 
 git checkout master
 git merge $TRAVIS_COMMIT
