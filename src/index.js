@@ -1,5 +1,6 @@
 import defineFlowType from './rules/defineFlowType';
 import genericSpacing from './rules/genericSpacing';
+import noWeakTypes from './rules/noWeakTypes';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -18,6 +19,7 @@ export default {
     'boolean-style': booleanStyle,
     'define-flow-type': defineFlowType,
     'generic-spacing': genericSpacing,
+    'no-weak-types': noWeakTypes,
     'require-parameter-type': requireParameterType,
     'require-return-type': requireReturnType,
     'require-valid-file-annotation': requireValidFileAnnotation,
@@ -34,6 +36,7 @@ export default {
     'boolean-style': 0,
     'define-flow-type': 0,
     'generic-spacing': 0,
+    'no-weak-types': 0,
     'require-parameter-type': 0,
     'require-return-type': 0,
     semi: 0,

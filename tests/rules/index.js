@@ -10,6 +10,7 @@ const reportingRules = [
   'boolean-style',
   'define-flow-type',
   'generic-spacing',
+  'no-weak-types',
   'require-parameter-type',
   'require-return-type',
   'require-valid-file-annotation',
