@@ -1,4 +1,4 @@
-import {get} from 'lodash';
+import _ from 'lodash';
 
 const reportWeakType = (context, weakType) => {
   return (node) => {
@@ -14,7 +14,7 @@ const genericTypeEvaluator = (context) => {
   const weakTypes = ['Function', 'Object'];
 
   return (node) => {
-    const name = get(node, 'id.name');
+    const name = _.get(node, 'id.name');
     const isWeakType = weakTypes.indexOf(name) >= 0;
 
     if (isWeakType) {
