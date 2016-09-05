@@ -7,12 +7,6 @@ if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
   exit 0
 fi
 
-if [[ $TRAVIS_BRANCH != "master" ]]; then
-  echo 'This is not a master branch. Exiting the release script.'
-
-  exit 0
-fi
-
 if [[ -n $TRAVIS_TAG ]]; then
   echo 'This is a tag release.'
 
@@ -23,6 +17,12 @@ if [[ -n $TRAVIS_TAG ]]; then
   NODE_ENV=production npm run build
 
   npm publish
+  exit 0
+fi
+
+if [[ $TRAVIS_BRANCH != "master" ]]; then
+  echo 'This is not a master branch. Exiting the release script.'
+
   exit 0
 fi
 
