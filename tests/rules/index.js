@@ -9,6 +9,7 @@ const ruleTester = new RuleTester();
 const reportingRules = [
   'boolean-style',
   'define-flow-type',
+  'delimiter-dangle',
   'generic-spacing',
   'no-weak-types',
   'require-parameter-type',
