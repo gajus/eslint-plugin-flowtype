@@ -15,6 +15,7 @@
     * [Rules](#eslint-plugin-flowtype-rules)
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
+        * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
@@ -61,6 +62,7 @@ npm install eslint-plugin-flowtype
   ],
   "rules": {
     "flowtype/define-flow-type": 1,
+    "flowtype/no-weak-types": 1,
     "flowtype/require-parameter-type": 1,
     "flowtype/require-return-type": [
       1,
@@ -276,6 +278,138 @@ type X = {Y<AType>(): BType}
 
 interface AType<BType> {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-weak-types"></a>
+### <code>no-weak-types</code>
+
+Warns against weak type annotations *any*, *Object* and *Function*.
+These types can cause flow to silently skip over portions of your code,
+which would have otherwise caused type errors.
+
+The following patterns are considered problems:
+
+```js
+function foo(thing): any {}
+// Message: Unexpected use of weak type "any"
+
+function foo(thing): Promise<any> {}
+// Message: Unexpected use of weak type "any"
+
+function foo(thing): Promise<Promise<any>> {}
+// Message: Unexpected use of weak type "any"
+
+function foo(thing): Object {}
+// Message: Unexpected use of weak type "Object"
+
+function foo(thing): Promise<Object> {}
+// Message: Unexpected use of weak type "Object"
+
+function foo(thing): Promise<Promise<Object>> {}
+// Message: Unexpected use of weak type "Object"
+
+function foo(thing): Function {}
+// Message: Unexpected use of weak type "Function"
+
+function foo(thing): Promise<Function> {}
+// Message: Unexpected use of weak type "Function"
+
+function foo(thing): Promise<Promise<Function>> {}
+// Message: Unexpected use of weak type "Function"
+
+(foo: any) => {}
+// Message: Unexpected use of weak type "any"
+
+(foo: Function) => {}
+// Message: Unexpected use of weak type "Function"
+
+(foo?: any) => {}
+// Message: Unexpected use of weak type "any"
+
+(foo?: Function) => {}
+// Message: Unexpected use of weak type "Function"
+
+(foo: { a: any }) => {}
+// Message: Unexpected use of weak type "any"
+
+(foo: { a: Object }) => {}
+// Message: Unexpected use of weak type "Object"
+
+(foo: any[]) => {}
+// Message: Unexpected use of weak type "any"
+
+type Foo = any
+// Message: Unexpected use of weak type "any"
+
+type Foo = Function
+// Message: Unexpected use of weak type "Function"
+
+type Foo = { a: any }
+// Message: Unexpected use of weak type "any"
+
+type Foo = { a: Object }
+// Message: Unexpected use of weak type "Object"
+
+type Foo = { (a: Object): string }
+// Message: Unexpected use of weak type "Object"
+
+type Foo = { (a: string): Function }
+// Message: Unexpected use of weak type "Function"
+
+function foo(thing: any) {}
+// Message: Unexpected use of weak type "any"
+
+function foo(thing: Object) {}
+// Message: Unexpected use of weak type "Object"
+
+var foo: Function
+// Message: Unexpected use of weak type "Function"
+
+var foo: Object
+// Message: Unexpected use of weak type "Object"
+
+class Foo { props: any }
+// Message: Unexpected use of weak type "any"
+
+class Foo { props: Object }
+// Message: Unexpected use of weak type "Object"
+
+var foo: any
+// Message: Unexpected use of weak type "any"
+```
+
+The following patterns are not considered problems:
+
+```js
+function foo(thing): string {}
+
+function foo(thing): Promise<string> {}
+
+function foo(thing): Promise<Promise<string>> {}
+
+(foo?: string) => {}
+
+(foo: ?string) => {}
+
+(foo: { a: string }) => {}
+
+(foo: { a: ?string }) => {}
+
+(foo: string[]) => {}
+
+type Foo = string
+
+type Foo = { a: string }
+
+type Foo = { (a: string): string }
+
+function foo(thing: string) {}
+
+var foo: string
+
+class Foo { props: string }
 ```
 
 
