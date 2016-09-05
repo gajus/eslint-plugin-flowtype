@@ -13,7 +13,7 @@ if [[ $TRAVIS_BRANCH != "master" ]]; then
   exit 0
 fi
 
-if [[ $TRAVIS_TAG != "" ]]; then
+if [[ -n $TRAVIS_TAG ]]; then
   echo 'This is a tag release.'
 
   # Use NPM_TOKEN to enable NPM authentication
