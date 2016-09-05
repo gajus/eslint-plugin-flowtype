@@ -46,7 +46,7 @@ git merge $TRAVIS_COMMIT
 npm run documentation
 
 git add --force ./README.md
-git commit --no-verify -m 'docs: update documentation' ./README.md
+git diff-index --quiet HEAD ./README.md || git commit --no-verify -m 'docs: update documentation' ./README.md
 
 # 1. bump the package.json version (based on your commit history)
 # 2. update CHANGELOG.md
