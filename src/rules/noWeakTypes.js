@@ -10,22 +10,33 @@ const reportWeakType = (context, weakType) => {
   };
 };
 
-const genericTypeEvaluator = (context) => {
-  const weakTypes = ['Function', 'Object'];
-
+const genericTypeEvaluator = (context, {checkFunction, checkObject}) => {
   return (node) => {
     const name = _.get(node, 'id.name');
-    const isWeakType = weakTypes.indexOf(name) >= 0;
 
-    if (isWeakType) {
+    if (checkFunction && name === 'Function' || checkObject && name === 'Object') {
       reportWeakType(context, name)(node);
     }
   };
 };
 
 export default (context) => {
-  return {
-    AnyTypeAnnotation: reportWeakType(context, 'any'),
-    GenericTypeAnnotation: genericTypeEvaluator(context)
-  };
+  const checkAny = _.get(context, 'options[0].any', true) === true;
+  const checkFunction = _.get(context, 'options[0].Function', true) === true;
+  const checkObject = _.get(context, 'options[0].Object', true) === true;
+
+  const checks = {};
+
+  if (checkAny) {
+    checks.AnyTypeAnnotation = reportWeakType(context, 'any');
+  }
+
+  if (checkFunction || checkObject) {
+    checks.GenericTypeAnnotation = genericTypeEvaluator(context, {
+      checkFunction,
+      checkObject
+    });
+  }
+
+  return checks;
 };

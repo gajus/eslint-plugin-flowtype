@@ -173,6 +173,24 @@ export default {
       errors: [{
         message: 'Unexpected use of weak type "any"'
       }]
+    },
+    {
+      code: 'type X = any; type Y = Function; type Z = Object',
+      errors: [
+        {message: 'Unexpected use of weak type "any"'},
+        {message: 'Unexpected use of weak type "Object"'}
+      ],
+      options: [{
+        Function: false
+      }]
+    },
+    {
+      code: 'type X = any; type Y = Function; type Z = Object',
+      errors: [{message: 'Unexpected use of weak type "Function"'}],
+      options: [{
+        Object: false,
+        any: false
+      }]
     }
   ],
   valid: [
@@ -217,6 +235,17 @@ export default {
     },
     {
       code: 'class Foo { props: string }'
+    },
+    {
+      code: 'type X = any; type Y = Object',
+      options: [{
+        Object: false,
+        any: false
+      }]
+    },
+    {
+      code: 'type X = Function',
+      options: [{Function: false}]
     }
   ]
 };
