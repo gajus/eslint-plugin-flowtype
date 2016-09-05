@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.15.0"></a>
+# [2.15.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.14.3...v2.15.0) (2016-09-05)
+
+
+### Features
+
+* options to prevent specific types in `no-weak-types` (#99) ([9c903ad](https://github.com/gajus/eslint-plugin-flowtype/commit/9c903ad))
+
+
+
 <a name="2.14.3"></a>
 ## [2.14.3](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.14.2...v2.14.3) (2016-09-05)
 
