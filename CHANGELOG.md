@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.14.1"></a>
+## [2.14.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.14.0...v2.14.1) (2016-09-05)
+
+
+### Bug Fixes
+
+* add a condition to prevent empty commit ([2e6ddfa](https://github.com/gajus/eslint-plugin-flowtype/commit/2e6ddfa))
+* fix release script ([260b86b](https://github.com/gajus/eslint-plugin-flowtype/commit/260b86b))
+
+
+
 <a name="2.14.0"></a>
 # [2.14.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.13.0...v2.14.0) (2016-09-05)
 
