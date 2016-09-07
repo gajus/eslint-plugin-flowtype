@@ -68,9 +68,34 @@ export default (context) => {
     }
   };
 
+  // required for reporting the correct position
+  const getLast = (property, indexer) => {
+    if (!property) {
+      return indexer;
+    }
+
+    if (!indexer) {
+      return property;
+    }
+
+    if (property.loc.end.line > indexer.loc.end.line) {
+      return property;
+    }
+
+    if (indexer.loc.end.line > property.loc.end.line) {
+      return indexer;
+    }
+
+    if (property.loc.end.column > indexer.loc.end.column) {
+      return property;
+    }
+
+    return indexer;
+  };
+
   return {
     ObjectTypeAnnotation (node) {
-      evaluate(node, _.last(node.properties) || _.last(node.indexers));
+      evaluate(node, getLast(_.last(node.properties), _.last(node.indexers)));
     },
 
     TupleTypeAnnotation (node) {

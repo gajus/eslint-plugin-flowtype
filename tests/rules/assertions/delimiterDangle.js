@@ -88,6 +88,39 @@ const OBJECT_TYPE_ANNOTATION = {
 
     // Indexer, Prop...
     {
+      code: 'type X = { [key: string]: number, foo: string, }',
+      errors: [{
+        // be sure it's reporting the prop, not the indexer
+        column: 35,
+        line: 1,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = { [key: string]: number, foo: string }'
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
+      errors: [{
+        // be sure it's reporting the prop, not the indexer
+        column: 1,
+        line: 3,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = {\n[key: string]: number,\nfoo: string\n}'
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\naReallyLongPropertyNameHere: string,\n}',
+      errors: [{
+        // be sure it's reporting the prop, not the indexer
+        column: 1,
+        line: 3,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = {\n[key: string]: number,\naReallyLongPropertyNameHere: string\n}'
+    },
+    {
       code: 'type X = { [key: string]: number, foo: string }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
@@ -119,6 +152,39 @@ const OBJECT_TYPE_ANNOTATION = {
     },
 
     // Prop, Indexer...
+    {
+      code: 'type X = { foo: string, [key: string]: number, }',
+      errors: [{
+        // be sure it's reporting the indexer, not the prop
+        column: 25,
+        line: 1,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = { foo: string, [key: string]: number }'
+    },
+    {
+      code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
+      errors: [{
+        // be sure it's reporting the prop, not the indexer
+        column: 1,
+        line: 3,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = {\nfoo: string,\n[key: string]: number\n}'
+    },
+    {
+      code: 'type X = {\naReallyLongPropertyNameHere: string,\n[key: string]: number,\n}',
+      errors: [{
+        // be sure it's reporting the prop, not the indexer
+        column: 1,
+        line: 3,
+        message: 'Unexpected trailing delimiter'
+      }],
+      options: ['never'],
+      output: 'type X = {\naReallyLongPropertyNameHere: string,\n[key: string]: number\n}'
+    },
     {
       code: 'type X = { foo: string, [key: string]: number }',
       errors: [{message: 'Missing trailing delimiter'}],
