@@ -20,6 +20,7 @@
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
+        * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
@@ -889,6 +890,437 @@ type FooType = { a: number;
 
 // Options: ["never"]
 type FooType = {}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-delimiter-dangle"></a>
+### <code>delimiter-dangle</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent use of trailing commas in Object and Tuple annotations.
+
+This rule takes one argument which mirrors ESLint's default `comma-dangle` rule.
+
+If it is `'never'` then a problem is raised when there is a trailing comma.
+
+If it is `'always'` then a problem is raised when there is no trailing comma.
+
+If it is `'always-multiline'` then a problem is raised when there is no trailing comma on a multi-line definition, or there _is_ a trailing comma on a single-line definition.
+
+If it is `'only-multiline'` then a problem is raised when there is a trailing comma on a single-line definition. It allows, but does not enforce, trailing commas on multi-line definitions.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+foo: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = {
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { foo: string; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+[key: string]: number,
+aReallyLongPropertyNameHere: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { [key: string]: number, foo: string }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = {
+[key: string]: number;
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string, [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+aReallyLongPropertyNameHere: string,
+[key: string]: number,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string, [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string; [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { foo: string, [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+[key: string]: number
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { foo: string, [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = [
+string,
+number,
+]
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = [string, number]
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = [
+string,
+number
+]
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = [
+foo, string
+]
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = [ number, string, ]
+// Message: Unexpected trailing delimiter
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = { foo: string }
+
+// Options: ["never"]
+type X = { foo: string }
+
+// Options: ["always"]
+type X = { foo: string, }
+
+// Options: ["always"]
+type X = { foo: string; }
+
+// Options: ["never"]
+type X = {
+foo: string
+}
+
+// Options: ["always"]
+type X = {
+foo: string,
+}
+
+// Options: ["always-multiline"]
+type X = { foo: string }
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+}
+
+// Options: ["always-multiline"]
+type X = {
+foo: string;
+}
+
+// Options: ["only-multiline"]
+type X = { foo: string }
+
+// Options: ["only-multiline"]
+type X = {
+foo: string
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string;
+}
+
+// Options: ["never"]
+type X = {}
+
+// Options: ["always"]
+type X = {}
+
+// Options: ["always-multiline"]
+type X = {}
+
+// Options: ["only-multiline"]
+type X = {}
+
+// Options: ["never"]
+type X = { [key: string]: number }
+
+// Options: ["always"]
+type X = { [key: string]: number, }
+
+// Options: ["always"]
+type X = { [key: string]: number; }
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number }
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number
+}
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number }
+
+// Options: ["never"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["always"]
+type X = { [key: string]: number, foo: string, }
+
+// Options: ["always"]
+type X = { [key: string]: number; foo: string; }
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number;
+foo: string
+}
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["never"]
+type X = { foo: string, [key: string]: number }
+
+// Options: ["always"]
+type X = { foo: string, [key: string]: number, }
+
+// Options: ["always"]
+type X = { foo: string; [key: string]: number; }
+
+// Options: ["always-multiline"]
+type X = { foo: string, [key: string]: number }
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string;
+[key: string]: number
+}
+
+// Options: ["only-multiline"]
+type X = { foo: string, [key: string]: number }
+
+type X = [string, number]
+
+// Options: ["never"]
+type X = [string, number]
+
+// Options: ["never"]
+type X = [
+string,
+number
+]
+
+// Options: ["always"]
+type X = [string, number,]
+
+// Options: ["always"]
+type X = [
+string,
+number,
+]
+
+// Options: ["always-multiline"]
+type X = [ foo, string ]
+
+// Options: ["always-multiline"]
+type X = [
+foo, string,
+]
+
+// Options: ["only-multiline"]
+type X = [ number, string ]
+
+// Options: ["only-multiline"]
+type X = [
+number,
+string
+]
+
+// Options: ["only-multiline"]
+type X = [
+number,
+string,
+]
+
+// Options: ["never"]
+type X = []
+
+// Options: ["always"]
+type X = []
+
+// Options: ["always-multiline"]
+type X = []
+
+// Options: ["only-multiline"]
+type X = []
 ```
 
 
