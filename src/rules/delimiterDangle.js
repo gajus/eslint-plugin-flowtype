@@ -25,13 +25,17 @@ export default (context) => {
     };
   };
 
-  const evaluate = (node, tokenToFix) => {
+  const evaluate = (node, lastChildNode) => {
+    if (!lastChildNode) {
+      return;
+    }
+
     const [penultimateToken, lastToken] = sourceCode.getLastTokens(node, 2);
 
     const isDangling = [';', ','].indexOf(penultimateToken.value) > -1;
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
-    const report = makeReporters(tokenToFix, penultimateToken);
+    const report = makeReporters(lastChildNode, penultimateToken);
 
     if (option === 'always' && !isDangling) {
       report.noDangle();
@@ -66,7 +70,7 @@ export default (context) => {
 
   return {
     ObjectTypeAnnotation (node) {
-      evaluate(node, _.last(node.properties));
+      evaluate(node, _.last(node.properties) || _.last(node.indexers));
     },
 
     TupleTypeAnnotation (node) {

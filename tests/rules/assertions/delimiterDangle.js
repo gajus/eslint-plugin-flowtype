@@ -52,6 +52,102 @@ const OBJECT_TYPE_ANNOTATION = {
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
       output: 'type X = { foo: string }'
+    },
+
+    // Only indexers...
+    {
+      code: 'type X = { [key: string]: number, }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['never'],
+      output: 'type X = { [key: string]: number }'
+    },
+    {
+      code: 'type X = { [key: string]: number }',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always'],
+      output: 'type X = { [key: string]: number, }'
+    },
+    {
+      code: 'type X = { [key: string]: number, }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = { [key: string]: number }'
+    },
+    {
+      code: 'type X = {\n[key: string]: number\n}',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = {\n[key: string]: number,\n}'
+    },
+    {
+      code: 'type X = { [key: string]: number; }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['only-multiline'],
+      output: 'type X = { [key: string]: number }'
+    },
+
+    // Indexer, Prop...
+    {
+      code: 'type X = { [key: string]: number, foo: string }',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always'],
+      output: 'type X = { [key: string]: number, foo: string, }'
+    },
+    {
+      code: 'type X = {\n[key: string]: number;\nfoo: string\n}',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always'],
+      output: 'type X = {\n[key: string]: number;\nfoo: string,\n}'
+    },
+    {
+      code: 'type X = { [key: string]: number, foo: string, }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = { [key: string]: number, foo: string }'
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\nfoo: string\n}',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = {\n[key: string]: number,\nfoo: string,\n}'
+    },
+    {
+      code: 'type X = { [key: string]: number, foo: string, }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['only-multiline'],
+      output: 'type X = { [key: string]: number, foo: string }'
+    },
+
+    // Prop, Indexer...
+    {
+      code: 'type X = { foo: string, [key: string]: number }',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always'],
+      output: 'type X = { foo: string, [key: string]: number, }'
+    },
+    {
+      code: 'type X = { foo: string; [key: string]: number }',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always'],
+      output: 'type X = { foo: string; [key: string]: number, }'
+    },
+    {
+      code: 'type X = { foo: string, [key: string]: number; }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = { foo: string, [key: string]: number }'
+    },
+    {
+      code: 'type X = {\nfoo: string,\n[key: string]: number\n}',
+      errors: [{message: 'Missing trailing delimiter'}],
+      options: ['always-multiline'],
+      output: 'type X = {\nfoo: string,\n[key: string]: number,\n}'
+    },
+    {
+      code: 'type X = { foo: string, [key: string]: number; }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['only-multiline'],
+      output: 'type X = { foo: string, [key: string]: number }'
     }
   ],
   valid: [
@@ -104,6 +200,126 @@ const OBJECT_TYPE_ANNOTATION = {
     },
     {
       code: 'type X = {\nfoo: string;\n}',
+      options: ['only-multiline']
+    },
+
+    // Empty...
+    {
+      code: 'type X = {}',
+      options: ['never']
+    },
+    {
+      code: 'type X = {}',
+      options: ['always']
+    },
+    {
+      code: 'type X = {}',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {}',
+      options: ['only-multiline']
+    },
+
+    // Only indexers...
+    {
+      code: 'type X = { [key: string]: number }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { [key: string]: number, }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [key: string]: number; }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [key: string]: number }',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\n}',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = { [key: string]: number }',
+      options: ['only-multiline']
+    },
+
+    // Indexer, Prop...
+    {
+      code: 'type X = { [key: string]: number, foo: string }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { [key: string]: number, foo: string, }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [key: string]: number; foo: string; }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [key: string]: number, foo: string }',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = {\n[key: string]: number;\nfoo: string\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = { [key: string]: number, foo: string }',
+      options: ['only-multiline']
+    },
+
+    // Prop, Indexer...
+    {
+      code: 'type X = { foo: string, [key: string]: number }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { foo: string, [key: string]: number, }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { foo: string; [key: string]: number; }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { foo: string, [key: string]: number }',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = {\nfoo: string;\n[key: string]: number\n}',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = { foo: string, [key: string]: number }',
       options: ['only-multiline']
     }
   ]
@@ -197,6 +413,22 @@ const TUPLE_TYPE_ANNOTATION = {
     },
     {
       code: 'type X = [\nnumber,\nstring,\n]',
+      options: ['only-multiline']
+    },
+    {
+      code: 'type X = []',
+      options: ['never']
+    },
+    {
+      code: 'type X = []',
+      options: ['always']
+    },
+    {
+      code: 'type X = []',
+      options: ['always-multiline']
+    },
+    {
+      code: 'type X = []',
       options: ['only-multiline']
     }
   ]
