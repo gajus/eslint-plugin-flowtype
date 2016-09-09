@@ -113,6 +113,8 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 ## Rules
 
+<!-- Rules are sorted alphabetically. -->
+
 {"gitdown": "include", "file": "./rules/boolean-style.md"}
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
