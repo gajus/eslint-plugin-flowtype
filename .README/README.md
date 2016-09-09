@@ -115,17 +115,17 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 {"gitdown": "include", "file": "./rules/boolean-style.md"}
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
+{"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
+{"gitdown": "include", "file": "./rules/generic-spacing.md"}
 {"gitdown": "include", "file": "./rules/no-weak-types.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/semi.md"}
-{"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
-{"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-generic-bracket.md"}
-{"gitdown": "include", "file": "./rules/union-intersection-spacing.md"}
-{"gitdown": "include", "file": "./rules/generic-spacing.md"}
+{"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/type-id-match.md"}
+{"gitdown": "include", "file": "./rules/union-intersection-spacing.md"}
 {"gitdown": "include", "file": "./rules/use-flow-type.md"}
 {"gitdown": "include", "file": "./rules/valid-syntax.md"}
