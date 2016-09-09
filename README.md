@@ -15,18 +15,18 @@
     * [Rules](#eslint-plugin-flowtype-rules)
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
+        * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
+        * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
-        * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
-        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
-        * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
-        * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+        * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
 
@@ -62,31 +62,52 @@ npm install eslint-plugin-flowtype
     "flowtype"
   ],
   "rules": {
+    "flowtype/boolean-style": [
+      2,
+      "boolean"
+    ],
     "flowtype/define-flow-type": 1,
-    "flowtype/no-weak-types": 1,
-    "flowtype/require-parameter-type": 1,
+    "flowtype/delimiter-dangle": [
+      2,
+      "never"
+    ],
+    "flowtype/generic-spacing": [
+      2,
+      "never"
+    ],
+    "flowtype/no-weak-types": 2,
+    "flowtype/require-parameter-type": 2,
     "flowtype/require-return-type": [
-      1,
+      2,
       "always",
       {
         "annotateUndefined": "never"
       }
     ],
+    "flowtype/require-valid-file-annotation": 2,
     "flowtype/semi": [
-      1,
+      2,
       "always"
     ],
     "flowtype/space-after-type-colon": [
-      1,
+      2,
       "always"
     ],
+    "flowtype/space-before-generic-bracket": [
+      2,
+      "never"
+    ],
     "flowtype/space-before-type-colon": [
-      1,
+      2,
       "never"
     ],
     "flowtype/type-id-match": [
-      1,
+      2,
       "^([A-Z][a-z0-9]+)+Type$"
+    ],
+    "flowtype/union-intersection-spacing": [
+      2,
+      "always"
     ],
     "flowtype/use-flow-type": 1,
     "flowtype/valid-syntax": 1
@@ -119,6 +140,8 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 <a name="eslint-plugin-flowtype-rules"></a>
 ## Rules
+
+<!-- Rules are sorted alphabetically. -->
 
 <a name="eslint-plugin-flowtype-rules-boolean-style"></a>
 ### <code>boolean-style</code>
@@ -279,6 +302,522 @@ type X = {Y<AType>(): BType}
 
 interface AType<BType> {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-delimiter-dangle"></a>
+### <code>delimiter-dangle</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent use of trailing commas in Object and Tuple annotations.
+
+This rule takes one argument which mirrors ESLint's default `comma-dangle` rule.
+
+If it is `'never'` then a problem is raised when there is a trailing comma.
+
+If it is `'always'` then a problem is raised when there is no trailing comma.
+
+If it is `'always-multiline'` then a problem is raised when there is no trailing comma on a multi-line definition, or there _is_ a trailing comma on a single-line definition.
+
+If it is `'only-multiline'` then a problem is raised when there is a trailing comma on a single-line definition. It allows, but does not enforce, trailing commas on multi-line definitions.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+foo: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = {
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { foo: string; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+[key: string]: number,
+aReallyLongPropertyNameHere: string,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { [key: string]: number, foo: string }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = {
+[key: string]: number;
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+foo: string
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number, foo: string, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = { foo: string, [key: string]: number, }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = {
+aReallyLongPropertyNameHere: string,
+[key: string]: number,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string, [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = { foo: string; [key: string]: number }
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = { foo: string, [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+[key: string]: number
+}
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = { foo: string, [key: string]: number; }
+// Message: Unexpected trailing delimiter
+
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["never"]
+type X = [
+string,
+number,
+]
+// Message: Unexpected trailing delimiter
+
+// Options: ["always"]
+type X = [string, number]
+// Message: Missing trailing delimiter
+
+// Options: ["always"]
+type X = [
+string,
+number
+]
+// Message: Missing trailing delimiter
+
+// Options: ["always-multiline"]
+type X = [string, number,]
+// Message: Unexpected trailing delimiter
+
+// Options: ["always-multiline"]
+type X = [
+foo, string
+]
+// Message: Missing trailing delimiter
+
+// Options: ["only-multiline"]
+type X = [ number, string, ]
+// Message: Unexpected trailing delimiter
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = { foo: string }
+
+// Options: ["never"]
+type X = { foo: string }
+
+// Options: ["always"]
+type X = { foo: string, }
+
+// Options: ["always"]
+type X = { foo: string; }
+
+// Options: ["never"]
+type X = {
+foo: string
+}
+
+// Options: ["always"]
+type X = {
+foo: string,
+}
+
+// Options: ["always-multiline"]
+type X = { foo: string }
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+}
+
+// Options: ["always-multiline"]
+type X = {
+foo: string;
+}
+
+// Options: ["only-multiline"]
+type X = { foo: string }
+
+// Options: ["only-multiline"]
+type X = {
+foo: string
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string;
+}
+
+// Options: ["never"]
+type X = {}
+
+// Options: ["always"]
+type X = {}
+
+// Options: ["always-multiline"]
+type X = {}
+
+// Options: ["only-multiline"]
+type X = {}
+
+// Options: ["never"]
+type X = { [key: string]: number }
+
+// Options: ["always"]
+type X = { [key: string]: number, }
+
+// Options: ["always"]
+type X = { [key: string]: number; }
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number }
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number
+}
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number }
+
+// Options: ["never"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["always"]
+type X = { [key: string]: number, foo: string, }
+
+// Options: ["always"]
+type X = { [key: string]: number; foo: string; }
+
+// Options: ["always-multiline"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["always-multiline"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number,
+foo: string,
+}
+
+// Options: ["only-multiline"]
+type X = {
+[key: string]: number;
+foo: string
+}
+
+// Options: ["only-multiline"]
+type X = { [key: string]: number, foo: string }
+
+// Options: ["never"]
+type X = { foo: string, [key: string]: number }
+
+// Options: ["always"]
+type X = { foo: string, [key: string]: number, }
+
+// Options: ["always"]
+type X = { foo: string; [key: string]: number; }
+
+// Options: ["always-multiline"]
+type X = { foo: string, [key: string]: number }
+
+// Options: ["always-multiline"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string,
+[key: string]: number,
+}
+
+// Options: ["only-multiline"]
+type X = {
+foo: string;
+[key: string]: number
+}
+
+// Options: ["only-multiline"]
+type X = { foo: string, [key: string]: number }
+
+type X = [string, number]
+
+// Options: ["never"]
+type X = [string, number]
+
+// Options: ["never"]
+type X = [
+string,
+number
+]
+
+// Options: ["always"]
+type X = [string, number,]
+
+// Options: ["always"]
+type X = [
+string,
+number,
+]
+
+// Options: ["always-multiline"]
+type X = [ foo, string ]
+
+// Options: ["always-multiline"]
+type X = [
+foo, string,
+]
+
+// Options: ["only-multiline"]
+type X = [ number, string ]
+
+// Options: ["only-multiline"]
+type X = [
+number,
+string
+]
+
+// Options: ["only-multiline"]
+type X = [
+number,
+string,
+]
+
+// Options: ["never"]
+type X = []
+
+// Options: ["always"]
+type X = []
+
+// Options: ["always-multiline"]
+type X = []
+
+// Options: ["only-multiline"]
+type X = []
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-generic-spacing"></a>
+### <code>generic-spacing</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent spacing within generic type annotation parameters.
+
+This rule takes one argument. If it is `'never'` then a problem is raised when there is a space surrounding the generic type parameters. If it is `'always'` then a problem is raised when there is no space surrounding the generic type parameters.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = Promise< string>
+// Message: There must be no space at start of "Promise" generic type annotation
+
+// Options: ["never"]
+type X = Promise<  string>
+// Message: There must be no space at start of "Promise" generic type annotation
+
+type X = FooBar<string >
+// Message: There must be no space at end of "FooBar" generic type annotation
+
+type X = Promise< string >
+// Message: There must be no space at start of "Promise" generic type annotation
+// Message: There must be no space at end of "Promise" generic type annotation
+
+type X = Promise< (foo), bar, (((baz))) >
+// Message: There must be no space at start of "Promise" generic type annotation
+// Message: There must be no space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = Promise<string >
+// Message: There must be a space at start of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = FooBar< string>
+// Message: There must be a space at end of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = Promise<string>
+// Message: There must be a space at start of "Promise" generic type annotation
+// Message: There must be a space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = Promise<(foo), bar, (((baz)))>
+// Message: There must be a space at start of "Promise" generic type annotation
+// Message: There must be a space at end of "Promise" generic type annotation
+
+// Options: ["always"]
+type X = FooBar<  string >
+// Message: There must be one space at start of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = FooBar< string  >
+// Message: There must be one space at end of "FooBar" generic type annotation
+
+// Options: ["always"]
+type X = Promise<  (foo), bar, (((baz)))  >
+// Message: There must be one space at start of "Promise" generic type annotation
+// Message: There must be one space at end of "Promise" generic type annotation
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Promise<string>
+
+type X = Promise<(string)>
+
+type X = Promise<(foo), bar, (((baz)))>
+
+// Options: ["always"]
+type X = Promise< string >
+
+// Options: ["always"]
+type X = Promise< (string) >
+
+// Options: ["always"]
+type X = Promise< (foo), bar, (((baz))) >
 ```
 
 
@@ -894,437 +1433,6 @@ type FooType = {}
 
 
 
-<a name="eslint-plugin-flowtype-rules-delimiter-dangle"></a>
-### <code>delimiter-dangle</code>
-
-_The `--fix` option on the command line automatically fixes problems reported by this rule._
-
-Enforces consistent use of trailing commas in Object and Tuple annotations.
-
-This rule takes one argument which mirrors ESLint's default `comma-dangle` rule.
-
-If it is `'never'` then a problem is raised when there is a trailing comma.
-
-If it is `'always'` then a problem is raised when there is no trailing comma.
-
-If it is `'always-multiline'` then a problem is raised when there is no trailing comma on a multi-line definition, or there _is_ a trailing comma on a single-line definition.
-
-If it is `'only-multiline'` then a problem is raised when there is a trailing comma on a single-line definition. It allows, but does not enforce, trailing commas on multi-line definitions.
-
-The default value is `'never'`.
-
-The following patterns are considered problems:
-
-```js
-type X = { foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = { foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = { foo: string; }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = {
-foo: string,
-}
-// Message: Unexpected trailing delimiter
-
-// Options: ["always"]
-type X = { foo: string }
-// Message: Missing trailing delimiter
-
-// Options: ["always"]
-type X = {
-foo: string
-}
-// Message: Missing trailing delimiter
-
-// Options: ["always-multiline"]
-type X = { foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["always-multiline"]
-type X = {
-foo: string
-}
-// Message: Missing trailing delimiter
-
-// Options: ["only-multiline"]
-type X = { foo: string; }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = { [key: string]: number, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["always"]
-type X = { [key: string]: number }
-// Message: Missing trailing delimiter
-
-// Options: ["always-multiline"]
-type X = { [key: string]: number, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["always-multiline"]
-type X = {
-[key: string]: number
-}
-// Message: Missing trailing delimiter
-
-// Options: ["only-multiline"]
-type X = { [key: string]: number; }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = { [key: string]: number, foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = {
-[key: string]: number,
-foo: string,
-}
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = {
-[key: string]: number,
-aReallyLongPropertyNameHere: string,
-}
-// Message: Unexpected trailing delimiter
-
-// Options: ["always"]
-type X = { [key: string]: number, foo: string }
-// Message: Missing trailing delimiter
-
-// Options: ["always"]
-type X = {
-[key: string]: number;
-foo: string
-}
-// Message: Missing trailing delimiter
-
-// Options: ["always-multiline"]
-type X = { [key: string]: number, foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["always-multiline"]
-type X = {
-[key: string]: number,
-foo: string
-}
-// Message: Missing trailing delimiter
-
-// Options: ["only-multiline"]
-type X = { [key: string]: number, foo: string, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = { foo: string, [key: string]: number, }
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = {
-foo: string,
-[key: string]: number,
-}
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = {
-aReallyLongPropertyNameHere: string,
-[key: string]: number,
-}
-// Message: Unexpected trailing delimiter
-
-// Options: ["always"]
-type X = { foo: string, [key: string]: number }
-// Message: Missing trailing delimiter
-
-// Options: ["always"]
-type X = { foo: string; [key: string]: number }
-// Message: Missing trailing delimiter
-
-// Options: ["always-multiline"]
-type X = { foo: string, [key: string]: number; }
-// Message: Unexpected trailing delimiter
-
-// Options: ["always-multiline"]
-type X = {
-foo: string,
-[key: string]: number
-}
-// Message: Missing trailing delimiter
-
-// Options: ["only-multiline"]
-type X = { foo: string, [key: string]: number; }
-// Message: Unexpected trailing delimiter
-
-type X = [string, number,]
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = [string, number,]
-// Message: Unexpected trailing delimiter
-
-// Options: ["never"]
-type X = [
-string,
-number,
-]
-// Message: Unexpected trailing delimiter
-
-// Options: ["always"]
-type X = [string, number]
-// Message: Missing trailing delimiter
-
-// Options: ["always"]
-type X = [
-string,
-number
-]
-// Message: Missing trailing delimiter
-
-// Options: ["always-multiline"]
-type X = [string, number,]
-// Message: Unexpected trailing delimiter
-
-// Options: ["always-multiline"]
-type X = [
-foo, string
-]
-// Message: Missing trailing delimiter
-
-// Options: ["only-multiline"]
-type X = [ number, string, ]
-// Message: Unexpected trailing delimiter
-```
-
-The following patterns are not considered problems:
-
-```js
-type X = { foo: string }
-
-// Options: ["never"]
-type X = { foo: string }
-
-// Options: ["always"]
-type X = { foo: string, }
-
-// Options: ["always"]
-type X = { foo: string; }
-
-// Options: ["never"]
-type X = {
-foo: string
-}
-
-// Options: ["always"]
-type X = {
-foo: string,
-}
-
-// Options: ["always-multiline"]
-type X = { foo: string }
-
-// Options: ["always-multiline"]
-type X = {
-foo: string,
-}
-
-// Options: ["always-multiline"]
-type X = {
-foo: string;
-}
-
-// Options: ["only-multiline"]
-type X = { foo: string }
-
-// Options: ["only-multiline"]
-type X = {
-foo: string
-}
-
-// Options: ["only-multiline"]
-type X = {
-foo: string,
-}
-
-// Options: ["only-multiline"]
-type X = {
-foo: string;
-}
-
-// Options: ["never"]
-type X = {}
-
-// Options: ["always"]
-type X = {}
-
-// Options: ["always-multiline"]
-type X = {}
-
-// Options: ["only-multiline"]
-type X = {}
-
-// Options: ["never"]
-type X = { [key: string]: number }
-
-// Options: ["always"]
-type X = { [key: string]: number, }
-
-// Options: ["always"]
-type X = { [key: string]: number; }
-
-// Options: ["always-multiline"]
-type X = { [key: string]: number }
-
-// Options: ["always-multiline"]
-type X = {
-[key: string]: number,
-}
-
-// Options: ["only-multiline"]
-type X = {
-[key: string]: number,
-}
-
-// Options: ["only-multiline"]
-type X = {
-[key: string]: number
-}
-
-// Options: ["only-multiline"]
-type X = { [key: string]: number }
-
-// Options: ["never"]
-type X = { [key: string]: number, foo: string }
-
-// Options: ["always"]
-type X = { [key: string]: number, foo: string, }
-
-// Options: ["always"]
-type X = { [key: string]: number; foo: string; }
-
-// Options: ["always-multiline"]
-type X = { [key: string]: number, foo: string }
-
-// Options: ["always-multiline"]
-type X = {
-[key: string]: number,
-foo: string,
-}
-
-// Options: ["only-multiline"]
-type X = {
-[key: string]: number,
-foo: string,
-}
-
-// Options: ["only-multiline"]
-type X = {
-[key: string]: number;
-foo: string
-}
-
-// Options: ["only-multiline"]
-type X = { [key: string]: number, foo: string }
-
-// Options: ["never"]
-type X = { foo: string, [key: string]: number }
-
-// Options: ["always"]
-type X = { foo: string, [key: string]: number, }
-
-// Options: ["always"]
-type X = { foo: string; [key: string]: number; }
-
-// Options: ["always-multiline"]
-type X = { foo: string, [key: string]: number }
-
-// Options: ["always-multiline"]
-type X = {
-foo: string,
-[key: string]: number,
-}
-
-// Options: ["only-multiline"]
-type X = {
-foo: string,
-[key: string]: number,
-}
-
-// Options: ["only-multiline"]
-type X = {
-foo: string;
-[key: string]: number
-}
-
-// Options: ["only-multiline"]
-type X = { foo: string, [key: string]: number }
-
-type X = [string, number]
-
-// Options: ["never"]
-type X = [string, number]
-
-// Options: ["never"]
-type X = [
-string,
-number
-]
-
-// Options: ["always"]
-type X = [string, number,]
-
-// Options: ["always"]
-type X = [
-string,
-number,
-]
-
-// Options: ["always-multiline"]
-type X = [ foo, string ]
-
-// Options: ["always-multiline"]
-type X = [
-foo, string,
-]
-
-// Options: ["only-multiline"]
-type X = [ number, string ]
-
-// Options: ["only-multiline"]
-type X = [
-number,
-string
-]
-
-// Options: ["only-multiline"]
-type X = [
-number,
-string,
-]
-
-// Options: ["never"]
-type X = []
-
-// Options: ["always"]
-type X = []
-
-// Options: ["always-multiline"]
-type X = []
-
-// Options: ["only-multiline"]
-type X = []
-```
-
-
-
 <a name="eslint-plugin-flowtype-rules-space-after-type-colon"></a>
 ### <code>space-after-type-colon</code>
 
@@ -1766,6 +1874,50 @@ type X = { get:<X>() => A; }
 
 
 
+<a name="eslint-plugin-flowtype-rules-space-before-generic-bracket"></a>
+### <code>space-before-generic-bracket</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent spacing before the opening `<` of generic type annotation parameters.
+
+This rule takes one argument. If it is `'never'` then a problem is raised when there is a space before the `<`. If it is `'always'` then a problem is raised when there is no space before the `<`.
+
+The default value is `'never'`.
+
+The following patterns are considered problems:
+
+```js
+type X = Promise <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+// Options: ["never"]
+type X = Promise <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+type X = Promise  <string>
+// Message: There must be no space before "Promise" generic type annotation bracket
+
+// Options: ["always"]
+type X = Promise<string>
+// Message: There must be a space before "Promise" generic type annotation bracket
+
+// Options: ["always"]
+type X = Promise  <string>
+// Message: There must be one space before "Promise" generic type annotation bracket
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Promise<string>
+
+// Options: ["always"]
+type X = Promise <string>
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-space-before-type-colon"></a>
 ### <code>space-before-type-colon</code>
 
@@ -2065,46 +2217,47 @@ type X = { foo? : string }
 
 
 
-<a name="eslint-plugin-flowtype-rules-space-before-generic-bracket"></a>
-### <code>space-before-generic-bracket</code>
+<a name="eslint-plugin-flowtype-rules-type-id-match"></a>
+### <code>type-id-match</code>
 
-_The `--fix` option on the command line automatically fixes problems reported by this rule._
+Enforces a consistent naming pattern for type aliases.
 
-Enforces consistent spacing before the opening `<` of generic type annotation parameters.
+<a name="eslint-plugin-flowtype-rules-type-id-match-options"></a>
+#### Options
 
-This rule takes one argument. If it is `'never'` then a problem is raised when there is a space before the `<`. If it is `'always'` then a problem is raised when there is no space before the `<`.
+This rule needs a text RegExp to operate with Its signature is as follows:
 
-The default value is `'never'`.
+```js
+{
+    "rules": {
+        "flowtype/type-id-match": [
+            2,
+            "^([A-Z][a-z0-9]*)+Type$"
+        ]
+    }
+}
+```
+
+`'^([A-Z][a-z0-9]*)+Type$'` is the default pattern.
 
 The following patterns are considered problems:
 
 ```js
-type X = Promise <string>
-// Message: There must be no space before "Promise" generic type annotation bracket
+type foo = {};
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
 
-// Options: ["never"]
-type X = Promise <string>
-// Message: There must be no space before "Promise" generic type annotation bracket
-
-type X = Promise  <string>
-// Message: There must be no space before "Promise" generic type annotation bracket
-
-// Options: ["always"]
-type X = Promise<string>
-// Message: There must be a space before "Promise" generic type annotation bracket
-
-// Options: ["always"]
-type X = Promise  <string>
-// Message: There must be one space before "Promise" generic type annotation bracket
+// Options: ["^foo$"]
+type FooType = {};
+// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
 ```
 
 The following patterns are not considered problems:
 
 ```js
-type X = Promise<string>
+type FooType = {};
 
-// Options: ["always"]
-type X = Promise <string>
+// Options: ["^foo$"]
+type foo = {};
 ```
 
 
@@ -2252,136 +2405,6 @@ type X =
 & string
 & number
 }
-```
-
-
-
-<a name="eslint-plugin-flowtype-rules-generic-spacing"></a>
-### <code>generic-spacing</code>
-
-_The `--fix` option on the command line automatically fixes problems reported by this rule._
-
-Enforces consistent spacing within generic type annotation parameters.
-
-This rule takes one argument. If it is `'never'` then a problem is raised when there is a space surrounding the generic type parameters. If it is `'always'` then a problem is raised when there is no space surrounding the generic type parameters.
-
-The default value is `'never'`.
-
-The following patterns are considered problems:
-
-```js
-type X = Promise< string>
-// Message: There must be no space at start of "Promise" generic type annotation
-
-// Options: ["never"]
-type X = Promise<  string>
-// Message: There must be no space at start of "Promise" generic type annotation
-
-type X = FooBar<string >
-// Message: There must be no space at end of "FooBar" generic type annotation
-
-type X = Promise< string >
-// Message: There must be no space at start of "Promise" generic type annotation
-// Message: There must be no space at end of "Promise" generic type annotation
-
-type X = Promise< (foo), bar, (((baz))) >
-// Message: There must be no space at start of "Promise" generic type annotation
-// Message: There must be no space at end of "Promise" generic type annotation
-
-// Options: ["always"]
-type X = Promise<string >
-// Message: There must be a space at start of "Promise" generic type annotation
-
-// Options: ["always"]
-type X = FooBar< string>
-// Message: There must be a space at end of "FooBar" generic type annotation
-
-// Options: ["always"]
-type X = Promise<string>
-// Message: There must be a space at start of "Promise" generic type annotation
-// Message: There must be a space at end of "Promise" generic type annotation
-
-// Options: ["always"]
-type X = Promise<(foo), bar, (((baz)))>
-// Message: There must be a space at start of "Promise" generic type annotation
-// Message: There must be a space at end of "Promise" generic type annotation
-
-// Options: ["always"]
-type X = FooBar<  string >
-// Message: There must be one space at start of "FooBar" generic type annotation
-
-// Options: ["always"]
-type X = FooBar< string  >
-// Message: There must be one space at end of "FooBar" generic type annotation
-
-// Options: ["always"]
-type X = Promise<  (foo), bar, (((baz)))  >
-// Message: There must be one space at start of "Promise" generic type annotation
-// Message: There must be one space at end of "Promise" generic type annotation
-```
-
-The following patterns are not considered problems:
-
-```js
-type X = Promise<string>
-
-type X = Promise<(string)>
-
-type X = Promise<(foo), bar, (((baz)))>
-
-// Options: ["always"]
-type X = Promise< string >
-
-// Options: ["always"]
-type X = Promise< (string) >
-
-// Options: ["always"]
-type X = Promise< (foo), bar, (((baz))) >
-```
-
-
-
-<a name="eslint-plugin-flowtype-rules-type-id-match"></a>
-### <code>type-id-match</code>
-
-Enforces a consistent naming pattern for type aliases.
-
-<a name="eslint-plugin-flowtype-rules-type-id-match-options"></a>
-#### Options
-
-This rule needs a text RegExp to operate with Its signature is as follows:
-
-```js
-{
-    "rules": {
-        "flowtype/type-id-match": [
-            2,
-            "^([A-Z][a-z0-9]*)+Type$"
-        ]
-    }
-}
-```
-
-`'^([A-Z][a-z0-9]*)+Type$'` is the default pattern.
-
-The following patterns are considered problems:
-
-```js
-type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
-
-// Options: ["^foo$"]
-type FooType = {};
-// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
-```
-
-The following patterns are not considered problems:
-
-```js
-type FooType = {};
-
-// Options: ["^foo$"]
-type foo = {};
 ```
 
 
