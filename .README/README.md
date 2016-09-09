@@ -37,31 +37,52 @@ npm install eslint-plugin-flowtype
     "flowtype"
   ],
   "rules": {
+    "flowtype/boolean-style": [
+      2,
+      "boolean"
+    ],
     "flowtype/define-flow-type": 1,
-    "flowtype/no-weak-types": 1,
-    "flowtype/require-parameter-type": 1,
+    "flowtype/delimiter-dangle": [
+      2,
+      "never"
+    ],
+    "flowtype/generic-spacing": [
+      2,
+      "never"
+    ],
+    "flowtype/no-weak-types": 2,
+    "flowtype/require-parameter-type": 2,
     "flowtype/require-return-type": [
-      1,
+      2,
       "always",
       {
         "annotateUndefined": "never"
       }
     ],
+    "flowtype/require-valid-file-annotation": 2,
     "flowtype/semi": [
-      1,
+      2,
       "always"
     ],
     "flowtype/space-after-type-colon": [
-      1,
+      2,
       "always"
     ],
+    "flowtype/space-before-generic-bracket": [
+      2,
+      "never"
+    ],
     "flowtype/space-before-type-colon": [
-      1,
+      2,
       "never"
     ],
     "flowtype/type-id-match": [
-      1,
+      2,
       "^([A-Z][a-z0-9]+)+Type$"
+    ],
+    "flowtype/union-intersection-spacing": [
+      2,
+      "always"
     ],
     "flowtype/use-flow-type": 1,
     "flowtype/valid-syntax": 1
