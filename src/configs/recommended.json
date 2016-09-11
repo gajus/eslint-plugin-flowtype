@@ -6,28 +6,16 @@
       "boolean"
     ],
     "flowtype/define-flow-type": 1,
-    "flowtype/delimiter-dangle": [
-      2,
-      "never"
-    ],
+    "flowtype/delimiter-dangle": 0,
     "flowtype/generic-spacing": [
       2,
       "never"
     ],
-    "flowtype/no-weak-types": 2,
-    "flowtype/require-parameter-type": 2,
-    "flowtype/require-return-type": [
-      2,
-      "always",
-      {
-        "annotateUndefined": "never"
-      }
-    ],
-    "flowtype/require-valid-file-annotation": 2,
-    "flowtype/semi": [
-      2,
-      "always"
-    ],
+    "flowtype/no-weak-types": 0,
+    "flowtype/require-parameter-type": 0,
+    "flowtype/require-return-type": 0,
+    "flowtype/require-valid-file-annotation": 0,
+    "flowtype/semi": 0,
     "flowtype/space-after-type-colon": [
       2,
       "always"
@@ -40,10 +28,7 @@
       2,
       "never"
     ],
-    "flowtype/type-id-match": [
-      2,
-      "^([A-Z][a-z0-9]+)+Type$"
-    ],
+    "flowtype/type-id-match": 0,
     "flowtype/union-intersection-spacing": [
       2,
       "always"
