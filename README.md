@@ -10,6 +10,7 @@
 * [eslint-plugin-flowtype](#eslint-plugin-flowtype)
     * [Installation](#eslint-plugin-flowtype-installation)
     * [Configuration](#eslint-plugin-flowtype-configuration)
+        * [Shareable configurations](#eslint-plugin-flowtype-configuration-shareable-configurations)
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
     * [Rules](#eslint-plugin-flowtype-rules)
@@ -119,6 +120,29 @@ npm install eslint-plugin-flowtype
   }
 }
 ```
+
+<a name="eslint-plugin-flowtype-configuration-shareable-configurations"></a>
+### Shareable configurations
+
+<a name="eslint-plugin-flowtype-configuration-shareable-configurations-recommended"></a>
+#### Recommended
+
+This plugin exports a [recommended configuration](./src/configs/recommended.json) that enforces Flow type good practices.
+
+To enable this configuration use the extends property in your `.eslintrc` config file:
+
+```json
+{
+  "extends": [
+    "flowtype:recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ]
+}
+```
+
+See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
 <a name="eslint-plugin-flowtype-settings"></a>
 ## Settings
