@@ -1,4 +1,5 @@
-{
+/* eslint-disable */
+export default {
   "parser": "babel-eslint",
   "rules": {
     "flowtype/boolean-style": [
@@ -41,4 +42,4 @@
       "onlyFilesWithFlowAnnotation": false
     }
   }
-}
+};
