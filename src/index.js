@@ -14,6 +14,7 @@ import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
 import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
+import noDupe from './rules/noDupe';
 import recommended from './configs/recommended';
 
 export default {
@@ -25,6 +26,7 @@ export default {
     'define-flow-type': defineFlowType,
     'delimiter-dangle': delimiterDangle,
     'generic-spacing': genericSpacing,
+    'no-dupe': noDupe,
     'no-weak-types': noWeakTypes,
     'require-parameter-type': requireParameterType,
     'require-return-type': requireReturnType,
@@ -43,6 +45,7 @@ export default {
     'define-flow-type': 0,
     'delimiter-dangle': 0,
     'generic-spacing': 0,
+    'no-dupe': 0,
     'no-weak-types': 0,
     'require-parameter-type': 0,
     'require-return-type': 0,

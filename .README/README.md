@@ -140,6 +140,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
+{"gitdown": "include", "file": "./rules/no-dupe.md}
 {"gitdown": "include", "file": "./rules/no-weak-types.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
