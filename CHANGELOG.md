@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.0"></a>
+# [2.17.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.16.1...v2.17.0) (2016-09-12)
+
+
+### Features
+
+* define recommended configuration ([dc2e35b](https://github.com/gajus/eslint-plugin-flowtype/commit/dc2e35b))
+* export recommended configuration ([f7d7a21](https://github.com/gajus/eslint-plugin-flowtype/commit/f7d7a21))
+
+
+
 <a name="2.16.1"></a>
 ## [2.16.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.16.0...v2.16.1) (2016-09-09)
 
