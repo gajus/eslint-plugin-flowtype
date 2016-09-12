@@ -14,8 +14,8 @@ export default (context) => {
   const checkForDuplicates = (node) => {
     const tokens = [];
 
-      const line = sourceCode.getText(identifierNode).replace(',', '');
     _.forEach(node.properties, (identifierNode) => {
+      const line = sourceCode.getFirstToken(identifierNode).value;
 
       if (_.includes(tokens, line)) {
         report(identifierNode);
