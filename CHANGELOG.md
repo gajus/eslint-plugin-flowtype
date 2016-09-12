@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.1"></a>
+## [2.17.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.17.0...v2.17.1) (2016-09-12)
+
+
+### Bug Fixes
+
+* config file (json failing lint) ([eedcac7](https://github.com/gajus/eslint-plugin-flowtype/commit/eedcac7))
+* correct recommended config name ([35150d4](https://github.com/gajus/eslint-plugin-flowtype/commit/35150d4))
+* disable lint for one run ([3745498](https://github.com/gajus/eslint-plugin-flowtype/commit/3745498))
+
+
+
 <a name="2.17.0"></a>
 # [2.17.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.16.1...v2.17.0) (2016-09-12)
 
