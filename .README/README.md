@@ -106,7 +106,7 @@ To enable this configuration use the extends property in your `.eslintrc` config
 ```json
 {
   "extends": [
-    "flowtype:recommended"
+    "plugin:flowtype/recommended"
   ],
   "plugins": [
     "flowtype"
