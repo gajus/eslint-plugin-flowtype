@@ -27,7 +27,7 @@
   "scripts": {
     "lint": "eslint ./src ./tests",
     "test": "mocha --compilers js:babel-register ./tests/rules/index.js",
-    "build": "babel ./src --out-dir ./dist",
+    "build": "babel ./src --out-dir ./dist --copy-files",
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "documentation": "gitdown ./.README/README.md --output-file ./README.md; npm run documentation-add-assertions",
     "create-index": "create-index ./src --update-index",
