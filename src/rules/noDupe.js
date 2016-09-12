@@ -1,5 +1,4 @@
-import forEach from 'lodash/forEach';
-import includes from 'lodash/includes';
+import _ from 'lodash/';
 
 export default (context) => {
   const sourceCode = context.getSourceCode();
@@ -15,10 +14,10 @@ export default (context) => {
   const checkForDuplicates = (node) => {
     const tokens = [];
 
-    forEach(node.properties, (identifierNode) => {
       const line = sourceCode.getText(identifierNode).replace(',', '');
+    _.forEach(node.properties, (identifierNode) => {
 
-      if (includes(tokens, line)) {
+      if (_.includes(tokens, line)) {
         report(identifierNode);
       } else {
         tokens.push(line);
