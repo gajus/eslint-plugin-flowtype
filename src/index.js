@@ -14,8 +14,12 @@ import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
 import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
+import recommended from './configs/recommended.json';
 
 export default {
+  configs: {
+    recommended
+  },
   rules: {
     'boolean-style': booleanStyle,
     'define-flow-type': defineFlowType,
