@@ -15,6 +15,7 @@ import validSyntax from './rules/validSyntax';
 import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
 import noDupeKeys from './rules/noDupeKeys';
+import sortKeys from './rules/sortKeys';
 import recommended from './configs/recommended.json';
 
 export default {
@@ -32,6 +33,7 @@ export default {
     'require-return-type': requireReturnType,
     'require-valid-file-annotation': requireValidFileAnnotation,
     semi,
+    'sort-keys': sortKeys,
     'space-after-type-colon': spaceAfterTypeColon,
     'space-before-generic-bracket': spaceBeforeGenericBracket,
     'space-before-type-colon': spaceBeforeTypeColon,
@@ -50,6 +52,7 @@ export default {
     'require-parameter-type': 0,
     'require-return-type': 0,
     semi: 0,
+    'sort-keys': 0,
     'space-after-type-colon': 0,
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
