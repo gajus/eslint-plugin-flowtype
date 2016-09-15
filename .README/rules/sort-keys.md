@@ -19,7 +19,9 @@ The second option takes an object with two possible properties.
 ```js
 {
   "rules": {
-    "flowtype/sort-keys": [ 2, "asc", {
+    "flowtype/sort-keys": [
+      2,
+      "asc", {
         "caseSensitive": true,
         "natural": false
       }
