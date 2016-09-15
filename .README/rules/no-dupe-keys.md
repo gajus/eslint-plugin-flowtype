@@ -7,7 +7,7 @@ This rule mirrors ESLint's [no-dupe-keys](http://eslint.org/docs/rules/no-dupe-k
 ```js
 {
     "rules": {
-        "flowtype/no-dupe-keys": 2,
+        "flowtype/no-dupe-keys": 2
     }
 }
 ```
