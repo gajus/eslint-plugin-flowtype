@@ -78,7 +78,7 @@ export default (context) => {
             order
           },
           loc: identifierNode.loc,
-          message: 'Expected type keys to be in {{natural}}{{insensitive}}{{order}}ending order. "{{current}}" should be before "{{last}}".',
+          message: 'Expected type annotations to be in {{natural}}{{insensitive}}{{order}}ending order. "{{current}}" should be before "{{last}}".',
           node: identifierNode
         });
       }
