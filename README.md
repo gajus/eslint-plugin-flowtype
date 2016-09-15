@@ -18,6 +18,7 @@
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
@@ -842,6 +843,39 @@ type X = Promise< (string) >
 
 // Options: ["always"]
 type X = Promise< (foo), bar, (((baz))) >
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-dupe-keys"></a>
+### <code>no-dupe-keys</code>
+
+Checks for duplicate properties in Object annotations.
+
+This rule mirrors ESLint's [no-dupe-keys](http://eslint.org/docs/rules/no-dupe-keys) rule.
+
+```js
+{
+    "rules": {
+        "flowtype/no-dupe-keys": 2
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type FooType = { a: number, b: string, a: number }
+// Message: Duplicate property.
+
+type FooType = { a: number, b: string, a: string }
+// Message: Duplicate property.
+```
+
+The following patterns are not considered problems:
+
+```js
+type FooType = { a: number, b: string, c: number }
 ```
 
 
