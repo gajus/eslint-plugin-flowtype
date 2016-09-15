@@ -1,8 +1,9 @@
 import _ from 'lodash/';
+import {
+  getParameterName
+} from './../utilities';
 
 export default (context) => {
-  const sourceCode = context.getSourceCode();
-
   const report = (node) => {
     context.report({
       loc: node.loc,
@@ -12,15 +13,15 @@ export default (context) => {
   };
 
   const checkForDuplicates = (node) => {
-    const tokens = [];
+    const haystack = [];
 
     _.forEach(node.properties, (identifierNode) => {
-      const line = sourceCode.getFirstToken(identifierNode).value;
+      const needle = getParameterName(identifierNode, context);
 
-      if (_.includes(tokens, line)) {
+      if (_.includes(haystack, needle)) {
         report(identifierNode);
       } else {
-        tokens.push(line);
+        haystack.push(needle);
       }
     });
   };
