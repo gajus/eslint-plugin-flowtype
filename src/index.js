@@ -15,7 +15,7 @@ import validSyntax from './rules/validSyntax';
 import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
 import noDupeKeys from './rules/noDupeKeys';
-import recommended from './configs/recommended';
+import recommended from './configs/recommended.json';
 
 export default {
   configs: {
