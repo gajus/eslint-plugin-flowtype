@@ -178,10 +178,39 @@ const objectTypePropertyEvaluator = (context) => {
   };
 };
 
+const typeCastEvaluator = (context) => {
+  const {always} = parseOptions(context);
+
+  return (typeCastExpression) => {
+    const spaces = typeCastExpression.typeAnnotation.typeAnnotation.start - typeCastExpression.typeAnnotation.start - 1;
+
+    if (always && spaces > 1) {
+      context.report({
+        fix: spacingFixers.stripSpacesBefore(typeCastExpression.typeAnnotation.typeAnnotation, spaces - 1),
+        message: 'There must be 1 space after type cast colon.',
+        node: typeCastExpression
+      });
+    } else if (always && spaces === 0) {
+      context.report({
+        fix: spacingFixers.addSpaceBefore(typeCastExpression.typeAnnotation.typeAnnotation),
+        message: 'There must be a space after type cast colon.',
+        node: typeCastExpression
+      });
+    } else if (!always && spaces > 0) {
+      context.report({
+        fix: spacingFixers.stripSpacesBefore(typeCastExpression.typeAnnotation.typeAnnotation, spaces),
+        message: 'There must be no space after type cast colon.',
+        node: typeCastExpression
+      });
+    }
+  };
+};
+
 export default (context) => {
   return {
     ...functionEvaluators(context),
     ClassProperty: propertyEvaluator(context, 'class property'),
-    ObjectTypeProperty: objectTypePropertyEvaluator(context)
+    ObjectTypeProperty: objectTypePropertyEvaluator(context),
+    TypeCastExpression: typeCastEvaluator(context)
   };
 };

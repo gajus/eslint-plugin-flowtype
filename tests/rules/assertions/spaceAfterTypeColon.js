@@ -683,6 +683,40 @@ const OBJECT_TYPE_PROPERTIES = {
   ]
 };
 
+
+const TYPE_CAST_EXPRESSIONS = {
+  invalid: [
+    {
+      code: 'const x = ({}: {})',
+      errors: [{message: 'There must be no space after type cast colon.'}],
+      options: ['never'],
+      output: 'const x = ({}:{})'
+    },
+    {
+      code: 'const x = ({}:{})',
+      errors: [{message: 'There must be a space after type cast colon.'}],
+      options: ['always'],
+      output: 'const x = ({}: {})'
+    },
+    {
+      code: 'const x = ({}:  {})',
+      errors: [{message: 'There must be 1 space after type cast colon.'}],
+      options: ['always'],
+      output: 'const x = ({}: {})'
+    }
+  ],
+  valid: [
+    {
+      code: 'const x = ({}:{})',
+      options: ['never']
+    },
+    {
+      code: 'const x = ({}: {})',
+      options: ['always']
+    }
+  ]
+};
+
 const ALL = [
   ARROW_FUNCTION_PARAMS,
   ARROW_FUNCTION_RETURN,
@@ -690,7 +724,8 @@ const ALL = [
   FUNCTION_RETURN,
   FUNCTION_TYPE_PARAMS,
   CLASS_PROPERTIES,
-  OBJECT_TYPE_PROPERTIES
+  OBJECT_TYPE_PROPERTIES,
+  TYPE_CAST_EXPRESSIONS
 ];
 
 export default {
