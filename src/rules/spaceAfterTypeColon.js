@@ -179,26 +179,28 @@ const objectTypePropertyEvaluator = (context) => {
 };
 
 const typeCastEvaluator = (context) => {
+  const sourceCode = context.getSourceCode();
   const {always} = parseOptions(context);
 
   return (typeCastExpression) => {
-    const spaces = typeCastExpression.typeAnnotation.typeAnnotation.start - typeCastExpression.typeAnnotation.start - 1;
+    const [, firstTokenOfType] = sourceCode.getFirstTokens(typeCastExpression.typeAnnotation, 2);
+    const spaces = firstTokenOfType.start - typeCastExpression.typeAnnotation.start - 1;
 
     if (always && spaces > 1) {
       context.report({
-        fix: spacingFixers.stripSpacesBefore(typeCastExpression.typeAnnotation.typeAnnotation, spaces - 1),
+        fix: spacingFixers.stripSpacesBefore(firstTokenOfType, spaces - 1),
         message: 'There must be 1 space after type cast colon.',
         node: typeCastExpression
       });
     } else if (always && spaces === 0) {
       context.report({
-        fix: spacingFixers.addSpaceBefore(typeCastExpression.typeAnnotation.typeAnnotation),
+        fix: spacingFixers.addSpaceBefore(firstTokenOfType),
         message: 'There must be a space after type cast colon.',
         node: typeCastExpression
       });
     } else if (!always && spaces > 0) {
       context.report({
-        fix: spacingFixers.stripSpacesBefore(typeCastExpression.typeAnnotation.typeAnnotation, spaces),
+        fix: spacingFixers.stripSpacesBefore(firstTokenOfType, spaces),
         message: 'There must be no space after type cast colon.',
         node: typeCastExpression
       });

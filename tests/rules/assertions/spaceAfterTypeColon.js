@@ -703,6 +703,24 @@ const TYPE_CAST_EXPRESSIONS = {
       errors: [{message: 'There must be 1 space after type cast colon.'}],
       options: ['always'],
       output: 'const x = ({}: {})'
+    },
+    {
+      code: '((x): (string))',
+      errors: [{message: 'There must be no space after type cast colon.'}],
+      options: ['never'],
+      output: '((x):(string))'
+    },
+    {
+      code: '((x):(string))',
+      errors: [{message: 'There must be a space after type cast colon.'}],
+      options: ['always'],
+      output: '((x): (string))'
+    },
+    {
+      code: '((x):  (string))',
+      errors: [{message: 'There must be 1 space after type cast colon.'}],
+      options: ['always'],
+      output: '((x): (string))'
     }
   ],
   valid: [
@@ -712,6 +730,14 @@ const TYPE_CAST_EXPRESSIONS = {
     },
     {
       code: 'const x = ({}: {})',
+      options: ['always']
+    },
+    {
+      code: '((x):(string))',
+      options: ['never']
+    },
+    {
+      code: '((x): (string))',
       options: ['always']
     }
   ]
