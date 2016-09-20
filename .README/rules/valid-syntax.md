@@ -1,5 +1,5 @@
 ### `valid-syntax`
 
-Checks for simple Flow syntax errors.
+**Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
-<!-- assertions validSyntax -->
+Checks for simple Flow syntax errors.
