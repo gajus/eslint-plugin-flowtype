@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.19.0"></a>
+# [2.19.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.18.2...v2.19.0) (2016-09-20)
+
+
+### Bug Fixes
+
+* parens in TypeCastExpression ([0e0081f](https://github.com/gajus/eslint-plugin-flowtype/commit/0e0081f))
+
+### Features
+
+* add rule `sort-keys` (fixes #104) ([f6b8deb](https://github.com/gajus/eslint-plugin-flowtype/commit/f6b8deb)), closes [#104](https://github.com/gajus/eslint-plugin-flowtype/issues/104)
+* check TypeCastExpressions in type colon spacing rules ([98839f0](https://github.com/gajus/eslint-plugin-flowtype/commit/98839f0))
+
+
+
 <a name="2.18.2"></a>
 ## [2.18.2](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.18.1...v2.18.2) (2016-09-18)
 
