@@ -24,6 +24,7 @@
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
+        * [`sort-keys`](#eslint-plugin-flowtype-rules-sort-keys)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
@@ -1491,6 +1492,109 @@ type FooType = {}
 
 
 
+<a name="eslint-plugin-flowtype-rules-sort-keys"></a>
+### <code>sort-keys</code>
+
+Enforces sorting of Object annotations.
+
+This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
+
+<a name="eslint-plugin-flowtype-rules-sort-keys-options"></a>
+#### Options
+
+The first option specifies sort order.
+
+* `"asc"` (default) - enforce ascending sort order.
+* `"desc"` - enforce descending sort order.
+
+The second option takes an object with two possible properties.
+
+* `caseSensitive` - if `true`, enforce case-sensitive sort order. Default is `true`.
+* `natural` - if `true`, enforce [natural sort order](https://en.wikipedia.org/wiki/Natural_sort_order). Default is `false`.
+
+```js
+{
+  "rules": {
+    "flowtype/sort-keys": [
+      2,
+      "asc", {
+        "caseSensitive": true,
+        "natural": false
+      }
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type FooType = { a: number, c: number, b: string }
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+type FooType = { a: number, b: number, C: number }
+// Message: Expected type annotations to be in ascending order. "C" should be before "b".
+
+type FooType = { 1: number, 2: number, 10: number }
+// Message: Expected type annotations to be in ascending order. "10" should be before "2".
+
+// Options: ["desc"]
+type FooType = { a: number, b: number }
+// Message: Expected type annotations to be in descending order. "b" should be before "a".
+
+// Options: ["desc"]
+type FooType = { C: number, b: number, a: string }
+// Message: Expected type annotations to be in descending order. "b" should be before "C".
+
+// Options: ["desc"]
+type FooType = { 10: number, 2: number, 1: number }
+// Message: Expected type annotations to be in descending order. "2" should be before "10".
+
+// Options: ["asc",{"caseSensitive":false}]
+type FooType = { a: number, c: number, C: number, b: string }
+// Message: Expected type annotations to be in insensitive ascending order. "b" should be before "C".
+
+// Options: ["asc",{"caseSensitive":false}]
+type FooType = { a: number, C: number, c: number, b: string }
+// Message: Expected type annotations to be in insensitive ascending order. "b" should be before "c".
+
+// Options: ["asc",{"natural":true}]
+type FooType = { 1: number, 10: number, 2: boolean }
+// Message: Expected type annotations to be in natural ascending order. "2" should be before "10".
+```
+
+The following patterns are not considered problems:
+
+```js
+type FooType = { a: number }
+
+type FooType = { a: number, b: number, c: (boolean | number) }
+
+type FooType = { C: number, a: string, b: foo }
+
+type FooType = { 1: number, 10: number, 2: boolean }
+
+// Options: ["desc"]
+type FooType = { c: number, b: number, a: number }
+
+// Options: ["desc"]
+type FooType = { b: string, a: {}, C: number }
+
+// Options: ["desc"]
+type FooType = { 2: number, 10: number, 1: boolean }
+
+// Options: ["asc",{"caseSensitive":false}]
+type FooType = { a: number, b: number, c: number, C: number }
+
+// Options: ["asc",{"caseSensitive":false}]
+type FooType = { a: number, b: number, C: number, c: number }
+
+// Options: ["asc",{"natural":true}]
+type FooType = { 1:number, 2: number, 10: number }
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-space-after-type-colon"></a>
 ### <code>space-after-type-colon</code>
 
@@ -1740,6 +1844,30 @@ type X = { get:  () => A; }
 
 type X = { get:  <X>() => A; }
 // Message: There must be 1 space after "get" type annotation colon.
+
+// Options: ["never"]
+const x = ({}: {})
+// Message: There must be no space after type cast colon.
+
+// Options: ["always"]
+const x = ({}:{})
+// Message: There must be a space after type cast colon.
+
+// Options: ["always"]
+const x = ({}:  {})
+// Message: There must be 1 space after type cast colon.
+
+// Options: ["never"]
+((x): (string))
+// Message: There must be no space after type cast colon.
+
+// Options: ["always"]
+((x):(string))
+// Message: There must be a space after type cast colon.
+
+// Options: ["always"]
+((x):  (string))
+// Message: There must be 1 space after type cast colon.
 ```
 
 The following patterns are not considered problems:
@@ -1928,6 +2056,18 @@ type X = { get:() => A; }
 
 // Options: ["never"]
 type X = { get:<X>() => A; }
+
+// Options: ["never"]
+const x = ({}:{})
+
+// Options: ["always"]
+const x = ({}: {})
+
+// Options: ["never"]
+((x):(string))
+
+// Options: ["always"]
+((x): (string))
 ```
 
 
@@ -2147,6 +2287,30 @@ type X = { foo?  : string }
 // Options: ["always"]
 type X = { foo   ?: string }
 // Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["never"]
+const x = ({} :{})
+// Message: There must be no space before type cast colon.
+
+// Options: ["always"]
+const x = ({}:{})
+// Message: There must be a space before type cast colon.
+
+// Options: ["always"]
+const x = ({}  :{})
+// Message: There must be 1 space before type cast colon.
+
+// Options: ["never"]
+((x) : string)
+// Message: There must be no space before type cast colon.
+
+// Options: ["always"]
+((x): string)
+// Message: There must be a space before type cast colon.
+
+// Options: ["always"]
+((x)  : string)
+// Message: There must be 1 space before type cast colon.
 ```
 
 The following patterns are not considered problems:
@@ -2271,6 +2435,18 @@ type X = { foo   ?: string }
 
 // Options: ["always"]
 type X = { foo? : string }
+
+// Options: ["never"]
+const x = ({}:{})
+
+// Options: ["always"]
+const x = ({} :{})
+
+// Options: ["never"]
+((x): string)
+
+// Options: ["always"]
+((x) : string)
 ```
 
 
@@ -2525,26 +2701,7 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 <a name="eslint-plugin-flowtype-rules-valid-syntax"></a>
 ### <code>valid-syntax</code>
 
+**Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
+
 Checks for simple Flow syntax errors.
-
-The following patterns are considered problems:
-
-```js
-function x(foo = "1": string) {}
-// Message: "foo" parameter type annotation must be placed on left-hand side of assignment.
-
-function x(foo = bar(): Type, baz = []: []) {}
-// Message: "foo" parameter type annotation must be placed on left-hand side of assignment.
-// Message: "baz" parameter type annotation must be placed on left-hand side of assignment.
-```
-
-The following patterns are not considered problems:
-
-```js
-function x(foo: string = "1") {}
-
-function x(foo: Type = bar()) {}
-```
-
-
 
