@@ -58,6 +58,34 @@ export default {
       options: [
         'always'
       ]
+    },
+    {
+      code: '/* @flow */',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `// @flow`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line'
+        }
+      ]
+    },
+    {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `/* @flow */`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ]
     }
   ],
   valid: [
@@ -93,6 +121,24 @@ export default {
           onlyFilesWithFlowAnnotation: true
         }
       }
+    },
+    {
+      code: '// @flow',
+      options: [
+        'always',
+        {
+          annotationStyle: 'line'
+        }
+      ]
+    },
+    {
+      code: '/* @flow */',
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ]
     }
   ]
 };
