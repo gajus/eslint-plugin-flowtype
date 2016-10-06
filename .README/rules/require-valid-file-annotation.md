@@ -1,19 +1,42 @@
 ### `require-valid-file-annotation`
 
-Makes sure that files have a valid `@flow` annotation. It will report annotations with typos (such as `// @floww`) or not placed at the top of the file, and optionaly missing annotations.
+This rule validates Flow file annotations.
+
+This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
 #### Options
 
-By default, this rule won't complain if there is no `@flow` annotation at all in the file. Passing a `"always"` option reports files missing those annotations as well.
+The rule has a string option:
+
+* `"never"` (default): Never report files that are missing an `@flow` annotation.
+* `"always"`: Always report files that are missing an `@flow` annotation
+
+This rule has an object option:
+
+* `"annotationStyle"` - Enforce a consistant file annotation style.
+    * `"none"` (default): Either annotation style is accepted.
+    * `"line"`: Require single line annotations (i.e. `// @flow`).
+    * `"block"`: Require block annotations (i.e. `/* @flow */`).
 
 ```js
 {
-    "rules": {
-        "flowtype/require-valid-file-annotation": [
-            2,
-            "always"
-        ]
-    }
+  "rules": {
+    "flowtype/require-valid-file-annotation": [
+      2,
+      "always"
+    ]
+  }
+}
+
+{
+  "rules": {
+    "flowtype/require-valid-file-annotation": [
+      2,
+      "always", {
+        "annotationStyle": "block"
+      }
+    ]
+  }
 }
 ```
 
