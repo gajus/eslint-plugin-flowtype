@@ -1,21 +1,9 @@
-import {spacingFixers} from '../utilities';
+import {spacingFixers, getTokenAfterParens} from '../utilities';
 
 export default (context) => {
   const sourceCode = context.getSourceCode();
 
   const always = (context.options[0] || 'always') === 'always';
-
-  const getTokenAfterParens = (node) => {
-    let sep;
-
-    sep = sourceCode.getTokenAfter(node);
-
-    while (sep.type === 'Punctuator' && sep.value === ')') {
-      sep = sourceCode.getTokenAfter(sep);
-    }
-
-    return sep;
-  };
 
   const check = (node) => {
     node.types.forEach((type, index) => {
@@ -23,7 +11,7 @@ export default (context) => {
         return;
       }
 
-      const separator = getTokenAfterParens(type);
+      const separator = getTokenAfterParens(sourceCode, type);
       const endOfType = sourceCode.getTokenBefore(separator);
       const nextType = sourceCode.getTokenAfter(separator);
 

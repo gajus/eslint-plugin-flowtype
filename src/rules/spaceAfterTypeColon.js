@@ -3,7 +3,9 @@ import {
     getParameterName,
     iterateFunctionNodes,
     spacingFixers,
-    quoteName
+    quoteName,
+    getTokenAfterParens,
+    getTokenBeforeParens
 } from './../utilities';
 
 const parseOptions = (context) => {
@@ -189,6 +191,75 @@ const objectTypePropertyEvaluator = (context) => {
   };
 };
 
+const objectTypeIndexerEvaluator = (context) => {
+  const {always} = parseOptions(context);
+
+  const sourceCode = context.getSourceCode();
+
+  // type X = { [a: b]: c }
+  //              ^
+  const checkIndexerKey = (objectTypeIndexer) => {
+    // babel-eslint deletes ObjectTypeIndexer's id, have to check the raw tokens instead
+    const colonToken = getTokenBeforeParens(sourceCode, objectTypeIndexer.key);
+    const tokenAfterColon = sourceCode.getTokenAfter(colonToken);
+
+    const spaces = tokenAfterColon.start - colonToken.end;
+
+    if (always && spaces > 1) {
+      context.report({
+        fix: spacingFixers.stripSpacesAfter(colonToken, spaces - 1),
+        message: 'There must be 1 space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    } else if (always && spaces === 0) {
+      context.report({
+        fix: spacingFixers.addSpaceAfter(colonToken),
+        message: 'There must be a space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    } else if (!always && spaces > 0) {
+      context.report({
+        fix: spacingFixers.stripSpacesAfter(colonToken, spaces),
+        message: 'There must be no space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    }
+  };
+
+  // type X = { [a: b]: c }
+  //                  ^
+  const checkIndexerValue = (objectTypeIndexer) => {
+    const [colonToken, tokenAfterColon] = sourceCode.getTokensAfter(getTokenAfterParens(sourceCode, objectTypeIndexer.key), 2);
+
+    const spaces = tokenAfterColon.start - colonToken.end;
+
+    if (always && spaces > 1) {
+      context.report({
+        fix: spacingFixers.stripSpacesAfter(colonToken, spaces - 1),
+        message: 'There must be 1 space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    } else if (always && spaces === 0) {
+      context.report({
+        fix: spacingFixers.addSpaceAfter(colonToken),
+        message: 'There must be a space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    } else if (!always && spaces > 0) {
+      context.report({
+        fix: spacingFixers.stripSpacesAfter(colonToken, spaces),
+        message: 'There must be no space after type annotation colon.',
+        node: objectTypeIndexer
+      });
+    }
+  };
+
+  return (objectTypeIndexer) => {
+    checkIndexerKey(objectTypeIndexer);
+    checkIndexerValue(objectTypeIndexer);
+  };
+};
+
 const typeCastEvaluator = (context) => {
   const sourceCode = context.getSourceCode();
   const {always} = parseOptions(context);
@@ -223,6 +294,7 @@ export default (context) => {
   return {
     ...functionEvaluators(context),
     ClassProperty: propertyEvaluator(context, 'class property'),
+    ObjectTypeIndexer: objectTypeIndexerEvaluator(context),
     ObjectTypeProperty: objectTypePropertyEvaluator(context),
     TypeCastExpression: typeCastEvaluator(context)
   };
