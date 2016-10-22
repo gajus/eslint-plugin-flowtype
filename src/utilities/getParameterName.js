@@ -18,7 +18,17 @@ export default (identifierNode, context) => {
   }
 
   if (identifierNode.type === 'ObjectTypeProperty') {
-    return context.getSourceCode().getFirstToken(identifierNode, identifierNode.static ? 1 : 0).value;
+    let tokenIndex = 0; // eslint-disable-line init-declarations
+
+    if (identifierNode.static) {
+      tokenIndex++;
+    }
+
+    if (identifierNode.variance) {
+      tokenIndex++;
+    }
+
+    return context.getSourceCode().getFirstToken(identifierNode, tokenIndex).value;
   }
 
   if (identifierNode.type === 'FunctionTypeParam') {

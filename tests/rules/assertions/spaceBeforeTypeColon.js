@@ -347,6 +347,42 @@ const CLASS_PROPERTIES = {
       errors: [{message: 'There must be a space before "bar" type annotation colon.'}],
       options: ['always'],
       output: 'declare class Foo { static bar : number; }'
+    },
+    {
+      code: 'class X { +foo: string }',
+      errors: [{message: 'There must be a space before "foo" class property type annotation colon.'}],
+      options: ['always'],
+      output: 'class X { +foo : string }'
+    },
+    {
+      code: 'class X { +foo  : string }',
+      errors: [{message: 'There must be 1 space before "foo" class property type annotation colon.'}],
+      options: ['always'],
+      output: 'class X { +foo : string }'
+    },
+    {
+      code: 'class X { +foo : string }',
+      errors: [{message: 'There must be no space before "foo" class property type annotation colon.'}],
+      options: ['never'],
+      output: 'class X { +foo: string }'
+    },
+    {
+      code: 'class X { static +foo: string }',
+      errors: [{message: 'There must be a space before "foo" class property type annotation colon.'}],
+      options: ['always'],
+      output: 'class X { static +foo : string }'
+    },
+    {
+      code: 'class X { static +foo  : string }',
+      errors: [{message: 'There must be 1 space before "foo" class property type annotation colon.'}],
+      options: ['always'],
+      output: 'class X { static +foo : string }'
+    },
+    {
+      code: 'class X { static +foo : string }',
+      errors: [{message: 'There must be no space before "foo" class property type annotation colon.'}],
+      options: ['never'],
+      output: 'class X { static +foo: string }'
     }
   ],
   valid: [
@@ -395,6 +431,20 @@ const CLASS_PROPERTIES = {
     },
     {
       code: 'declare class Foo { static bar : number; }',
+      options: ['always']
+    },
+    {
+      code: 'class X { +foo: string }'
+    },
+    {
+      code: 'class X { static +foo: string }'
+    },
+    {
+      code: 'class X { +foo : string }',
+      options: ['always']
+    },
+    {
+      code: 'class X { static +foo : string }',
       options: ['always']
     }
   ]
@@ -447,6 +497,42 @@ const OBJECT_TYPE_PROPERTIES = {
       errors: [{message: 'There must be a space before "foo" type annotation colon.'}],
       options: ['always'],
       output: 'type X = { foo   ? : string }'
+    },
+    {
+      code: 'type X = { +foo: string }',
+      errors: [{message: 'There must be a space before "foo" type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +foo : string }'
+    },
+    {
+      code: 'type X = { +foo  : string }',
+      errors: [{message: 'There must be 1 space before "foo" type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +foo : string }'
+    },
+    {
+      code: 'type X = { +foo : string }',
+      errors: [{message: 'There must be no space before "foo" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { +foo: string }'
+    },
+    {
+      code: 'type X = { +foo?: string }',
+      errors: [{message: 'There must be a space before "foo" type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +foo? : string }'
+    },
+    {
+      code: 'type X = { +foo?  : string }',
+      errors: [{message: 'There must be 1 space before "foo" type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +foo? : string }'
+    },
+    {
+      code: 'type X = { +foo? : string }',
+      errors: [{message: 'There must be no space before "foo" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { +foo?: string }'
     }
   ],
   valid: [
@@ -465,6 +551,20 @@ const OBJECT_TYPE_PROPERTIES = {
     },
     {
       code: 'type X = { foo? : string }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { +foo: string }'
+    },
+    {
+      code: 'type X = { +foo?: string }'
+    },
+    {
+      code: 'type X = { +foo : string }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { +foo? : string }',
       options: ['always']
     }
   ]
