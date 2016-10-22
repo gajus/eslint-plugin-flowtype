@@ -90,17 +90,28 @@ const objectTypePropertyEvaluator = (context) => {
   const sourceCode = context.getSourceCode();
 
   const getFirstTokens = (objectTypeProperty) => {
-    const tokens = sourceCode.getFirstTokens(objectTypeProperty, 3);
+    const tokens = sourceCode.getFirstTokens(objectTypeProperty, 4);
 
-    if (objectTypeProperty.optional || objectTypeProperty.static) {
-      return [tokens[1], tokens[2]];
-    } else {
-      return [tokens[0], tokens[1]];
+    let tokenIndex = 0; // eslint-disable-line init-declarations
+
+    if (objectTypeProperty.optional) {
+      tokenIndex++;
     }
+
+    if (objectTypeProperty.static) {
+      tokenIndex++;
+    }
+
+    if (objectTypeProperty.variance) {
+      tokenIndex++;
+    }
+
+
+    return [tokens[tokenIndex], tokens[tokenIndex + 1]];
   };
 
   return (objectTypeProperty) => {
-        // tokenBeforeColon can be identifier, or a ? token if is optional
+    // tokenBeforeColon can be identifier, or a ? token if is optional
     const [tokenBeforeColon, colon] = getFirstTokens(objectTypeProperty);
     const spaces = colon.start - tokenBeforeColon.end;
 

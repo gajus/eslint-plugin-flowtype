@@ -476,6 +476,38 @@ const CLASS_PROPERTIES = {
       errors: [{message: 'There must be no space after "foo" type annotation colon.'}],
       options: ['never'],
       output: 'declare class X { static foo :number }'
+    },
+    {
+      code: 'class X { +foo:string }',
+      errors: [{message: 'There must be a space after "foo" class property type annotation colon.'}],
+      output: 'class X { +foo: string }'
+    },
+    {
+      code: 'class X { +foo:  string }',
+      errors: [{message: 'There must be 1 space after "foo" class property type annotation colon.'}],
+      output: 'class X { +foo: string }'
+    },
+    {
+      code: 'class X { +foo: string }',
+      errors: [{message: 'There must be no space after "foo" class property type annotation colon.'}],
+      options: ['never'],
+      output: 'class X { +foo:string }'
+    },
+    {
+      code: 'class X { static +foo:string }',
+      errors: [{message: 'There must be a space after "foo" class property type annotation colon.'}],
+      output: 'class X { static +foo: string }'
+    },
+    {
+      code: 'class X { static +foo:  string }',
+      errors: [{message: 'There must be 1 space after "foo" class property type annotation colon.'}],
+      output: 'class X { static +foo: string }'
+    },
+    {
+      code: 'class X { static +foo: string }',
+      errors: [{message: 'There must be no space after "foo" class property type annotation colon.'}],
+      options: ['never'],
+      output: 'class X { static +foo:string }'
     }
   ],
   valid: [
@@ -511,6 +543,20 @@ const CLASS_PROPERTIES = {
     },
     {
       code: 'declare class X { static foo :number }',
+      options: ['never']
+    },
+    {
+      code: 'class X { +foo: string }'
+    },
+    {
+      code: 'class X { static +foo: string }'
+    },
+    {
+      code: 'class X { +foo:string }',
+      options: ['never']
+    },
+    {
+      code: 'class X { static +foo:string }',
       options: ['never']
     }
   ]
@@ -618,6 +664,38 @@ const OBJECT_TYPE_PROPERTIES = {
       code: 'type X = { get:  <X>() => A; }',
       errors: [{message: 'There must be 1 space after "get" type annotation colon.'}],
       output: 'type X = { get: <X>() => A; }'
+    },
+    {
+      code: 'type X = { +foo:string }',
+      errors: [{message: 'There must be a space after "foo" type annotation colon.'}],
+      output: 'type X = { +foo: string }'
+    },
+    {
+      code: 'type X = { +foo:  string }',
+      errors: [{message: 'There must be 1 space after "foo" type annotation colon.'}],
+      output: 'type X = { +foo: string }'
+    },
+    {
+      code: 'type X = { +foo: string }',
+      errors: [{message: 'There must be no space after "foo" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { +foo:string }'
+    },
+    {
+      code: 'type X = { +foo?:string }',
+      errors: [{message: 'There must be a space after "foo" type annotation colon.'}],
+      output: 'type X = { +foo?: string }'
+    },
+    {
+      code: 'type X = { +foo?:  string }',
+      errors: [{message: 'There must be 1 space after "foo" type annotation colon.'}],
+      output: 'type X = { +foo?: string }'
+    },
+    {
+      code: 'type X = { +foo?: string }',
+      errors: [{message: 'There must be no space after "foo" type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { +foo?:string }'
     }
   ],
   valid: [
@@ -678,6 +756,20 @@ const OBJECT_TYPE_PROPERTIES = {
     },
     {
       code: 'type X = { get:<X>() => A; }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { +foo: string }'
+    },
+    {
+      code: 'type X = { +foo?: string }'
+    },
+    {
+      code: 'type X = { +foo:string }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { +foo?:string }',
       options: ['never']
     }
   ]

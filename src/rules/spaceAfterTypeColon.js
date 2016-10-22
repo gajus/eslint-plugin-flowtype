@@ -132,11 +132,22 @@ const objectTypePropertyEvaluator = (context) => {
   const sourceCode = context.getSourceCode();
 
   const getColon = (objectTypeProperty) => {
-    if (objectTypeProperty.optional || objectTypeProperty.static) {
-      return sourceCode.getFirstToken(objectTypeProperty, 2);
-    } else {
-      return sourceCode.getFirstToken(objectTypeProperty, 1);
+    let tokenIndex = 1; // eslint-disable-line init-declarations
+
+    if (objectTypeProperty.optional) {
+      tokenIndex++;
     }
+
+    if (objectTypeProperty.static) {
+      tokenIndex++;
+    }
+
+    if (objectTypeProperty.variance) {
+      tokenIndex++;
+    }
+
+
+    return sourceCode.getFirstToken(objectTypeProperty, tokenIndex);
   };
 
   return (objectTypeProperty) => {
