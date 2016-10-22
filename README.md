@@ -1819,6 +1819,26 @@ declare class X { static foo :number }
 declare class X { static foo : number }
 // Message: There must be no space after "foo" type annotation colon.
 
+class X { +foo:string }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+class X { +foo:  string }
+// Message: There must be 1 space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { +foo: string }
+// Message: There must be no space after "foo" class property type annotation colon.
+
+class X { static +foo:string }
+// Message: There must be a space after "foo" class property type annotation colon.
+
+class X { static +foo:  string }
+// Message: There must be 1 space after "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { static +foo: string }
+// Message: There must be no space after "foo" class property type annotation colon.
+
 type X = { foo:string }
 // Message: There must be a space after "foo" type annotation colon.
 
@@ -1881,6 +1901,26 @@ type X = { get:  () => A; }
 
 type X = { get:  <X>() => A; }
 // Message: There must be 1 space after "get" type annotation colon.
+
+type X = { +foo:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+type X = { +foo:  string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { +foo: string }
+// Message: There must be no space after "foo" type annotation colon.
+
+type X = { +foo?:string }
+// Message: There must be a space after "foo" type annotation colon.
+
+type X = { +foo?:  string }
+// Message: There must be 1 space after "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { +foo?: string }
+// Message: There must be no space after "foo" type annotation colon.
 
 // Options: ["never"]
 const x = ({}: {})
@@ -2052,6 +2092,16 @@ declare class X { static foo : number }
 // Options: ["never"]
 declare class X { static foo :number }
 
+class X { +foo: string }
+
+class X { static +foo: string }
+
+// Options: ["never"]
+class X { +foo:string }
+
+// Options: ["never"]
+class X { static +foo:string }
+
 type X = { foo: string }
 
 // Options: ["never"]
@@ -2093,6 +2143,16 @@ type X = { get:() => A; }
 
 // Options: ["never"]
 type X = { get:<X>() => A; }
+
+type X = { +foo: string }
+
+type X = { +foo?: string }
+
+// Options: ["never"]
+type X = { +foo:string }
+
+// Options: ["never"]
+type X = { +foo?:string }
 
 // Options: ["never"]
 const x = ({}:{})
@@ -2295,6 +2355,30 @@ declare class Foo { static bar:number; }
 declare class Foo { static bar: number; }
 // Message: There must be a space before "bar" type annotation colon.
 
+// Options: ["always"]
+class X { +foo: string }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { +foo  : string }
+// Message: There must be 1 space before "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { +foo : string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static +foo: string }
+// Message: There must be a space before "foo" class property type annotation colon.
+
+// Options: ["always"]
+class X { static +foo  : string }
+// Message: There must be 1 space before "foo" class property type annotation colon.
+
+// Options: ["never"]
+class X { static +foo : string }
+// Message: There must be no space before "foo" class property type annotation colon.
+
 type X = { foo : string }
 // Message: There must be no space before "foo" type annotation colon.
 
@@ -2324,6 +2408,30 @@ type X = { foo?  : string }
 // Options: ["always"]
 type X = { foo   ?: string }
 // Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { +foo: string }
+// Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { +foo  : string }
+// Message: There must be 1 space before "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { +foo : string }
+// Message: There must be no space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { +foo?: string }
+// Message: There must be a space before "foo" type annotation colon.
+
+// Options: ["always"]
+type X = { +foo?  : string }
+// Message: There must be 1 space before "foo" type annotation colon.
+
+// Options: ["never"]
+type X = { +foo? : string }
+// Message: There must be no space before "foo" type annotation colon.
 
 // Options: ["never"]
 const x = ({} :{})
@@ -2461,6 +2569,16 @@ declare class Foo { static bar: number; }
 // Options: ["always"]
 declare class Foo { static bar : number; }
 
+class X { +foo: string }
+
+class X { static +foo: string }
+
+// Options: ["always"]
+class X { +foo : string }
+
+// Options: ["always"]
+class X { static +foo : string }
+
 type X = { foo: string }
 
 // Options: ["always"]
@@ -2472,6 +2590,16 @@ type X = { foo   ?: string }
 
 // Options: ["always"]
 type X = { foo? : string }
+
+type X = { +foo: string }
+
+type X = { +foo?: string }
+
+// Options: ["always"]
+type X = { +foo : string }
+
+// Options: ["always"]
+type X = { +foo? : string }
 
 // Options: ["never"]
 const x = ({}:{})
