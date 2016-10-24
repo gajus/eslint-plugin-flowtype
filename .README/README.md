@@ -51,6 +51,10 @@ npm install eslint-plugin-flowtype
       "never"
     ],
     "flowtype/no-weak-types": 2,
+    "flowtype/object-type-delimiter": [
+      2,
+      "comma"
+    ],
     "flowtype/require-parameter-type": 2,
     "flowtype/require-return-type": [
       2,
@@ -142,6 +146,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
 {"gitdown": "include", "file": "./rules/no-weak-types.md"}
+{"gitdown": "include", "file": "./rules/object-type-delimiter.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}

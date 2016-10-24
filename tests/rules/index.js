@@ -13,6 +13,7 @@ const reportingRules = [
   'generic-spacing',
   'no-dupe-keys',
   'no-weak-types',
+  'object-type-delimiter',
   'require-parameter-type',
   'require-return-type',
   'require-valid-file-annotation',

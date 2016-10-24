@@ -16,6 +16,7 @@ import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
 import noDupeKeys from './rules/noDupeKeys';
 import sortKeys from './rules/sortKeys';
+import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import recommended from './configs/recommended.json';
 
 export default {
@@ -29,6 +30,7 @@ export default {
     'generic-spacing': genericSpacing,
     'no-dupe-keys': noDupeKeys,
     'no-weak-types': noWeakTypes,
+    'object-type-delimiter': objectTypeDelimiter,
     'require-parameter-type': requireParameterType,
     'require-return-type': requireReturnType,
     'require-valid-file-annotation': requireValidFileAnnotation,
@@ -49,6 +51,7 @@ export default {
     'generic-spacing': 0,
     'no-dupe-keys': 0,
     'no-weak-types': 0,
+    'object-type-delimiter': 0,
     'require-parameter-type': 0,
     'require-return-type': 0,
     semi: 0,
