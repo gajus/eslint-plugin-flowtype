@@ -20,6 +20,7 @@
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
+        * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
@@ -79,6 +80,10 @@ npm install eslint-plugin-flowtype
       "never"
     ],
     "flowtype/no-weak-types": 2,
+    "flowtype/object-type-delimiter": [
+      2,
+      "comma"
+    ],
     "flowtype/require-parameter-type": 2,
     "flowtype/require-return-type": [
       2,
@@ -1050,6 +1055,63 @@ type X = any; type Y = Object
 
 // Options: [{"Function":false}]
 type X = Function
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-object-type-delimiter"></a>
+### <code>object-type-delimiter</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces consistent separators between properties in Flow object types.
+
+This rule takes one argument.
+
+If it is `'comma'` then a problem is raised when using `;` as a separator.
+
+If it is `'semicolon'` then a problem is raised when using `,` as a separator.
+
+The default value is `'comma'`.
+
+_This rule is ported from `babel/flow-object-type`, however the default option was changed._
+
+The following patterns are considered problems:
+
+```js
+// Options: ["semicolon"]
+type Foo = { a: Foo, b: Bar }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+type Foo = { a: Foo; b: Bar }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
+declare class Foo { a: Foo, }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+declare class Foo { a: Foo; }
+// Message: Prefer commas to semicolons in object and class types
+```
+
+The following patterns are not considered problems:
+
+```js
+// Options: ["semicolon"]
+type Foo = { a: Foo; b: Bar }
+
+// Options: ["comma"]
+type Foo = { a: Foo, b: Bar }
+
+type Foo = { a: Foo, b: Bar }
+
+// Options: ["semicolon"]
+declare class Foo { a: Foo; }
+
+// Options: ["comma"]
+declare class Foo { a: Foo, }
 ```
 
 
