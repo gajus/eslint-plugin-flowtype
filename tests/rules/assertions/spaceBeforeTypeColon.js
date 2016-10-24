@@ -570,6 +570,142 @@ const OBJECT_TYPE_PROPERTIES = {
   ]
 };
 
+const OBJECT_TYPE_INDEXERS = {
+  invalid: [
+    // [id:key]: value
+    //    ^
+    {
+      code: 'type X = { [a: b] : c }',
+      errors: [{message: 'There must be a space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { [a : b] : c }'
+    },
+    {
+      code: 'type X = { [a : b]: c }',
+      errors: [{message: 'There must be no space before type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { [a: b]: c }'
+    },
+    {
+      code: 'type X = { [a  : b] : c }',
+      errors: [{message: 'There must be 1 space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { [a : b] : c }'
+    },
+    {
+      code: 'type X = { +[a:b] : c }',
+      errors: [{message: 'There must be a space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +[a :b] : c }'
+    },
+    {
+      code: 'type X = { +[a : b]: c }',
+      errors: [{message: 'There must be no space before type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { +[a: b]: c }'
+    },
+    {
+      code: 'type X = { +[a  : b] : c }',
+      errors: [{message: 'There must be 1 space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { +[a : b] : c }'
+    },
+    // [id:key]: value
+    //         ^
+    {
+      code: 'type X = { [a : b]: c }',
+      errors: [{message: 'There must be a space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { [a : b] : c }'
+    },
+    {
+      code: 'type X = { [a: b] : c }',
+      errors: [{message: 'There must be no space before type annotation colon.'}],
+      options: ['never'],
+      output: 'type X = { [a: b]: c }'
+    },
+    {
+      code: 'type X = { [a : b]  : c }',
+      errors: [{message: 'There must be 1 space before type annotation colon.'}],
+      options: ['always'],
+      output: 'type X = { [a : b] : c }'
+    },
+    // [id:key]: value
+    //    ^    ^
+    {
+      code: 'type X = { [a:b]:c }',
+      errors: [
+        {message: 'There must be a space before type annotation colon.'},
+        {message: 'There must be a space before type annotation colon.'}
+      ],
+      options: ['always'],
+      output: 'type X = { [a :b] :c }'
+    },
+    {
+      code: 'type X = { [a : b] : c }',
+      errors: [
+        {message: 'There must be no space before type annotation colon.'},
+        {message: 'There must be no space before type annotation colon.'}
+      ],
+      options: ['never'],
+      output: 'type X = { [a: b]: c }'
+    },
+    {
+      code: 'type X = { [a  : b]  : c }',
+      errors: [
+        {message: 'There must be 1 space before type annotation colon.'},
+        {message: 'There must be 1 space before type annotation colon.'}
+      ],
+      options: ['always'],
+      output: 'type X = { [a : b] : c }'
+    },
+    {
+      code: 'type X = { [a:(b)]:(c) }',
+      errors: [
+        {message: 'There must be a space before type annotation colon.'},
+        {message: 'There must be a space before type annotation colon.'}
+      ],
+      options: ['always'],
+      output: 'type X = { [a :(b)] :(c) }'
+    },
+    {
+      code: 'type X = { [a : (b)] : (c) }',
+      errors: [
+        {message: 'There must be no space before type annotation colon.'},
+        {message: 'There must be no space before type annotation colon.'}
+      ],
+      options: ['never'],
+      output: 'type X = { [a: (b)]: (c) }'
+    }
+  ],
+  valid: [
+    {
+      code: 'type X = { [a : b] : c }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [a:b]:c }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { +[a : b] : c }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { +[a:b]:c }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { [a : (b)] : (c) }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [a:(b)]:(c) }',
+      options: ['never']
+    }
+  ]
+};
+
 const TYPE_CAST_EXPRESSIONS = {
   invalid: [
     {
@@ -637,6 +773,7 @@ const ALL = [
   FUNCTION_TYPE_PARAMS,
   CLASS_PROPERTIES,
   OBJECT_TYPE_PROPERTIES,
+  OBJECT_TYPE_INDEXERS,
   TYPE_CAST_EXPRESSIONS
 ];
 
