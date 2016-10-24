@@ -122,8 +122,39 @@ const ARROW_FUNCTION_PARAMS = {
 
 const ARROW_FUNCTION_RETURN = {
   invalid: [
+    {
+      code: '() : x => {}',
+      errors: [{message: 'There must be no space before return type colon.'}],
+      output: '(): x => {}'
+    },
+    {
+      code: '(): x => {}',
+      errors: [{message: 'There must be a space before return type colon.'}],
+      options: ['always'],
+      output: '() : x => {}'
+    },
+    {
+      code: '()  : x => {}',
+      errors: [{message: 'There must be 1 space before return type colon.'}],
+      options: ['always'],
+      output: '() : x => {}'
+    }
   ],
   valid: [
+    {
+      code: '(): x => {}'
+    },
+    {
+      code: '() : x => {}',
+      options: ['always']
+    },
+    {
+      code: '(): (number | string) => {}'
+    },
+    {
+      code: '() : (number | string) => {}',
+      options: ['always']
+    }
   ]
 };
 
@@ -204,8 +235,39 @@ const FUNCTION_PARAMS = {
 
 const FUNCTION_RETURN = {
   invalid: [
+    {
+      code: 'function a() : x {}',
+      errors: [{message: 'There must be no space before return type colon.'}],
+      output: 'function a(): x {}'
+    },
+    {
+      code: 'function a(): x {}',
+      errors: [{message: 'There must be a space before return type colon.'}],
+      options: ['always'],
+      output: 'function a() : x {}'
+    },
+    {
+      code: 'function a()  : x {}',
+      errors: [{message: 'There must be 1 space before return type colon.'}],
+      options: ['always'],
+      output: 'function a() : x {}'
+    }
   ],
   valid: [
+    {
+      code: 'function a(): x {}'
+    },
+    {
+      code: 'function a() : x {}',
+      options: ['always']
+    },
+    {
+      code: 'function a(): (number | string) {}'
+    },
+    {
+      code: 'function a() : (number | string) {}',
+      options: ['always']
+    }
   ]
 };
 

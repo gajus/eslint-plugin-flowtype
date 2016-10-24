@@ -287,8 +287,39 @@ const FUNCTION_PARAMS = {
 
 const FUNCTION_RETURN = {
   invalid: [
+    {
+      code: 'function a():x {}',
+      errors: [{message: 'There must be a space after return type colon.'}],
+      output: 'function a(): x {}'
+    },
+    {
+      code: 'function a():  x {}',
+      errors: [{message: 'There must be 1 space after return type colon.'}],
+      options: ['always'],
+      output: 'function a(): x {}'
+    },
+    {
+      code: 'function a(): x {}',
+      errors: [{message: 'There must be no space after return type colon.'}],
+      options: ['never'],
+      output: 'function a():x {}'
+    }
   ],
   valid: [
+    {
+      code: 'function a(): x {}'
+    },
+    {
+      code: 'function a():x {}',
+      options: ['never']
+    },
+    {
+      code: 'function a(): (number | string) {}'
+    },
+    {
+      code: 'function a() :(number | string) {}',
+      options: ['never']
+    }
   ]
 };
 
