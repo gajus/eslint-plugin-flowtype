@@ -1922,6 +1922,67 @@ type X = { +foo?:  string }
 type X = { +foo?: string }
 // Message: There must be no space after "foo" type annotation colon.
 
+// Options: ["always"]
+type X = { [a:b]: c }
+// Message: There must be a space after type annotation colon.
+
+// Options: ["never"]
+type X = { [a: b]:c }
+// Message: There must be no space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a:    b]: c }
+// Message: There must be 1 space after type annotation colon.
+
+// Options: ["always"]
+type X = { +[a:b]: c }
+// Message: There must be a space after type annotation colon.
+
+// Options: ["never"]
+type X = { +[a: b]:c }
+// Message: There must be no space after type annotation colon.
+
+// Options: ["always"]
+type X = { +[a:    b]: c }
+// Message: There must be 1 space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a: b]:c }
+// Message: There must be a space after type annotation colon.
+
+// Options: ["never"]
+type X = { [a:b]: c }
+// Message: There must be no space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a: b]:    c }
+// Message: There must be 1 space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a:b]:c }
+// Message: There must be a space after type annotation colon.
+// Message: There must be a space after type annotation colon.
+
+// Options: ["never"]
+type X = { [a: b]: c }
+// Message: There must be no space after type annotation colon.
+// Message: There must be no space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a:  b]:  c }
+// Message: There must be 1 space after type annotation colon.
+// Message: There must be 1 space after type annotation colon.
+
+// Options: ["always"]
+type X = { [a:(b)]:(c) }
+// Message: There must be a space after type annotation colon.
+// Message: There must be a space after type annotation colon.
+
+// Options: ["never"]
+type X = { [a: (b)]: (c) }
+// Message: There must be no space after type annotation colon.
+// Message: There must be no space after type annotation colon.
+
 // Options: ["never"]
 const x = ({}: {})
 // Message: There must be no space after type cast colon.
@@ -2153,6 +2214,18 @@ type X = { +foo:string }
 
 // Options: ["never"]
 type X = { +foo?:string }
+
+// Options: ["always"]
+type X = { [a: b]: c }
+
+// Options: ["never"]
+type X = { [a:b]:c }
+
+// Options: ["always"]
+type X = { +[a: b]: c }
+
+// Options: ["never"]
+type X = { +[a:b]:c }
 
 // Options: ["never"]
 const x = ({}:{})
@@ -2433,6 +2506,67 @@ type X = { +foo?  : string }
 type X = { +foo? : string }
 // Message: There must be no space before "foo" type annotation colon.
 
+// Options: ["always"]
+type X = { [a: b] : c }
+// Message: There must be a space before type annotation colon.
+
+// Options: ["never"]
+type X = { [a : b]: c }
+// Message: There must be no space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a  : b] : c }
+// Message: There must be 1 space before type annotation colon.
+
+// Options: ["always"]
+type X = { +[a:b] : c }
+// Message: There must be a space before type annotation colon.
+
+// Options: ["never"]
+type X = { +[a : b]: c }
+// Message: There must be no space before type annotation colon.
+
+// Options: ["always"]
+type X = { +[a  : b] : c }
+// Message: There must be 1 space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a : b]: c }
+// Message: There must be a space before type annotation colon.
+
+// Options: ["never"]
+type X = { [a: b] : c }
+// Message: There must be no space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a : b]  : c }
+// Message: There must be 1 space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a:b]:c }
+// Message: There must be a space before type annotation colon.
+// Message: There must be a space before type annotation colon.
+
+// Options: ["never"]
+type X = { [a : b] : c }
+// Message: There must be no space before type annotation colon.
+// Message: There must be no space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a  : b]  : c }
+// Message: There must be 1 space before type annotation colon.
+// Message: There must be 1 space before type annotation colon.
+
+// Options: ["always"]
+type X = { [a:(b)]:(c) }
+// Message: There must be a space before type annotation colon.
+// Message: There must be a space before type annotation colon.
+
+// Options: ["never"]
+type X = { [a : (b)] : (c) }
+// Message: There must be no space before type annotation colon.
+// Message: There must be no space before type annotation colon.
+
 // Options: ["never"]
 const x = ({} :{})
 // Message: There must be no space before type cast colon.
@@ -2600,6 +2734,24 @@ type X = { +foo : string }
 
 // Options: ["always"]
 type X = { +foo? : string }
+
+// Options: ["always"]
+type X = { [a : b] : c }
+
+// Options: ["never"]
+type X = { [a:b]:c }
+
+// Options: ["always"]
+type X = { +[a : b] : c }
+
+// Options: ["never"]
+type X = { +[a:b]:c }
+
+// Options: ["always"]
+type X = { [a : (b)] : (c) }
+
+// Options: ["never"]
+type X = { [a:(b)]:(c) }
 
 // Options: ["never"]
 const x = ({}:{})
