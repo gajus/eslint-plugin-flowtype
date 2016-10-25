@@ -32,4 +32,22 @@ Alternatively, you can want to exclude only concise arrow functions (e.g. `x => 
 }
 ```
 
+You can exclude parameters that match a certain regex by using `excludeParameterMatch`.
+
+```js
+{
+    "rules": {
+        "flowtype/require-parameter-type": [
+            2,
+            {
+              "excludeParameterMatch": "^_"
+            }
+        ]
+    }
+}
+```
+
+This excludes all parameters that start with an underscore (`_`).
+The default pattern is `a^`, which doesn't match anything, i.e., all parameters are checked.
+
 <!-- assertions requireParameterType -->

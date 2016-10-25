@@ -14,9 +14,16 @@ export default iterateFunctionNodes((context) => {
   }
 
   const skipArrows = _.get(context, 'options[0].excludeArrowFunctions');
+  const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
 
   return (functionNode) => {
     _.forEach(functionNode.params, (identifierNode) => {
+      const parameterName = getParameterName(identifierNode, context);
+
+      if (excludeParameterMatch.test(parameterName)) {
+        return;
+      }
+
       const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
       const isArrow = functionNode.type === 'ArrowFunctionExpression';
@@ -29,7 +36,7 @@ export default iterateFunctionNodes((context) => {
       if (!typeAnnotation) {
         context.report({
           data: {
-            name: quoteName(getParameterName(identifierNode, context))
+            name: quoteName(parameterName)
           },
           message: 'Missing {{name}}parameter type annotation.',
           node: identifierNode
