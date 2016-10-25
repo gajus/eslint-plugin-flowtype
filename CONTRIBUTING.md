@@ -30,10 +30,6 @@ Run them with `npm t`.
 
 Run with `npm run lint`.
 
-## Updating documentation
-
-A CI service will build and publish the new documentation.
-
 ## Adding a Rule
 
 ### Source & Tests
