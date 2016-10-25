@@ -1868,6 +1868,17 @@ function x(i?:  number) {}
 function x(i?: number) {}
 // Message: There must be no space after "i" parameter type annotation colon.
 
+function a():x {}
+// Message: There must be a space after return type colon.
+
+// Options: ["always"]
+function a():  x {}
+// Message: There must be 1 space after return type colon.
+
+// Options: ["never"]
+function a(): x {}
+// Message: There must be no space after return type colon.
+
 type X = (foo:number) => string
 // Message: There must be a space after "foo" parameter type annotation colon.
 
@@ -2226,6 +2237,16 @@ function x(i?: number) {}
 // Options: ["never"]
 function x(i?:number) {}
 
+function a(): x {}
+
+// Options: ["never"]
+function a():x {}
+
+function a(): (number | string) {}
+
+// Options: ["never"]
+function a() :(number | string) {}
+
 type X = (foo: number) => string;
 
 type X = (foo : number) => string;
@@ -2468,6 +2489,17 @@ The following patterns are considered problems:
 ([ a, b ] : string[]) => {}
 // Message: There must be no space before "[ a, b ]" parameter type annotation colon.
 
+() : x => {}
+// Message: There must be no space before return type colon.
+
+// Options: ["always"]
+(): x => {}
+// Message: There must be a space before return type colon.
+
+// Options: ["always"]
+()  : x => {}
+// Message: There must be 1 space before return type colon.
+
 function x(foo : string) {}
 // Message: There must be no space before "foo" parameter type annotation colon.
 
@@ -2491,6 +2523,17 @@ class Foo { constructor(foo: string ) {} }
 
 async function foo({ lorem, ipsum, dolor } : SomeType) {}
 // Message: There must be no space before "{ lorem, ipsum, dolor }" parameter type annotation colon.
+
+function a() : x {}
+// Message: There must be no space before return type colon.
+
+// Options: ["always"]
+function a(): x {}
+// Message: There must be a space before return type colon.
+
+// Options: ["always"]
+function a()  : x {}
+// Message: There must be 1 space before return type colon.
 
 type X = (foo :string) => string;
 // Message: There must be no space before "foo" parameter type annotation colon.
@@ -2761,6 +2804,16 @@ The following patterns are not considered problems:
 
 ([ a, b ]: string[]) => {}
 
+(): x => {}
+
+// Options: ["always"]
+() : x => {}
+
+(): (number | string) => {}
+
+// Options: ["always"]
+() : (number | string) => {}
+
 function x(foo: string) {}
 
 // Options: ["always"]
@@ -2781,6 +2834,16 @@ class Foo { constructor(foo : string ) {} }
 async function foo({ lorem, ipsum, dolor }: SomeType) {}
 
 function x({ a, b }: { a: string, b: number }) {}
+
+function a(): x {}
+
+// Options: ["always"]
+function a() : x {}
+
+function a(): (number | string) {}
+
+// Options: ["always"]
+function a() : (number | string) {}
 
 type X = (foo:string) => number;
 
