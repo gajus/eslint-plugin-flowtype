@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.25.0"></a>
+# [2.25.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.24.0...v2.25.0) (2016-10-25)
+
+
+### Features
+
+* Add excludeParameterMatch option to require-parameter-type ([d9cfbbe](https://github.com/gajus/eslint-plugin-flowtype/commit/d9cfbbe))
+
+
+
 <a name="2.24.0"></a>
 # [2.24.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.23.1...v2.24.0) (2016-10-25)
 
