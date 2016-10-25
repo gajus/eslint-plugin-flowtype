@@ -1,14 +1,50 @@
-# Updating documentation
+# Contributing
 
-[./README.md](./README.md) is a generated file. The source of the file is [./.README/README.md](/.README/README.md).
+**`README.md` is a generated file. Do not edit it directly.** Edit the files inside `.README` instead.
 
-## To make a change to the documentation:
+## Pre-Commit Hook
 
-1. Update [./.README/README.md](/.README/README.md)
+When making a commit, the following Pre-Commit hooks run:
+
+* tests
+* lint
+* commit message validation (see "Commit Messages" below)
+
+## Commit Messages
+
+All commit messages must begin with one of the following prefixes:
+
+* `fix: `
+* `feat: `
+* `refactor: `
+* `docs: `
+* `chore: `
+
+The prefix is used to bump the correct segment of the version number automatically during deploy.
+
+## Tests
+
+Run them with `npm t`.
+
+## Lint
+
+Run with `npm run lint`.
+
+## Updating documentation
 
 A CI service will build and publish the new documentation.
 
-## To add documentation for a rule:
+## Adding a Rule
+
+### Source & Tests
+
+1. Create a file in `tests/rules/assertions` named the `camelCase` version of your rule name with the following template:
+  * `export default { invalid: [], valid: [] }`
+2. Add your test file to `tests/index.js`
+3. Create a file in `src/rules` named the `camelCase` version  of your rule name
+4. Add your rule file to `src/index.js`
+
+### Adding Documentation
 
 1. Create new file in `./README/rules/[rule-name].md`.
   * Use [./.README/rules/require-valid-file-annotation.md](./.README/rules/require-valid-file-annotation.md) as a template.
@@ -17,4 +53,4 @@ A CI service will build and publish the new documentation.
 
 A CI service will build and publish the new documentation.
 
-Note: The section "The following patterns are considered problems:" and "The following patterns are not considered problems:" is generated using the test cases.
+Note: The section "The following patterns are considered problems:" and "The following patterns are not considered problems:" is **generated automatically** using the test cases.
