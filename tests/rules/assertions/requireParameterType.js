@@ -107,6 +107,32 @@ export default {
           excludeArrowFunctions: 'expressionsOnly'
         }
       ]
+    },
+    {
+      code: '(_foo: number, bar) => {}',
+      errors: [
+        {
+          message: 'Missing "bar" parameter type annotation.'
+        }
+      ],
+      options: [
+        {
+          excludeParameterMatch: '^_'
+        }
+      ]
+    },
+    {
+      code: '(_foo, bar) => {}',
+      errors: [
+        {
+          message: 'Missing "bar" parameter type annotation.'
+        }
+      ],
+      options: [
+        {
+          excludeParameterMatch: '^_'
+        }
+      ]
     }
   ],
   valid: [
@@ -146,6 +172,22 @@ export default {
       options: [
         {
           excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
+    },
+    {
+      code: '(_foo, bar: string) => {}',
+      options: [
+        {
+          excludeParameterMatch: '^_'
+        }
+      ]
+    },
+    {
+      code: '(_foo: number, bar: string) => {}',
+      options: [
+        {
+          excludeParameterMatch: '^_'
         }
       ]
     }
