@@ -1088,11 +1088,51 @@ type Foo = { a: Foo; b: Bar }
 // Message: Prefer commas to semicolons in object and class types
 
 // Options: ["semicolon"]
+type Foo = { [a: string]: Foo, [b: string]: Bar }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+type Foo = { [a: string]: Foo; [b: string]: Bar }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
+type Foo = { (): Foo, (): Bar }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+type Foo = { (): Foo; (): Bar }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
 declare class Foo { a: Foo, }
 // Message: Prefer semicolons to commas in object and class types
 
 // Options: ["comma"]
 declare class Foo { a: Foo; }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
+declare class Foo { [a: string]: Foo, }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+declare class Foo { a: Foo; }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
+declare class Foo { (): Foo, }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+declare class Foo { (): Foo; }
+// Message: Prefer commas to semicolons in object and class types
+
+// Options: ["semicolon"]
+declare class Foo { static (): Foo, }
+// Message: Prefer semicolons to commas in object and class types
+
+// Options: ["comma"]
+declare class Foo { static (): Foo; }
 // Message: Prefer commas to semicolons in object and class types
 ```
 
@@ -1105,13 +1145,41 @@ type Foo = { a: Foo; b: Bar }
 // Options: ["comma"]
 type Foo = { a: Foo, b: Bar }
 
+// Options: ["semicolon"]
+type Foo = { [a: string]: Foo; [b: string]: Bar }
+
+// Options: ["comma"]
+type Foo = { [a: string]: Foo, [b: string]: Bar }
+
+// Options: ["semicolon"]
+type Foo = { (): Foo; (): Bar }
+
+// Options: ["comma"]
+type Foo = { (): Foo, (): Bar }
+
 type Foo = { a: Foo, b: Bar }
+
+type Foo = { [a: string]: Foo, [b: string]: Bar }
+
+type Foo = { (): Foo, (): Bar }
 
 // Options: ["semicolon"]
 declare class Foo { a: Foo; }
 
 // Options: ["comma"]
 declare class Foo { a: Foo, }
+
+// Options: ["semicolon"]
+declare class Foo { [a: string]: Foo; }
+
+// Options: ["comma"]
+declare class Foo { [a: string]: Foo, }
+
+// Options: ["semicolon"]
+declare class Foo { (): Foo; }
+
+// Options: ["comma"]
+declare class Foo { (): Foo, }
 ```
 
 
