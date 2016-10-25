@@ -41,6 +41,8 @@ const create = (context) => {
   };
 
   return {
+    ObjectTypeCallProperty: requireProperPunctuation,
+    ObjectTypeIndexer: requireProperPunctuation,
     ObjectTypeProperty: requireProperPunctuation
   };
 };
