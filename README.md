@@ -1220,6 +1220,24 @@ Alternatively, you can want to exclude only concise arrow functions (e.g. `x => 
 }
 ```
 
+You can exclude parameters that match a certain regex by using `excludeParameterMatch`.
+
+```js
+{
+    "rules": {
+        "flowtype/require-parameter-type": [
+            2,
+            {
+              "excludeParameterMatch": "^_"
+            }
+        ]
+    }
+}
+```
+
+This excludes all parameters that start with an underscore (`_`).
+The default pattern is `a^`, which doesn't match anything, i.e., all parameters are checked.
+
 The following patterns are considered problems:
 
 ```js
@@ -1259,6 +1277,14 @@ function x(foo) {}
 // Options: [{"excludeArrowFunctions":"expressionsOnly"}]
 function x(foo) {}
 // Message: Missing "foo" parameter type annotation.
+
+// Options: [{"excludeParameterMatch":"^_"}]
+(_foo: number, bar) => {}
+// Message: Missing "bar" parameter type annotation.
+
+// Options: [{"excludeParameterMatch":"^_"}]
+(_foo, bar) => {}
+// Message: Missing "bar" parameter type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -1281,6 +1307,12 @@ The following patterns are not considered problems:
 
 // Options: [{"excludeArrowFunctions":"expressionsOnly"}]
 (foo) => 3
+
+// Options: [{"excludeParameterMatch":"^_"}]
+(_foo, bar: string) => {}
+
+// Options: [{"excludeParameterMatch":"^_"}]
+(_foo: number, bar: string) => {}
 ```
 
 
