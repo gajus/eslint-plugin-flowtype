@@ -11,12 +11,19 @@ export default (context) => {
     return () => {};
   }
 
+  const excludeVariableMatch = new RegExp(_.get(context, 'options[0].excludeVariableMatch', 'a^'));
+
   return {
     VariableDeclaration: (variableDeclaration) => {
       _.forEach(variableDeclaration.declarations, (variableDeclarator) => {
         const identifierNode = _.get(variableDeclarator, 'id');
-        const typeAnnotation = _.get(identifierNode, 'typeAnnotation');
         const identifierName = _.get(identifierNode, 'name');
+
+        if (excludeVariableMatch.test(identifierName)) {
+          return;
+        }
+
+        const typeAnnotation = _.get(identifierNode, 'typeAnnotation');
 
         if (!typeAnnotation) {
           context.report({
