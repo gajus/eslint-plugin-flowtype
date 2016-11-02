@@ -28,6 +28,22 @@ export default {
           excludeVariableMatch: '^_'
         }
       ]
+    },
+    {
+      code: 'var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"',
+      errors: [
+        {
+          message: 'Missing "hey" variable type annotation.'
+        }
+      ],
+      options: [
+        {
+          excludeVariableTypes: {
+            let: false,
+            var: true
+          }
+        }
+      ]
     }
   ],
   valid: [
@@ -42,6 +58,27 @@ export default {
       options: [
         {
           excludeVariableMatch: '^_'
+        }
+      ]
+    },
+    {
+      code: 'var foo = "bar", bar = 1',
+      options: [
+        {
+          excludeVariableTypes: {
+            var: true
+          }
+        }
+      ]
+    },
+    {
+      code: 'var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"',
+      options: [
+        {
+          excludeVariableTypes: {
+            let: true,
+            var: true
+          }
         }
       ]
     }

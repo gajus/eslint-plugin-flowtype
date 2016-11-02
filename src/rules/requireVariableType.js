@@ -12,9 +12,16 @@ export default (context) => {
   }
 
   const excludeVariableMatch = new RegExp(_.get(context, 'options[0].excludeVariableMatch', 'a^'));
+  const excludeVariableTypes = _.get(context, 'options[0].excludeVariableTypes', {});
 
   return {
     VariableDeclaration: (variableDeclaration) => {
+      const variableType = _.get(variableDeclaration, 'kind');
+
+      if (_.get(excludeVariableTypes, variableType)) {
+        return;
+      }
+
       _.forEach(variableDeclaration.declarations, (variableDeclarator) => {
         const identifierNode = _.get(variableDeclarator, 'id');
         const identifierName = _.get(identifierNode, 'name');
