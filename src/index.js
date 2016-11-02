@@ -4,6 +4,7 @@ import noWeakTypes from './rules/noWeakTypes';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
+import requireVariableType from './rules/requireVariableType';
 import semi from './rules/semi';
 import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
@@ -34,6 +35,7 @@ export default {
     'require-parameter-type': requireParameterType,
     'require-return-type': requireReturnType,
     'require-valid-file-annotation': requireValidFileAnnotation,
+    'require-variable-type': requireVariableType,
     semi,
     'sort-keys': sortKeys,
     'space-after-type-colon': spaceAfterTypeColon,
@@ -54,6 +56,7 @@ export default {
     'object-type-delimiter': 0,
     'require-parameter-type': 0,
     'require-return-type': 0,
+    'require-variable-type': 0,
     semi: 0,
     'sort-keys': 0,
     'space-after-type-colon': 0,
