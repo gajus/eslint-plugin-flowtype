@@ -124,6 +124,12 @@ const ARROW_FUNCTION_PARAMS = {
       options: ['always', {
         allowLineBreak: true
       }]
+    },
+    {
+      code: '(foo:\r\n  { a: string, b: number }) => {}',
+      options: ['always', {
+        allowLineBreak: true
+      }]
     }
   ]
 };

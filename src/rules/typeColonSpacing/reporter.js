@@ -22,7 +22,7 @@ export default (direction, context, {always, allowLineBreak}) => {
 
     const charAfter = context.getSourceCode().getText(colon, 0, 1).slice(1);
 
-    if (allowLineBreak && (charAfter === '\n' || charAfter === '\r\n')) {
+    if (allowLineBreak && RegExp(/(\n|\r)+/).test(charAfter)) {
       spaces = 1;
     } else {
       spaces = getSpaces(direction, colon, context);
