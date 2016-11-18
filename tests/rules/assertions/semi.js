@@ -50,6 +50,14 @@ export default {
     {
       code: 'type FooType = {}',
       options: ['never']
+    },
+    {
+      code: 'type FooType = {}',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

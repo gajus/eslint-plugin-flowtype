@@ -74,10 +74,10 @@ const UNION = {
     }
   ],
   valid: [
-        {code: 'type X = string | number;'},
-        {code: 'type X = string | number | boolean;'},
-        {code: 'type X = (string) | number;'},
-        {code: 'type X = ((string)) | (number | foo);'},
+    {code: 'type X = string | number;'},
+    {code: 'type X = string | number | boolean;'},
+    {code: 'type X = (string) | number;'},
+    {code: 'type X = ((string)) | (number | foo);'},
     {
       code: 'type X = string|number',
       options: ['never']
@@ -93,6 +93,14 @@ const UNION = {
         '| number',
         '}'
       ].join('\n')
+    },
+    {
+      code: 'type X = string| number;',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };
@@ -173,10 +181,10 @@ const INTERSECTION = {
     }
   ],
   valid: [
-        {code: 'type X = string & number;'},
-        {code: 'type X = string & number & boolean;'},
-        {code: 'type X = (string) & number;'},
-        {code: 'type X = ((string)) & (number & foo);'},
+    {code: 'type X = string & number;'},
+    {code: 'type X = string & number & boolean;'},
+    {code: 'type X = (string) & number;'},
+    {code: 'type X = ((string)) & (number & foo);'},
     {
       code: 'type X = string&number',
       options: ['never']
@@ -192,6 +200,14 @@ const INTERSECTION = {
         '& number',
         '}'
       ].join('\n')
+    },
+    {
+      code: 'type X = string& number;',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };
