@@ -12,6 +12,14 @@ export default {
   valid: [
     {
       code: 'type FooType = { a: number, b: string, c: number }'
+    },
+    {
+      code: 'type FooType = { a: number, b: string, a: number }',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

@@ -142,6 +142,15 @@ export default {
     {
       code: 'declare class Foo { (): Foo, }',
       options: ['comma']
+    },
+    {
+      code: 'type Foo = { a: Foo, b: Bar }',
+      options: ['semicolon'],
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

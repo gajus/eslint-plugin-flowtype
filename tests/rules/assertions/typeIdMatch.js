@@ -29,6 +29,14 @@ export default {
       options: [
         '^foo$'
       ]
+    },
+    {
+      code: 'type foo = {};',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

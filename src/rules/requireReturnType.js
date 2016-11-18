@@ -1,15 +1,6 @@
 import _ from 'lodash';
-import {
-    isFlowFile
-} from './../utilities';
 
 export default (context) => {
-  const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
-
-  if (!checkThisFile) {
-    return () => {};
-  }
-
   const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
   const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
