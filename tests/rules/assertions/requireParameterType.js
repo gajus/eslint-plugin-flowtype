@@ -190,6 +190,14 @@ export default {
           excludeParameterMatch: '^_'
         }
       ]
+    },
+    {
+      code: '(foo) => {}',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

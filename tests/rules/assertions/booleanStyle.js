@@ -29,6 +29,15 @@ export default {
     {
       code: 'type X = bool',
       options: ['bool']
+    },
+    {
+      code: 'type X = bool',
+      options: ['boolean'],
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };
