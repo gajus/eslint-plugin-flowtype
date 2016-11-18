@@ -8,3 +8,4 @@ export * as spacingFixers from './spacingFixers';
 export quoteName from './quoteName';
 export getTokenBeforeParens from './getTokenBeforeParens';
 export getTokenAfterParens from './getTokenAfterParens';
+export checkFlowFileAnnotation from './checkFlowFileAnnotation';

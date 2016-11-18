@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-    isFlowFile,
     isFlowFileAnnotation
 } from './../utilities';
 
@@ -27,12 +26,6 @@ export const schema = [
 ];
 
 export default (context) => {
-  const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
-
-  if (!checkThisFile) {
-    return {};
-  }
-
   const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
 
