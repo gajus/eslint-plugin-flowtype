@@ -15,6 +15,7 @@ import validSyntax from './rules/validSyntax';
 import booleanStyle from './rules/booleanStyle';
 import delimiterDangle from './rules/delimiterDangle';
 import noDupeKeys from './rules/noDupeKeys';
+import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import sortKeys from './rules/sortKeys';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import recommended from './configs/recommended.json';
@@ -29,6 +30,7 @@ export default {
     'delimiter-dangle': delimiterDangle,
     'generic-spacing': genericSpacing,
     'no-dupe-keys': noDupeKeys,
+    'no-primitive-constructor-types': noPrimitiveConstructorTypes,
     'no-weak-types': noWeakTypes,
     'object-type-delimiter': objectTypeDelimiter,
     'require-parameter-type': requireParameterType,
