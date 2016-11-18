@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import {checkFlowFileAnnotation} from './utilities';
 import defineFlowType from './rules/defineFlowType';
 import genericSpacing from './rules/genericSpacing';
 import noWeakTypes from './rules/noWeakTypes';
@@ -21,33 +23,45 @@ import sortKeys from './rules/sortKeys';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import recommended from './configs/recommended.json';
 
+const rules = {
+  'boolean-style': booleanStyle,
+  'define-flow-type': defineFlowType,
+  'delimiter-dangle': delimiterDangle,
+  'generic-spacing': genericSpacing,
+  'no-dupe-keys': noDupeKeys,
+  'no-primitive-constructor-types': noPrimitiveConstructorTypes,
+  'no-weak-types': noWeakTypes,
+  'object-type-delimiter': objectTypeDelimiter,
+  'require-parameter-type': requireParameterType,
+  'require-return-type': requireReturnType,
+  'require-valid-file-annotation': requireValidFileAnnotation,
+  'require-variable-type': requireVariableType,
+  semi,
+  'sort-keys': sortKeys,
+  'space-after-type-colon': spaceAfterTypeColon,
+  'space-before-generic-bracket': spaceBeforeGenericBracket,
+  'space-before-type-colon': spaceBeforeTypeColon,
+  'type-id-match': typeIdMatch,
+  'union-intersection-spacing': unionIntersectionSpacing,
+  'use-flow-type': useFlowType,
+  'valid-syntax': validSyntax
+};
+
 export default {
   configs: {
     recommended
   },
-  rules: {
-    'boolean-style': booleanStyle,
-    'define-flow-type': defineFlowType,
-    'delimiter-dangle': delimiterDangle,
-    'generic-spacing': genericSpacing,
-    'no-dupe-keys': noDupeKeys,
-    'no-primitive-constructor-types': noPrimitiveConstructorTypes,
-    'no-weak-types': noWeakTypes,
-    'object-type-delimiter': objectTypeDelimiter,
-    'require-parameter-type': requireParameterType,
-    'require-return-type': requireReturnType,
-    'require-valid-file-annotation': requireValidFileAnnotation,
-    'require-variable-type': requireVariableType,
-    semi,
-    'sort-keys': sortKeys,
-    'space-after-type-colon': spaceAfterTypeColon,
-    'space-before-generic-bracket': spaceBeforeGenericBracket,
-    'space-before-type-colon': spaceBeforeTypeColon,
-    'type-id-match': typeIdMatch,
-    'union-intersection-spacing': unionIntersectionSpacing,
-    'use-flow-type': useFlowType,
-    'valid-syntax': validSyntax
-  },
+  rules: _.mapValues(rules, (rule) => {
+    // Support current and deprecated rule formats
+    if (_.isPlainObject(rule)) {
+      return {
+        ...rule,
+        create: _.partial(checkFlowFileAnnotation, rule.create)
+      };
+    }
+
+    return _.partial(checkFlowFileAnnotation, rule);
+  }),
   rulesConfig: {
     'boolean-style': 0,
     'define-flow-type': 0,

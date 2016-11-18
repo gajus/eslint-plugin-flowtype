@@ -31,7 +31,7 @@ export const schema = [
 ];
 
 export default (context) => {
-  const always = context.options[0] === 'always' && !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation', false);
+  const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
 
   return {
