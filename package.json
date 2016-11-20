@@ -22,6 +22,7 @@
     "eslint": ">=2.0.0"
   },
   "dependencies": {
+    "detect-newline": "^2.1.0",
     "lodash": "^4.15.0"
   },
   "scripts": {

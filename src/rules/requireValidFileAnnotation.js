@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import detectNewline from 'detect-newline';
 import {
     isFlowFile,
     isFlowFileAnnotation
@@ -10,6 +11,10 @@ const defaults = {
 
 const looksLikeFlowFileAnnotation = (comment) => {
   return /@(?:no)?flow/i.test(comment);
+};
+
+const getNewLine = (context) => {
+  return detectNewline.graceful(context.getSourceCode().text);
 };
 
 const isValidAnnotationStyle = (node, style) => {
@@ -26,6 +31,10 @@ export const schema = [
   }
 ];
 
+const styleToFlowFileAnnotation = (style) => {
+  return style === 'line' ? '// @flow' : '/* @flow */';
+};
+
 export default (context) => {
   const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
 
@@ -39,7 +48,6 @@ export default (context) => {
   return {
     Program (node) {
       const firstToken = node.tokens[0];
-
       const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {
         return looksLikeFlowFileAnnotation(comment.value);
       });
@@ -54,12 +62,21 @@ export default (context) => {
         }
 
         if (!isValidAnnotationStyle(potentialFlowFileAnnotation, style)) {
-          const str = style === 'line' ? '`// @flow`' : '`/* @flow */`';
+          const str = ['`', styleToFlowFileAnnotation(style), '`'].join('');
 
           context.report(potentialFlowFileAnnotation, 'Flow file annotation style must be ' + str);
         }
       } else if (always) {
-        context.report(node, 'Flow file annotation is missing.');
+        context.report({
+          fix (fixer) {
+            const str = styleToFlowFileAnnotation(style);
+            const newLine = getNewLine(context);
+
+            return fixer.insertTextBefore(node, str + newLine);
+          },
+          message: 'Flow file annotation is missing.',
+          node
+        });
       }
     }
   };

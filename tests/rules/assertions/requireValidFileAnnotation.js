@@ -86,6 +86,68 @@ export default {
           annotationStyle: 'block'
         }
       ]
+    },
+    {
+      code: 'this;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: '/* @flow */\nthis;'
+    }, {
+      code: 'this;\r\n',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: '/* @flow */\r\nthis;\r\n'
+    }, {
+      code: 'this;\n',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: '/* @flow */\nthis;\n'
+    }, {
+      code: 'this;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line'
+        }
+      ],
+      output: '// @flow\nthis;'
+    }, {
+      code: 'this;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ],
+      output: '/* @flow */\nthis;'
     }
   ],
   valid: [
