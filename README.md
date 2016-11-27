@@ -25,6 +25,7 @@
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
+        * [`require-variable-type`](#eslint-plugin-flowtype-rules-require-variable-type)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
         * [`sort-keys`](#eslint-plugin-flowtype-rules-sort-keys)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
@@ -1712,6 +1713,94 @@ a;
 
 // Options: ["always",{"annotationStyle":"block"}]
 /* @flow */
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-require-variable-type"></a>
+### <code>require-variable-type</code>
+
+Requires that all variable declarators have type annotations.
+
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options"></a>
+#### Options
+
+You can exclude variables that match a certain regex by using `excludeVariableMatch`.
+
+This excludes all parameters that start with an underscore (`_`).
+The default pattern is `a^`, which doesn't match anything, i.e., all parameters are checked.
+
+```js
+{
+    "rules": {
+        "flowtype/require-variable-type": [
+            2,
+            {
+              "excludeVariableMatch": "^_"
+            }
+        ]
+    }
+}
+```
+
+
+You can choose specific variable types (`var`, `let`, and `const`) to ignore using `excludeVariableTypes`.
+
+This excludes `var` and `let` declarations from needing type annotations, but forces `const` declarations to have it.
+By default, all declarations are checked.
+
+```js
+{
+    "rules": {
+        "flowtype/require-variable-type": [
+            2,
+            {
+              "excludeVariableTypes": {
+                "var": true,
+                "let": true,
+                "const": false,
+              }
+            }
+        ]
+    }
+}
+```
+
+
+
+The following patterns are considered problems:
+
+```js
+var foo = "bar"
+// Message: Missing "foo" variable type annotation.
+
+var foo : string = "bar", bar = 1
+// Message: Missing "bar" variable type annotation.
+
+// Options: [{"excludeVariableMatch":"^_"}]
+var _foo = "bar", bar = 1
+// Message: Missing "bar" variable type annotation.
+
+// Options: [{"excludeVariableTypes":{"let":false,"var":true}}]
+var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"
+// Message: Missing "hey" variable type annotation.
+```
+
+The following patterns are not considered problems:
+
+```js
+var foo : string = "bar"
+
+var foo : string = "bar", bar : number = 1
+
+// Options: [{"excludeVariableMatch":"^_"}]
+var _foo = "bar", bar : number = 1
+
+// Options: [{"excludeVariableTypes":{"var":true}}]
+var foo = "bar", bar = 1
+
+// Options: [{"excludeVariableTypes":{"let":true,"var":true}}]
+var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"
 ```
 
 
