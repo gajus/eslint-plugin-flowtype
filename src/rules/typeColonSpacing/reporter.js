@@ -10,14 +10,23 @@ const getSpaces = (direction, colon, context) => {
   }
 };
 
-export default (direction, context, {always}) => {
+export default (direction, context, {always, allowLineBreak}) => {
   return ({colon, node, name = '', type = 'type annotation'}) => {
-    const spaces = getSpaces(direction, colon, context);
+    let spaces;
+
     const data = {
       direction,
       name,
       type
     };
+
+    const charAfter = context.getSourceCode().getText(colon, 0, 1).slice(1);
+
+    if (allowLineBreak && RegExp(/(\n|\r)+/).test(charAfter)) {
+      spaces = 1;
+    } else {
+      spaces = getSpaces(direction, colon, context);
+    }
 
     if (always && spaces > 1) {
       context.report({

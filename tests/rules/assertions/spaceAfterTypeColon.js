@@ -67,6 +67,11 @@ const ARROW_FUNCTION_PARAMS = {
       errors: [{message: 'There must be no space after "i" parameter type annotation colon.'}],
       options: ['never'],
       output: '(i?:number) => {}'
+    },
+    {
+      code: '(foo:\n  { a: string, b: number }) => {}',
+      errors: [{message: 'There must be 1 space after "foo" parameter type annotation colon.'}],
+      output: '(foo: { a: string, b: number }) => {}'
     }
   ],
   valid: [
@@ -113,6 +118,18 @@ const ARROW_FUNCTION_PARAMS = {
     {
       code: '(i?:number) => {}',
       options: ['never']
+    },
+    {
+      code: '(foo:\n  { a: string, b: number }) => {}',
+      options: ['always', {
+        allowLineBreak: true
+      }]
+    },
+    {
+      code: '(foo:\r\n  { a: string, b: number }) => {}',
+      options: ['always', {
+        allowLineBreak: true
+      }]
     }
   ]
 };
