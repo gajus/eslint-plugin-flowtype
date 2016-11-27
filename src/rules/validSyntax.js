@@ -5,7 +5,7 @@ import {
     quoteName
 } from './../utilities';
 
-export default iterateFunctionNodes((context) => {
+const create = iterateFunctionNodes((context) => {
   return (functionNode) => {
     _.forEach(functionNode.params, (identifierNode) => {
       const nodeType = _.get(identifierNode, 'type');
@@ -25,3 +25,11 @@ export default iterateFunctionNodes((context) => {
     });
   };
 });
+
+export default {
+  create,
+  meta: {
+    deprecated: true
+  }
+};
+
