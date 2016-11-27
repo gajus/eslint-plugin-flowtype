@@ -1653,16 +1653,19 @@ The following patterns are considered problems:
 // Message: Flow file annotation not at the top of the file.
 
 // @Flow
-// Message: Malformed flow file annotation.
-
-// @floweeeeeee
-// Message: Malformed flow file annotation.
+// Message: Malformed Flow file annotation.
 
 // @NoFlow
-// Message: Malformed flow file annotation.
+// Message: Malformed Flow file annotation.
+
+// @Noflow
+// Message: Malformed Flow file annotation.
+
+// @floweeeeeee
+// Message: Misspelled or malformed Flow file annotation.
 
 // @nofloweeeeeee
-// Message: Malformed flow file annotation.
+// Message: Misspelled or malformed Flow file annotation.
 
 // Options: ["always"]
 a;
@@ -1675,6 +1678,14 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 // @flow
 // Message: Flow file annotation style must be `/* @flow */`
+
+// Options: ["always",{"annotationStyle":"line"}]
+/* @noflow */
+// Message: Flow file annotation style must be `// @noflow`
+
+// Options: ["always",{"annotationStyle":"block"}]
+// @noflow
+// Message: Flow file annotation style must be `/* @noflow */`
 ```
 
 The following patterns are not considered problems:
