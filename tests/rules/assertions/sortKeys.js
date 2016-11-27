@@ -79,6 +79,14 @@ export default {
     {
       code: 'type FooType = { 1:number, 2: number, 10: number }',
       options: ['asc', {natural: true}]
+    },
+    {
+      code: 'type FooType = { b: number, a: number }',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

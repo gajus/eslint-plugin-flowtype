@@ -246,6 +246,14 @@ export default {
     {
       code: 'type X = Function',
       options: [{Function: false}]
+    },
+    {
+      code: 'function foo(thing): Function {}',
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ]
 };

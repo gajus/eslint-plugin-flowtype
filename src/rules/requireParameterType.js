@@ -1,18 +1,11 @@
 import _ from 'lodash';
 import {
     getParameterName,
-    isFlowFile,
     iterateFunctionNodes,
     quoteName
 } from './../utilities';
 
 export default iterateFunctionNodes((context) => {
-  const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
-
-  if (!checkThisFile) {
-    return () => {};
-  }
-
   const skipArrows = _.get(context, 'options[0].excludeArrowFunctions');
   const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
 
