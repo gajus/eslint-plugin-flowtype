@@ -14,6 +14,13 @@ export default (direction, context, {always, allowLineBreak}) => {
   return ({colon, node, name = '', type = 'type annotation'}) => {
     let spaces;
 
+    // Support optional names
+    // type X = { [string]: a }
+    // type X = string => string
+    if (colon.value !== ':') {
+      return;
+    }
+
     const data = {
       direction,
       name,

@@ -338,6 +338,41 @@ const FUNCTION_TYPE_PARAMS = {
     {
       code: 'type X = (foo? : ?string) => number',
       options: ['always']
+    },
+    {
+      code: 'type X = (number) => string;'
+    },
+    {
+      code: 'type X = (?number) => string;'
+    },
+    {
+      code: 'type X = number => string;'
+    },
+    {
+      code: 'type X = ?number => string;'
+    },
+    {
+      code: 'type X = ({ foo: bar }) => string;'
+    },
+    {
+      code: 'type X = (number) => string;',
+      options: ['always']
+    },
+    {
+      code: 'type X = (?number) => string;',
+      options: ['always']
+    },
+    {
+      code: 'type X = number => string;',
+      options: ['always']
+    },
+    {
+      code: 'type X = ?number => string;',
+      options: ['always']
+    },
+    {
+      code: 'type X = ({ foo : bar }) => string;',
+      options: ['always']
     }
   ]
 };
@@ -747,6 +782,14 @@ const OBJECT_TYPE_INDEXERS = {
     },
     {
       code: 'type X = { [a:b]:c }',
+      options: ['never']
+    },
+    {
+      code: 'type X = { [string] : c }',
+      options: ['always']
+    },
+    {
+      code: 'type X = { [string]:c }',
       options: ['never']
     },
     {
