@@ -215,6 +215,9 @@ type X = boolean
 
 // Options: ["bool"]
 type X = bool
+
+// Options: ["boolean"]
+type X = bool
 ```
 
 
@@ -885,6 +888,8 @@ The following patterns are not considered problems:
 
 ```js
 type FooType = { a: number, b: string, c: number }
+
+type FooType = { a: number, b: string, a: number }
 ```
 
 
@@ -1132,6 +1137,8 @@ type X = any; type Y = Object
 
 // Options: [{"Function":false}]
 type X = Function
+
+function foo(thing): Function {}
 ```
 
 
@@ -1257,6 +1264,9 @@ declare class Foo { (): Foo; }
 
 // Options: ["comma"]
 declare class Foo { (): Foo, }
+
+// Options: ["semicolon"]
+type Foo = { a: Foo, b: Bar }
 ```
 
 
@@ -1390,6 +1400,8 @@ The following patterns are not considered problems:
 
 // Options: [{"excludeParameterMatch":"^_"}]
 (_foo: number, bar: string) => {}
+
+(foo) => {}
 ```
 
 
@@ -1863,6 +1875,8 @@ type FooType = { a: number;
 
 // Options: ["never"]
 type FooType = {}
+
+type FooType = {}
 ```
 
 
@@ -1966,6 +1980,8 @@ type FooType = { a: number, b: number, C: number, c: number }
 
 // Options: ["asc",{"natural":true}]
 type FooType = { 1:number, 2: number, 10: number }
+
+type FooType = { b: number, a: number }
 ```
 
 
@@ -3245,6 +3261,8 @@ type FooType = {};
 
 // Options: ["^foo$"]
 type foo = {};
+
+type foo = {};
 ```
 
 
@@ -3372,6 +3390,8 @@ type X =
 | number
 }
 
+type X = string| number;
+
 type X = string & number;
 
 type X = string & number & boolean;
@@ -3392,6 +3412,8 @@ type X =
 & string
 & number
 }
+
+type X = string& number;
 ```
 
 
