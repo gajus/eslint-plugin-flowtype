@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.27.1"></a>
+## [2.27.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.27.0...v2.27.1) (2016-11-27)
+
+
+### Bug Fixes
+
+* annotation spell check, better @noflow support ([0fe502b](https://github.com/gajus/eslint-plugin-flowtype/commit/0fe502b))
+
+
+
 <a name="2.27.0"></a>
 # [2.27.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.26.1...v2.27.0) (2016-11-27)
 
