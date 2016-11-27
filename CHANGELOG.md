@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.27.0"></a>
+# [2.27.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.26.1...v2.27.0) (2016-11-27)
+
+
+### Features
+
+* Add excludeVariableMatch option to require-variable-type ([a087fe6](https://github.com/gajus/eslint-plugin-flowtype/commit/a087fe6))
+* Add excludeVariableTypes option to require-variable-type ([35f601f](https://github.com/gajus/eslint-plugin-flowtype/commit/35f601f))
+* Add require-variable-type rule ([3013025](https://github.com/gajus/eslint-plugin-flowtype/commit/3013025))
+
+
+
 <a name="2.26.1"></a>
 ## [2.26.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.26.0...v2.26.1) (2016-11-27)
 
