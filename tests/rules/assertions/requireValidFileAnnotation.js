@@ -20,15 +20,7 @@ export default {
       code: '// @Flow',
       errors: [
         {
-          message: 'Malformed flow file annotation.'
-        }
-      ]
-    },
-    {
-      code: '// @floweeeeeee',
-      errors: [
-        {
-          message: 'Malformed flow file annotation.'
+          message: 'Malformed Flow file annotation.'
         }
       ]
     },
@@ -36,7 +28,23 @@ export default {
       code: '// @NoFlow',
       errors: [
         {
-          message: 'Malformed flow file annotation.'
+          message: 'Malformed Flow file annotation.'
+        }
+      ]
+    },
+    {
+      code: '// @Noflow',
+      errors: [
+        {
+          message: 'Malformed Flow file annotation.'
+        }
+      ]
+    },
+    {
+      code: '// @floweeeeeee',
+      errors: [
+        {
+          message: 'Misspelled or malformed Flow file annotation.'
         }
       ]
     },
@@ -44,7 +52,7 @@ export default {
       code: '// @nofloweeeeeee',
       errors: [
         {
-          message: 'Malformed flow file annotation.'
+          message: 'Misspelled or malformed Flow file annotation.'
         }
       ]
     },
@@ -78,6 +86,34 @@ export default {
       errors: [
         {
           message: 'Flow file annotation style must be `/* @flow */`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ]
+    },
+    {
+      code: '/* @noflow */',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `// @noflow`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line'
+        }
+      ]
+    },
+    {
+      code: '// @noflow',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `/* @noflow */`'
         }
       ],
       options: [

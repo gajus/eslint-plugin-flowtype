@@ -9,5 +9,5 @@ export default (context) => {
 
   const firstComment = comments[0];
 
-  return isFlowFileAnnotation(firstComment.value);
+  return isFlowFileAnnotation(firstComment.value) && !/no/.test(firstComment.value);
 };
