@@ -1653,16 +1653,19 @@ The following patterns are considered problems:
 // Message: Flow file annotation not at the top of the file.
 
 // @Flow
-// Message: Malformed flow file annotation.
-
-// @floweeeeeee
-// Message: Malformed flow file annotation.
+// Message: Malformed Flow file annotation.
 
 // @NoFlow
-// Message: Malformed flow file annotation.
+// Message: Malformed Flow file annotation.
+
+// @Noflow
+// Message: Malformed Flow file annotation.
+
+// @floweeeeeee
+// Message: Misspelled or malformed Flow file annotation.
 
 // @nofloweeeeeee
-// Message: Malformed flow file annotation.
+// Message: Misspelled or malformed Flow file annotation.
 
 // Options: ["always"]
 a;
@@ -1675,6 +1678,14 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 // @flow
 // Message: Flow file annotation style must be `/* @flow */`
+
+// Options: ["always",{"annotationStyle":"line"}]
+/* @noflow */
+// Message: Flow file annotation style must be `// @noflow`
+
+// Options: ["always",{"annotationStyle":"block"}]
+// @noflow
+// Message: Flow file annotation style must be `/* @noflow */`
 ```
 
 The following patterns are not considered problems:
@@ -1966,7 +1977,30 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-This rule takes one argument. If it is `'always'` then a problem is raised when there is no space after the type annotation colon. If it is `'never'` then a problem is raised when there is a space after the type annotation colon. The default value is `'always'`.
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options"></a>
+#### Options
+
+This rule has a string argument.
+
+* `"always"` (default): Require a space after the type annotation colon (e.g. foo: BarType).
+* `"never"`: Require no spaces after the type annotation colon (e.g. foo:BarType).
+
+This rule has an option object.
+
+* `"allowLineBreak"` - Allow a line break to count as a space following the annotation colon.
+    * `"true"`: Enable
+    * `"false"`: Disable
+
+{
+  "rules": {
+    "flowtype/space-after-type-colon": [
+      2,
+      "always", {
+        "allowLineBreak": false
+      }
+    ]
+  }
+}
 
 The following patterns are considered problems:
 
@@ -2012,6 +2046,10 @@ The following patterns are considered problems:
 // Options: ["never"]
 (i?: number) => {}
 // Message: There must be no space after "i" parameter type annotation colon.
+
+(foo:
+  { a: string, b: number }) => {}
+// Message: There must be 1 space after "foo" parameter type annotation colon.
 
 // Options: ["always"]
 ():Object => {}
@@ -2379,6 +2417,14 @@ The following patterns are not considered problems:
 
 // Options: ["never"]
 (i?:number) => {}
+
+// Options: ["always",{"allowLineBreak":true}]
+(foo:
+  { a: string, b: number }) => {}
+
+// Options: ["always",{"allowLineBreak":true}]
+(foo:
+  { a: string, b: number }) => {}
 
 // Options: ["never"]
 ():Object => {}
