@@ -64,6 +64,15 @@ export default {
     },
     {
       code: '(x: boolean) => {}'
+    },
+    {
+      code: 'type x = MyNumber'
+    },
+    {
+      code: 'type x = MyString'
+    },
+    {
+      code: 'type x = MyBoolean'
     }
   ]
 };

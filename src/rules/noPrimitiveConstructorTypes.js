@@ -6,7 +6,7 @@ export default {
       GenericTypeAnnotation: (node) => {
         const name = _.get(node, 'id.name');
 
-        if (RegExp(/(Boolean|Number|String)/).test(name)) {
+        if (RegExp(/^(Boolean|Number|String)$/).test(name)) {
           context.report({
             data: {
               name
