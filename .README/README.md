@@ -150,6 +150,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
+{"gitdown": "include", "file": "./rules/require-variable-type.md"}
 {"gitdown": "include", "file": "./rules/semi.md"}
 {"gitdown": "include", "file": "./rules/sort-keys.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
