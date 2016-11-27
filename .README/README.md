@@ -17,9 +17,9 @@
 <!-- -->
 
 ```sh
-npm install eslint
-npm install babel-eslint
-npm install eslint-plugin-flowtype
+npm install eslint --save-dev
+npm install babel-eslint --save-dev
+npm install eslint-plugin-flowtype --save-dev
 ```
 
 ## Configuration
