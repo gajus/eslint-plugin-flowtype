@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.26.0"></a>
+# [2.26.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.25.0...v2.26.0) (2016-11-27)
+
+
+### Bug Fixes
+
+* primitive constructor types regex ([ceea11c](https://github.com/gajus/eslint-plugin-flowtype/commit/ceea11c))
+
+### Features
+
+* add no-primitive-constructor-types rule ([0d37f03](https://github.com/gajus/eslint-plugin-flowtype/commit/0d37f03))
+
+
+
 <a name="2.25.0"></a>
 # [2.25.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.24.0...v2.25.0) (2016-10-25)
 
