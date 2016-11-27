@@ -19,6 +19,7 @@
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
@@ -79,6 +80,7 @@ npm install eslint-plugin-flowtype
       2,
       "never"
     ],
+    "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-weak-types": 2,
     "flowtype/object-type-delimiter": [
       2,
@@ -882,6 +884,80 @@ The following patterns are not considered problems:
 
 ```js
 type FooType = { a: number, b: string, c: number }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-primitive-constructor-types"></a>
+### <code>no-primitive-constructor-types</code>
+
+Disallows use of primitive constructors as types, such as `Boolean`, `Number` and `String`. [See more](https://flowtype.org/docs/builtins.html).
+
+```js
+{
+    "rules": {
+        "flowtype/no-primitive-constructor-types": 2
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type x = Number
+// Message: Unexpected use of Number constructor type.
+
+type x = String
+// Message: Unexpected use of String constructor type.
+
+type x = Boolean
+// Message: Unexpected use of Boolean constructor type.
+
+type x = { a: Number }
+// Message: Unexpected use of Number constructor type.
+
+type x = { a: String }
+// Message: Unexpected use of String constructor type.
+
+type x = { a: Boolean }
+// Message: Unexpected use of Boolean constructor type.
+
+(x: Number) => {}
+// Message: Unexpected use of Number constructor type.
+
+(x: String) => {}
+// Message: Unexpected use of String constructor type.
+
+(x: Boolean) => {}
+// Message: Unexpected use of Boolean constructor type.
+```
+
+The following patterns are not considered problems:
+
+```js
+type x = number
+
+type x = string
+
+type x = boolean
+
+type x = { a: number }
+
+type x = { a: string }
+
+type x = { a: boolean }
+
+(x: number) => {}
+
+(x: string) => {}
+
+(x: boolean) => {}
+
+type x = MyNumber
+
+type x = MyString
+
+type x = MyBoolean
 ```
 
 
