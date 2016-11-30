@@ -2539,6 +2539,31 @@ type TArrayPredicate = (el: T, i?: number) => boolean
 // Options: ["never"]
 type TArrayPredicate = (el:T, i?:number) => boolean
 
+type X = (number) => string;
+
+type X = (?number) => string;
+
+type X = number => string;
+
+type X = ?number => string;
+
+type X = ({ foo: bar }) => string;
+
+// Options: ["always"]
+type X = (number) => string;
+
+// Options: ["always"]
+type X = (?number) => string;
+
+// Options: ["always"]
+type X = number => string;
+
+// Options: ["always"]
+type X = ?number => string;
+
+// Options: ["always"]
+type X = ({ foo: bar }) => string;
+
 class Foo { bar }
 
 class Foo { bar = 3 }
@@ -2636,6 +2661,12 @@ type X = { +[a: b]: c }
 
 // Options: ["never"]
 type X = { +[a:b]:c }
+
+// Options: ["always"]
+type X = { [string]: c }
+
+// Options: ["never"]
+type X = { [string]:c }
 
 // Options: ["never"]
 const x = ({}:{})
@@ -3122,6 +3153,31 @@ type X = (foo? : string) => number
 // Options: ["always"]
 type X = (foo? : ?string) => number
 
+type X = (number) => string;
+
+type X = (?number) => string;
+
+type X = number => string;
+
+type X = ?number => string;
+
+type X = ({ foo: bar }) => string;
+
+// Options: ["always"]
+type X = (number) => string;
+
+// Options: ["always"]
+type X = (?number) => string;
+
+// Options: ["always"]
+type X = number => string;
+
+// Options: ["always"]
+type X = ?number => string;
+
+// Options: ["always"]
+type X = ({ foo : bar }) => string;
+
 class Foo { bar }
 
 class Foo { bar = 3 }
@@ -3192,6 +3248,12 @@ type X = { [a : b] : c }
 
 // Options: ["never"]
 type X = { [a:b]:c }
+
+// Options: ["always"]
+type X = { [string] : c }
+
+// Options: ["never"]
+type X = { [string]:c }
 
 // Options: ["always"]
 type X = { +[a : b] : c }
