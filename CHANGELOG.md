@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.29.0"></a>
+# [2.29.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.28.2...v2.29.0) (2016-11-30)
+
+
+### Features
+
+* support optional Flow names (closes #145) ([c40ad7c](https://github.com/gajus/eslint-plugin-flowtype/commit/c40ad7c)), closes [#145](https://github.com/gajus/eslint-plugin-flowtype/issues/145)
+
+
+
 <a name="2.28.2"></a>
 ## [2.28.2](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.28.1...v2.28.2) (2016-11-27)
 
