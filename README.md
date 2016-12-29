@@ -1538,6 +1538,8 @@ async () => { return 4; }
 The following patterns are not considered problems:
 
 ```js
+return;
+
 (foo): string => {}
 
 // Options: ["always"]
