@@ -278,6 +278,9 @@ export default {
   ],
   valid: [
     {
+      code: 'return;'
+    },
+    {
       code: '(foo): string => {}'
     },
     {

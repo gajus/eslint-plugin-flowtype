@@ -68,7 +68,9 @@ export default (context) => {
     FunctionExpression: registerFunction,
     'FunctionExpression:exit': evaluateFunction,
     ReturnStatement: (node) => {
-      targetNodes[targetNodes.length - 1].returnStatementNode = node;
+      if (targetNodes.length) {
+        targetNodes[targetNodes.length - 1].returnStatementNode = node;
+      }
     }
   };
 };
