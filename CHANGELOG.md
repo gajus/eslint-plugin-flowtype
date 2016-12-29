@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.29.2"></a>
+## [2.29.2](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.29.1...v2.29.2) (2016-12-29)
+
+
+### Bug Fixes
+
+* require-return-type exception ([59bbf3e](https://github.com/gajus/eslint-plugin-flowtype/commit/59bbf3e))
+
+
+
 <a name="2.29.1"></a>
 ## [2.29.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.29.0...v2.29.1) (2016-12-01)
 
