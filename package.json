@@ -19,9 +19,11 @@
   },
   "license": "BSD-3-Clause",
   "peerDependencies": {
-    "eslint": ">=2.0.0"
+    "eslint": ">=2.0.0",
+    "flow-bin": "^0.37.4"
   },
   "dependencies": {
+    "eslint-plugin-flowtype-errors": "^2.0.3",
     "lodash": "^4.15.0"
   },
   "scripts": {
