@@ -870,6 +870,33 @@ const TYPE_CAST_EXPRESSIONS = {
   ]
 };
 
+const VARIABLE_EXPRESSIONS = {
+  invalid: [
+    {
+      code: 'const x:number = 7;',
+      errors: [{message: 'There must be a space before const type annotation colon.'}],
+      options: ['always'],
+      output: 'const x :number = 7;'
+    },
+    {
+      code: 'let x:number = 42;',
+      errors: [{message: 'There must be a space before let type annotation colon.'}],
+      options: ['always'],
+      output: 'let x :number = 42;'
+    }
+  ],
+  valid: [
+    {
+      code: 'const x :number = 7;',
+      options: ['always']
+    },
+    {
+      code: 'let x :number = 42;',
+      options: ['always']
+    }
+  ]
+};
+
 const ALL = [
   ARROW_FUNCTION_PARAMS,
   ARROW_FUNCTION_RETURN,
@@ -879,7 +906,8 @@ const ALL = [
   CLASS_PROPERTIES,
   OBJECT_TYPE_PROPERTIES,
   OBJECT_TYPE_INDEXERS,
-  TYPE_CAST_EXPRESSIONS
+  TYPE_CAST_EXPRESSIONS,
+  VARIABLE_EXPRESSIONS
 ];
 
 export default {
