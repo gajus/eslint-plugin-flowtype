@@ -883,6 +883,12 @@ const VARIABLE_EXPRESSIONS = {
       errors: [{message: 'There must be a space before let type annotation colon.'}],
       options: ['always'],
       output: 'let x :number = 42;'
+    },
+    {
+      code: 'var x:number = 42;',
+      errors: [{message: 'There must be a space before var type annotation colon.'}],
+      options: ['always'],
+      output: 'var x :number = 42;'
     }
   ],
   valid: [
@@ -892,6 +898,10 @@ const VARIABLE_EXPRESSIONS = {
     },
     {
       code: 'let x :number = 42;',
+      options: ['always']
+    },
+    {
+      code: 'var x :number = 42;',
       options: ['always']
     }
   ]
