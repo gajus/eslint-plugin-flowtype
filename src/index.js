@@ -3,6 +3,7 @@ import {checkFlowFileAnnotation} from './utilities';
 import defineFlowType from './rules/defineFlowType';
 import genericSpacing from './rules/genericSpacing';
 import noWeakTypes from './rules/noWeakTypes';
+import noTypesMissingFlowAnnotation from './rules/noTypesMissingFlowAnnotation';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -30,6 +31,7 @@ const rules = {
   'generic-spacing': genericSpacing,
   'no-dupe-keys': noDupeKeys,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
+  'no-types-missing-flow-annotation': noTypesMissingFlowAnnotation,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
   'require-parameter-type': requireParameterType,
@@ -51,13 +53,17 @@ export default {
   configs: {
     recommended
   },
-  rules: _.mapValues(rules, (rule) => {
+  rules: _.mapValues(rules, (rule, key) => {
     // Support current and deprecated rule formats
     if (_.isPlainObject(rule)) {
       return {
         ...rule,
         create: _.partial(checkFlowFileAnnotation, rule.create)
       };
+    }
+
+    if (key === 'no-types-missing-flow-annotation') {
+      return rule;
     }
 
     return _.partial(checkFlowFileAnnotation, rule);
