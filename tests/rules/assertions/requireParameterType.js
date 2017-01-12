@@ -152,6 +152,9 @@ export default {
       code: '([foo]: Array) => {}'
     },
     {
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => {}'
+    },
+    {
       code: '(foo) => {}',
       settings: {
         flowtype: {

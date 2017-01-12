@@ -1,9 +1,13 @@
 import _ from 'lodash';
+import {
+  getTypeAliases
+} from './../utilities';
 
 export default (context) => {
   const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
   const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
+  const typeAliasNodes = getTypeAliases(context);
 
   const makeRegExp = (str) => {
     return new RegExp(str);
@@ -50,6 +54,15 @@ export default (context) => {
     return false;
   };
 
+  const getShorthandReturn = (arrowNode) => {
+    const idName = _.get(arrowNode, 'parent.id.typeAnnotation.typeAnnotation.id.name');
+    const annot = _.find(typeAliasNodes, (node) => {
+      return _.get(node, 'id.name') === idName;
+    });
+
+    return _.get(annot, 'right.returnType');
+  };
+
   const evaluateFunction = (functionNode) => {
     const targetNode = targetNodes.pop();
 
@@ -67,12 +80,14 @@ export default (context) => {
       return;
     }
 
+    const returnType = functionNode.returnType || isArrow && getShorthandReturn(functionNode);
+
     if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
       context.report(functionNode, 'Must annotate undefined return type.');
     } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
-      if (annotateReturn && !functionNode.returnType && !shouldFilterNode(functionNode)) {
+      if (annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
         context.report(functionNode, 'Missing return type annotation.');
       }
     }

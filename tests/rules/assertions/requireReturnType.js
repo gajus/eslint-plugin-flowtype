@@ -322,6 +322,9 @@ export default {
       ]
     },
     {
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => { return 42; }'
+    },
+    {
       code: '(foo) => { return; }'
     },
     {

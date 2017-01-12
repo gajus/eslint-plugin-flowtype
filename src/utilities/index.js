@@ -9,4 +9,5 @@ export quoteName from './quoteName';
 export getTokenBeforeParens from './getTokenBeforeParens';
 export getTokenAfterParens from './getTokenAfterParens';
 export fuzzyStringMatch from './fuzzyStringMatch';
+export getTypeAliases from './getTypeAliases';
 export checkFlowFileAnnotation from './checkFlowFileAnnotation';
