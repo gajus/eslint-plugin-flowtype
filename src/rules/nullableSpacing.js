@@ -20,10 +20,19 @@ export default (context) => {
 
   const checkNode = (node) => {
     const annotColon = sourceCode.getTokenBefore(node);
-    const annotType = _.get(node, 'typeAnnotation');
+    const annotNode = _.get(node, 'typeAnnotation');
+
+    let nodeAfter;
+
+    // Union and Intersections types are surrounded by parens
+    if (annotNode.type === 'UnionTypeAnnotation' || annotNode.type === 'IntersectionTypeAnnotation') {
+      nodeAfter = sourceCode.getTokenBefore(annotNode);
+    } else {
+      nodeAfter = annotNode;
+    }
 
     const spaceBefore = node.start - annotColon.end;
-    const spaceAfter = annotType.start - node.start - 1;
+    const spaceAfter = nodeAfter.start - (node.start + 1);
 
     if (!after && spaceAfter !== 0 || after && spaceAfter > 1) {
       reporter(node, {

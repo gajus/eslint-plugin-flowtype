@@ -44,7 +44,7 @@ export default {
       errors: [{
         message: 'Unexpected whitespace after nullable type annotation.'
       }, {
-        message: 'Unexpected whitespace before nullable type annotation.'       ,
+        message: 'Unexpected whitespace before nullable type annotation.'
       }],
       options: [{
         after: false,
@@ -58,6 +58,16 @@ export default {
     },
     {
       code: 'function x(a: ?e) {};'
+    },
+    {
+      code: 'function foo(n: ?(number | string)) {}'
+    },
+    {
+      code: 'function foo(n:? (number | string)) {}',
+      options: [{
+        after: true,
+        before: false
+      }]
     }
   ]
 };
