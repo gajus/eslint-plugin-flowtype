@@ -33,7 +33,7 @@
     "create-index": "create-index ./src --update-index",
     "precommit": "npm run lint && npm run test && npm run format-json",
     "commitmsg": "conventional-changelog-lint -e",
-    "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json"
+    "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json && jsonlint --sort-keys --in-place --indent '  ' ./src/configs/strict.json && echo '' >> ./src/configs/strict.json"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
