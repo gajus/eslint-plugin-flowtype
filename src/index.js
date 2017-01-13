@@ -3,7 +3,7 @@ import {checkFlowFileAnnotation} from './utilities';
 import defineFlowType from './rules/defineFlowType';
 import genericSpacing from './rules/genericSpacing';
 import noWeakTypes from './rules/noWeakTypes';
-import noTypesMissingFlowAnnotation from './rules/noTypesMissingFlowAnnotation';
+import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -31,7 +31,7 @@ const rules = {
   'generic-spacing': genericSpacing,
   'no-dupe-keys': noDupeKeys,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
-  'no-types-missing-flow-annotation': noTypesMissingFlowAnnotation,
+  'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
   'require-parameter-type': requireParameterType,
@@ -62,7 +62,7 @@ export default {
       };
     }
 
-    if (key === 'no-types-missing-flow-annotation') {
+    if (key === 'no-types-missing-file-annotation') {
       return rule;
     }
 
