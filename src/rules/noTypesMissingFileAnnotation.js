@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {isFlowFile} from '../utilities';
 
 /**
@@ -7,7 +8,7 @@ import {isFlowFile} from '../utilities';
 
 export default (context) => {
   // Skip flow files
-  if (isFlowFile(context)) {
+  if (_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context)) {
     return {};
   }
 

@@ -1,13 +1,13 @@
-### `no-types-missing-flow-annotation`
+### `no-types-missing-file-annotation`
 
 Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration.
 
 ```js
 {
     "rules": {
-        "flowtype/no-types-missing-flow-annotation": 2
+        "flowtype/no-types-missing-file-annotation": 2
     }
 }
 ```
 
-<!-- assertions noTypesMissingFlowAnnotation -->
+<!-- assertions noTypesMissingFileAnnotation -->
