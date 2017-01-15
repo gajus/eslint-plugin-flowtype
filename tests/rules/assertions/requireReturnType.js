@@ -274,6 +274,38 @@ export default {
           excludeArrowFunctions: 'expressionsOnly'
         }
       ]
+    },
+    {
+      code: 'function foo() { return 42; }\nfunction bar() { return 42; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'const foo = () => { return 42; };\nconst bar = () => { return 42; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'bar'
+          ]
+        }
+      ]
     }
   ],
   valid: [
@@ -472,6 +504,74 @@ export default {
         'always',
         {
           excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
+    },
+    {
+      code: 'function foo() { return 42; }',
+      options: [
+        'always',
+        {
+          excludeMatching: [
+            'foo'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'function foo() { return 42; }',
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
+      options: [
+        'always',
+        {
+          excludeMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'foo',
+            'baz'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
+      options: [
+        'always',
+        {
+          excludeMatching: [
+            '^b.*',
+            'qux'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            '^f.*'
+          ]
         }
       ]
     }
