@@ -34,4 +34,41 @@ Alternatively, you can want to exclude only concise arrow function (e.g. `() => 
 }
 ```
 
+You can exclude or include specific tests with the `includeOnlyMatching` and `excludeMatching` rules.
+
+```js
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "includeOnlyMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "excludeMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+```
+
+Both rules take an array that can contain either strings or valid RegExp statements.
+
 <!-- assertions requireReturnType -->
