@@ -5,18 +5,12 @@ export default (context) => {
   const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
 
-  const getRegExp = (str) => {
+  const makeRegExp = (str) => {
     return new RegExp(str);
   };
 
-  let excludeMatching;
-  let includeOnlyMatching;
-
-  excludeMatching = _.get(context, 'options[1].excludeMatching', []);
-  includeOnlyMatching = _.get(context, 'options[1].includeOnlyMatching', []);
-
-  excludeMatching = _.map(excludeMatching, getRegExp);
-  includeOnlyMatching = _.map(includeOnlyMatching, getRegExp);
+  const excludeMatching = _.get(context, 'options[1].excludeMatching', []).map(makeRegExp);
+  const includeOnlyMatching = _.get(context, 'options[1].includeOnlyMatching', []).map(makeRegExp);
 
   const targetNodes = [];
 
@@ -37,13 +31,13 @@ export default (context) => {
     return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid;
   };
 
-  const getShouldFilterNode = (functionNode) => {
+  const shouldFilterNode = (functionNode) => {
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const identiferName = _.get(functionNode, isArrow ? 'parent.id.name' : 'id.name');
 
-    const checkRegExp = _.partial((str, re) => {
-      return re.test(str);
-    }, identiferName);
+    const checkRegExp = (regex) => {
+      return regex.test(identiferName);
+    };
 
     if (excludeMatching.length && _.some(excludeMatching, checkRegExp)) {
       return true;
@@ -78,9 +72,7 @@ export default (context) => {
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
       context.report(functionNode, 'Must annotate undefined return type.');
     } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
-      const shouldFilterNode = getShouldFilterNode(functionNode);
-
-      if (annotateReturn && !functionNode.returnType && !shouldFilterNode) {
+      if (annotateReturn && !functionNode.returnType && !shouldFilterNode(functionNode)) {
         context.report(functionNode, 'Missing return type annotation.');
       }
     }
