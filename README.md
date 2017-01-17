@@ -137,7 +137,7 @@ npm install eslint-plugin-flowtype --save-dev
 <a name="eslint-plugin-flowtype-configuration-shareable-configurations-recommended"></a>
 #### Recommended
 
-This plugin exports a [recommended configuration](./src/configs/recommended.json) that enforces Flow type good practices.
+This plugin exports a [recommended configuration](./src/configs/recommended.js) that enforces Flow type good practices.
 
 To enable this configuration use the extends property in your `.eslintrc` config file:
 
