@@ -45,10 +45,7 @@ export default iterateFunctionNodes((context) => {
       typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
       if (isArrow && functionAnnotation) {
-        // Check each of the params in the annotation against the current parameter name
-        typeAnnotation = _.find(functionAnnotation.right.params, (node) => {
-          return getParameterName(node, context) === parameterName;
-        });
+        typeAnnotation = true;
       }
 
       if (!typeAnnotation) {
