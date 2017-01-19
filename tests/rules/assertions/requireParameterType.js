@@ -146,6 +146,9 @@ export default {
       code: '(...foo: string) => {}'
     },
     {
+      code: 'const f: Foo = (a, b) => 42;'
+    },
+    {
       code: '({foo}: {foo: string}) => {}'
     },
     {

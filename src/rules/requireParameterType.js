@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import {
     getParameterName,
-    getTypeAliases,
     iterateFunctionNodes,
     quoteName
 } from './../utilities';
@@ -9,15 +8,6 @@ import {
 export default iterateFunctionNodes((context) => {
   const skipArrows = _.get(context, 'options[0].excludeArrowFunctions');
   const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
-
-  const getFunctionAnnotation = (functionNode) => {
-    const typeAliasNodes = getTypeAliases(context);
-    const idName = _.get(functionNode, 'parent.id.typeAnnotation.typeAnnotation.id.name');
-
-    return _.find(typeAliasNodes, (node) => {
-      return _.get(node, 'id.name') === idName;
-    });
-  };
 
   return (functionNode) => {
     // It is save to ignore FunctionTypeAnnotation nodes in this rule.
@@ -27,7 +17,7 @@ export default iterateFunctionNodes((context) => {
 
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isArrowFunctionExpression = functionNode.expression;
-    const functionAnnotation = isArrow && getFunctionAnnotation(functionNode);
+    const functionAnnotation = isArrow && _.get(functionNode, 'parent.id.typeAnnotation');
 
     if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
       return;
