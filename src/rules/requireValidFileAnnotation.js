@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {
     isFlowFileAnnotation,
+    flowFileAnnotationMode,
     fuzzyStringMatch
 } from './../utilities';
 
@@ -33,6 +34,7 @@ export const schema = [
 export default (context) => {
   const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
+  const mode = _.get(context, 'options[1].mode', defaults.mode);
 
   return {
     Program (node) {
@@ -52,6 +54,14 @@ export default (context) => {
             const str = style === 'line' ? '`// ' + potentialFlowFileAnnotation.value.trim() + '`' : '`/* ' + potentialFlowFileAnnotation.value.trim() + ' */`';
 
             context.report(potentialFlowFileAnnotation, 'Flow file annotation style must be ' + str);
+          }
+
+          const fileMode = flowFileAnnotationMode(potentialFlowFileAnnotation.value);
+
+          if (mode === 'flow weak' && fileMode === 'noflow') {
+            context.report(potentialFlowFileAnnotation, 'Flow file annotation must be `@flow` or ``@flow weak`');
+          } else if (mode === 'flow' && (fileMode === 'noflow' || fileMode === 'flow weak')) {
+            context.report(potentialFlowFileAnnotation, 'Flow file annotation must be `@flow`');
           }
         } else if (checkAnnotationSpelling(potentialFlowFileAnnotation.value.trim())) {
           context.report(potentialFlowFileAnnotation, 'Misspelled or malformed Flow file annotation.');

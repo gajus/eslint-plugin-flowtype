@@ -10,3 +10,4 @@ export getTokenBeforeParens from './getTokenBeforeParens';
 export getTokenAfterParens from './getTokenAfterParens';
 export fuzzyStringMatch from './fuzzyStringMatch';
 export checkFlowFileAnnotation from './checkFlowFileAnnotation';
+export flowFileAnnotationMode from './flowFileAnnotationMode';
