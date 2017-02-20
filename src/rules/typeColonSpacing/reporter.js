@@ -17,7 +17,7 @@ export default (direction, context, {always, allowLineBreak}) => {
     // Support optional names
     // type X = { [string]: a }
     // type X = string => string
-    if (colon.value !== ':') {
+    if (!colon || colon.value !== ':') {
       return;
     }
 
