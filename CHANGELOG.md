@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.30.0"></a>
+# [2.30.0](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.29.1...v2.30.0) (2017-02-24)
+
+
+### Bug Fixes
+
+* ensure colon is not null in typeColonSpacing reporter (#197) ([1242ab4](https://github.com/gajus/eslint-plugin-flowtype/commit/1242ab4))
+* require-return-type exception ([59bbf3e](https://github.com/gajus/eslint-plugin-flowtype/commit/59bbf3e))
+
+### Features
+
+* `require-return-type` include / exclude filter support ([3f4b947](https://github.com/gajus/eslint-plugin-flowtype/commit/3f4b947))
+
+
+
 <a name="2.29.1"></a>
 ## [2.29.1](https://github.com/gajus/eslint-plugin-flowtype/compare/v2.29.0...v2.29.1) (2016-12-01)
 
