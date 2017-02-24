@@ -122,6 +122,48 @@ export default {
           annotationStyle: 'block'
         }
       ]
+    },
+    {
+      code: '/* @noflow */',
+      errors: [
+        {
+          message: 'Flow file annotation must be `@flow` or ``@flow weak`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          mode: 'flow weak'
+        }
+      ]
+    },
+    {
+      code: '/* @noflow */',
+      errors: [
+        {
+          message: 'Flow file annotation must be `@flow`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          mode: 'flow'
+        }
+      ]
+    },
+    {
+      code: '/* @flow weak */',
+      errors: [
+        {
+          message: 'Flow file annotation must be `@flow`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          mode: 'flow'
+        }
+      ]
     }
   ],
   valid: [
@@ -175,8 +217,51 @@ export default {
           annotationStyle: 'block'
         }
       ]
+    },
+    {
+      code: '/* @noflow */',
+      options: [
+        'always',
+        {
+          mode: 'noflow'
+        }
+      ]
+    },
+    {
+      code: '/* @flow */',
+      options: [
+        'always',
+        {
+          mode: 'noflow'
+        }
+      ]
+    },
+    {
+      code: '/* @flow weak */',
+      options: [
+        'always',
+        {
+          mode: 'flow weak'
+        }
+      ]
+    },
+    {
+      code: '/* @flow */',
+      options: [
+        'always',
+        {
+          mode: 'flow weak'
+        }
+      ]
+    },
+    {
+      code: '/* @flow */',
+      options: [
+        'always',
+        {
+          mode: 'flow'
+        }
+      ]
     }
   ]
 };
-
-

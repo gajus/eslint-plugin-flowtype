@@ -18,6 +18,11 @@ This rule has an object option:
     * `"line"`: Require single line annotations (i.e. `// @flow`).
     * `"block"`: Require block annotations (i.e. `/* @flow */`).
 
+* `"mode"` - Enforce a consistent file annotation mode level.
+    * `"noflow"` (default): Any flow level is acceptable.
+    * `"flow weak"`: Require flow weak or strict mode.
+    * `"flow"`: Require flow strict mode.
+
 ```js
 {
   "rules": {
@@ -33,7 +38,8 @@ This rule has an object option:
     "flowtype/require-valid-file-annotation": [
       2,
       "always", {
-        "annotationStyle": "block"
+        "annotationStyle": "block",
+        "mode": "flow"
       }
     ]
   }
