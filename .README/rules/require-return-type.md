@@ -6,7 +6,7 @@ Requires that functions have return type annotation.
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
+Alternatively, you can exclude a concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
 
 ```js
 {
