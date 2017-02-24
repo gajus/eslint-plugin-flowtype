@@ -1416,7 +1416,7 @@ Requires that functions have return type annotation.
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
+Alternatively, you can exclude a concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
 
 ```js
 {
@@ -1443,6 +1443,43 @@ Alternatively, you can want to exclude only concise arrow function (e.g. `() => 
     }
 }
 ```
+
+You can exclude or include specific tests with the `includeOnlyMatching` and `excludeMatching` rules.
+
+```js
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "includeOnlyMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "excludeMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+```
+
+Both rules take an array that can contain either strings or valid RegExp statements.
 
 The following patterns are considered problems:
 
@@ -1533,11 +1570,23 @@ function* x() {}
 // Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
 async () => { return 4; }
 // Message: Missing return type annotation.
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+function foo() { return 42; }
+function bar() { return 42; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+const foo = () => { return 42; };
+const bar = () => { return 42; }
+// Message: Missing return type annotation.
 ```
 
 The following patterns are not considered problems:
 
 ```js
+return;
+
 (foo): string => {}
 
 // Options: ["always"]
@@ -1606,6 +1655,28 @@ async (foo): Promise<number> => { return 3; }
 
 // Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
 async () => 3
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+function foo() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+function foo() { return 42; }
+
+// Options: ["always",{"excludeMatching":["bar"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["foo","baz"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"excludeMatching":["^b.*","qux"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["^f.*"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
 ```
 
 
