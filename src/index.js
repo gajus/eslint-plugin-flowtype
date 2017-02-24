@@ -22,6 +22,7 @@ import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import sortKeys from './rules/sortKeys';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import recommended from './configs/recommended.json';
+import strict from './configs/strict.json';
 
 const rules = {
   'boolean-style': booleanStyle,
@@ -49,7 +50,8 @@ const rules = {
 
 export default {
   configs: {
-    recommended
+    recommended,
+    strict
   },
   rules: _.mapValues(rules, (rule) => {
     // Support current and deprecated rule formats
