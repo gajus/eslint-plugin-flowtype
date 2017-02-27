@@ -14,6 +14,5 @@ script:
   - npm run test
   - npm run lint
   - npm run build
-  - conventional-changelog-lint --from=HEAD~$(git --no-pager rev-list master..HEAD --count)
 after_success:
-  - travis-after-all && ./.scripts/release.sh
+  - rm -fr ./dist && npm run build && semantic-release pre && npm publish && semantic-release post
