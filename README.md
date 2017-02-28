@@ -1686,7 +1686,7 @@ function bar() { return 42; }
 
 This rule validates Flow file annotations.
 
-This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
+This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @flow`), and enforce a consistant annotation style.
 
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
 #### Options
