@@ -9,6 +9,7 @@ import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noWeakTypes from './rules/noWeakTypes';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
+import requireExportType from './rules/requireExportType';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -34,6 +35,7 @@ const rules = {
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
+  'require-export-type': requireExportType,
   'require-parameter-type': requireParameterType,
   'require-return-type': requireReturnType,
   'require-valid-file-annotation': requireValidFileAnnotation,
