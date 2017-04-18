@@ -7,7 +7,7 @@ import {isFlowFile} from '../utilities';
 
 export default (context) => {
   // Skip flow files
-  if (isFlowFile(context)) {
+  if (isFlowFile(context, false)) {
     return {};
   }
 
@@ -22,6 +22,10 @@ export default (context) => {
   return {
     ImportDeclaration (node) {
       if (node.importKind === 'type') {
+        reporter(node, 'imports');
+      }
+      if (node.importKind === 'value' &&
+      node.specifiers.some((specifier) => { return specifier.importKind === 'type'; })) {
         reporter(node, 'imports');
       }
     },

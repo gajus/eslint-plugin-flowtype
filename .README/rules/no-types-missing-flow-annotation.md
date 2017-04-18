@@ -1,6 +1,6 @@
 ### `no-types-missing-file-annotation`
 
-Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration.
+Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
 
 ```js
 {
