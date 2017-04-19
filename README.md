@@ -1,8 +1,6 @@
 <a name="eslint-plugin-flowtype"></a>
 # eslint-plugin-flowtype
 
-<!-- -->
-
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-flowtype.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-flowtype)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-flowtype/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-flowtype)
 [![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -22,6 +20,7 @@
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
+        * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
@@ -84,6 +83,7 @@ npm install eslint-plugin-flowtype --save-dev
       "never"
     ],
     "flowtype/no-primitive-constructor-types": 2,
+    "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
     "flowtype/object-type-delimiter": [
       2,
@@ -879,10 +879,46 @@ This rule mirrors ESLint's [no-dupe-keys](http://eslint.org/docs/rules/no-dupe-k
 The following patterns are considered problems:
 
 ```js
-type FooType = { a: number, b: string, a: number }
+type f = { a: number, b: string, a: number }
 // Message: Duplicate property.
 
-type FooType = { a: number, b: string, a: string }
+type f = { a: number, b: string, a: string }
+// Message: Duplicate property.
+
+type f = { get(key: "a"): string, get(key: "a"): string }
+// Message: Duplicate property.
+
+type f = { get(key: 1): string, get(key: 1): string }
+// Message: Duplicate property.
+
+type f = { get(key: 1.1): string, get(key: 1.1): string }
+// Message: Duplicate property.
+
+type f = { get(key: true): string, get(key: true): string }
+// Message: Duplicate property.
+
+type f = { get(key: {a: 1}): string, get(key: {a: 1}):string }
+// Message: Duplicate property.
+
+var a = "a"; type f = { get(key: a): string, get(key: a): string }
+// Message: Duplicate property.
+
+var b = 1; type f = { get(key: b): string, get(key: b): string }
+// Message: Duplicate property.
+
+var c = true; type f = { get(key: c): string, get(key: c): string }
+// Message: Duplicate property.
+
+var d = {}; type f = { get(key: d): string, get(key: d): string }
+// Message: Duplicate property.
+
+var e = []; type f = { get(key: e): string, get(key: e): string }
+// Message: Duplicate property.
+
+var e = [1, "a"]; type f = { get(key: e): string, get(key: e): string }
+// Message: Duplicate property.
+
+function fn() {}; type f = { get(key: fn): string, get(key: fn): string }
 // Message: Duplicate property.
 ```
 
@@ -892,6 +928,32 @@ The following patterns are not considered problems:
 type FooType = { a: number, b: string, c: number }
 
 type FooType = { a: number, b: string, a: number }
+
+type f = { get(key: "a"): string, get(key: "b"): string }
+
+type f = { get(key: 1): string, get(key: 2): string }
+
+type f = { get(key: 1.1): string, get(key: 1.2): string }
+
+type f = { get(key: true): string, get(key: false): string }
+
+type f = { get(key: ["a", 1]): string, get(key: ["a", 2]): string }
+
+type f = { get(key: ["a", ["b", 1]]): string, get(key: ["a", ["b", 2]]): string }
+
+type f = { a: number, b: string, c: number }
+
+type f = { get(key: "a"): string, get(key: "b"): string }
+
+type f = { get(key: "a"): string, get(key: "a", key2: "b"): string }
+
+type f = { get(key: "a"): string, get(key: 1): string }
+
+type f = { get(key: { a: 1 }): string, get(key: { a: 2 }): string}
+
+var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
+
+var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
 ```
 
 
@@ -966,6 +1028,62 @@ type x = MyNumber
 type x = MyString
 
 type x = MyBoolean
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-types-missing-file-annotation"></a>
+### <code>no-types-missing-file-annotation</code>
+
+Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
+
+```js
+{
+    "rules": {
+        "flowtype/no-types-missing-file-annotation": 2
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+const x: number = 42;
+// Message: Type annotations require valid Flow declaration.
+
+type FooType = number;
+// Message: Type aliases require valid Flow declaration.
+
+import type A from "a"
+// Message: Type imports require valid Flow declaration.
+
+import type {A} from "a"
+// Message: Type imports require valid Flow declaration.
+
+import {type A} from "a"
+// Message: Type imports require valid Flow declaration.
+
+function t<T>(): T{}
+// Message: Type annotations require valid Flow declaration.
+```
+
+The following patterns are not considered problems:
+
+```js
+// @flow
+const x: number = 42;
+
+/* @flow weak */
+type FooType = number;
+
+/* @noflow */
+type FooType = number;
+
+/* @noflow */
+import type A from "a"
+
+/* @noflow */
+import {type A} from "a"
 ```
 
 
