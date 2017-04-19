@@ -51,6 +51,7 @@ npm install eslint-plugin-flowtype --save-dev
       "never"
     ],
     "flowtype/no-primitive-constructor-types": 2,
+    "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
     "flowtype/object-type-delimiter": [
       2,
@@ -147,6 +148,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
 {"gitdown": "include", "file": "./rules/no-primitive-constructor-types.md"}
+{"gitdown": "include", "file": "./rules/no-types-missing-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/no-weak-types.md"}
 {"gitdown": "include", "file": "./rules/object-type-delimiter.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
