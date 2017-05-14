@@ -31,6 +31,12 @@ export default {
       }]
     },
     {
+      code: 'export type {A} from "a"',
+      errors: [{
+        message: 'Type exports require valid Flow declaration.'
+      }]
+    },
+    {
       code: 'function t<T>(): T{}',
       errors: [{
         message: 'Type annotations require valid Flow declaration.'
@@ -52,6 +58,9 @@ export default {
     },
     {
       code: '/* @noflow */\nimport {type A} from "a"'
+    },
+    {
+      code: '/* @noflow */\nexport type {A} from "a"'
     }
   ]
 };

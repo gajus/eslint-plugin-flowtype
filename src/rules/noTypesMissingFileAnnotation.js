@@ -20,6 +20,11 @@ export default (context) => {
   };
 
   return {
+    ExportNamedDeclaration (node) {
+      if (node.exportKind === 'type') {
+        reporter(node, 'exports');
+      }
+    },
     ImportDeclaration (node) {
       if (node.importKind === 'type') {
         reporter(node, 'imports');
