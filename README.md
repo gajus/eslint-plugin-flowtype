@@ -1035,7 +1035,7 @@ type x = MyBoolean
 <a name="eslint-plugin-flowtype-rules-no-types-missing-file-annotation"></a>
 ### <code>no-types-missing-file-annotation</code>
 
-Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
+Disallows Flow type imports, exports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
 
 ```js
 {
@@ -1063,6 +1063,9 @@ import type {A} from "a"
 import {type A} from "a"
 // Message: Type imports require valid Flow declaration.
 
+export type {A} from "a"
+// Message: Type exports require valid Flow declaration.
+
 function t<T>(): T{}
 // Message: Type annotations require valid Flow declaration.
 ```
@@ -1084,6 +1087,9 @@ import type A from "a"
 
 /* @noflow */
 import {type A} from "a"
+
+/* @noflow */
+export type {A} from "a"
 ```
 
 
@@ -3732,4 +3738,3 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 **Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
 Checks for simple Flow syntax errors.
-
