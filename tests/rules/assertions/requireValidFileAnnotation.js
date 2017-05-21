@@ -168,6 +168,19 @@ export default {
       ]
     },
     {
+      code: '// @function',
+      options: [
+        'never',
+        {
+          annotationStyle: 'none'
+        }
+      ]
+    },
+    {
+      code: '// @fixable',
+      options: [ 'error', 'never' ]
+    },
+    {
       code: '/* @flow */',
       options: [
         'always',
@@ -178,5 +191,3 @@ export default {
     }
   ]
 };
-
-
