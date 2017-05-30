@@ -9,7 +9,7 @@ const defaults = {
 };
 
 const looksLikeFlowFileAnnotation = (comment) => {
-  return /@(?:no)?f/i.test(comment);
+  return /@(?:no)?flo/i.test(comment);
 };
 
 const isValidAnnotationStyle = (node, style) => {
