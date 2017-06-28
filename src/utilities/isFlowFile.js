@@ -10,11 +10,8 @@ import isFlowFileAnnotation from './isFlowFileAnnotation.js';
 export default (context, strict = true) => {
   const comments = context.getAllComments();
 
-  if (!comments.length) {
-    return false;
+  return comments.some((comment) => {
+    return isFlowFileAnnotation(comment.value) && !(strict && /no/.test(comment.value));
   }
-
-  const firstComment = comments[0];
-
-  return isFlowFileAnnotation(firstComment.value) && !(strict && /no/.test(firstComment.value));
+  );
 };

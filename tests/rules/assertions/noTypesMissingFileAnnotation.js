@@ -61,6 +61,9 @@ export default {
     },
     {
       code: '/* @noflow */\nexport type {A} from "a"'
+    },
+    {
+      code: '/* some comment */\n// @flow\n var x: number = 42;'
     }
   ]
 };
