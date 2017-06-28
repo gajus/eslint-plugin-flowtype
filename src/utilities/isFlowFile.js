@@ -14,7 +14,10 @@ export default (context, strict = true) => {
     return false;
   }
 
-  const firstComment = comments[0];
-
-  return isFlowFileAnnotation(firstComment.value) && !(strict && /no/.test(firstComment.value));
+  return comments.some((comment) => {
+    return (
+      isFlowFileAnnotation(comment.value) &&
+      !(strict && /no/.test(comment.value))
+    );
+  });
 };

@@ -61,6 +61,9 @@ export default {
     },
     {
       code: '/* @noflow */\nexport type {A} from "a"'
+    },
+    {
+      code: '// an unrelated comment\n// @flow\nexport type {A} from "a"'
     }
   ]
 };
