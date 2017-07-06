@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined */
+
 export default {
   invalid: [
     {
@@ -83,6 +85,17 @@ export default {
       errors: [{message: 'Prefer commas to semicolons in object and class types'}],
       options: ['comma'],
       output: 'declare class Foo { static (): Foo, }'
+    }
+  ],
+  misconfigured: [
+    {
+      errors: [{
+        field: 'data["0"]',
+        message: 'must be an enum value',
+        type: undefined,
+        value: 'period'
+      }],
+      options: ['period']
     }
   ],
   valid: [
