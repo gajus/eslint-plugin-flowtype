@@ -135,6 +135,41 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["0"].excludeOtherStuff'
+        }
+      ],
+      options: [{excludeOtherStuff: true}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].excludeArrowFunctions',
+          message: 'must be an enum value',
+          type: undefined, // eslint-disable-line no-undefined
+          value: 'everything'
+        }
+      ],
+      options: [{excludeArrowFunctions: 'everything'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].excludeParameterMatch',
+          message: 'is the wrong type',
+          type: 'string',
+          value: 3
+        }
+      ],
+      options: [{excludeParameterMatch: 3}]
+    }
+  ],
   valid: [
     {
       code: '(foo: string) => {}'
