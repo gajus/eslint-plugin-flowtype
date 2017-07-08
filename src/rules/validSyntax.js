@@ -5,6 +5,8 @@ import {
     quoteName
 } from './../utilities';
 
+const schema = [];
+
 const create = iterateFunctionNodes((context) => {
   return (functionNode) => {
     _.forEach(functionNode.params, (identifierNode) => {
@@ -30,6 +32,7 @@ export default {
   create,
   meta: {
     deprecated: true
-  }
+  },
+  schema
 };
 
