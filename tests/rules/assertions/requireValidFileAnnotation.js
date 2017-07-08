@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined */
+
 export default {
   invalid: [
     {
@@ -124,6 +126,30 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: undefined,
+          value: 'sometimes'
+        }
+      ],
+      options: ['sometimes']
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].annotationStyle',
+          message: 'must be an enum value',
+          type: undefined,
+          value: 'upside-down'
+        }
+      ],
+      options: ['never', {annotationStyle: 'upside-down'}]
+    }
+  ],
   valid: [
     {
       code: 'a;'
@@ -178,7 +204,7 @@ export default {
     },
     {
       code: '// @fixable',
-      options: [ 'error', 'never' ]
+      options: ['never']
     },
     {
       code: '/* @flow */',
