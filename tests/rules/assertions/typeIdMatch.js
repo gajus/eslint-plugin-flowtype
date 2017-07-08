@@ -20,6 +20,19 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'is the wrong type',
+          type: 'string',
+          value: 7
+        }
+      ],
+      options: [7]
+    }
+  ],
   valid: [
     {
       code: 'type FooType = {};'

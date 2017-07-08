@@ -1,8 +1,8 @@
 import assert from 'assert';
 import _ from 'lodash';
 import {RuleTester} from 'eslint';
-import validator from 'eslint/lib/config/config-validator';
 import rules from 'eslint/lib/rules';
+import validator from 'eslint/lib/config/config-validator';
 import validate from 'is-my-json-valid';
 import plugin from './../../src';
 
@@ -48,6 +48,11 @@ for (const ruleName of reportingRules) {
         RuleTester.describe('misconfigured', () => {
           RuleTester.it(JSON.stringify(misconfiguration.options), () => {
             const schema = validator.getRuleOptionsSchema('flowtype/' + ruleName);
+
+            if (!schema) {
+              throw new Error('No schema.');
+            }
+
             const validateSchema = validate(schema, {verbose: true});
 
             validateSchema(misconfiguration.options);
