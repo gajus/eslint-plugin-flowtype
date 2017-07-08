@@ -26,13 +26,15 @@ const checkAnnotationSpelling = (comment) => {
 
 const schema = [
   {
-    enum: ['always', 'never']
+    enum: ['always', 'never'],
+    type: 'string'
   },
   {
     additionalProperties: false,
     properties: {
       annotationStyle: {
-        enum: ['none', 'line', 'block']
+        enum: ['none', 'line', 'block'],
+        type: 'string'
       }
     },
     type: 'object'

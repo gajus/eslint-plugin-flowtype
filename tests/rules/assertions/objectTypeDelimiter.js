@@ -1,5 +1,3 @@
-/* eslint-disable no-undefined */
-
 export default {
   invalid: [
     {
@@ -92,7 +90,7 @@ export default {
       errors: [{
         field: 'data["0"]',
         message: 'must be an enum value',
-        type: undefined,
+        type: 'string',
         value: 'period'
       }],
       options: ['period']

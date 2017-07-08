@@ -49,7 +49,8 @@ const create = (context) => {
 
 const schema = [
   {
-    enum: ['semicolon', 'comma']
+    enum: ['semicolon', 'comma'],
+    type: 'string'
   }
 ];
 

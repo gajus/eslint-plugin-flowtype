@@ -1,5 +1,3 @@
-/* eslint-disable no-undefined */
-
 export default {
   invalid: [
     {
@@ -132,7 +130,7 @@ export default {
         {
           field: 'data["0"]',
           message: 'must be an enum value',
-          type: undefined,
+          type: 'string',
           value: 'sometimes'
         }
       ],
@@ -143,7 +141,7 @@ export default {
         {
           field: 'data["1"].annotationStyle',
           message: 'must be an enum value',
-          type: undefined,
+          type: 'string',
           value: 'upside-down'
         }
       ],
