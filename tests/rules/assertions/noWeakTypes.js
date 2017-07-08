@@ -193,6 +193,30 @@ export default {
       }]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["0"].nonExistentWeakType'
+        }
+      ],
+      options: [{nonExistentWeakType: false}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].Object',
+          message: 'is the wrong type',
+          type: 'boolean',
+          value: 'irrelevant'
+        }
+      ],
+      options: [{Object: 'irrelevant'}]
+    }
+  ],
   valid: [
     {
       code: 'function foo(thing): string {}'
