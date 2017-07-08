@@ -43,6 +43,52 @@ export default {
       options: ['asc', {natural: true}]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'random'
+        }
+      ],
+      options: ['random']
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"]',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["1"].language'
+        }
+      ],
+      options: ['asc', {language: 'jp-JP'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].caseSensitive',
+          message: 'is the wrong type',
+          type: 'boolean',
+          value: 'no'
+        }
+      ],
+      options: ['desc', {caseSensitive: 'no'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].natural',
+          message: 'is the wrong type',
+          type: 'boolean',
+          value: 'no'
+        }
+      ],
+      options: ['desc', {natural: 'no'}]
+    }
+  ],
   valid: [
     {
       code: 'type FooType = { a: number }'

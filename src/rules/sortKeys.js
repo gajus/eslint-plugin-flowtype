@@ -8,6 +8,25 @@ const defaults = {
   natural: false
 };
 
+const schema = [
+  {
+    enum: ['asc', 'desc'],
+    type: 'string'
+  },
+  {
+    additionalProperties: false,
+    properties: {
+      caseSensitive: {
+        type: 'boolean'
+      },
+      natural: {
+        type: 'boolean'
+      }
+    },
+    type: 'object'
+  }
+];
+
 /**
  * Functions to compare the order of two strings
  *
@@ -46,7 +65,7 @@ const isValidOrders = {
   }
 };
 
-export default (context) => {
+const create = (context) => {
   const order = _.get(context, ['options', 0], 'asc');
   const {natural, caseSensitive} = _.get(context, ['options', 1], defaults);
   const insensitive = caseSensitive === false;
@@ -88,4 +107,9 @@ export default (context) => {
   return {
     ObjectTypeAnnotation: checkKeyOrder
   };
+};
+
+export default {
+  create,
+  schema
 };
