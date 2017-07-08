@@ -5,7 +5,9 @@ import {isFlowFile} from '../utilities';
  * Only checks files without a valid flow annotation.
  */
 
-export default (context) => {
+const schema = [];
+
+const create = (context) => {
   // Skip flow files
   if (isFlowFile(context, false)) {
     return {};
@@ -41,4 +43,9 @@ export default (context) => {
       reporter(node, 'annotations');
     }
   };
+};
+
+export default {
+  create,
+  schema
 };
