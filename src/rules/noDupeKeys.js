@@ -3,7 +3,9 @@ import {
   getParameterName
 } from './../utilities';
 
-export default (context) => {
+const schema = [];
+
+const create = (context) => {
   const report = (node) => {
     context.report({
       loc: node.loc,
@@ -82,4 +84,9 @@ export default (context) => {
   return {
     ObjectTypeAnnotation: checkForDuplicates
   };
+};
+
+export default {
+  create,
+  schema
 };
