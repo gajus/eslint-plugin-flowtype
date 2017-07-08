@@ -46,6 +46,52 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["0"].excludeOtherStuff'
+        }
+      ],
+      options: [{excludeOtherStuff: true}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].excludeVariableMatch',
+          message: 'is the wrong type',
+          type: 'string',
+          value: 99
+        }
+      ],
+      options: [{excludeVariableMatch: 99}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].excludeVariableTypes',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["0"].excludeVariableTypes.declare'
+        }
+      ],
+      options: [{excludeVariableTypes: {declare: false}}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["0"].excludeVariableTypes.let',
+          message: 'is the wrong type',
+          type: 'boolean',
+          value: 'yes'
+        }
+      ],
+      options: [{excludeVariableTypes: {let: 'yes'}}]
+    }
+  ],
   valid: [
     {
       code: 'var foo : string = "bar"'

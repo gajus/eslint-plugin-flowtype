@@ -4,7 +4,34 @@ import {
     quoteName
 } from './../utilities';
 
-export default (context) => {
+const schema = [
+  {
+    additionalProperties: false,
+    properties: {
+      excludeVariableMatch: {
+        type: 'string'
+      },
+      excludeVariableTypes: {
+        additionalProperties: false,
+        properties: {
+          const: {
+            type: 'boolean'
+          },
+          let: {
+            type: 'boolean'
+          },
+          var: {
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    },
+    type: 'object'
+  }
+];
+
+const create = (context) => {
   const checkThisFile = !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation') || isFlowFile(context);
 
   if (!checkThisFile) {
@@ -44,4 +71,9 @@ export default (context) => {
       });
     }
   };
+};
+
+export default {
+  create,
+  schema
 };
