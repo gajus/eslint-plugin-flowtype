@@ -18,6 +18,19 @@ export default {
       output: 'type X = bool'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'integer'
+        }
+      ],
+      options: ['integer']
+    }
+  ],
   valid: [
     {
       code: 'type X = boolean'
