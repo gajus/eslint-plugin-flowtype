@@ -92,6 +92,19 @@ export default {
       output: 'type X = Promise< (foo), bar, (((baz))) >'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'frequently'
+        }
+      ],
+      options: ['frequently']
+    }
+  ],
   valid: [
         // Never
 
