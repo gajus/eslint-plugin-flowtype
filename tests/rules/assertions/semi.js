@@ -31,6 +31,19 @@ export default {
       output: 'type FooType = {}'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'temporarily'
+        }
+      ],
+      options: ['temporarily']
+    }
+  ],
   valid: [
     {
       code: 'type FooType = {};'
