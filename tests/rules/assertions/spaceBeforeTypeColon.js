@@ -882,7 +882,22 @@ const ALL = [
   TYPE_CAST_EXPRESSIONS
 ];
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        field: 'data["0"]',
+        message: 'must be an enum value',
+        type: 'string',
+        value: 'wherever'
+      }
+    ],
+    options: ['wherever']
+  }
+];
+
 export default {
   invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  misconfigured: MISCONFIGURED,
   valid: _.flatMap(ALL, (rules) => { return rules.valid; })
 };
