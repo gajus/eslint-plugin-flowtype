@@ -212,7 +212,22 @@ const INTERSECTION = {
   ]
 };
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        field: 'data["0"]',
+        message: 'must be an enum value',
+        type: 'string',
+        value: 'however'
+      }
+    ],
+    options: ['however']
+  }
+];
+
 export default {
   invalid: [...UNION.invalid, ...INTERSECTION.invalid],
+  misconfigured: MISCONFIGURED,
   valid: [...UNION.valid, ...INTERSECTION.valid]
 };

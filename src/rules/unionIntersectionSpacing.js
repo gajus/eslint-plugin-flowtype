@@ -1,6 +1,13 @@
 import {spacingFixers, getTokenAfterParens} from '../utilities';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const sourceCode = context.getSourceCode();
 
   const always = (context.options[0] || 'always') === 'always';
@@ -64,4 +71,9 @@ export default (context) => {
     IntersectionTypeAnnotation: check,
     UnionTypeAnnotation: check
   };
+};
+
+export default {
+  create,
+  schema
 };
