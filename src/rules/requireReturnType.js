@@ -1,6 +1,38 @@
 import _ from 'lodash';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always'],
+    type: 'string'
+  },
+  {
+    additionalProperties: false,
+    properties: {
+      annotateUndefined: {
+        enum: ['always', 'never'],
+        type: 'string'
+      },
+      excludeArrowFunctions: {
+        enum: [false, true, 'expressionsOnly']
+      },
+      excludeMatching: {
+        items: {
+          type: 'string'
+        },
+        type: 'array'
+      },
+      includeOnlyMatching: {
+        items: {
+          type: 'string'
+        },
+        type: 'array'
+      }
+    },
+    type: 'object'
+  }
+];
+
+const create = (context) => {
   const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
   const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
@@ -99,4 +131,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

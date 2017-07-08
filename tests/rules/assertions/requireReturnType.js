@@ -308,6 +308,74 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'never'
+        }
+      ],
+      options: ['never']
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"]',
+          message: 'has additional properties',
+          type: 'object',
+          value: 'data["1"].excludeOtherStuff'
+        }
+      ],
+      options: ['always', {excludeOtherStuff: true}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].annotateUndefined',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'often'
+        }
+      ],
+      options: ['always', {annotateUndefined: 'often'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].excludeArrowFunctions',
+          message: 'must be an enum value',
+          type: undefined, // eslint-disable-line no-undefined
+          value: 'everything'
+        }
+      ],
+      options: ['always', {excludeArrowFunctions: 'everything'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].excludeMatching',
+          message: 'is the wrong type',
+          type: 'array',
+          value: '^foo'
+        }
+      ],
+      options: ['always', {excludeMatching: '^foo'}]
+    },
+    {
+      errors: [
+        {
+          field: 'data["1"].includeOnlyMatching.0',
+          message: 'is the wrong type',
+          type: 'string',
+          value: false
+        }
+      ],
+      options: ['always', {includeOnlyMatching: [false]}]
+    }
+  ],
   valid: [
     {
       code: 'return;'
