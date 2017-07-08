@@ -1,6 +1,6 @@
-export const schema = [];
+const schema = [];
 
-export default (context) => {
+const create = (context) => {
   let globalScope;
 
     // do nearly the same thing that eslint does for config globals
@@ -61,4 +61,9 @@ export default (context) => {
       });
     }
   };
+};
+
+export {
+  create,
+  schema
 };
