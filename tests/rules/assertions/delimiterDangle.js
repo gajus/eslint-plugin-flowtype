@@ -500,11 +500,26 @@ const TUPLE_TYPE_ANNOTATION = {
   ]
 };
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        field: 'data["0"]',
+        message: 'must be an enum value',
+        type: 'string',
+        value: 'occasionally'
+      }
+    ],
+    options: ['occasionally']
+  }
+];
+
 export default {
   invalid: [
     ...OBJECT_TYPE_ANNOTATION.invalid,
     ...TUPLE_TYPE_ANNOTATION.invalid
   ],
+  misconfigured: MISCONFIGURED,
   valid: [
     ...OBJECT_TYPE_ANNOTATION.valid,
     ...TUPLE_TYPE_ANNOTATION.valid

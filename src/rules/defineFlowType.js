@@ -63,7 +63,7 @@ const create = (context) => {
   };
 };
 
-export {
+export default {
   create,
   schema
 };
