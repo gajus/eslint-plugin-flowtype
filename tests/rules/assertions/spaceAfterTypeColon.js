@@ -1068,7 +1068,44 @@ const ALL = [
   TYPE_CAST_EXPRESSIONS
 ];
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        field: 'data["0"]',
+        message: 'must be an enum value',
+        type: 'string',
+        value: 'from time to time'
+      }
+    ],
+    options: ['from time to time']
+  },
+  {
+    errors: [
+      {
+        field: 'data["1"]',
+        message: 'has additional properties',
+        type: 'object',
+        value: 'data["1"].allowEmoji'
+      }
+    ],
+    options: ['always', {allowEmoji: true}]
+  },
+  {
+    errors: [
+      {
+        field: 'data["1"].allowLineBreak',
+        message: 'is the wrong type',
+        type: 'boolean',
+        value: 'why not?'
+      }
+    ],
+    options: ['always', {allowLineBreak: 'why not?'}]
+  }
+];
+
 export default {
   invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  misconfigured: MISCONFIGURED,
   valid: _.flatMap(ALL, (rules) => { return rules.valid; })
 };
