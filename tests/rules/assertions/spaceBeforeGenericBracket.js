@@ -29,6 +29,19 @@ export default {
       output: 'type X = Promise <string>'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          field: 'data["0"]',
+          message: 'must be an enum value',
+          type: 'string',
+          value: 'whenever'
+        }
+      ],
+      options: ['whenever']
+    }
+  ],
   valid: [
     {
       code: 'type X = Promise<string>'
