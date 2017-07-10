@@ -54,19 +54,14 @@ export default {
     recommended
   },
   rules: _.mapValues(rules, (rule, key) => {
-    // Support current and deprecated rule formats
-    if (_.isPlainObject(rule)) {
-      return {
-        ...rule,
-        create: _.partial(checkFlowFileAnnotation, rule.create)
-      };
-    }
-
     if (key === 'no-types-missing-file-annotation') {
       return rule;
     }
 
-    return _.partial(checkFlowFileAnnotation, rule);
+    return {
+      ...rule,
+      create: _.partial(checkFlowFileAnnotation, rule.create)
+    };
   }),
   rulesConfig: {
     'boolean-style': 0,
