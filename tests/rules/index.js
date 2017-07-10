@@ -16,9 +16,9 @@ const reportingRules = [
   'delimiter-dangle',
   'generic-spacing',
   'no-dupe-keys',
-  'no-weak-types',
   'no-primitive-constructor-types',
   'no-types-missing-file-annotation',
+  'no-weak-types',
   'object-type-delimiter',
   'require-parameter-type',
   'require-return-type',
@@ -27,10 +27,10 @@ const reportingRules = [
   'semi',
   'sort-keys',
   'space-after-type-colon',
-  'space-before-type-colon',
   'space-before-generic-bracket',
-  'union-intersection-spacing',
+  'space-before-type-colon',
   'type-id-match',
+  'union-intersection-spacing',
   'use-flow-type',
   'valid-syntax'
 ];
