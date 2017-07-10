@@ -504,10 +504,35 @@ const MISCONFIGURED = [
   {
     errors: [
       {
-        field: 'data["0"]',
-        message: 'must be an enum value',
-        type: 'string',
-        value: 'occasionally'
+        data: 'occasionally',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'always-multiline',
+            'only-multiline',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'always-multiline',
+            'only-multiline',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'always-multiline',
+          'only-multiline',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+
       }
     ],
     options: ['occasionally']

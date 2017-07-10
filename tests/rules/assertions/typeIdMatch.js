@@ -24,10 +24,18 @@ export default {
     {
       errors: [
         {
-          field: 'data["0"]',
-          message: 'is the wrong type',
-          type: 'string',
-          value: 7
+          data: 7,
+          dataPath: '[0]',
+          keyword: 'type',
+          message: 'should be string',
+          params: {
+            type: 'string'
+          },
+          parentSchema: {
+            type: 'string'
+          },
+          schema: 'string',
+          schemaPath: '#/items/0/type'
         }
       ],
       options: [7]

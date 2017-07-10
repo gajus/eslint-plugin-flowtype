@@ -22,10 +22,28 @@ export default {
     {
       errors: [
         {
-          field: 'data["0"]',
-          message: 'must be an enum value',
-          type: 'string',
-          value: 'integer'
+          data: 'integer',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'bool',
+              'boolean'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'bool',
+              'boolean'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'bool',
+            'boolean'
+          ],
+          schemaPath: '#/items/0/enum'
         }
       ],
       options: ['integer']

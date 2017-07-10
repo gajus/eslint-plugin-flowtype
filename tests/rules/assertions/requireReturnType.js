@@ -312,10 +312,25 @@ export default {
     {
       errors: [
         {
-          field: 'data["0"]',
-          message: 'must be an enum value',
-          type: 'string',
-          value: 'never'
+          data: 'never',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always'
+          ],
+          schemaPath: '#/items/0/enum'
         }
       ],
       options: ['never']
@@ -323,10 +338,49 @@ export default {
     {
       errors: [
         {
-          field: 'data["1"]',
-          message: 'has additional properties',
-          type: 'object',
-          value: 'data["1"].excludeOtherStuff'
+          data: {
+            excludeOtherStuff: true
+          },
+          dataPath: '[1]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'excludeOtherStuff'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              annotateUndefined: {
+                enum: [
+                  'always',
+                  'never'
+                ],
+                type: 'string'
+              },
+              excludeArrowFunctions: {
+                enum: [
+                  false,
+                  true,
+                  'expressionsOnly'
+                ]
+              },
+              excludeMatching: {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              },
+              includeOnlyMatching: {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/1/additionalProperties'
         }
       ],
       options: ['always', {excludeOtherStuff: true}]
@@ -334,10 +388,28 @@ export default {
     {
       errors: [
         {
-          field: 'data["1"].annotateUndefined',
-          message: 'must be an enum value',
-          type: 'string',
-          value: 'often'
+          data: 'often',
+          dataPath: '[1].annotateUndefined',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/1/properties/annotateUndefined/enum'
         }
       ],
       options: ['always', {annotateUndefined: 'often'}]
@@ -345,10 +417,30 @@ export default {
     {
       errors: [
         {
-          field: 'data["1"].excludeArrowFunctions',
-          message: 'must be an enum value',
-          type: undefined, // eslint-disable-line no-undefined
-          value: 'everything'
+          data: 'everything',
+          dataPath: '[1].excludeArrowFunctions',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          schema: [
+            false,
+            true,
+            'expressionsOnly'
+          ],
+          schemaPath: '#/items/1/properties/excludeArrowFunctions/enum'
         }
       ],
       options: ['always', {excludeArrowFunctions: 'everything'}]
@@ -356,10 +448,21 @@ export default {
     {
       errors: [
         {
-          field: 'data["1"].excludeMatching',
-          message: 'is the wrong type',
-          type: 'array',
-          value: '^foo'
+          data: '^foo',
+          dataPath: '[1].excludeMatching',
+          keyword: 'type',
+          message: 'should be array',
+          params: {
+            type: 'array'
+          },
+          parentSchema: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          },
+          schema: 'array',
+          schemaPath: '#/items/1/properties/excludeMatching/type'
         }
       ],
       options: ['always', {excludeMatching: '^foo'}]
@@ -367,10 +470,18 @@ export default {
     {
       errors: [
         {
-          field: 'data["1"].includeOnlyMatching.0',
-          message: 'is the wrong type',
-          type: 'string',
-          value: false
+          data: false,
+          dataPath: '[1].includeOnlyMatching[0]',
+          keyword: 'type',
+          message: 'should be string',
+          params: {
+            type: 'string'
+          },
+          parentSchema: {
+            type: 'string'
+          },
+          schema: 'string',
+          schemaPath: '#/items/1/properties/includeOnlyMatching/items/type'
         }
       ],
       options: ['always', {includeOnlyMatching: [false]}]

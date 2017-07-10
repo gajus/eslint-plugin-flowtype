@@ -35,10 +35,28 @@ export default {
     {
       errors: [
         {
-          field: 'data["0"]',
-          message: 'must be an enum value',
-          type: 'string',
-          value: 'temporarily'
+          data: 'temporarily',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/0/enum'
         }
       ],
       options: ['temporarily']

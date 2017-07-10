@@ -9,6 +9,7 @@
   },
   "description": "Flowtype linting rules for ESLint.",
   "devDependencies": {
+    "ajv": "^5.2.1",
     "babel-cli": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -20,7 +21,6 @@
     "eslint-config-canonical": "1.8.1",
     "gitdown": "^2.5.0",
     "husky": "^0.11.7",
-    "is-my-json-valid": "^2.16.0",
     "jsonlint": "^1.6.2",
     "mocha": "^3.0.2",
     "semantic-release": "^6.3.2"

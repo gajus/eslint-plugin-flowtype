@@ -87,12 +87,32 @@ export default {
   ],
   misconfigured: [
     {
-      errors: [{
-        field: 'data["0"]',
-        message: 'must be an enum value',
-        type: 'string',
-        value: 'period'
-      }],
+      errors: [
+        {
+          data: 'period',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'semicolon',
+              'comma'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'semicolon',
+              'comma'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'semicolon',
+            'comma'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
       options: ['period']
     }
   ],

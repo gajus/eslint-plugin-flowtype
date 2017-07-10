@@ -1,9 +1,9 @@
 import assert from 'assert';
 import _ from 'lodash';
+import Ajv from 'ajv';
 import {RuleTester} from 'eslint';
 import rules from 'eslint/lib/rules';
 import validator from 'eslint/lib/config/config-validator';
-import validate from 'is-my-json-valid';
 import plugin from './../../src';
 
 rules.importPlugin(plugin, 'flowtype');
@@ -36,6 +36,7 @@ const reportingRules = [
 ];
 
 const parser = require.resolve('babel-eslint');
+const ajv = new Ajv({verbose: true});
 
 for (const ruleName of reportingRules) {
     /* eslint-disable global-require */
@@ -53,7 +54,7 @@ for (const ruleName of reportingRules) {
               throw new Error('No schema.');
             }
 
-            const validateSchema = validate(schema, {verbose: true});
+            const validateSchema = ajv.compile(schema);
 
             validateSchema(misconfiguration.options);
             if (!validateSchema.errors) {
