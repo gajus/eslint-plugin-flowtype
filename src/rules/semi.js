@@ -1,4 +1,11 @@
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const never = (context.options[0] || 'always') === 'never';
   const sourceCode = context.getSourceCode();
 
@@ -49,4 +56,9 @@ export default (context) => {
   return {
     TypeAlias: checkForSemicolon
   };
+};
+
+export default {
+  create,
+  schema
 };

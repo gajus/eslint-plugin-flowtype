@@ -41,6 +41,17 @@ export default {
       errors: [{
         message: 'Type annotations require valid Flow declaration.'
       }]
+    },
+    {
+      code: 'const x: number = 42;',
+      errors: [{
+        message: 'Type annotations require valid Flow declaration.'
+      }],
+      settings: {
+        flowtype: {
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     }
   ],
   valid: [

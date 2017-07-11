@@ -212,7 +212,40 @@ const INTERSECTION = {
   ]
 };
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'however',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+      }
+    ],
+    options: ['however']
+  }
+];
+
 export default {
   invalid: [...UNION.invalid, ...INTERSECTION.invalid],
+  misconfigured: MISCONFIGURED,
   valid: [...UNION.valid, ...INTERSECTION.valid]
 };

@@ -1068,7 +1068,86 @@ const ALL = [
   TYPE_CAST_EXPRESSIONS
 ];
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'from time to time',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+      }
+    ],
+    options: ['from time to time']
+  },
+  {
+    errors: [
+      {
+        data: {
+          allowEmoji: true
+        },
+        dataPath: '[1]',
+        keyword: 'additionalProperties',
+        message: 'should NOT have additional properties',
+        params: {
+          additionalProperty: 'allowEmoji'
+        },
+        parentSchema: {
+          additionalProperties: false,
+          properties: {
+            allowLineBreak: {
+              type: 'boolean'
+            }
+          },
+          type: 'object'
+        },
+        schema: false,
+        schemaPath: '#/items/1/additionalProperties'
+      }
+    ],
+    options: ['always', {allowEmoji: true}]
+  },
+  {
+    errors: [
+      {
+        data: 'why not?',
+        dataPath: '[1].allowLineBreak',
+        keyword: 'type',
+        message: 'should be boolean',
+        params: {
+          type: 'boolean'
+        },
+        parentSchema: {
+          type: 'boolean'
+        },
+        schema: 'boolean',
+        schemaPath: '#/items/1/properties/allowLineBreak/type'
+      }
+    ],
+    options: ['always', {allowLineBreak: 'why not?'}]
+  }
+];
+
 export default {
   invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  misconfigured: MISCONFIGURED,
   valid: _.flatMap(ALL, (rules) => { return rules.valid; })
 };

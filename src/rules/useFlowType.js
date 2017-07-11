@@ -1,6 +1,6 @@
-export const schema = [];
+const schema = [];
 
-export default (context) => {
+const create = (context) => {
   const markTypeAsUsed = (node) => {
     context.markVariableAsUsed(node.id.name);
   };
@@ -33,4 +33,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

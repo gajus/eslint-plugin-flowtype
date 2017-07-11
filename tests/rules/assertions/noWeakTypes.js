@@ -193,6 +193,60 @@ export default {
       }]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: {
+            nonExistentWeakType: false
+          },
+          dataPath: '[0]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'nonExistentWeakType'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              Function: {
+                type: 'boolean'
+              },
+              Object: {
+                type: 'boolean'
+              },
+              any: {
+                type: 'boolean'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/0/additionalProperties'
+        }
+      ],
+      options: [{nonExistentWeakType: false}]
+    },
+    {
+      errors: [
+        {
+          data: 'irrelevant',
+          dataPath: '[0].Object',
+          keyword: 'type',
+          message: 'should be boolean',
+          params: {
+            type: 'boolean'
+          },
+          parentSchema: {
+            type: 'boolean'
+          },
+          schema: 'boolean',
+          schemaPath: '#/items/0/properties/Object/type'
+        }
+      ],
+      options: [{Object: 'irrelevant'}]
+    }
+  ],
   valid: [
     {
       code: 'function foo(thing): string {}'

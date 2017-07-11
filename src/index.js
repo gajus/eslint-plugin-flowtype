@@ -1,28 +1,28 @@
 import _ from 'lodash';
-import {checkFlowFileAnnotation} from './utilities';
+import recommended from './configs/recommended.json';
+import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
+import delimiterDangle from './rules/delimiterDangle';
 import genericSpacing from './rules/genericSpacing';
-import noWeakTypes from './rules/noWeakTypes';
+import noDupeKeys from './rules/noDupeKeys';
+import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
+import noWeakTypes from './rules/noWeakTypes';
+import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
 import semi from './rules/semi';
+import sortKeys from './rules/sortKeys';
 import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
-import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import typeIdMatch from './rules/typeIdMatch';
+import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
-import booleanStyle from './rules/booleanStyle';
-import delimiterDangle from './rules/delimiterDangle';
-import noDupeKeys from './rules/noDupeKeys';
-import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
-import sortKeys from './rules/sortKeys';
-import objectTypeDelimiter from './rules/objectTypeDelimiter';
-import recommended from './configs/recommended.json';
+import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
   'boolean-style': booleanStyle,
@@ -54,19 +54,14 @@ export default {
     recommended
   },
   rules: _.mapValues(rules, (rule, key) => {
-    // Support current and deprecated rule formats
-    if (_.isPlainObject(rule)) {
-      return {
-        ...rule,
-        create: _.partial(checkFlowFileAnnotation, rule.create)
-      };
-    }
-
     if (key === 'no-types-missing-file-annotation') {
       return rule;
     }
 
-    return _.partial(checkFlowFileAnnotation, rule);
+    return {
+      ...rule,
+      create: _.partial(checkFlowFileAnnotation, rule.create)
+    };
   }),
   rulesConfig: {
     'boolean-style': 0,

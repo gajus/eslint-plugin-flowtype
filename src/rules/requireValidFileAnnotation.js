@@ -24,13 +24,24 @@ const checkAnnotationSpelling = (comment) => {
   return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.20);
 };
 
-export const schema = [
+const schema = [
   {
-    enum: ['always']
+    enum: ['always', 'never'],
+    type: 'string'
+  },
+  {
+    additionalProperties: false,
+    properties: {
+      annotationStyle: {
+        enum: ['none', 'line', 'block'],
+        type: 'string'
+      }
+    },
+    type: 'object'
   }
 ];
 
-export default (context) => {
+const create = (context) => {
   const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
 
@@ -63,4 +74,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

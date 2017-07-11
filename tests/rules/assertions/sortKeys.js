@@ -43,6 +43,105 @@ export default {
       options: ['asc', {natural: true}]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'random',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'asc',
+              'desc'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'asc',
+              'desc'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'asc',
+            'desc'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['random']
+    },
+    {
+      errors: [
+        {
+          data: {
+            language: 'jp-JP'
+          },
+          dataPath: '[1]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'language'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              caseSensitive: {
+                type: 'boolean'
+              },
+              natural: {
+                type: 'boolean'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/1/additionalProperties'
+        }
+      ],
+      options: ['asc', {language: 'jp-JP'}]
+    },
+    {
+      errors: [
+        {
+          data: 'no',
+          dataPath: '[1].caseSensitive',
+          keyword: 'type',
+          message: 'should be boolean',
+          params: {
+            type: 'boolean'
+          },
+          parentSchema: {
+            type: 'boolean'
+          },
+          schema: 'boolean',
+          schemaPath: '#/items/1/properties/caseSensitive/type'
+        }
+      ],
+      options: ['desc', {caseSensitive: 'no'}]
+    },
+    {
+      errors: [
+        {
+          data: 'no',
+          dataPath: '[1].natural',
+          keyword: 'type',
+          message: 'should be boolean',
+          params: {
+            type: 'boolean'
+          },
+          parentSchema: {
+            type: 'boolean'
+          },
+          schema: 'boolean',
+          schemaPath: '#/items/1/properties/natural/type'
+        }
+      ],
+      options: ['desc', {natural: 'no'}]
+    }
+  ],
   valid: [
     {
       code: 'type FooType = { a: number }'

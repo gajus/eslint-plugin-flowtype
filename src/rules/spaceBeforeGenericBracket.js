@@ -1,6 +1,13 @@
 import {spacingFixers} from '../utilities';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const never = (context.options[0] || 'never') === 'never';
 
   return {
@@ -44,4 +51,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

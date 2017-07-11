@@ -92,6 +92,37 @@ export default {
       output: 'type X = Promise< (foo), bar, (((baz))) >'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'frequently',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['frequently']
+    }
+  ],
   valid: [
         // Never
 

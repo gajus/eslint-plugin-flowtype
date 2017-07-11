@@ -882,7 +882,40 @@ const ALL = [
   TYPE_CAST_EXPRESSIONS
 ];
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'wherever',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+      }
+    ],
+    options: ['wherever']
+  }
+];
+
 export default {
   invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  misconfigured: MISCONFIGURED,
   valid: _.flatMap(ALL, (rules) => { return rules.valid; })
 };

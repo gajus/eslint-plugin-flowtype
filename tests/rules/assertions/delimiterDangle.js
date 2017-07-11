@@ -500,11 +500,51 @@ const TUPLE_TYPE_ANNOTATION = {
   ]
 };
 
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'occasionally',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'always-multiline',
+            'only-multiline',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'always-multiline',
+            'only-multiline',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'always-multiline',
+          'only-multiline',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+
+      }
+    ],
+    options: ['occasionally']
+  }
+];
+
 export default {
   invalid: [
     ...OBJECT_TYPE_ANNOTATION.invalid,
     ...TUPLE_TYPE_ANNOTATION.invalid
   ],
+  misconfigured: MISCONFIGURED,
   valid: [
     ...OBJECT_TYPE_ANNOTATION.valid,
     ...TUPLE_TYPE_ANNOTATION.valid
