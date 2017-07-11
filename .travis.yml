@@ -1,12 +1,10 @@
 language: node_js
 node_js:
-  - 7
+  - node
+  - 8
   - 6
-  - 5
-  - 4
 before_install:
   - npm config set depth 0
-  - npm install --global npm@latest
 notifications:
   email: false
 sudo: false
