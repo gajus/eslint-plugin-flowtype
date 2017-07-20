@@ -82,6 +82,7 @@ npm install eslint-plugin-flowtype --save-dev
       2,
       "never"
     ],
+    "flowtype/no-dupe-keys": 2,
     "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
@@ -98,10 +99,12 @@ npm install eslint-plugin-flowtype --save-dev
       }
     ],
     "flowtype/require-valid-file-annotation": 2,
+    "flowtype/require-variable-type": 2,
     "flowtype/semi": [
       2,
       "always"
     ],
+    "flowtype/sort-keyts": 2,
     "flowtype/space-after-type-colon": [
       2,
       "always"
