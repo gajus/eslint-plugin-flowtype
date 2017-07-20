@@ -82,6 +82,7 @@ npm install eslint-plugin-flowtype --save-dev
       2,
       "never"
     ],
+    "flowtype/no-dupe-keys": 2,
     "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
