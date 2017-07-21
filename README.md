@@ -98,6 +98,7 @@ npm install eslint-plugin-flowtype --save-dev
       }
     ],
     "flowtype/require-valid-file-annotation": 2,
+    "flowtype/require-variable-type": 2,
     "flowtype/semi": [
       2,
       "always"
