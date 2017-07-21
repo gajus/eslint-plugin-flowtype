@@ -102,6 +102,7 @@ npm install eslint-plugin-flowtype --save-dev
       2,
       "always"
     ],
+    "flowtype/sort-keys": 2,
     "flowtype/space-after-type-colon": [
       2,
       "always"
