@@ -70,7 +70,17 @@ const ARROW_FUNCTION_PARAMS = {
     },
     {
       code: '(foo:\n  { a: string, b: number }) => {}',
-      errors: [{message: 'There must be 1 space after "foo" parameter type annotation colon.'}],
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
+      output: '(foo: { a: string, b: number }) => {}'
+    },
+    {
+      code: '(foo:\n{ a: string, b: number }) => {}',
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
+      output: '(foo: { a: string, b: number }) => {}'
+    },
+    {
+      code: '(foo: \n{ a: string, b: number }) => {}',
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
       output: '(foo: { a: string, b: number }) => {}'
     }
   ],
