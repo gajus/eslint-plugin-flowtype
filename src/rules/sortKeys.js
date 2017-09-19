@@ -65,6 +65,17 @@ const isValidOrders = {
   }
 };
 
+const generateOrderedList = (context, sort, properties) => {
+  return properties.map((property) => {
+    const name = getParameterName(property, context);
+    const value = context.getSourceCode().getFirstToken(property.value).value;
+
+    return [name, value];
+  })
+    .sort((first, second) => { return sort(first[0], second[0]) ? -1 : 1; })
+    .map((item) => { return item[0] + ': ' + item[1]; });
+};
+
 const create = (context) => {
   const order = _.get(context, ['options', 0], 'asc');
   const {natural, caseSensitive} = _.get(context, ['options', 1], defaults);
@@ -95,6 +106,31 @@ const create = (context) => {
             last,
             natural: natural ? 'natural ' : '',
             order
+          },
+          fix (fixer) {
+            // this could be done much more cleanly in ESLint >=4
+            // as we can apply multiple fixes. That also means we can
+            // maintain code style in a much nicer way
+            let nodeText;
+            const newTypes = generateOrderedList(context, isValidOrder, node.properties);
+            const source = context.getSourceCode(node);
+
+            const originalSubstring = source.getText(node);
+
+            nodeText = originalSubstring;
+
+            node.properties.forEach((property, index) => {
+              const subString = source.getText(property);
+              const addComma = subString[subString.length - 1] === ',';
+
+              nodeText = nodeText.replace(subString, '$' + index + (addComma ? ',' : ''));
+            });
+
+            newTypes.forEach((item, index) => {
+              nodeText = nodeText.replace('$' + index, item);
+            });
+
+            return fixer.replaceText(node, nodeText);
           },
           loc: identifierNode.loc,
           message: 'Expected type annotations to be in {{natural}}{{insensitive}}{{order}}ending order. "{{current}}" should be before "{{last}}".',

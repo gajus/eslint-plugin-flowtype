@@ -41,6 +41,28 @@ export default {
       code: 'type FooType = { 1: number, 10: number, 2: boolean }',
       errors: [{message: 'Expected type annotations to be in natural ascending order. "2" should be before "10".'}],
       options: ['asc', {natural: true}]
+    },
+    {
+      code: 'type FooType = { a: number, c: number, b: string }',
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: 'type FooType = { a: number, b: string, c: number }'
+    },
+    {
+      code: [
+        'type FooType = {',
+        '  a: number,',
+        '  c: number,',
+        '  b: string,',
+        '}'
+      ].join('\n'),
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: [
+        'type FooType = {',
+        '  a: number,',
+        '  b: string,',
+        '  c: number,',
+        '}'
+      ].join('\n')
     }
   ],
   misconfigured: [
