@@ -63,6 +63,76 @@ export default {
         '  c: number,',
         '}'
       ].join('\n')
+    },
+    {
+      code: [
+        'type FooType = {',
+        '  a?: number,',
+        '  c: ?number,',
+        '  b: string,',
+        '}'
+      ].join('\n'),
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: [
+        'type FooType = {',
+        '  a?: number,',
+        '  b: string,',
+        '  c: ?number,',
+        '}'
+      ].join('\n')
+    },
+    {
+      code: [
+        'type FooType = {',
+        '  a: (number) => void,',
+        '  c: number,',
+        '  b: (param: string) => number,',
+        '}'
+      ].join('\n'),
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: [
+        'type FooType = {',
+        '  a: (number) => void,',
+        '  b: (param: string) => number,',
+        '  c: number,',
+        '}'
+      ].join('\n')
+    },
+    {
+      code: [
+        'type FooType = {',
+        '  a: number | string | boolean,',
+        '  c: number,',
+        '  b: (param: string) => number,',
+        '}'
+      ].join('\n'),
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: [
+        'type FooType = {',
+        '  a: number | string | boolean,',
+        '  b: (param: string) => number,',
+        '  c: number,',
+        '}'
+      ].join('\n')
+    },
+    {
+      code: [
+        'type FooType = {',
+        '  c: number,',
+        '  a: number ',
+        ' | string | boolean,',
+        '  b: (param: string) => number,',
+        '}'
+      ].join('\n'),
+      errors: [{message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}],
+      output: [
+        'type FooType = {',
+        '  a: number ',
+        ' | string | boolean,',
+        '  b: (param: string) => number,',
+        '  c: number,',
+        '}'
+      ].join('\n')
     }
   ],
   misconfigured: [

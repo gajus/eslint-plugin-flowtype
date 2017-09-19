@@ -68,9 +68,9 @@ const isValidOrders = {
 const generateOrderedList = (context, sort, properties) => {
   return properties.map((property) => {
     const name = getParameterName(property, context);
-    const value = context.getSourceCode().getFirstToken(property.value).value;
+    const value = context.getSourceCode().getText(property.value);
 
-    return [name, value];
+    return [name + (property.optional ? '?' : ''), value];
   })
     .sort((first, second) => { return sort(first[0], second[0]) ? -1 : 1; })
     .map((item) => { return item[0] + ': ' + item[1]; });
