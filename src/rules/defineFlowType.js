@@ -35,6 +35,12 @@ const create = (context) => {
     ClassImplements (node) {
       makeDefined(node.id);
     },
+    DeclareInterface (node) {
+      makeDefined(node.id);
+    },
+    DeclareTypeAlias (node) {
+      makeDefined(node.id);
+    },
     GenericTypeAnnotation (node) {
       if (node.id.type === 'Identifier') {
         makeDefined(node.id);
