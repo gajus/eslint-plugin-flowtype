@@ -21,6 +21,7 @@
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
+        * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
@@ -1035,7 +1036,7 @@ type x = MyBoolean
 <a name="eslint-plugin-flowtype-rules-no-types-missing-file-annotation"></a>
 ### <code>no-types-missing-file-annotation</code>
 
-Disallows Flow type imports, exports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
+Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
 
 ```js
 {
@@ -1068,6 +1069,9 @@ export type {A} from "a"
 
 function t<T>(): T{}
 // Message: Type annotations require valid Flow declaration.
+
+const x: number = 42;
+// Message: Type annotations require valid Flow declaration.
 ```
 
 The following patterns are not considered problems:
@@ -1090,6 +1094,59 @@ import {type A} from "a"
 
 /* @noflow */
 export type {A} from "a"
+
+// an unrelated comment
+// @flow
+export type {A} from "a"
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-unused-expressions"></a>
+### <code>no-unused-expressions</code>
+
+An extension of [ESLint's `no-unused-expressions`](https://eslint.org/docs/rules/no-unused-expressions).
+This rule ignores type cast expressions, but otherwise behaves the same as ESLint's
+`no-unused-expressions`.
+
+Bare type casts are useful, for example to assert the exhaustiveness of a `switch`:
+
+```js
+type Action
+  = { type: 'FOO', doFoo: (_: number) => void }
+  | { type: 'BAR', doBar: (_: string) => void };
+
+type State = { foo: number, bar: string };
+
+function runFooBar(action: Action, state: State): void {
+  switch (action.type) {
+    case 'FOO':
+      doFoo(state.foo);
+      break;
+    case 'BAR':
+      doBar(state.bar);
+      break;
+    default:
+      (action: empty);  // type error when `Action` is extended with new types
+      console.error(`Impossible action: ${action.toString()}`);
+  }
+}
+```
+
+This rule takes the same arguments as ESLint's `no-unused-expressions`. See
+[that rule's documentation](https://eslint.org/docs/rules/no-unused-expressions) for details.
+
+The following patterns are considered problems:
+
+```js
+foo + 1
+// Message: Expected an assignment or function call and instead saw an expression.
+```
+
+The following patterns are not considered problems:
+
+```js
+(foo: number)
 ```
 
 
@@ -1931,6 +1988,12 @@ a;
 // Options: ["always",{"annotationStyle":"line"}]
 // @flow
 
+// Options: ["never",{"annotationStyle":"none"}]
+// @function
+
+// Options: ["never"]
+// @fixable
+
 // Options: ["always",{"annotationStyle":"block"}]
 /* @flow */
 ```
@@ -2262,7 +2325,15 @@ The following patterns are considered problems:
 
 (foo:
   { a: string, b: number }) => {}
-// Message: There must be 1 space after "foo" parameter type annotation colon.
+// Message: There must not be a line break after "foo" parameter type annotation colon.
+
+(foo:
+{ a: string, b: number }) => {}
+// Message: There must not be a line break after "foo" parameter type annotation colon.
+
+(foo: 
+{ a: string, b: number }) => {}
+// Message: There must not be a line break after "foo" parameter type annotation colon.
 
 // Options: ["always"]
 ():Object => {}
@@ -3738,3 +3809,4 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 **Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
 Checks for simple Flow syntax errors.
+
