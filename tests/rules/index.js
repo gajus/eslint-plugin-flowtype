@@ -18,6 +18,7 @@ const reportingRules = [
   'no-dupe-keys',
   'no-primitive-constructor-types',
   'no-types-missing-file-annotation',
+  'no-unused-expressions',
   'no-weak-types',
   'object-type-delimiter',
   'require-parameter-type',

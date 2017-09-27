@@ -7,6 +7,7 @@ import genericSpacing from './rules/genericSpacing';
 import noDupeKeys from './rules/noDupeKeys';
 import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
+import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireParameterType from './rules/requireParameterType';
@@ -32,6 +33,7 @@ const rules = {
   'no-dupe-keys': noDupeKeys,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
+  'no-unused-expressions': noUnusedExpressions,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
   'require-parameter-type': requireParameterType,
