@@ -2,37 +2,51 @@ export default {
   invalid: [
     {
       code: 'type X = (?string)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<?string>'
     },
     {
       code: 'type X = (?string)[]',
       errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
-      options: ['verbose']
+      options: ['verbose'],
+      output: 'type X = Array<?string>'
     },
     {
       code: 'type X = Array<?string>',
       errors: [{message: 'Use "ComplexType[]", not "Array<ComplexType>"'}],
-      options: ['shorthand']
+      options: ['shorthand'],
+      output: 'type X = (?string)[]'
+    },
+    {
+      code: 'type X = Array<{foo: string}>',
+      errors: [{message: 'Use "ComplexType[]", not "Array<ComplexType>"'}],
+      options: ['shorthand'],
+      output: 'type X = {foo: string}[]'
     },
     {
       code: 'type X = (string | number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<string | number>'
     },
     {
       code: 'type X = (string & number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<string & number>'
     },
     {
       code: 'type X = [string, number][]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<[string, number]>'
     },
     {
-      code: 'type X = ({foo: string})[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      code: 'type X = {foo: string}[]',
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<{foo: string}>'
     },
     {
       code: 'type X = (string => number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}]
+      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      output: 'type X = Array<string => number>'
     }
   ],
   misconfigured: [

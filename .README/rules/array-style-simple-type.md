@@ -1,5 +1,7 @@
 ### `array-style-simple-type`
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces a particular style for array type annotations for complex types. Type is considered simple in these cases:
 
 * Primitive types

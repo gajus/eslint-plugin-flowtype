@@ -1,5 +1,7 @@
 ### `array-style-complex-type`
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces a particular style for array type annotations for complex types. Type is considered complex in these cases:
 
 * [Maybe type](https://flow.org/en/docs/types/maybe/)

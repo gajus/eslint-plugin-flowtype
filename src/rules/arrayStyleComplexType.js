@@ -1,17 +1,19 @@
 import makeArrayStyleRule from './arrayStyle';
 
-const shorthandHandler = (isSimpleType, verbose, context, node) => {
+const shorthandHandler = (isSimpleType, verbose, context, node, fix) => {
   if (!isSimpleType && verbose) {
     context.report({
+      fix,
       message: 'Use "Array<ComplexType>", not "ComplexType[]"',
       node
     });
   }
 };
 
-const verboseHandler = (isSimpleType, verbose, context, node) => {
+const verboseHandler = (isSimpleType, verbose, context, node, fix) => {
   if (!isSimpleType && !verbose) {
     context.report({
+      fix,
       message: 'Use "ComplexType[]", not "Array<ComplexType>"',
       node
     });
