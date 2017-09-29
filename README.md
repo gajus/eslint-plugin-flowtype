@@ -220,6 +220,7 @@ type X = boolean
 type X = bool
 
 // Options: ["boolean"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = bool
 ```
 
@@ -928,6 +929,7 @@ The following patterns are not considered problems:
 ```js
 type FooType = { a: number, b: string, c: number }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = { a: number, b: string, a: number }
 
 type f = { get(key: "a"): string, get(key: "b"): string }
@@ -1070,6 +1072,7 @@ export type {A} from "a"
 function t<T>(): T{}
 // Message: Type annotations require valid Flow declaration.
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 const x: number = 42;
 // Message: Type annotations require valid Flow declaration.
 ```
@@ -1321,6 +1324,7 @@ type X = any; type Y = Object
 // Options: [{"Function":false}]
 type X = Function
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 function foo(thing): Function {}
 ```
 
@@ -1449,6 +1453,7 @@ declare class Foo { (): Foo; }
 declare class Foo { (): Foo, }
 
 // Options: ["semicolon"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type Foo = { a: Foo, b: Bar }
 ```
 
@@ -1536,6 +1541,7 @@ function x(foo) {}
 ({foo = 1} = {}) => {}
 // Message: Missing "{foo = 1}" parameter type annotation.
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
@@ -1570,6 +1576,7 @@ The following patterns are not considered problems:
 
 ([foo]: Array) => {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => {}
 
 // Options: [{"excludeArrowFunctions":true}]
@@ -1584,6 +1591,7 @@ The following patterns are not considered problems:
 // Options: [{"excludeParameterMatch":"^_"}]
 (_foo: number, bar: string) => {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => {}
 ```
 
@@ -1717,11 +1725,13 @@ The following patterns are considered problems:
 (foo) => { return void 0; }
 // Message: Must annotate undefined return type.
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
 (foo) => { return 1; }
 // Message: Missing return type annotation.
 
 // Options: ["always",{"annotateUndefined":"always"}]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
  (foo) => { return undefined; }
 // Message: Must annotate undefined return type.
@@ -1805,9 +1815,11 @@ return;
 (foo): void => { return void 0; }
 
 // Options: ["always"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return 1; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return undefined; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
@@ -1983,6 +1995,7 @@ a;
 a;
 
 // Options: ["always"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 a;
 
 // Options: ["always",{"annotationStyle":"line"}]
@@ -2136,6 +2149,7 @@ type FooType = { a: number;
 // Options: ["never"]
 type FooType = {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = {}
 ```
 
@@ -2241,6 +2255,7 @@ type FooType = { a: number, b: number, C: number, c: number }
 // Options: ["asc",{"natural":true}]
 type FooType = { 1:number, 2: number, 10: number }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = { b: number, a: number }
 ```
 
@@ -3592,6 +3607,7 @@ type FooType = {};
 // Options: ["^foo$"]
 type foo = {};
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type foo = {};
 ```
 
@@ -3720,6 +3736,7 @@ type X =
 | number
 }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = string| number;
 
 type X = string & number;
@@ -3743,6 +3760,7 @@ type X =
 & number
 }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = string& number;
 ```
 
