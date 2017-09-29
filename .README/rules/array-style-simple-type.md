@@ -18,6 +18,6 @@ If it is `'verbose'` then a problem is raised when using `Type[]` instead of `Ar
 
 If it is `'shorthand'` then a problem is raised when using `Array<Type>` instead of `Type[]`.
 
-The default value is `'shorthand'`.
+The default value is `'verbose'`.
 
 <!-- assertions arrayStyleSimpleType -->

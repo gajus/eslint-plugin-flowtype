@@ -1,9 +1,9 @@
 export default {
   invalid: [
     {
-      code: 'type X = Array<string>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = string[]'
+      code: 'type X = string[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<string>'
     },
     {
       code: 'type X = string[]',
@@ -18,44 +18,46 @@ export default {
       output: 'type X = string[]'
     },
     {
-      code: 'type X = Array<Date>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = Date[]'
+      code: 'type X = Date[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<Date>'
     },
     {
-      code: 'type X = Array<Promise<string>>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = Promise<string>[]'
+      code: 'type X = Promise<string>[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<Promise<string>>'
     },
     {
-      code: 'type X = Array<$Keys<{ foo: string }>>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = $Keys<{ foo: string }>[]'
+      code: 'type X = $Keys<{ foo: string }>[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<$Keys<{ foo: string }>>'
     },
     {
-      code: 'type X = Array<any>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = any[]'
+      code: 'type X = any[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<any>'
     },
     {
-      code: 'type X = Array<mixed>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = mixed[]'
+      code: 'type X = mixed[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<mixed>'
     },
     {
-      code: 'type X = Array<void>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = void[]'
+      code: 'type X = void[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<void>'
     },
     {
-      code: 'type X = Array<null>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = null[]'
+      code: 'type X = null[]',
+      errors: [{message: 'Use "Array<SimpleType>", not "SimpleType[]"'}],
+      output: 'type X = Array<null>'
     },
     {
-      code: 'type X = Array<string[]>',
-      errors: [{message: 'Use "SimpleType[]", not "Array<SimpleType>"'}],
-      output: 'type X = string[][]'
+      code: 'type X = string[][]',
+      errors: [
+        {message: 'Use "Array<SimpleType>", not "SimpleType[]"'},
+        {message: 'Use "Array<SimpleType>", not "SimpleType[]"'}
+      ]
     }
   ],
   misconfigured: [
@@ -91,7 +93,7 @@ export default {
   ],
   valid: [
     {
-      code: 'type X = string[]'
+      code: 'type X = Array<string>'
     },
     {
       code: 'type X = Array<string>',
@@ -102,7 +104,7 @@ export default {
       options: ['shorthand']
     },
     {
-      code: 'type X = string[][]'
+      code: 'type X = Array<Array<string>>'
     },
     {
       code: 'type X = (?string)[]',

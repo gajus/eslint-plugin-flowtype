@@ -20,4 +20,4 @@ const verboseHandler = (isSimpleType, verbose, context, node, fix) => {
   }
 };
 
-export default makeArrayStyleRule('shorthand', shorthandHandler, verboseHandler);
+export default makeArrayStyleRule('verbose', shorthandHandler, verboseHandler);
