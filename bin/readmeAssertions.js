@@ -14,6 +14,10 @@ const formatCodeSnippet = (setup) => {
     paragraphs.push('// Options: ' + JSON.stringify(setup.options));
   }
 
+  if (setup.settings) {
+    paragraphs.push('// Settings: ' + JSON.stringify(setup.settings));
+  }
+
   paragraphs.push(setup.code);
 
   if (setup.errors) {
