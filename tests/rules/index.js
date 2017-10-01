@@ -22,6 +22,7 @@ const reportingRules = [
   'no-weak-types',
   'object-type-delimiter',
   'require-parameter-type',
+  'require-read-only-array',
   'require-return-type',
   'require-valid-file-annotation',
   'require-variable-type',

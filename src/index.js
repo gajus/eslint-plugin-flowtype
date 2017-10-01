@@ -11,6 +11,7 @@ import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireParameterType from './rules/requireParameterType';
+import requireReadOnlyArray from './rules/requireReadOnlyArray';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
@@ -37,6 +38,7 @@ const rules = {
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
   'require-parameter-type': requireParameterType,
+  'require-read-only-array': requireReadOnlyArray,
   'require-return-type': requireReturnType,
   'require-valid-file-annotation': requireValidFileAnnotation,
   'require-variable-type': requireVariableType,
@@ -74,6 +76,7 @@ export default {
     'no-weak-types': 0,
     'object-type-delimiter': 0,
     'require-parameter-type': 0,
+    'require-read-only-array': 0,
     'require-return-type': 0,
     'require-variable-type': 0,
     semi: 0,
