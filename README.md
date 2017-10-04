@@ -2158,6 +2158,8 @@ type FooType = {}
 <a name="eslint-plugin-flowtype-rules-sort-keys"></a>
 ### <code>sort-keys</code>
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
