@@ -47,93 +47,93 @@ export default {
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
       output: 'type FooType = { a: number, b: string, c: number }'
     },
+    /* eslint-disable no-restricted-syntax */
     {
-      code: [
-        'type FooType = {',
-        '  a: number,',
-        '  c: number,',
-        '  b: string,',
-        '}'
-      ].join('\n'),
+      code: `
+        type FooType = {
+          a: number,
+          c: number,
+          b: string,
+        }
+      `,
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
-      output: [
-        'type FooType = {',
-        '  a: number,',
-        '  b: string,',
-        '  c: number,',
-        '}'
-      ].join('\n')
+      output: `
+        type FooType = {
+          a: number,
+          b: string,
+          c: number,
+        }
+      `
     },
     {
-      code: [
-        'type FooType = {',
-        '  a?: number,',
-        '  c: ?number,',
-        '  b: string,',
-        '}'
-      ].join('\n'),
+      code: `
+        type FooType = {
+          a?: number,
+          c: ?number,
+          b: string,
+        }
+      `,
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
-      output: [
-        'type FooType = {',
-        '  a?: number,',
-        '  b: string,',
-        '  c: ?number,',
-        '}'
-      ].join('\n')
+      output: `
+        type FooType = {
+          a?: number,
+          b: string,
+          c: ?number,
+        }
+      `
     },
     {
-      code: [
-        'type FooType = {',
-        '  a: (number) => void,',
-        '  c: number,',
-        '  b: (param: string) => number,',
-        '}'
-      ].join('\n'),
+      code: `
+        type FooType = {
+          a: (number) => void,
+          c: number,
+          b: (param: string) => number,
+        }
+      `,
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
-      output: [
-        'type FooType = {',
-        '  a: (number) => void,',
-        '  b: (param: string) => number,',
-        '  c: number,',
-        '}'
-      ].join('\n')
+      output: `
+        type FooType = {
+          a: (number) => void,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
     },
     {
-      code: [
-        'type FooType = {',
-        '  a: number | string | boolean,',
-        '  c: number,',
-        '  b: (param: string) => number,',
-        '}'
-      ].join('\n'),
+      code: `
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b: (param: string) => number,
+        }
+      `,
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
-      output: [
-        'type FooType = {',
-        '  a: number | string | boolean,',
-        '  b: (param: string) => number,',
-        '  c: number,',
-        '}'
-      ].join('\n')
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
     },
     {
-      code: [
-        'type FooType = {',
-        '  c: number,',
-        '  a: number ',
-        ' | string | boolean,',
-        '  b: (param: string) => number,',
-        '}'
-      ].join('\n'),
+      code: `
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
       errors: [{message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}],
-      output: [
-        'type FooType = {',
-        '  a: number ',
-        ' | string | boolean,',
-        '  b: (param: string) => number,',
-        '  c: number,',
-        '}'
-      ].join('\n')
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
     }
+    /* eslint-enable no-restricted-syntax */
   ],
   misconfigured: [
     {
