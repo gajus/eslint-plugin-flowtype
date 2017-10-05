@@ -8,22 +8,6 @@ const schema = [
   }
 ];
 
-const fixShorthand = (node, type) => {
-  return (fixer) => {
-    return fixer.replaceText(node, 'Array<' + type + '>');
-  };
-};
-
-const fixVerbose = (node, type, elementTypeNode) => {
-  return (fixer) => {
-    if (needWrap(elementTypeNode)) {
-      return fixer.replaceText(node, '(' + type + ')[]');
-    } else {
-      return fixer.replaceText(node, type + '[]');
-    }
-  };
-};
-
 const inlineType = (type) => {
   const inlined = type.replace(/\s+/g, ' ');
 
@@ -34,7 +18,7 @@ const inlineType = (type) => {
   }
 };
 
-export default (defaultConfig, shorthandHandler, verboseHandler) => {
+export default (defaultConfig, simpleType) => {
   const create = (context) => {
     const verbose = (context.options[0] || defaultConfig) === 'verbose';
 
@@ -45,15 +29,19 @@ export default (defaultConfig, shorthandHandler, verboseHandler) => {
         const inlinedType = inlineType(rawElementType);
         const wrappedInlinedType = needWrap(node.elementType) ? '(' + inlinedType + ')' : inlinedType;
 
-        shorthandHandler(
-          isSimpleType(node.elementType),
-          verbose,
-          context,
-          node,
-          fixShorthand(node, rawElementType),
-          inlinedType,
-          wrappedInlinedType
-        );
+        if (isSimpleType(node.elementType) === simpleType && verbose) {
+          context.report({
+            data: {
+              type: inlinedType,
+              wrappedType: wrappedInlinedType
+            },
+            fix (fixer) {
+              return fixer.replaceText(node, 'Array<' + rawElementType + '>');
+            },
+            message: 'Use "Array<{{ type }}>", not "{{ wrappedType }}[]"',
+            node
+          });
+        }
       },
       // verbose
       GenericTypeAnnotation (node) {
@@ -64,15 +52,23 @@ export default (defaultConfig, shorthandHandler, verboseHandler) => {
             const inlinedType = inlineType(rawElementType);
             const wrappedInlinedType = needWrap(elementTypeNode) ? '(' + inlinedType + ')' : inlinedType;
 
-            verboseHandler(
-              isSimpleType(elementTypeNode),
-              verbose,
-              context,
-              node,
-              fixVerbose(node, rawElementType, elementTypeNode),
-              inlinedType,
-              wrappedInlinedType
-            );
+            if (isSimpleType(elementTypeNode) === simpleType && !verbose) {
+              context.report({
+                data: {
+                  type: inlinedType,
+                  wrappedType: wrappedInlinedType
+                },
+                fix (fixer) {
+                  if (needWrap(elementTypeNode)) {
+                    return fixer.replaceText(node, '(' + rawElementType + ')[]');
+                  } else {
+                    return fixer.replaceText(node, rawElementType + '[]');
+                  }
+                },
+                message: 'Use "{{ wrappedType }}[]", not "Array<{{ type }}>"',
+                node
+              });
+            }
           }
         }
       }
