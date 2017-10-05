@@ -166,6 +166,71 @@ export default {
           c: number,
         }
       `
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: {
+            x: string,
+            y: boolean,
+            z: number,
+          },
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "k" should be before "l".'},
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: {
+            x: string,
+            y: boolean,
+            z: {
+              j: string,
+              k: boolean,
+              l: number,
+            },
+          },
+        }
+      `
     }
     /* eslint-enable no-restricted-syntax */
   ],

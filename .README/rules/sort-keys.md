@@ -1,5 +1,7 @@
 ### `sort-keys`
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
