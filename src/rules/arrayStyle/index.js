@@ -8,25 +8,30 @@ const schema = [
   }
 ];
 
-const fixShorthand = (context, node) => {
+const fixShorthand = (node, type) => {
   return (fixer) => {
-    const rawElementType = context.getSourceCode().getText(node.elementType);
-
-    return fixer.replaceText(node, 'Array<' + rawElementType + '>');
+    return fixer.replaceText(node, 'Array<' + type + '>');
   };
 };
 
-const fixVerbose = (context, node) => {
+const fixVerbose = (node, type, elementTypeNode) => {
   return (fixer) => {
-    const elementTypeNode = node.typeParameters.params[0];
-    const rawElementType = context.getSourceCode().getText(elementTypeNode);
-
     if (needWrap(elementTypeNode)) {
-      return fixer.replaceText(node, '(' + rawElementType + ')[]');
+      return fixer.replaceText(node, '(' + type + ')[]');
     } else {
-      return fixer.replaceText(node, rawElementType + '[]');
+      return fixer.replaceText(node, type + '[]');
     }
   };
+};
+
+const inlineType = (type) => {
+  const inlined = type.replace(/\s+/g, ' ');
+
+  if (inlined.length <= 50) {
+    return inlined;
+  } else {
+    return 'Type';
+  }
 };
 
 export default (defaultConfig, shorthandHandler, verboseHandler) => {
@@ -36,13 +41,38 @@ export default (defaultConfig, shorthandHandler, verboseHandler) => {
     return {
       // shorthand
       ArrayTypeAnnotation (node) {
-        shorthandHandler(isSimpleType(node.elementType), verbose, context, node, fixShorthand(context, node));
+        const rawElementType = context.getSourceCode().getText(node.elementType);
+        const inlinedType = inlineType(rawElementType);
+        const wrappedInlinedType = needWrap(node.elementType) ? '(' + inlinedType + ')' : inlinedType;
+
+        shorthandHandler(
+          isSimpleType(node.elementType),
+          verbose,
+          context,
+          node,
+          fixShorthand(node, rawElementType),
+          inlinedType,
+          wrappedInlinedType
+        );
       },
       // verbose
       GenericTypeAnnotation (node) {
         if (node.id.name === 'Array') {
           if (node.typeParameters.params.length === 1) {
-            verboseHandler(isSimpleType(node.typeParameters.params[0]), verbose, context, node, fixVerbose(context, node));
+            const elementTypeNode = node.typeParameters.params[0];
+            const rawElementType = context.getSourceCode().getText(elementTypeNode);
+            const inlinedType = inlineType(rawElementType);
+            const wrappedInlinedType = needWrap(elementTypeNode) ? '(' + inlinedType + ')' : inlinedType;
+
+            verboseHandler(
+              isSimpleType(elementTypeNode),
+              verbose,
+              context,
+              node,
+              fixVerbose(node, rawElementType, elementTypeNode),
+              inlinedType,
+              wrappedInlinedType
+            );
           }
         }
       }

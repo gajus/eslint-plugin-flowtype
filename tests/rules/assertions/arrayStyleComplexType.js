@@ -2,51 +2,61 @@ export default {
   invalid: [
     {
       code: 'type X = (?string)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<?string>", not "(?string)[]"'}],
       output: 'type X = Array<?string>'
     },
     {
       code: 'type X = (?string)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<?string>", not "(?string)[]"'}],
       options: ['verbose'],
       output: 'type X = Array<?string>'
     },
     {
       code: 'type X = Array<?string>',
-      errors: [{message: 'Use "ComplexType[]", not "Array<ComplexType>"'}],
+      errors: [{message: 'Use "(?string)[]", not "Array<?string>"'}],
       options: ['shorthand'],
       output: 'type X = (?string)[]'
     },
     {
       code: 'type X = Array<{foo: string}>',
-      errors: [{message: 'Use "ComplexType[]", not "Array<ComplexType>"'}],
+      errors: [{message: 'Use "{foo: string}[]", not "Array<{foo: string}>"'}],
       options: ['shorthand'],
       output: 'type X = {foo: string}[]'
     },
     {
       code: 'type X = (string | number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<string | number>", not "(string | number)[]"'}],
       output: 'type X = Array<string | number>'
     },
     {
       code: 'type X = (string & number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<string & number>", not "(string & number)[]"'}],
       output: 'type X = Array<string & number>'
     },
     {
       code: 'type X = [string, number][]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<[string, number]>", not "[string, number][]"'}],
       output: 'type X = Array<[string, number]>'
     },
     {
       code: 'type X = {foo: string}[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<{foo: string}>", not "{foo: string}[]"'}],
       output: 'type X = Array<{foo: string}>'
     },
     {
       code: 'type X = (string => number)[]',
-      errors: [{message: 'Use "Array<ComplexType>", not "ComplexType[]"'}],
+      errors: [{message: 'Use "Array<string => number>", not "(string => number)[]"'}],
       output: 'type X = Array<string => number>'
+    },
+    {
+      code: 'type X = {\n    foo: string,\n    bar: number\n}[]',
+      errors: [{message: 'Use "Array<{ foo: string, bar: number }>", not "{ foo: string, bar: number }[]"'}],
+      output: 'type X = Array<{\n    foo: string,\n    bar: number\n}>'
+    },
+    {
+      code: 'type X = {\n    foo: string,\n    bar: number,\n    quo: boolean,\n    hey: Date\n}[]',
+      errors: [{message: 'Use "Array<Type>", not "Type[]"'}],
+      output: 'type X = Array<{\n    foo: string,\n    bar: number,\n    quo: boolean,\n    hey: Date\n}>'
     }
   ],
   misconfigured: [

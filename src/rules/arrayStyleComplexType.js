@@ -1,20 +1,28 @@
 import makeArrayStyleRule from './arrayStyle';
 
-const shorthandHandler = (isSimpleType, verbose, context, node, fix) => {
+const shorthandHandler = (isSimpleType, verbose, context, node, fix, inlinedType, wrappedInlinedType) => {
   if (!isSimpleType && verbose) {
     context.report({
+      data: {
+        type: inlinedType,
+        wrappedType: wrappedInlinedType
+      },
       fix,
-      message: 'Use "Array<ComplexType>", not "ComplexType[]"',
+      message: 'Use "Array<{{ type }}>", not "{{ wrappedType }}[]"',
       node
     });
   }
 };
 
-const verboseHandler = (isSimpleType, verbose, context, node, fix) => {
+const verboseHandler = (isSimpleType, verbose, context, node, fix, inlinedType, wrappedInlinedType) => {
   if (!isSimpleType && !verbose) {
     context.report({
+      data: {
+        type: inlinedType,
+        wrappedType: wrappedInlinedType
+      },
       fix,
-      message: 'Use "ComplexType[]", not "Array<ComplexType>"',
+      message: 'Use "{{ wrappedType }}[]", not "Array<{{ type }}>"',
       node
     });
   }
