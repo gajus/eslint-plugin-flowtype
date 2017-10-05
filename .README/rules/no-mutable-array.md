@@ -1,4 +1,4 @@
-### `require-read-only-array`
+### `no-mutable-array`
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
@@ -13,4 +13,4 @@ General reasons for using immutable data structures:
 * They always have failure atomicity
 * They are much easier to cache
 
-<!-- assertions requireReadOnlyArray -->
+<!-- assertions noMutableArray -->

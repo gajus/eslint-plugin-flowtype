@@ -5,13 +5,13 @@ import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
 import genericSpacing from './rules/genericSpacing';
 import noDupeKeys from './rules/noDupeKeys';
+import noMutableArray from './rules/noMutableArray';
 import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireParameterType from './rules/requireParameterType';
-import requireReadOnlyArray from './rules/requireReadOnlyArray';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
@@ -32,13 +32,13 @@ const rules = {
   'delimiter-dangle': delimiterDangle,
   'generic-spacing': genericSpacing,
   'no-dupe-keys': noDupeKeys,
+  'no-mutable-array': noMutableArray,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
   'no-unused-expressions': noUnusedExpressions,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
   'require-parameter-type': requireParameterType,
-  'require-read-only-array': requireReadOnlyArray,
   'require-return-type': requireReturnType,
   'require-valid-file-annotation': requireValidFileAnnotation,
   'require-variable-type': requireVariableType,
@@ -73,10 +73,10 @@ export default {
     'delimiter-dangle': 0,
     'generic-spacing': 0,
     'no-dupe-keys': 0,
+    'no-mutable-array': 0,
     'no-weak-types': 0,
     'object-type-delimiter': 0,
     'require-parameter-type': 0,
-    'require-read-only-array': 0,
     'require-return-type': 0,
     'require-variable-type': 0,
     semi: 0,
