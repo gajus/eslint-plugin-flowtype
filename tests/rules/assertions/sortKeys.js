@@ -41,7 +41,198 @@ export default {
       code: 'type FooType = { 1: number, 10: number, 2: boolean }',
       errors: [{message: 'Expected type annotations to be in natural ascending order. "2" should be before "10".'}],
       options: ['asc', {natural: true}]
+    },
+    {
+      code: 'type FooType = { a: number, c: number, b: string }',
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: 'type FooType = { a: number, b: string, c: number }'
+    },
+    /* eslint-disable no-restricted-syntax */
+    {
+      code: `
+        type FooType = {
+          a: number,
+          c: number,
+          b: string,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: number,
+          b: string,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          +a: number,
+          c: number,
+          b: string,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          +a: number,
+          b: string,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          -a: number,
+          c: number,
+          b: string,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          -a: number,
+          b: string,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          a?: number,
+          c: ?number,
+          b: string,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a?: number,
+          b: string,
+          c: ?number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          a: (number) => void,
+          c: number,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: (number) => void,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: {
+            x: string,
+            y: boolean,
+            z: number,
+          },
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "k" should be before "l".'},
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b: (param: string) => number,
+          c: {
+            x: string,
+            y: boolean,
+            z: {
+              j: string,
+              k: boolean,
+              l: number,
+            },
+          },
+        }
+      `
     }
+    /* eslint-enable no-restricted-syntax */
   ],
   misconfigured: [
     {
