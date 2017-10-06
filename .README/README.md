@@ -147,6 +147,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
+{"gitdown": "include", "file": "./rules/no-mutable-array.md"}
 {"gitdown": "include", "file": "./rules/no-primitive-constructor-types.md"}
 {"gitdown": "include", "file": "./rules/no-types-missing-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/no-unused-expressions.md"}

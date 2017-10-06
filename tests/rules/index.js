@@ -16,6 +16,7 @@ const reportingRules = [
   'delimiter-dangle',
   'generic-spacing',
   'no-dupe-keys',
+  'no-mutable-array',
   'no-primitive-constructor-types',
   'no-types-missing-file-annotation',
   'no-unused-expressions',
