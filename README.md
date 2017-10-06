@@ -19,6 +19,7 @@
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
         * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
@@ -957,6 +958,40 @@ type f = { get(key: { a: 1 }): string, get(key: { a: 2 }): string}
 var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
 
 var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-mutable-array"></a>
+### <code>no-mutable-array</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Requires use of [`$ReadOnlyArray`](https://github.com/facebook/flow/blob/v0.46.0/lib/core.js#L185) instead of just `Array` or array [shorthand notation](https://flow.org/en/docs/types/arrays/#toc-array-type-shorthand-syntax). `$ReadOnlyArray` is immutable array collection type and the superclass of Array and tuple types in Flow. Use of `$ReadOnlyArray` instead of `Array` can solve some "problems" in typing with Flow (e.g., [1](https://github.com/facebook/flow/issues/3425), [2](https://github.com/facebook/flow/issues/4251)).
+
+General reasons for using immutable data structures:
+
+* They are simpler to construct, test, and use
+* They help to avoid temporal coupling
+* Their usage is side-effect free (no defensive copies)
+* Identity mutability problem is avoided
+* They always have failure atomicity
+* They are much easier to cache
+
+The following patterns are considered problems:
+
+```js
+type X = Array<string>
+// Message: Use "$ReadOnlyArray" instead of "Array"
+
+type X = string[]
+// Message: Use "$ReadOnlyArray" instead of array shorthand notation
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = $ReadOnlyArray<string>
 ```
 
 
@@ -2226,6 +2261,105 @@ type FooType = { a: number, C: number, c: number, b: string }
 // Options: ["asc",{"natural":true}]
 type FooType = { 1: number, 10: number, 2: boolean }
 // Message: Expected type annotations to be in natural ascending order. "2" should be before "10".
+
+type FooType = { a: number, c: number, b: string }
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          +a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          -a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a?: number,
+          c: ?number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: (number) => void,
+          c: number,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "k" should be before "l".
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
 ```
 
 The following patterns are not considered problems:
