@@ -65,10 +65,20 @@ const create = (context) => {
 
   const shouldFilterNode = (functionNode) => {
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
-    const identiferName = _.get(functionNode, isArrow ? 'parent.id.name' : 'id.name');
+    const isMethod = functionNode.parent && functionNode.parent.type === 'MethodDefinition';
+    let selector;
+
+    if (isMethod) {
+      selector = 'parent.key.name';
+    } else if (isArrow) {
+      selector = 'parent.id.name';
+    } else {
+      selector = 'id.name';
+    }
+    const identifierName = _.get(functionNode, selector);
 
     const checkRegExp = (regex) => {
-      return regex.test(identiferName);
+      return regex.test(identifierName);
     };
 
     if (excludeMatching.length && _.some(excludeMatching, checkRegExp)) {
@@ -98,15 +108,20 @@ const create = (context) => {
     if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
       return;
     }
-
+    if (shouldFilterNode(functionNode)) {
+      return;
+    }
     if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
       context.report(functionNode, 'Must annotate undefined return type.');
-    } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
-      if (annotateReturn && !functionNode.returnType && !shouldFilterNode(functionNode)) {
-        context.report(functionNode, 'Missing return type annotation.');
-      }
+    } else if (
+      !isFunctionReturnUndefined &&
+      !isReturnTypeAnnotationUndefined &&
+      annotateReturn &&
+      !functionNode.returnType
+    ) {
+      context.report(functionNode, 'Missing return type annotation.');
     }
   };
 
