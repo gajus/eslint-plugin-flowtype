@@ -61,6 +61,10 @@ const create = (context) => {
     const haystack = [];
 
     _.forEach(node.properties, (identifierNode) => {
+      if (identifierNode.type === 'ObjectTypeSpreadProperty') {
+        return;
+      }
+
       const needle = {name: getParameterName(identifierNode, context)};
 
       if (identifierNode.value.type === 'FunctionTypeAnnotation') {

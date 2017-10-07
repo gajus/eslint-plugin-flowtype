@@ -107,6 +107,9 @@ export default {
     },
     {
       code: 'var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }'
+    },
+    {
+      code: 'type One = { c: number }; type Two = { a: number, b: string, ...One }'
     }
   ]
 };

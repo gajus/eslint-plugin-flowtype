@@ -49,9 +49,6 @@ const create = (context) => {
         makeDefined(qid);
       }
     },
-    InterfaceDeclaration (node) {
-      makeDefined(node.id);
-    },
     Program () {
       globalScope = context.getScope();
     },

@@ -34,62 +34,6 @@ const VALID_WITH_USE_FLOW_TYPE = [
     errors: [
       '\'A\' is defined but never used.'
     ]
-  },
-  {
-    code: 'import type A from "a"; (function<T: A>(): T {})',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type A from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'import type {A} from "a"; (function<T: A>(): T {})',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type {A} from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type {a as A} from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'type A = {}; function x<Y: A>(i: Y) { i }; x()',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'function x<Y: A>(i: Y) { i }; type A = {}; x()',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()',
-        // QualifiedTypeIdentifier -------^
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()',
-        //                   ^- QualifiedTypeIdentifier
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
   }
 ];
 
@@ -125,7 +69,18 @@ const ALWAYS_VALID = [
   'import type A from "a"; (function(): A {})',
   '(function(): A {}); import type A from "a";',
   'declare interface A {}',
-  'declare type A = {}'
+  'declare type A = {}',
+  'import type A from "a"; (function<T: A>(): T {})',
+  '(function<T: A>(): T {}); import type A from "a"',
+  'import type {A} from "a"; (function<T: A>(): T {})',
+  '(function<T: A>(): T {}); import type {A} from "a"',
+  '(function<T: A>(): T {}); import type {a as A} from "a"',
+  'type A = {}; function x<Y: A>(i: Y) { i }; x()',
+  'function x<Y: A>(i: Y) { i }; type A = {}; x()',
+  'type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()',
+      // QualifiedTypeIdentifier -------^
+  'function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()'
+      //                   ^- QualifiedTypeIdentifier
 ];
 
 /**
@@ -187,4 +142,3 @@ export default {
     })
   ]
 };
-
