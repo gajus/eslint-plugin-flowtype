@@ -252,6 +252,9 @@ var a: AType<BType>
 type A = AType
 // Additional rules: {"no-undef":2}
 
+opaque type A = AType
+// Additional rules: {"no-undef":2}
+
 function f(a: AType) {}
 // Additional rules: {"no-undef":2}
 
@@ -304,6 +307,9 @@ var a: AType<BType>
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 type A = AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+opaque type A = AType
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 function f(a: AType) {}
