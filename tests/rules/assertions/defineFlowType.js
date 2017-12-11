@@ -37,6 +37,12 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     ]
   },
   {
+    code: 'declare type A = number',
+    errors: [
+      '\'A\' is not defined.'
+    ]
+  },
+  {
     code: 'function f(a: AType) {}',
     errors: [
       '\'AType\' is not defined.'
@@ -95,6 +101,12 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     code: 'interface AType {}',
     errors: [
       '\'AType\' is not defined.'
+    ]
+  },
+  {
+    code: 'declare interface A {}',
+    errors: [
+      '\'A\' is not defined.'
     ]
   },
   {
