@@ -58,6 +58,11 @@ const create = (context) => {
     InterfaceDeclaration (node) {
       makeDefined(node.id);
     },
+    OpaqueType (node) {
+      if (node.id.type === 'Identifier') {
+        makeDefined(node.id);
+      }
+    },
     Program () {
       globalScope = context.getScope();
     },
