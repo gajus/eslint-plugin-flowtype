@@ -5,6 +5,7 @@ import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
 import genericSpacing from './rules/genericSpacing';
 import noDupeKeys from './rules/noDupeKeys';
+import noFlowFixMeComments from './rules/noFlowFixMeComments';
 import noMutableArray from './rules/noMutableArray';
 import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
@@ -32,6 +33,7 @@ const rules = {
   'delimiter-dangle': delimiterDangle,
   'generic-spacing': genericSpacing,
   'no-dupe-keys': noDupeKeys,
+  'no-flow-fix-me-comments': noFlowFixMeComments,
   'no-mutable-array': noMutableArray,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
@@ -73,6 +75,7 @@ export default {
     'delimiter-dangle': 0,
     'generic-spacing': 0,
     'no-dupe-keys': 0,
+    'no-flow-fix-me-comments': 0,
     'no-mutable-array': 0,
     'no-weak-types': 0,
     'object-type-delimiter': 0,
