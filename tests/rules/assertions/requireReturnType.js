@@ -240,6 +240,30 @@ export default {
       ]
     },
     {
+      code: 'class Test { foo() { return 42; } }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => { return 42; } }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => 42; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ]
+    },
+    {
       code: 'async () => { return; }',
       errors: [
         {
@@ -644,6 +668,39 @@ export default {
     },
     {
       code: 'class Test { constructor() { } }'
+    },
+    {
+      code: 'class Test { foo() { return 42; } }',
+      options: [
+        'always',
+        {
+          excludeMatching: [ 'foo' ]
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => { return 42; } }',
+      options: [
+        'always',
+        {
+          excludeMatching: [ 'foo' ]
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => 42; }',
+      options: [
+        'always',
+        {
+          excludeMatching: [ 'foo' ]
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = (): number => { return 42; } }'
+    },
+    {
+      code: 'class Test { foo = (): number => 42; }'
     },
     {
       code: 'async (foo): Promise<number> => { return 3; }'
