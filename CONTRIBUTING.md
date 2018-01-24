@@ -36,7 +36,7 @@ Run with `npm run lint`.
 
 1. Create a file in `tests/rules/assertions` named the `camelCase` version of your rule name with the following template:
   * `export default { invalid: [], valid: [] }`
-2. Add your test file to `tests/index.js`
+2. Add your test file to `tests/rules/index.js`
 3. Create a file in `src/rules` named the `camelCase` version  of your rule name
 4. Add your rule file to `src/index.js`
 
