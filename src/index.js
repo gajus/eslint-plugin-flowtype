@@ -12,6 +12,7 @@ import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
+import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -40,6 +41,7 @@ const rules = {
   'no-unused-expressions': noUnusedExpressions,
   'no-weak-types': noWeakTypes,
   'object-type-delimiter': objectTypeDelimiter,
+  'require-exact-type': requireExactType,
   'require-parameter-type': requireParameterType,
   'require-return-type': requireReturnType,
   'require-valid-file-annotation': requireValidFileAnnotation,
@@ -79,6 +81,7 @@ export default {
     'no-mutable-array': 0,
     'no-weak-types': 0,
     'object-type-delimiter': 0,
+    'require-exact-type': 0,
     'require-parameter-type': 0,
     'require-return-type': 0,
     'require-variable-type': 0,

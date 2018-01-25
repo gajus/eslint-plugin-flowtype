@@ -19,12 +19,14 @@
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
         * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
         * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
+        * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
@@ -252,6 +254,9 @@ var a: AType<BType>
 type A = AType
 // Additional rules: {"no-undef":2}
 
+declare type A = number
+// Additional rules: {"no-undef":2}
+
 opaque type A = AType
 // Additional rules: {"no-undef":2}
 
@@ -283,6 +288,9 @@ class C implements AType {}
 // Additional rules: {"no-undef":2}
 
 interface AType {}
+// Additional rules: {"no-undef":2}
+
+declare interface A {}
 // Additional rules: {"no-undef":2}
 
 ({ a: ({b() {}}: AType) })
@@ -309,6 +317,9 @@ var a: AType<BType>
 type A = AType
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
+declare type A = number
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
 opaque type A = AType
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
@@ -340,6 +351,9 @@ class C implements AType {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 interface AType {}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+declare interface A {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 ({ a: ({b() {}}: AType) })
@@ -968,6 +982,31 @@ var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
 
 
 
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments"></a>
+### <code>no-flow-fix-me-comments</code>
+
+Disallows `$FlowFixMe` comment suppressions.
+
+This is especially useful as a warning to ensure instances of `$FlowFixMe` in your codebase get fixed over time.
+
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options"></a>
+#### Options
+
+This rule takes an optional RegExp that comments a text RegExp that makes the supression valid.
+
+```js
+{
+    "rules": {
+        "flowtype/no-flow-fix-me-comments": [
+            1,
+            "TODO\s+[0-9]+"
+        ]
+    }
+}
+```
+
+<!-- assertions no-flow-fix-me-comments -->
+
 <a name="eslint-plugin-flowtype-rules-no-mutable-array"></a>
 ### <code>no-mutable-array</code>
 
@@ -1500,6 +1539,95 @@ type Foo = { a: Foo, b: Bar }
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-exact-type"></a>
+### <code>require-exact-type</code>
+
+This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
+
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options"></a>
+#### Options
+
+The rule has one string option:
+
+* `"always"` (default): Report all object type definitions that aren't exact.
+* `"never"`: Report all object type definitions that are exact.
+
+```js
+{
+  "rules": {
+    "flowtype/require-exact-type": [
+      2,
+      "always"
+    ]
+  }
+}
+
+{
+  "rules": {
+    "flowtype/require-exact-type": [
+      2,
+      "never"
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type foo = {};
+// Message: Type identifier 'foo' must be exact.
+
+type foo = { bar: string };
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["always"]
+type foo = {};
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["always"]
+type foo = { bar: string };
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["never"]
+type foo = {| |};
+// Message: Type identifier 'foo' must not be exact.
+
+// Options: ["never"]
+type foo = {| bar: string |};
+// Message: Type identifier 'foo' must not be exact.
+```
+
+The following patterns are not considered problems:
+
+```js
+type foo = {| |};
+
+type foo = {| bar: string |};
+
+type foo = number;
+
+// Options: ["always"]
+type foo = {| |};
+
+// Options: ["always"]
+type foo = {| bar: string |};
+
+// Options: ["always"]
+type foo = number;
+
+// Options: ["never"]
+type foo = { };
+
+// Options: ["never"]
+type foo = { bar: string };
+
+// Options: ["never"]
+type foo = number;
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-parameter-type"></a>
 ### <code>require-parameter-type</code>
 
@@ -1789,6 +1917,19 @@ async () => {}
 async function x() {}
 // Message: Missing return type annotation.
 
+// Options: ["always",{"annotateUndefined":"always"}]
+class Test { constructor() { } }
+// Message: Must annotate undefined return type.
+
+class Test { foo() { return 42; } }
+// Message: Missing return type annotation.
+
+class Test { foo = () => { return 42; } }
+// Message: Missing return type annotation.
+
+class Test { foo = () => 42; }
+// Message: Missing return type annotation.
+
 // Options: ["always"]
 async () => { return; }
 // Message: Missing return type annotation.
@@ -1868,6 +2009,24 @@ async function doThing(): Promise<void> {}
 
 // Options: ["always",{"annotateUndefined":"always"}]
 function* doThing(): Generator<number, void, void> { yield 2; }
+
+// Options: ["always",{"annotateUndefined":"always","excludeMatching":["constructor"]}]
+class Test { constructor() { } }
+
+class Test { constructor() { } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo() { return 42; } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo = () => { return 42; } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo = () => 42; }
+
+class Test { foo = (): number => { return 42; } }
+
+class Test { foo = (): number => 42; }
 
 async (foo): Promise<number> => { return 3; }
 

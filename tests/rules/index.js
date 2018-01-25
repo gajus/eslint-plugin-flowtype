@@ -23,6 +23,7 @@ const reportingRules = [
   'no-unused-expressions',
   'no-weak-types',
   'object-type-delimiter',
+  'require-exact-type',
   'require-parameter-type',
   'require-return-type',
   'require-valid-file-annotation',
