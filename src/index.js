@@ -57,9 +57,35 @@ const rules = {
   'valid-syntax': validSyntax
 };
 
+const globals = [
+  '$Keys',
+  '$Values',
+  '$ReadOnly',
+  '$Exact',
+  '$Diff',
+  '$Rest',
+  '$PropertyType',
+  '$ElementType',
+  '$ObjMap',
+  '$TupleMap',
+  '$Call',
+  'Class',
+  '$Supertype',
+  '$Subtype'
+].reduce((acc, key) => {
+  acc[key] = true;
+
+  return acc;
+}, {});
+
 export default {
   configs: {
     recommended
+  },
+  environments: {
+    globals: {
+      globals
+    }
   },
   rules: _.mapValues(rules, (rule, key) => {
     if (key === 'no-types-missing-file-annotation') {
