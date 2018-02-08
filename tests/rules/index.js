@@ -15,6 +15,7 @@ const reportingRules = [
   'define-flow-type',
   'delimiter-dangle',
   'generic-spacing',
+  'newline-after-flow-annotation',
   'no-dupe-keys',
   'no-flow-fix-me-comments',
   'no-mutable-array',
