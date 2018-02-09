@@ -4,6 +4,7 @@ import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
 import genericSpacing from './rules/genericSpacing';
+import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
 import noFlowFixMeComments from './rules/noFlowFixMeComments';
 import noMutableArray from './rules/noMutableArray';
@@ -33,6 +34,7 @@ const rules = {
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
   'generic-spacing': genericSpacing,
+  'newline-after-flow-annotation': newlineAfterFlowAnnotation,
   'no-dupe-keys': noDupeKeys,
   'no-flow-fix-me-comments': noFlowFixMeComments,
   'no-mutable-array': noMutableArray,
@@ -76,6 +78,7 @@ export default {
     'define-flow-type': 0,
     'delimiter-dangle': 0,
     'generic-spacing': 0,
+    'newline-after-flow-annotation': 0,
     'no-dupe-keys': 0,
     'no-flow-fix-me-comments': 0,
     'no-mutable-array': 0,
