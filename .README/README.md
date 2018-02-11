@@ -113,9 +113,6 @@ To enable this configuration use the extends property in your `.eslintrc` config
 {
   "extends": [
     "plugin:flowtype/recommended"
-  ],
-  "plugins": [
-    "flowtype"
   ]
 }
 ```

@@ -2436,7 +2436,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2445,7 +2445,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2454,7 +2454,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2463,7 +2463,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2472,7 +2472,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2481,7 +2481,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -2490,7 +2490,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
 
@@ -2503,7 +2503,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
@@ -2521,7 +2521,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
@@ -2647,7 +2647,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo: 
+(foo:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
@@ -4128,4 +4128,3 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 **Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
 Checks for simple Flow syntax errors.
-
