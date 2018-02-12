@@ -6,6 +6,7 @@ import delimiterDangle from './rules/delimiterDangle';
 import genericSpacing from './rules/genericSpacing';
 import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
+import noExistentialType from './rules/noExistentialType';
 import noFlowFixMeComments from './rules/noFlowFixMeComments';
 import noMutableArray from './rules/noMutableArray';
 import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
@@ -36,6 +37,7 @@ const rules = {
   'generic-spacing': genericSpacing,
   'newline-after-flow-annotation': newlineAfterFlowAnnotation,
   'no-dupe-keys': noDupeKeys,
+  'no-existential-type': noExistentialType,
   'no-flow-fix-me-comments': noFlowFixMeComments,
   'no-mutable-array': noMutableArray,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
