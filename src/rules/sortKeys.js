@@ -123,6 +123,11 @@ const create = (context) => {
     prev = null;
 
     _.forEach(node.properties, (identifierNode) => {
+      // avoids error for types constructed from spreading others like: type Props = { ...A, ...B }
+      if (identifierNode.type === 'ObjectTypeSpreadProperty') {
+        return;
+      }
+
       const current = getParameterName(identifierNode, context);
       const last = prev;
 

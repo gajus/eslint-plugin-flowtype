@@ -108,5 +108,9 @@ export default {
     {
       code: 'var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }'
     }
+    // TODO: Uncomment when we update the tests to use babel-eslint@^7.2.0.
+    // {
+    //   code: 'type One = { c: number }; type Two = { a: number, b: string, ...One }'
+    // }
   ]
 };

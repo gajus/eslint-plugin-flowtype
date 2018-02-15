@@ -61,6 +61,11 @@ const create = (context) => {
     const haystack = [];
 
     _.forEach(node.properties, (identifierNode) => {
+      // avoids error for types constructed from spreading others like: type Props = { ...A, ...B }
+      if (identifierNode.type === 'ObjectTypeSpreadProperty') {
+        return;
+      }
+
       const needle = {name: getParameterName(identifierNode, context)};
 
       if (identifierNode.value.type === 'FunctionTypeAnnotation') {
