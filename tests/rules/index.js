@@ -27,6 +27,7 @@ const reportingRules = [
   'require-exact-type',
   'require-parameter-type',
   'require-return-type',
+  'require-types-at-top',
   'require-valid-file-annotation',
   'require-variable-type',
   'semi',

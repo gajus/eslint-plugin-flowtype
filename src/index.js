@@ -17,6 +17,7 @@ import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
+import requireTypesAtTop from './rules/requireTypesAtTop';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
 import semi from './rules/semi';
@@ -48,6 +49,7 @@ const rules = {
   'require-exact-type': requireExactType,
   'require-parameter-type': requireParameterType,
   'require-return-type': requireReturnType,
+  'require-types-at-top': requireTypesAtTop,
   'require-valid-file-annotation': requireValidFileAnnotation,
   'require-variable-type': requireVariableType,
   semi,
