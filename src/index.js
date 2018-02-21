@@ -26,6 +26,7 @@ import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
 import typeIdMatch from './rules/typeIdMatch';
+import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
@@ -58,6 +59,7 @@ const rules = {
   'space-before-generic-bracket': spaceBeforeGenericBracket,
   'space-before-type-colon': spaceBeforeTypeColon,
   'type-id-match': typeIdMatch,
+  'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
   'valid-syntax': validSyntax
@@ -98,6 +100,7 @@ export default {
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
     'type-id-match': 0,
+    'type-import-style': 0,
     'union-intersection-spacing': 0,
     'use-flow-type': 0,
     'valid-syntax': 0
