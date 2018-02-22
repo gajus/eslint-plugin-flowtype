@@ -378,5 +378,9 @@ export default {
         }
       }
     }
+    // TODO: Uncomment when we update the tests to use babel-eslint@^7.2.0.
+    // {
+    //   code: 'type One = { c: number }; type Two = { a: number, b: string, ...One }'
+    // }
   ]
 };
