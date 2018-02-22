@@ -29,7 +29,13 @@ const create = (context) => {
           context.report({
             fix (fixer) {
               const imports = node.specifiers.map((specifier) => {
-                return 'type ' + specifier.local.name;
+                if (specifier.type === 'ImportDefaultSpecifier') {
+                  return 'type default as ' + specifier.local.name;
+                } else if (specifier.imported.name === specifier.local.name) {
+                  return 'type ' + specifier.local.name;
+                } else {
+                  return 'type ' + specifier.imported.name + ' as ' + specifier.local.name;
+                }
               });
               const source = node.source.value;
 
