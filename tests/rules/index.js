@@ -27,6 +27,7 @@ const reportingRules = [
   'require-exact-type',
   'require-parameter-type',
   'require-return-type',
+  'require-types-at-top',
   'require-valid-file-annotation',
   'require-variable-type',
   'semi',
@@ -35,6 +36,7 @@ const reportingRules = [
   'space-before-generic-bracket',
   'space-before-type-colon',
   'type-id-match',
+  'type-import-style',
   'union-intersection-spacing',
   'use-flow-type',
   'valid-syntax'
