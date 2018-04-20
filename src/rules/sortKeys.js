@@ -75,7 +75,9 @@ const generateOrderedList = (context, sort, properties) => {
     const name = getParameterName(property, context);
     let value;
 
-    if (property.value.type === 'ObjectTypeAnnotation') {
+    if (property.type === 'ObjectTypeSpreadProperty') {
+      return ['...' + property.argument.id.name];
+    } else if (property.value.type === 'ObjectTypeAnnotation') {
       value = generateFix(property.value, context, sort); // eslint-disable-line no-use-before-define
     } else {
       value = context.getSourceCode().getText(property.value);
@@ -84,7 +86,13 @@ const generateOrderedList = (context, sort, properties) => {
     return [(variances[property.variance] || '') + name + (property.optional ? '?' : ''), value];
   })
     .sort((first, second) => { return sort(first[0], second[0]) ? -1 : 1; })
-    .map((item) => { return item[0] + ': ' + item[1]; });
+    .map((item) => {
+      if (item.length === 1) {
+        return item[0];
+      }
+
+      return item[0] + ': ' + item[1];
+    });
 };
 
 const generateFix = (node, context, sort) => {
