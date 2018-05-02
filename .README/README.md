@@ -122,6 +122,12 @@ To enable this configuration use the extends property in your `.eslintrc` config
 
 See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
+### Community maintained configurations
+
+The following are third-party submitted/ maintained configurations of `eslint-plugin-flowtype`:
+
+* https://github.com/wemake-services/eslint-config-flowtype-essential
+
 ## Settings
 
 ### `onlyFilesWithFlowAnnotation`
