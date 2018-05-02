@@ -122,6 +122,11 @@ To enable this configuration use the extends property in your `.eslintrc` config
 
 See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
+#### Essential 
+
+This is a 3d-party plugin focused on a strict syntax and permissive type rules.
+Follow [these instuctions](https://github.com/wemake-services/eslint-config-flowtype-essential) to install and configure it.
+
 ## Settings
 
 ### `onlyFilesWithFlowAnnotation`
