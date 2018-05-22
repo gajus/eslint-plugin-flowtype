@@ -46,7 +46,7 @@
   },
   "scripts": {
     "build": "rm -fr ./dist && babel ./src --out-dir ./dist --copy-files",
-    "documentation": "gitdown ./.README/README.md --output-file ./README.md; npm run documentation-add-assertions",
+    "documentation": "gitdown ./.README/README.md --output-file ./README.md && npm run documentation-add-assertions",
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json",
     "lint": "eslint ./src ./tests",
