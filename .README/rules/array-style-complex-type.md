@@ -2,11 +2,13 @@
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
-Enforces a particular style for array type annotations for complex types. Type is considered complex in these cases:
+Enforces a particular annotation style of complex types.
+
+Type is considered complex in these cases:
 
 * [Maybe type](https://flow.org/en/docs/types/maybe/)
-* Function type
-* Object type
+* [Function type](https://flow.org/en/docs/types/functions/)
+* [Object type](https://flow.org/en/docs/types/objects/)
 * [Tuple type](https://flow.org/en/docs/types/tuples/)
 * [Union type](https://flow.org/en/docs/types/unions/)
 * [Intersection type](https://flow.org/en/docs/types/intersections/)
