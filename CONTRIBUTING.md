@@ -36,13 +36,13 @@ Run with `npm run lint`.
 
 1. Create a file in `tests/rules/assertions` named the `camelCase` version of your rule name with the following template:
   * `export default { invalid: [], valid: [] }`
-2. Add your test file to `tests/index.js`
+2. Add your test file to `tests/rules/index.js`
 3. Create a file in `src/rules` named the `camelCase` version  of your rule name
 4. Add your rule file to `src/index.js`
 
 ### Adding Documentation
 
-1. Create new file in `./README/rules/[rule-name].md`.
+1. Create new file in `./.README/rules/[rule-name].md`.
   * Use [./.README/rules/require-valid-file-annotation.md](./.README/rules/require-valid-file-annotation.md) as a template.
   * Ensure that rule documentation document includes `<!-- assertions spaceAfterTypeColon -->` declaration.
 1. Update [./.README/README.md](/.README/README.md) to include the new rule.

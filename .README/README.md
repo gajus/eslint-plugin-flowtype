@@ -122,6 +122,12 @@ To enable this configuration use the extends property in your `.eslintrc` config
 
 See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
+### Community maintained configurations
+
+The following are third-party submitted/ maintained configurations of `eslint-plugin-flowtype`:
+
+* https://github.com/wemake-services/eslint-config-flowtype-essential
+
 ## Settings
 
 ### `onlyFilesWithFlowAnnotation`
@@ -148,14 +154,20 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
+{"gitdown": "include", "file": "./rules/newline-after-flow-annotation"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
+{"gitdown": "include", "file": "./rules/no-existential-type.md"}
+{"gitdown": "include", "file": "./rules/no-flow-fix-me-comments.md"}
+{"gitdown": "include", "file": "./rules/no-mutable-array.md"}
 {"gitdown": "include", "file": "./rules/no-primitive-constructor-types.md"}
 {"gitdown": "include", "file": "./rules/no-types-missing-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/no-unused-expressions.md"}
 {"gitdown": "include", "file": "./rules/no-weak-types.md"}
 {"gitdown": "include", "file": "./rules/object-type-delimiter.md"}
+{"gitdown": "include", "file": "./rules/require-exact-type.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
+{"gitdown": "include", "file": "./rules/require-types-at-top.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
 {"gitdown": "include", "file": "./rules/require-variable-type.md"}
 {"gitdown": "include", "file": "./rules/semi.md"}
@@ -164,6 +176,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/space-before-generic-bracket.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
 {"gitdown": "include", "file": "./rules/type-id-match.md"}
+{"gitdown": "include", "file": "./rules/type-import-style.md"}
 {"gitdown": "include", "file": "./rules/union-intersection-spacing.md"}
 {"gitdown": "include", "file": "./rules/use-flow-type.md"}
 {"gitdown": "include", "file": "./rules/valid-syntax.md"}

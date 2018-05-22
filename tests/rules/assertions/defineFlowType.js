@@ -37,6 +37,20 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     ]
   },
   {
+    code: 'declare type A = number',
+    errors: [
+      '\'A\' is not defined.'
+    ]
+  },
+  {
+    code: 'opaque type A = AType',
+    errors: [
+      // Complaining about 'A' not being defined might be an upstream bug
+      '\'A\' is not defined.',
+      '\'AType\' is not defined.'
+    ]
+  },
+  {
     code: 'function f(a: AType) {}',
     errors: [
       '\'AType\' is not defined.'
@@ -98,6 +112,12 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     ]
   },
   {
+    code: 'declare interface A {}',
+    errors: [
+      '\'A\' is not defined.'
+    ]
+  },
+  {
     code: '({ a: ({b() {}}: AType) })',
         // `AType` appears twice in `globalScope.through` as distinct
         // references, this may be a babel-eslint bug.
@@ -154,6 +174,8 @@ const ALWAYS_VALID = [
   'var a: Array',
   'var a: Array<string>',
   'type A = Array',
+  // This complains about 'A' not being defined. It might be an upstream bug
+  // 'opaque type A = Array',
   'function f(a: string) {}',
   'function f(a): string {}',
   'class C { a: string }',
