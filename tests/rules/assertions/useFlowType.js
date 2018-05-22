@@ -79,6 +79,7 @@ const VALID_WITH_USE_FLOW_TYPE = [
   },
   {
     code: 'type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()',
+
         // QualifiedTypeIdentifier -------^
     errors: [
       '\'A\' is defined but never used.'
@@ -86,6 +87,7 @@ const VALID_WITH_USE_FLOW_TYPE = [
   },
   {
     code: 'function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()',
+
         //                   ^- QualifiedTypeIdentifier
     errors: [
       '\'A\' is defined but never used.'

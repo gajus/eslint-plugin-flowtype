@@ -78,14 +78,17 @@ const generateOrderedList = (context, sort, properties) => {
     if (property.type === 'ObjectTypeSpreadProperty') {
       return ['...' + property.argument.id.name];
     } else if (property.value.type === 'ObjectTypeAnnotation') {
-      value = generateFix(property.value, context, sort); // eslint-disable-line no-use-before-define
+      // eslint-disable-next-line no-use-before-define
+      value = generateFix(property.value, context, sort);
     } else {
       value = context.getSourceCode().getText(property.value);
     }
 
     return [(variances[property.variance] || '') + name + (property.optional ? '?' : ''), value];
   })
-    .sort((first, second) => { return sort(first[0], second[0]) ? -1 : 1; })
+    .sort((first, second) => {
+      return sort(first[0], second[0]) ? -1 : 1;
+    })
     .map((item) => {
       if (item.length === 1) {
         return item[0];

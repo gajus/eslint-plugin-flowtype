@@ -43,6 +43,7 @@ export default (defaultConfig, simpleType) => {
           });
         }
       },
+
       // verbose
       GenericTypeAnnotation (node) {
         if (node.id.name === 'Array') {

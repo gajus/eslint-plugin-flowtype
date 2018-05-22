@@ -70,8 +70,6 @@ const create = (context) => {
 
     if (option === 'only-multiline' && isDangling && !isMultiLine) {
       report.dangle();
-
-      return;
     }
   };
 

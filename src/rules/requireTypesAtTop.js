@@ -16,16 +16,27 @@ const create = (context) => {
     // nodes representing type and import declarations
     const ignoredNodes = [
       // import ...
-      (node) => { return node.type === 'ImportDeclaration'; },
+      (node) => {
+        return node.type === 'ImportDeclaration';
+      },
+
       // export type Foo = ...
       // export opaque type Foo = ...
       // export type Foo from ...
       // export opaque type Foo from ...
-      (node) => { return node.type === 'ExportNamedDeclaration' && node.exportKind === 'type'; },
+      (node) => {
+        return node.type === 'ExportNamedDeclaration' && node.exportKind === 'type';
+      },
+
       // type Foo = ...
-      (node) => { return node.type === 'TypeAlias'; },
+      (node) => {
+        return node.type === 'TypeAlias';
+      },
+
       // opaque type Foo = ...
-      (node) => { return node.type === 'OpaqueType'; }
+      (node) => {
+        return node.type === 'OpaqueType';
+      }
     ];
 
     const isIgnoredNode = (node) => {

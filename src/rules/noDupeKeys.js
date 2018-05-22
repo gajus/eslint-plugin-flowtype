@@ -59,6 +59,7 @@ const create = (context) => {
 
   const checkForDuplicates = (node) => {
     const haystack = [];
+
     // filter out complex object types, like ObjectTypeSpreadProperty
     const identifierNodes = _.filter(node.properties, {type: 'ObjectTypeProperty'});
 

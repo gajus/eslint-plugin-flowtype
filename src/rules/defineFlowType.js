@@ -3,27 +3,29 @@ const schema = [];
 const create = (context) => {
   let globalScope;
 
-    // do nearly the same thing that eslint does for config globals
-    // https://github.com/eslint/eslint/blob/v2.0.0/lib/eslint.js#L118-L194
+  // do nearly the same thing that eslint does for config globals
+  // https://github.com/eslint/eslint/blob/v2.0.0/lib/eslint.js#L118-L194
   const makeDefined = (ident) => {
     let ii;
 
-        // start from the right since we're going to remove items from the array
+    // start from the right since we're going to remove items from the array
     for (ii = globalScope.through.length - 1; ii >= 0; ii--) {
       const ref = globalScope.through[ii];
 
       if (ref.identifier.name === ident.name) {
-                // use "__defineGeneric" since we don't have a reference to "escope.Variable"
-        globalScope.__defineGeneric( // eslint-disable-line no-underscore-dangle
-                    ident.name,
-                    globalScope.set,
-                    globalScope.variables
-                );
+        // use "__defineGeneric" since we don't have a reference to "escope.Variable"
+        // eslint-disable-next-line no-underscore-dangle
+        globalScope.__defineGeneric(
+          ident.name,
+          globalScope.set,
+          globalScope.variables
+        );
         const variable = globalScope.set.get(ident.name);
 
         variable.writeable = false;
-                // "through" contains all references whose definition cannot be found
-                // so we need to update references and remove the ones that were added
+
+        // "through" contains all references whose definition cannot be found
+        // so we need to update references and remove the ones that were added
         globalScope.through.splice(ii, 1);
         ref.resolved = variable;
         variable.references.push(ref);

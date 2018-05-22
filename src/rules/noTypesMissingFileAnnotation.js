@@ -32,7 +32,9 @@ const create = (context) => {
         reporter(node, 'imports');
       }
       if (node.importKind === 'value' &&
-      node.specifiers.some((specifier) => { return specifier.importKind === 'type'; })) {
+      node.specifiers.some((specifier) => {
+        return specifier.importKind === 'type';
+      })) {
         reporter(node, 'imports');
       }
     },

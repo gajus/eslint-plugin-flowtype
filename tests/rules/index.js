@@ -45,12 +45,13 @@ const reportingRules = [
 ];
 
 const parser = require.resolve('babel-eslint');
-const ajv = new Ajv({verbose: true});
+const ajv = new Ajv({
+  verbose: true
+});
 
 for (const ruleName of reportingRules) {
-    /* eslint-disable global-require */
+  // eslint-disable-next-line global-require, import/no-dynamic-require
   const assertions = require('./assertions/' + _.camelCase(ruleName));
-    /* eslint-enable global-require */
 
   if (assertions.misconfigured) {
     for (const misconfiguration of assertions.misconfigured) {

@@ -868,7 +868,6 @@ const OBJECT_TYPE_PROPERTIES = {
   ]
 };
 
-
 const OBJECT_TYPE_INDEXERS = {
   invalid: [
     // [id:key]: value
@@ -909,6 +908,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { +[a: b]: c }'
     },
+
     // [id:key]: value
     //         ^
     {
@@ -929,6 +929,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { [a: b]: c }'
     },
+
     // [id:key]: value
     //    ^    ^
     {
@@ -1005,7 +1006,6 @@ const OBJECT_TYPE_INDEXERS = {
   ]
 };
 
-
 const TYPE_CAST_EXPRESSIONS = {
   invalid: [
     {
@@ -1064,7 +1064,6 @@ const TYPE_CAST_EXPRESSIONS = {
     }
   ]
 };
-
 
 const ALL = [
   ARROW_FUNCTION_PARAMS,
@@ -1157,7 +1156,11 @@ const MISCONFIGURED = [
 ];
 
 export default {
-  invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  invalid: _.flatMap(ALL, (rules) => {
+    return rules.invalid;
+  }),
   misconfigured: MISCONFIGURED,
-  valid: _.flatMap(ALL, (rules) => { return rules.valid; })
+  valid: _.flatMap(ALL, (rules) => {
+    return rules.valid;
+  })
 };

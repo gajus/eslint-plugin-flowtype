@@ -707,6 +707,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { +[a : b] : c }'
     },
+
     // [id:key]: value
     //         ^
     {
@@ -727,6 +728,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { [a : b] : c }'
     },
+
     // [id:key]: value
     //    ^    ^
     {
@@ -915,7 +917,11 @@ const MISCONFIGURED = [
 ];
 
 export default {
-  invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
+  invalid: _.flatMap(ALL, (rules) => {
+    return rules.invalid;
+  }),
   misconfigured: MISCONFIGURED,
-  valid: _.flatMap(ALL, (rules) => { return rules.valid; })
+  valid: _.flatMap(ALL, (rules) => {
+    return rules.valid;
+  })
 };

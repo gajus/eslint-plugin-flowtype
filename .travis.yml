@@ -13,4 +13,6 @@ script:
   - npm run lint
   - npm run build
 after_success:
-  - rm -fr ./dist && npm run build && semantic-release pre && npm publish && semantic-release post
+  - export NODE_ENV=production
+  - npm run build
+  - semantic-release
