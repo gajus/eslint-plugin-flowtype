@@ -1,5 +1,6 @@
 export default {
   invalid: [
+
     // removed, as Babylon now prevents the invalid syntax
   ],
   valid: [

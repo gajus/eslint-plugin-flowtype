@@ -1,7 +1,8 @@
 import {getParameterName, quoteName} from '../../utilities';
 
 const getColon = (context, objectTypeProperty) => {
-  let tokenIndex = 1; // eslint-disable-line init-declarations
+  // eslint-disable-next-line init-declarations
+  let tokenIndex = 1;
 
   if (objectTypeProperty.optional) {
     tokenIndex++;

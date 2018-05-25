@@ -1,16 +1,18 @@
 import assert from 'assert';
-import _ from 'lodash';
+import {
+  camelCase
+} from 'lodash';
 import Ajv from 'ajv';
-import {RuleTester} from 'eslint';
-import rules from 'eslint/lib/rules';
-import validator from 'eslint/lib/config/config-validator';
+import {
+  RuleTester
+} from 'eslint';
 import plugin from './../../src';
-
-rules.importPlugin(plugin, 'flowtype');
 
 const ruleTester = new RuleTester();
 
 const reportingRules = [
+  'array-style-complex-type',
+  'array-style-simple-type',
   'boolean-style',
   'define-flow-type',
   'delimiter-dangle',
@@ -43,25 +45,29 @@ const reportingRules = [
 ];
 
 const parser = require.resolve('babel-eslint');
-const ajv = new Ajv({verbose: true});
+const ajv = new Ajv({
+  verbose: true
+});
 
 for (const ruleName of reportingRules) {
-    /* eslint-disable global-require */
-  const assertions = require('./assertions/' + _.camelCase(ruleName));
-    /* eslint-enable global-require */
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  const assertions = require('./assertions/' + camelCase(ruleName));
 
   if (assertions.misconfigured) {
     for (const misconfiguration of assertions.misconfigured) {
       RuleTester.describe(ruleName, () => {
         RuleTester.describe('misconfigured', () => {
           RuleTester.it(JSON.stringify(misconfiguration.options), () => {
-            const schema = validator.getRuleOptionsSchema('flowtype/' + ruleName);
+            const schema = plugin.rules[ruleName].schema && plugin.rules[ruleName].schema;
 
             if (!schema) {
               throw new Error('No schema.');
             }
 
-            const validateSchema = ajv.compile(schema);
+            const validateSchema = ajv.compile({
+              items: schema,
+              type: 'array'
+            });
 
             validateSchema(misconfiguration.options);
             if (!validateSchema.errors) {
@@ -75,13 +81,13 @@ for (const ruleName of reportingRules) {
     }
   }
 
-  assertions.invalid = _.map(assertions.invalid, (assertion) => {
+  assertions.invalid = assertions.invalid.map((assertion) => {
     assertion.parser = parser;
 
     return assertion;
   });
 
-  assertions.valid = _.map(assertions.valid, (assertion) => {
+  assertions.valid = assertions.valid.map((assertion) => {
     assertion.parser = parser;
 
     return assertion;

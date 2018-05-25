@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import recommended from './configs/recommended.json';
+import arrayStyleComplexType from './rules/arrayStyleComplexType';
+import arrayStyleSimpleType from './rules/arrayStyleSimpleType';
 import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
@@ -33,6 +35,8 @@ import validSyntax from './rules/validSyntax';
 import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
+  'array-style-complex-type': arrayStyleComplexType,
+  'array-style-simple-type': arrayStyleSimpleType,
   'boolean-style': booleanStyle,
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
