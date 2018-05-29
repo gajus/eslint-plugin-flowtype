@@ -49,6 +49,14 @@ const create = (context) => {
     Program (node) {
       const firstToken = node.tokens[0];
 
+      const addAnnotation = () => {
+        return (fixer) => {
+          const annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
+
+          return fixer.replaceTextRange([node.start, node.start], annotation);
+        };
+      };
+
       const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {
         return looksLikeFlowFileAnnotation(comment.value);
       });
@@ -70,7 +78,11 @@ const create = (context) => {
           context.report(potentialFlowFileAnnotation, 'Malformed Flow file annotation.');
         }
       } else if (always) {
-        context.report(node, 'Flow file annotation is missing.');
+        context.report({
+          fix: addAnnotation(),
+          message: 'Flow file annotation is missing.',
+          node
+        });
       }
     }
   };

@@ -2437,6 +2437,8 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
+This rule is autofixable with the `--fix` argument. This will autofix files by adding missing flow annotations to the top of each file. To avoid autofixing this rule per-file, you can add a `// @noflow` annotation to the top of individual files.
+
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
 #### Options
 

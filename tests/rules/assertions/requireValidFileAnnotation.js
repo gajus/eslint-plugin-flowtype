@@ -122,6 +122,33 @@ export default {
           annotationStyle: 'block'
         }
       ]
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: '// @flow\na;'
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ],
+      output: '/* @flow */\na;'
     }
   ],
   misconfigured: [
