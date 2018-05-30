@@ -1277,45 +1277,22 @@ Disallows use of the existential type (*). [See more](https://flow.org/en/docs/t
 The following patterns are considered problems:
 
 ```js
-// @flow
-import Foo from './foo';
-// Message: Expected newline after flow annotation
+type T = *;
+// Message: Unexpected use of existential type (*).
 
-// Options: ["always"]
-// @flow
-import Foo from './foo';
-// Message: Expected newline after flow annotation
+type T = U<*, *>;
+// Message: Unexpected use of existential type (*).
+// Message: Unexpected use of existential type (*).
 
-// Options: ["always-windows"]
-// @flow
-import Foo from './foo';
-// Message: Expected newline after flow annotation
-
-// Options: ["never"]
-// @flow
-
-
-// Message: Expected no newline after flow annotation
+const f: (*) => null = () => null;
+// Message: Unexpected use of existential type (*).
 ```
 
 The following patterns are not considered problems:
 
 ```js
-// Options: ["always"]
-// @flow
-
-import Foo from './foo';
-
-// Options: ["always-windows"]
-// @flow
-
-import Foo from './foo';
-
-// Options: ["never"]
-// @flow
-import Foo from './foo';
+type T = string | null
 ```
-
 
 
 
@@ -2437,8 +2414,6 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
-This rule is autofixable with the `--fix` argument. This will autofix files by adding missing flow annotations to the top of each file. To avoid autofixing this rule per-file, you can add a `// @noflow` annotation to the top of individual files.
-
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
 #### Options
 
@@ -2520,6 +2495,14 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 // @noflow
 // Message: Flow file annotation style must be `/* @noflow */`
+
+// Options: ["always"]
+a;
+// Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"block"}]
+a;
+// Message: Flow file annotation is missing.
 ```
 
 The following patterns are not considered problems:
