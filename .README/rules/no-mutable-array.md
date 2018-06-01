@@ -13,4 +13,6 @@ General reasons for using immutable data structures:
 * They always have failure atomicity
 * They are much easier to cache
 
+Note that even when this rule is enabled, initialization of a variable with an empty array is considered as valid (e.g., `const values: Array<string> = [];`). This behavior kind of imitates the behavior of Flow's [unsealed objects](https://flow.org/en/docs/types/objects/#toc-unsealed-objects), as it is assumed that empty array is intended to be mutated.
+
 <!-- assertions noMutableArray -->
