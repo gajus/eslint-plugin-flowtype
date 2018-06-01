@@ -119,6 +119,7 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   },
   {
     code: '({ a: ({b() {}}: AType) })',
+
         // `AType` appears twice in `globalScope.through` as distinct
         // references, this may be a babel-eslint bug.
     errors: [
@@ -174,6 +175,7 @@ const ALWAYS_VALID = [
   'var a: Array',
   'var a: Array<string>',
   'type A = Array',
+
   // This complains about 'A' not being defined. It might be an upstream bug
   // 'opaque type A = Array',
   'function f(a: string) {}',

@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import recommended from './configs/recommended.json';
+import arrayStyleComplexType from './rules/arrayStyleComplexType';
+import arrayStyleSimpleType from './rules/arrayStyleSimpleType';
 import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
@@ -17,6 +19,7 @@ import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
 import requireReturnType from './rules/requireReturnType';
+import requireTypesAtTop from './rules/requireTypesAtTop';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
 import semi from './rules/semi';
@@ -25,12 +28,15 @@ import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
 import typeIdMatch from './rules/typeIdMatch';
+import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
 import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
+  'array-style-complex-type': arrayStyleComplexType,
+  'array-style-simple-type': arrayStyleSimpleType,
   'boolean-style': booleanStyle,
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
@@ -48,6 +54,7 @@ const rules = {
   'require-exact-type': requireExactType,
   'require-parameter-type': requireParameterType,
   'require-return-type': requireReturnType,
+  'require-types-at-top': requireTypesAtTop,
   'require-valid-file-annotation': requireValidFileAnnotation,
   'require-variable-type': requireVariableType,
   semi,
@@ -56,6 +63,7 @@ const rules = {
   'space-before-generic-bracket': spaceBeforeGenericBracket,
   'space-before-type-colon': spaceBeforeTypeColon,
   'type-id-match': typeIdMatch,
+  'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
   'valid-syntax': validSyntax
@@ -96,6 +104,7 @@ export default {
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
     'type-id-match': 0,
+    'type-import-style': 0,
     'union-intersection-spacing': 0,
     'use-flow-type': 0,
     'valid-syntax': 0

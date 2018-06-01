@@ -11,5 +11,4 @@ Disallows use of the existential type (*). [See more](https://flow.org/en/docs/t
 ```
 
 
-<!-- assertions newlineAfterFlowAnnotation -->
-
+<!-- assertions noExistentialType -->

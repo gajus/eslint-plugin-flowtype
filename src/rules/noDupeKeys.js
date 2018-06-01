@@ -60,7 +60,10 @@ const create = (context) => {
   const checkForDuplicates = (node) => {
     const haystack = [];
 
-    _.forEach(node.properties, (identifierNode) => {
+    // filter out complex object types, like ObjectTypeSpreadProperty
+    const identifierNodes = _.filter(node.properties, {type: 'ObjectTypeProperty'});
+
+    _.forEach(identifierNodes, (identifierNode) => {
       const needle = {name: getParameterName(identifierNode, context)};
 
       if (identifierNode.value.type === 'FunctionTypeAnnotation') {

@@ -662,7 +662,7 @@ export default {
         'always',
         {
           annotateUndefined: 'always',
-          excludeMatching: [ 'constructor' ]
+          excludeMatching: ['constructor']
         }
       ]
     },
@@ -674,7 +674,7 @@ export default {
       options: [
         'always',
         {
-          excludeMatching: [ 'foo' ]
+          excludeMatching: ['foo']
         }
       ]
     },
@@ -683,7 +683,7 @@ export default {
       options: [
         'always',
         {
-          excludeMatching: [ 'foo' ]
+          excludeMatching: ['foo']
         }
       ]
     },
@@ -692,7 +692,7 @@ export default {
       options: [
         'always',
         {
-          excludeMatching: [ 'foo' ]
+          excludeMatching: ['foo']
         }
       ]
     },

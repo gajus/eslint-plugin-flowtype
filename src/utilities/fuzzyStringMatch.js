@@ -1,5 +1,5 @@
-
 import _ from 'lodash';
+
 /**
  * Creates an array of letter pairs from a given an array
  * https://github.com/d3/d3-array/blob/master/src/pairs.js

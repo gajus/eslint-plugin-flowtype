@@ -9,3 +9,4 @@ dist
 !.babelrc
 !.travis.yml
 !.README
+/package-lock.json

@@ -18,7 +18,9 @@ export default (identifierNode, context) => {
   }
 
   if (identifierNode.type === 'ObjectTypeProperty') {
-    let tokenIndex = 0; // eslint-disable-line init-declarations
+    let tokenIndex;
+
+    tokenIndex = 0;
 
     if (identifierNode.static) {
       tokenIndex++;

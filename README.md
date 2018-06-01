@@ -11,14 +11,19 @@
     * [Installation](#eslint-plugin-flowtype-installation)
     * [Configuration](#eslint-plugin-flowtype-configuration)
         * [Shareable configurations](#eslint-plugin-flowtype-configuration-shareable-configurations)
+        * [Community maintained configurations](#eslint-plugin-flowtype-configuration-community-maintained-configurations)
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
     * [Rules](#eslint-plugin-flowtype-rules)
+        * [`array-style-complex-type`](#eslint-plugin-flowtype-rules-array-style-complex-type)
+        * [`array-style-simple-type`](#eslint-plugin-flowtype-rules-array-style-simple-type)
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`newline-after-flow-annotation`](#eslint-plugin-flowtype-rules-newline-after-flow-annotation)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
         * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
         * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
@@ -29,6 +34,7 @@
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
+        * [`require-types-at-top`](#eslint-plugin-flowtype-rules-require-types-at-top)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`require-variable-type`](#eslint-plugin-flowtype-rules-require-variable-type)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
@@ -37,6 +43,7 @@
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+        * [`type-import-style`](#eslint-plugin-flowtype-rules-type-import-style)
         * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
@@ -160,6 +167,13 @@ To enable this configuration use the extends property in your `.eslintrc` config
 
 See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
+<a name="eslint-plugin-flowtype-configuration-community-maintained-configurations"></a>
+### Community maintained configurations
+
+The following are third-party submitted/ maintained configurations of `eslint-plugin-flowtype`:
+
+* https://github.com/wemake-services/eslint-config-flowtype-essential
+
 <a name="eslint-plugin-flowtype-settings"></a>
 ## Settings
 
@@ -182,6 +196,200 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 ## Rules
 
 <!-- Rules are sorted alphabetically. -->
+
+<a name="eslint-plugin-flowtype-rules-array-style-complex-type"></a>
+### <code>array-style-complex-type</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular annotation style of complex types.
+
+Type is considered complex in these cases:
+
+* [Maybe type](https://flow.org/en/docs/types/maybe/)
+* [Function type](https://flow.org/en/docs/types/functions/)
+* [Object type](https://flow.org/en/docs/types/objects/)
+* [Tuple type](https://flow.org/en/docs/types/tuples/)
+* [Union type](https://flow.org/en/docs/types/unions/)
+* [Intersection type](https://flow.org/en/docs/types/intersections/)
+
+This rule takes one argument.
+
+If it is `'verbose'` then a problem is raised when using `Type[]` instead of `Array<Type>`.
+
+If it is `'shorthand'` then a problem is raised when using `Array<Type>` instead of `Type[]`.
+
+The default value is `'verbose'`.
+
+The following patterns are considered problems:
+
+```js
+type X = (?string)[]
+// Message: Use "Array<?string>", not "(?string)[]"
+
+// Options: ["verbose"]
+type X = (?string)[]
+// Message: Use "Array<?string>", not "(?string)[]"
+
+// Options: ["shorthand"]
+type X = Array<?string>
+// Message: Use "(?string)[]", not "Array<?string>"
+
+// Options: ["shorthand"]
+type X = Array<{foo: string}>
+// Message: Use "{foo: string}[]", not "Array<{foo: string}>"
+
+type X = (string | number)[]
+// Message: Use "Array<string | number>", not "(string | number)[]"
+
+type X = (string & number)[]
+// Message: Use "Array<string & number>", not "(string & number)[]"
+
+type X = [string, number][]
+// Message: Use "Array<[string, number]>", not "[string, number][]"
+
+type X = {foo: string}[]
+// Message: Use "Array<{foo: string}>", not "{foo: string}[]"
+
+type X = (string => number)[]
+// Message: Use "Array<string => number>", not "(string => number)[]"
+
+type X = {
+    foo: string,
+    bar: number
+}[]
+// Message: Use "Array<{ foo: string, bar: number }>", not "{ foo: string, bar: number }[]"
+
+type X = {
+    foo: string,
+    bar: number,
+    quo: boolean,
+    hey: Date
+}[]
+// Message: Use "Array<Type>", not "Type[]"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Array<?string>
+
+// Options: ["verbose"]
+type X = Array<?string>
+
+// Options: ["shorthand"]
+type X = (?string)[]
+
+// Options: ["shorthand"]
+type X = Array<string>
+
+// Options: ["shorthand"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+type X = Array<?string>
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-array-style-simple-type"></a>
+### <code>array-style-simple-type</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular array type annotation style of simple types.
+
+Type is considered simple in these cases:
+
+* [Primitive types](https://flow.org/en/docs/types/primitives/)
+* [Literal types](https://flow.org/en/docs/types/literals/)
+* [Mixed type](https://flow.org/en/docs/types/mixed/)
+* [Any type](https://flow.org/en/docs/types/any/)
+* [Class type](https://flow.org/en/docs/types/classes/)
+* [Generic type](https://flow.org/en/docs/types/generics/)
+* Array type [shorthand notation](https://flow.org/en/docs/types/arrays/#toc-array-type-shorthand-syntax)
+
+This rule takes one argument.
+
+If it is `'verbose'` then a problem is raised when using `Type[]` instead of `Array<Type>`.
+
+If it is `'shorthand'` then a problem is raised when using `Array<Type>` instead of `Type[]`.
+
+The default value is `'verbose'`.
+
+The following patterns are considered problems:
+
+```js
+type X = string[]
+// Message: Use "Array<string>", not "string[]"
+
+// Options: ["verbose"]
+type X = string[]
+// Message: Use "Array<string>", not "string[]"
+
+// Options: ["shorthand"]
+type X = Array<string>
+// Message: Use "string[]", not "Array<string>"
+
+type X = Date[]
+// Message: Use "Array<Date>", not "Date[]"
+
+type X = Promise<string>[]
+// Message: Use "Array<Promise<string>>", not "Promise<string>[]"
+
+type X = $Keys<{foo: string}>[]
+// Message: Use "Array<$Keys<{foo: string}>>", not "$Keys<{foo: string}>[]"
+
+type X = any[]
+// Message: Use "Array<any>", not "any[]"
+
+type X = mixed[]
+// Message: Use "Array<mixed>", not "mixed[]"
+
+type X = void[]
+// Message: Use "Array<void>", not "void[]"
+
+type X = null[]
+// Message: Use "Array<null>", not "null[]"
+
+type X = string[][]
+// Message: Use "Array<string[]>", not "string[][]"
+// Message: Use "Array<string>", not "string[]"
+
+type X = Promise<{
+    foo: string,
+    bar: number
+}>[]
+// Message: Use "Array<Promise<{ foo: string, bar: number }>>", not "Promise<{ foo: string, bar: number }>[]"
+
+type X = Promise<{
+    foo: string,
+    bar: number,
+    quo: boolean
+}>[]
+// Message: Use "Array<Type>", not "Type[]"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Array<string>
+
+// Options: ["verbose"]
+type X = Array<string>
+
+// Options: ["shorthand"]
+type X = string[]
+
+type X = Array<Array<string>>
+
+// Options: ["verbose"]
+type X = (?string)[]
+
+// Options: ["verbose"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+type X = string[]
+```
+
+
 
 <a name="eslint-plugin-flowtype-rules-boolean-style"></a>
 ### <code>boolean-style</code>
@@ -884,6 +1092,76 @@ type X = Promise< (foo), bar, (((baz))) >
 
 
 
+<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation"></a>
+### <code>newline-after-flow-annotation</code>
+
+This rule requires an empty line after the Flow annotation.
+
+<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation-options"></a>
+#### Options
+
+The rule has a string option:
+
+* `"always"` (default): Enforces that `@flow` annotations be followed by an empty line, separated by newline (LF)
+* `"always-windows"`: Identical to "always", but will use a CRLF when autofixing
+* `"never"`: Enforces that `@flow` annotations are not followed by empty lines
+
+```js
+{
+  "rules": {
+    "flowtype/newline-after-flow-annotation": [
+      2,
+      "always"
+    ]
+  }
+}
+```
+
+
+The following patterns are considered problems:
+
+```js
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["always"]
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["always-windows"]
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["never"]
+// @flow
+
+
+// Message: Expected no newline after flow annotation
+```
+
+The following patterns are not considered problems:
+
+```js
+// Options: ["always"]
+// @flow
+
+import Foo from './foo';
+
+// Options: ["always-windows"]
+// @flow
+
+import Foo from './foo';
+
+// Options: ["never"]
+// @flow
+import Foo from './foo';
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-no-dupe-keys"></a>
 ### <code>no-dupe-keys</code>
 
@@ -978,6 +1256,42 @@ type f = { get(key: { a: 1 }): string, get(key: { a: 2 }): string}
 var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
 
 var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-existential-type"></a>
+### <code>no-existential-type</code>
+
+Disallows use of the existential type (*). [See more](https://flow.org/en/docs/types/utilities/#toc-existential-type)
+
+```js
+{
+  "rules": {
+    "flowtype/no-existential-type": 2
+  }
+}
+```
+
+
+The following patterns are considered problems:
+
+```js
+type T = *;
+// Message: Unexpected use of existential type (*).
+
+type T = U<*, *>;
+// Message: Unexpected use of existential type (*).
+// Message: Unexpected use of existential type (*).
+
+const f: (*) => null = () => null;
+// Message: Unexpected use of existential type (*).
+```
+
+The following patterns are not considered problems:
+
+```js
+type T = string | null
 ```
 
 
@@ -2076,6 +2390,23 @@ function bar() { return 42; }
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-types-at-top"></a>
+### <code>require-types-at-top</code>
+
+Requires all type declarations to be at the top of the file, after any import declarations.
+
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"`
+* `"always"`
+
+The default value is `"always"`.
+
+<!-- assertions require-types-at-top -->
+
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation"></a>
 ### <code>require-valid-file-annotation</code>
 
@@ -2164,6 +2495,14 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 // @noflow
 // Message: Flow file annotation style must be `/* @noflow */`
+
+// Options: ["always"]
+a;
+// Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"block"}]
+a;
+// Message: Flow file annotation is missing.
 ```
 
 The following patterns are not considered problems:
@@ -3910,6 +4249,66 @@ type foo = {};
 
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type foo = {};
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-type-import-style"></a>
+### <code>type-import-style</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular style for type imports:
+
+```
+// 'identifier' style
+import {type T, type U, type V} from '...';
+
+// 'declaration' style
+import type {T, U, V} from '...';
+```
+
+The rule has a string option:
+
+* `"identifier"` (default): Enforces that type imports are all in the
+  'identifier' style.
+* `"declaration"`: Enforces that type imports are all in the 'declaration'
+  style.
+
+The following patterns are considered problems:
+
+```js
+import type {A, B} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type {A, B} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type {A, B as C} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type A from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["declaration"]
+import {type A, type B} from 'a';
+// Message: Unexpected type import
+// Message: Unexpected type import
+```
+
+The following patterns are not considered problems:
+
+```js
+import {type A, type B} from 'a';
+
+// Options: ["identifier"]
+import {type A, type B} from 'a';
+
+// Options: ["declaration"]
+import type {A, B} from 'a';
 ```
 
 
