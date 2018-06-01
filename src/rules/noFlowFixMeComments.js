@@ -31,8 +31,7 @@ const create = (context) => {
   };
 
   return {
-    BlockComment: handleComment,
-    GenericTypeAnnotation: (node) => {
+    GenericTypeAnnotation (node) {
       if (isIdentifier(node.id, /\$FlowFixMe/)) {
         context.report({
           message,
@@ -40,7 +39,16 @@ const create = (context) => {
         });
       }
     },
-    LineComment: handleComment
+
+    Program () {
+      context
+        .getSourceCode()
+        .getAllComments()
+        .filter((comment) => {
+          return comment.type === 'Block' || comment.type === 'Line';
+        })
+        .forEach(handleComment);
+    }
   };
 };
 
