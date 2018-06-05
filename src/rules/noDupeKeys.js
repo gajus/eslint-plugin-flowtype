@@ -65,6 +65,10 @@ const create = (context) => {
 
     _.forEach(identifierNodes, (identifierNode) => {
       const needle = {name: getParameterName(identifierNode, context)};
+      // avoids error for types constructed from spreading others like: type Props = { ...A, ...B }
+      if (identifierNode.type === 'ObjectTypeSpreadProperty') {
+        return
+      }
 
       if (identifierNode.value.type === 'FunctionTypeAnnotation') {
         needle.args = _.map(identifierNode.value.params, (param) => {
