@@ -24,8 +24,18 @@ const create = (context) => {
   }
 
   const requireProperPunctuation = (node) => {
-    const tokens = context.getSourceCode().getTokens(node);
-    const lastToken = tokens[tokens.length - 1];
+    const sourceCode = context.getSourceCode();
+    const tokens = sourceCode.getTokens(node);
+    let lastToken;
+
+    lastToken = tokens[tokens.length - 1];
+    if (lastToken.type !== 'Punctuator' ||
+        !(lastToken.value === SEMICOLON.char ||
+          lastToken.value === COMMA.char)) {
+      const parentTokens = sourceCode.getTokens(node.parent);
+
+      lastToken = parentTokens[parentTokens.indexOf(lastToken) + 1];
+    }
 
     if (lastToken.type === 'Punctuator') {
       if (lastToken.value === BAD.char) {

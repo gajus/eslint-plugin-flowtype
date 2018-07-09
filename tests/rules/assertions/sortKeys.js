@@ -231,6 +231,46 @@ export default {
           },
         }
       `
+    },
+    {
+      code: `
+        type FooType = {
+          +c: number,
+          -b: number,
+          a: number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "b".'}
+      ],
+      output: `
+        type FooType = {
+          a: number,
+          -b: number,
+          +c: number,
+        }
+      `
+    },
+    {
+      code: `
+        type FooType = {|
+          +c: number,
+          -b: number,
+          a: number,
+        |}
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "b".'}
+      ],
+      output: `
+        type FooType = {|
+          a: number,
+          -b: number,
+          +c: number,
+        |}
+      `
     }
     /* eslint-enable no-restricted-syntax */
   ],

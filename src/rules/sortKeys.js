@@ -70,6 +70,16 @@ const variances = {
   plus: '+'
 };
 
+const getVariance = (node) => {
+  if (_.isString(node.variance)) {
+    return variances[node.variance] || '';
+  } else if (_.get(node, 'variance.type') === 'Variance') {
+    return variances[node.variance.kind] || '';
+  } else {
+    return '';
+  }
+};
+
 const generateOrderedList = (context, sort, properties) => {
   return properties.map((property) => {
     const name = getParameterName(property, context);
@@ -84,7 +94,7 @@ const generateOrderedList = (context, sort, properties) => {
       value = context.getSourceCode().getText(property.value);
     }
 
-    return [(variances[property.variance] || '') + name + (property.optional ? '?' : ''), value];
+    return [name, getVariance(property) + name + (property.optional ? '?' : ''), value];
   })
     .sort((first, second) => {
       return sort(first[0], second[0]) ? -1 : 1;
@@ -94,7 +104,7 @@ const generateOrderedList = (context, sort, properties) => {
         return item[0];
       }
 
-      return item[0] + ': ' + item[1];
+      return item[1] + ': ' + item[2];
     });
 };
 
