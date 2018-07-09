@@ -1337,6 +1337,8 @@ General reasons for using immutable data structures:
 * They always have failure atomicity
 * They are much easier to cache
 
+Note that initialization of a variable with an empty array is considered valid (e.g., `const values: Array<string> = [];`). This behavior resembles the behavior of Flow's [unsealed objects](https://flow.org/en/docs/types/objects/#toc-unsealed-objects), as it is assumed that empty array is intended to be mutated.
+
 The following patterns are considered problems:
 
 ```js
@@ -1345,12 +1347,27 @@ type X = Array<string>
 
 type X = string[]
 // Message: Use "$ReadOnlyArray" instead of array shorthand notation
+
+const values: Array<Array<string>> = [];
+// Message: Use "$ReadOnlyArray" instead of "Array"
+
+let values: Array<Array<string>>;
+// Message: Use "$ReadOnlyArray" instead of "Array"
+// Message: Use "$ReadOnlyArray" instead of "Array"
 ```
 
 The following patterns are not considered problems:
 
 ```js
 type X = $ReadOnlyArray<string>
+
+const values: Array<$ReadOnlyArray<string>> = [];
+
+const values: $ReadOnlyArray<string>[] = [];
+
+const values: Array<$ReadOnlyArray<string>> = new Array();
+
+const values: Array<$ReadOnlyArray<string>> = Array();
 ```
 
 
@@ -2864,6 +2881,26 @@ type FooType = { a: number, c: number, b: string }
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          +c: number,
+          -b: number,
+          a: number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "a" should be before "b".
+
+
+        type FooType = {|
+          +c: number,
+          -b: number,
+          a: number,
+        |}
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
 
 The following patterns are not considered problems:
@@ -3321,6 +3358,18 @@ const x = ({}:  {})
 // Options: ["always"]
 ((x):  (string))
 // Message: There must be 1 space after type cast colon.
+
+// Options: ["always"]
+const x:number = 7;
+// Message: There must be a space after const type annotation colon.
+
+// Options: ["always"]
+let x:number = 42;
+// Message: There must be a space after let type annotation colon.
+
+// Options: ["always"]
+var x:number = 42;
+// Message: There must be a space after var type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -3602,6 +3651,15 @@ const x = ({}: {})
 
 // Options: ["always"]
 ((x): (string))
+
+// Options: ["always"]
+const x: number = 7;
+
+// Options: ["always"]
+let x: number = 42;
+
+// Options: ["always"]
+var x: number = 42;
 ```
 
 
@@ -3976,6 +4034,18 @@ const x = ({}  :{})
 // Options: ["always"]
 ((x)  : string)
 // Message: There must be 1 space before type cast colon.
+
+// Options: ["always"]
+const x:number = 7;
+// Message: There must be a space before const type annotation colon.
+
+// Options: ["always"]
+let x:number = 42;
+// Message: There must be a space before let type annotation colon.
+
+// Options: ["always"]
+var x:number = 42;
+// Message: There must be a space before var type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -4201,6 +4271,15 @@ const x = ({} :{})
 
 // Options: ["always"]
 ((x) : string)
+
+// Options: ["always"]
+const x :number = 7;
+
+// Options: ["always"]
+let x :number = 42;
+
+// Options: ["always"]
+var x :number = 42;
 ```
 
 
