@@ -30,6 +30,29 @@ export default {
         {message: 'Unexpected type import'}
       ],
       options: ['declaration']
+    },
+    {
+      code: 'import {A, type B} from \'a\';',
+      errors: [
+        {message: 'Unexpected type import'}
+      ],
+      options: ['declaration']
+    },
+    {
+      code: 'import {type A, type B} from \'a\';',
+      errors: [
+        {message: 'Unexpected type import'}
+      ],
+      options: ['prefer-declaration'],
+      output: 'import type {A, B} from \'a\';'
+    },
+    {
+      code: 'import {type A as A2, type B} from \'a\';',
+      errors: [
+        {message: 'Unexpected type import'}
+      ],
+      options: ['prefer-declaration'],
+      output: 'import type {A as A2, B} from \'a\';'
     }
   ],
   valid: [
@@ -43,6 +66,22 @@ export default {
     {
       code: 'import type {A, B} from \'a\';',
       options: ['declaration']
+    },
+    {
+      code: 'import {A, type B} from \'a\';',
+      options: ['prefer-declaration']
+    },
+    {
+      code: 'import A, {type B} from \'a\';',
+      options: ['prefer-declaration']
+    },
+    {
+      code: 'import {A, type B as B2} from \'a\';',
+      options: ['prefer-declaration']
+    },
+    {
+      code: 'import type A, * as B from \'a\';',
+      options: ['prefer-declaration']
     }
   ]
 };
