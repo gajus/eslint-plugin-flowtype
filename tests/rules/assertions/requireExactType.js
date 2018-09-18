@@ -70,6 +70,9 @@ export default {
       code: 'type foo = {| bar: string |};'
     },
     {
+      code: 'type foo = { [key: string]: string };'
+    },
+    {
       code: 'type foo = number;'
     },
     {
