@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {
-    isFlowFileAnnotation,
-    fuzzyStringMatch
-} from './../utilities';
+  isFlowFileAnnotation,
+  fuzzyStringMatch
+} from '../utilities';
 
 const defaults = {
   annotationStyle: 'none'

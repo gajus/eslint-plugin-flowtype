@@ -1,4 +1,4 @@
-import isFlowFileAnnotation from './isFlowFileAnnotation.js';
+import isFlowFileAnnotation from './isFlowFileAnnotation';
 /* eslint-disable flowtype/require-valid-file-annotation */
 /**
  * Checks whether a file has an @flow or @noflow annotation.

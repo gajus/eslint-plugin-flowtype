@@ -1,8 +1,8 @@
 import {
-    RuleTester
+  RuleTester
 } from 'eslint';
 import noUnusedVarsRule from 'eslint/lib/rules/no-unused-vars';
-import useFlowType from './../../../src/rules/useFlowType';
+import useFlowType from '../../../src/rules/useFlowType';
 
 const VALID_WITH_USE_FLOW_TYPE = [
   {
@@ -31,64 +31,6 @@ const VALID_WITH_USE_FLOW_TYPE = [
   },
   {
     code: 'declare var A: Y',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'import type A from "a"; (function<T: A>(): T {})',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type A from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'import type {A} from "a"; (function<T: A>(): T {})',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type {A} from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: '(function<T: A>(): T {}); import type {a as A} from "a"',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'type A = {}; function x<Y: A>(i: Y) { i }; x()',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'function x<Y: A>(i: Y) { i }; type A = {}; x()',
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()',
-
-        // QualifiedTypeIdentifier -------^
-    errors: [
-      '\'A\' is defined but never used.'
-    ]
-  },
-  {
-    code: 'function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()',
-
-        //                   ^- QualifiedTypeIdentifier
     errors: [
       '\'A\' is defined but never used.'
     ]
@@ -189,4 +131,3 @@ export default {
     })
   ]
 };
-

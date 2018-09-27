@@ -1,7 +1,7 @@
 import _ from 'lodash/';
 import {
   getParameterName
-} from './../utilities';
+} from '../utilities';
 
 const schema = [];
 
