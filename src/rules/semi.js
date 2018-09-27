@@ -54,6 +54,7 @@ const create = (context) => {
   };
 
   return {
+    OpaqueType: checkForSemicolon,
     TypeAlias: checkForSemicolon
   };
 };
