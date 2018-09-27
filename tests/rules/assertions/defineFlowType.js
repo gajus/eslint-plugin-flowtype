@@ -1,5 +1,5 @@
 import {
-    RuleTester
+  RuleTester
 } from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
 
@@ -45,7 +45,7 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
     code: 'opaque type A = AType',
     errors: [
-      // Complaining about 'A' not being defined might be an upstream bug
+      // Complaining about 'A' is fixed in https://github.com/babel/babel-eslint/pull/696
       '\'A\' is not defined.',
       '\'AType\' is not defined.'
     ]
@@ -106,12 +106,6 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     ]
   },
   {
-    code: 'interface AType {}',
-    errors: [
-      '\'AType\' is not defined.'
-    ]
-  },
-  {
     code: 'declare interface A {}',
     errors: [
       '\'A\' is not defined.'
@@ -120,8 +114,8 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
     code: '({ a: ({b() {}}: AType) })',
 
-        // `AType` appears twice in `globalScope.through` as distinct
-        // references, this may be a babel-eslint bug.
+    // `AType` appears twice in `globalScope.through` as distinct
+    // references, this may be a babel-eslint bug.
     errors: [
       '\'AType\' is not defined.',
       '\'AType\' is not defined.'
@@ -129,13 +123,6 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   },
   {
     code: 'type X = {Y<AType>(): BType}',
-    errors: [
-      '\'AType\' is not defined.',
-      '\'BType\' is not defined.'
-    ]
-  },
-  {
-    code: 'interface AType<BType> {}',
     errors: [
       '\'AType\' is not defined.',
       '\'BType\' is not defined.'
@@ -196,7 +183,7 @@ const ALWAYS_VALID = [
     parser: 'babel-eslint'
   });
 
-  ruleTester.run('no-under must not trigger an error in these cases', noUndefRule, {
+  ruleTester.run('no-undef must not trigger an error in these cases', noUndefRule, {
     invalid: [],
     valid: ALWAYS_VALID
   });
