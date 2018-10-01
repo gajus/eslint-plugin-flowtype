@@ -3,11 +3,13 @@ import _ from 'lodash';
 const schema = [];
 
 const create = (context) => {
+  const regex = /^(Boolean|Number|String)$/;
+
   return {
     GenericTypeAnnotation: (node) => {
       const name = _.get(node, 'id.name');
 
-      if (RegExp(/^(Boolean|Number|String)$/).test(name)) {
+      if (regex.test(name)) {
         context.report({
           data: {
             name

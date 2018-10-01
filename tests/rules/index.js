@@ -6,7 +6,7 @@ import Ajv from 'ajv';
 import {
   RuleTester
 } from 'eslint';
-import plugin from './../../src';
+import plugin from '../../src';
 
 const ruleTester = new RuleTester();
 

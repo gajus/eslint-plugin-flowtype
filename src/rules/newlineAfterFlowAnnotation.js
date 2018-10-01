@@ -36,9 +36,9 @@ const create = (context) => {
           context.report({
             fix: (fixer) => {
               return fixer.insertTextAfter(
-              potentialFlowFileAnnotation,
-              newline
-            );
+                potentialFlowFileAnnotation,
+                newline
+              );
             },
             message: 'Expected newline after flow annotation',
             node

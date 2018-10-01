@@ -1,4 +1,4 @@
-import {spacingFixers} from './../utilities';
+import {spacingFixers} from '../utilities';
 
 const schema = [
   {
@@ -16,9 +16,9 @@ const create = (context) => {
     GenericTypeAnnotation (node) {
       const types = node.typeParameters;
 
-            // Promise<foo>
-            // ^^^^^^^^^^^^ GenericTypeAnnotation (with typeParameters)
-            //         ^^^  GenericTypeAnnotation (without typeParameters)
+      // Promise<foo>
+      // ^^^^^^^^^^^^ GenericTypeAnnotation (with typeParameters)
+      //         ^^^  GenericTypeAnnotation (without typeParameters)
       if (!types) {
         return;
       }

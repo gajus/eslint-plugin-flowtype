@@ -39,9 +39,7 @@ const create = (context) => {
               });
               const source = node.source.value;
 
-              return fixer.replaceText(node,
-                'import {' + imports.join(', ') + '} from \'' + source + '\';'
-              );
+              return fixer.replaceText(node, 'import {' + imports.join(', ') + '} from \'' + source + '\';');
             },
             message: 'Unexpected "import type"',
             node
@@ -56,4 +54,3 @@ export default {
   create,
   schema
 };
-

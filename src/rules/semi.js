@@ -11,7 +11,8 @@ const create = (context) => {
 
   const report = (node, missing) => {
     const lastToken = sourceCode.getLastToken(node);
-    let fix, message;
+    let fix;
+    let message;
     let {loc} = lastToken;
 
     if (missing) {
@@ -54,6 +55,7 @@ const create = (context) => {
   };
 
   return {
+    OpaqueType: checkForSemicolon,
     TypeAlias: checkForSemicolon
   };
 };

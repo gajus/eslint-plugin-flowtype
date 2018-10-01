@@ -1,6 +1,6 @@
 export default {
   invalid: [
-        // Never
+    // Never
 
     {
       code: 'type X = Promise< string>',
@@ -21,21 +21,21 @@ export default {
     {
       code: 'type X = Promise< string >',
       errors: [
-                {message: 'There must be no space at start of "Promise" generic type annotation'},
-                {message: 'There must be no space at end of "Promise" generic type annotation'}
+        {message: 'There must be no space at start of "Promise" generic type annotation'},
+        {message: 'There must be no space at end of "Promise" generic type annotation'}
       ],
       output: 'type X = Promise<string>'
     },
     {
       code: 'type X = Promise< (foo), bar, (((baz))) >',
       errors: [
-                {message: 'There must be no space at start of "Promise" generic type annotation'},
-                {message: 'There must be no space at end of "Promise" generic type annotation'}
+        {message: 'There must be no space at start of "Promise" generic type annotation'},
+        {message: 'There must be no space at end of "Promise" generic type annotation'}
       ],
       output: 'type X = Promise<(foo), bar, (((baz)))>'
     },
 
-        // Always (given no space)
+    // Always (given no space)
 
     {
       code: 'type X = Promise<string >',
@@ -52,8 +52,8 @@ export default {
     {
       code: 'type X = Promise<string>',
       errors: [
-                {message: 'There must be a space at start of "Promise" generic type annotation'},
-                {message: 'There must be a space at end of "Promise" generic type annotation'}
+        {message: 'There must be a space at start of "Promise" generic type annotation'},
+        {message: 'There must be a space at end of "Promise" generic type annotation'}
       ],
       options: ['always'],
       output: 'type X = Promise< string >'
@@ -61,14 +61,14 @@ export default {
     {
       code: 'type X = Promise<(foo), bar, (((baz)))>',
       errors: [
-                {message: 'There must be a space at start of "Promise" generic type annotation'},
-                {message: 'There must be a space at end of "Promise" generic type annotation'}
+        {message: 'There must be a space at start of "Promise" generic type annotation'},
+        {message: 'There must be a space at end of "Promise" generic type annotation'}
       ],
       options: ['always'],
       output: 'type X = Promise< (foo), bar, (((baz))) >'
     },
 
-        // Always (given too many spaces)
+    // Always (given too many spaces)
 
     {
       code: 'type X = FooBar<  string >',
@@ -85,8 +85,8 @@ export default {
     {
       code: 'type X = Promise<  (foo), bar, (((baz)))  >',
       errors: [
-                {message: 'There must be one space at start of "Promise" generic type annotation'},
-                {message: 'There must be one space at end of "Promise" generic type annotation'}
+        {message: 'There must be one space at start of "Promise" generic type annotation'},
+        {message: 'There must be one space at end of "Promise" generic type annotation'}
       ],
       options: ['always'],
       output: 'type X = Promise< (foo), bar, (((baz))) >'
@@ -124,13 +124,13 @@ export default {
     }
   ],
   valid: [
-        // Never
+    // Never
 
-        {code: 'type X = Promise<string>'},
-        {code: 'type X = Promise<(string)>'},
-        {code: 'type X = Promise<(foo), bar, (((baz)))>'},
+    {code: 'type X = Promise<string>'},
+    {code: 'type X = Promise<(string)>'},
+    {code: 'type X = Promise<(foo), bar, (((baz)))>'},
 
-        // Always
+    // Always
 
     {
       code: 'type X = Promise< string >',
