@@ -1568,19 +1568,20 @@ The following patterns are not considered problems:
 <a name="eslint-plugin-flowtype-rules-no-weak-types"></a>
 ### <code>no-weak-types</code>
 
-Warns against weak type annotations *any*, *Object* and *Function*.
+Warns against weak type annotations *any*, *mixed*, *Object* and *Function*.
 These types can cause flow to silently skip over portions of your code,
 which would have otherwise caused type errors.
 
 This rule optionally takes one argument, an object to configure which type warnings to enable. By default, all of the
 warnings are enabled. e.g. to disable the `any` warning (allowing it to exist in your code), while continuing to warn
-about `Object` and `Function`:
+about `mixed`, `Object` and `Function`:
 
 ```js
 {
     "rules": {
         "flowtype/no-weak-types": [2, {
             "any": false,
+            "mixed: true,
             "Object": true,
             "Function": true
         }]
@@ -1609,6 +1610,15 @@ function foo(thing): Promise<any> {}
 
 function foo(thing): Promise<Promise<any>> {}
 // Message: Unexpected use of weak type "any"
+
+function foo(thing): mixed {}
+// Message: Unexpected use of weak type "mixed"
+
+function foo(thing): Promise<mixed> {}
+// Message: Unexpected use of weak type "mixed"
+
+function foo(thing): Promise<Promise<mixed>> {}
+// Message: Unexpected use of weak type "mixed"
 
 function foo(thing): Object {}
 // Message: Unexpected use of weak type "Object"
@@ -1731,6 +1741,9 @@ class Foo { props: string }
 
 // Options: [{"Object":false,"any":false}]
 type X = any; type Y = Object
+
+// Options: [{"Object":false,"mixed":false}]
+type X = mixed; type Y = Object
 
 // Options: [{"Function":false}]
 type X = Function
