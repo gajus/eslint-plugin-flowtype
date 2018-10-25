@@ -26,6 +26,7 @@ const reportingRules = [
   'no-unused-expressions',
   'no-weak-types',
   'object-type-delimiter',
+  'require-compound-type-alias',
   'require-exact-type',
   'require-parameter-type',
   'require-return-type',
