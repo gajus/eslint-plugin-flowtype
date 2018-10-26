@@ -31,6 +31,7 @@
         * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
+        * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
@@ -495,9 +496,6 @@ class C { a: AType.a.b }
 class C implements AType {}
 // Additional rules: {"no-undef":2}
 
-interface AType {}
-// Additional rules: {"no-undef":2}
-
 declare interface A {}
 // Additional rules: {"no-undef":2}
 
@@ -505,9 +503,6 @@ declare interface A {}
 // Additional rules: {"no-undef":2}
 
 type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2}
-
-interface AType<BType> {}
 // Additional rules: {"no-undef":2}
 
 var a: AType
@@ -558,9 +553,6 @@ class C { a: AType.a.b }
 class C implements AType {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
-interface AType {}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
 declare interface A {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
@@ -568,9 +560,6 @@ declare interface A {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-interface AType<BType> {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 ```
 
@@ -1303,7 +1292,7 @@ Disallows `$FlowFixMe` comment suppressions.
 
 This is especially useful as a warning to ensure instances of `$FlowFixMe` in your codebase get fixed over time.
 
-<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options"></a>
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options-1"></a>
 #### Options
 
 This rule takes an optional RegExp that comments a text RegExp that makes the supression valid.
@@ -1568,20 +1557,19 @@ The following patterns are not considered problems:
 <a name="eslint-plugin-flowtype-rules-no-weak-types"></a>
 ### <code>no-weak-types</code>
 
-Warns against weak type annotations *any*, *mixed*, *Object* and *Function*.
+Warns against weak type annotations *any*, *Object* and *Function*.
 These types can cause flow to silently skip over portions of your code,
 which would have otherwise caused type errors.
 
 This rule optionally takes one argument, an object to configure which type warnings to enable. By default, all of the
 warnings are enabled. e.g. to disable the `any` warning (allowing it to exist in your code), while continuing to warn
-about `mixed`, `Object` and `Function`:
+about `Object` and `Function`:
 
 ```js
 {
     "rules": {
         "flowtype/no-weak-types": [2, {
             "any": false,
-            "mixed: true,
             "Object": true,
             "Function": true
         }]
@@ -1703,9 +1691,13 @@ type X = any; type Y = Function; type Z = Object
 // Message: Unexpected use of weak type "any"
 // Message: Unexpected use of weak type "Object"
 
-// Options: [{"Object":false,"any":false}]
+// Options: [{"any":false,"Object":false}]
 type X = any; type Y = Function; type Z = Object
 // Message: Unexpected use of weak type "Function"
+
+// Options: [{"Function":false,"Object":false}]
+type X = mixed; type Y = Function; type Z = Object
+// Message: Unexpected use of weak type "mixed"
 ```
 
 The following patterns are not considered problems:
@@ -1739,10 +1731,10 @@ var foo: string
 
 class Foo { props: string }
 
-// Options: [{"Object":false,"any":false}]
+// Options: [{"any":false,"Object":false}]
 type X = any; type Y = Object
 
-// Options: [{"Object":false,"mixed":false}]
+// Options: [{"mixed":false,"Object":false}]
 type X = mixed; type Y = Object
 
 // Options: [{"Function":false}]
@@ -1883,12 +1875,77 @@ type Foo = { a: Foo, b: Bar }
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias"></a>
+### <code>require-compound-type-alias</code>
+
+Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy&paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
+
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-2"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"`
+* `"always"`
+
+The default value is `"always"`.
+
+The following patterns are considered problems:
+
+```js
+function foo(bar: "A" | "B") {}
+// Message: All union types must be declared with named type alias.
+
+const foo: "A" | "B" = "A";
+// Message: All union types must be declared with named type alias.
+
+type Foo = { bar: "A" | "B" };
+// Message: All union types must be declared with named type alias.
+
+function foo(bar: { n: number } | { s: string }) {}
+// Message: All union types must be declared with named type alias.
+
+function foo(bar: { n: number } & { s: string }) {}
+// Message: All intersection types must be declared with named type alias.
+
+const foo: { n: number } & { s: string } = { n: 0, s: "" };
+// Message: All intersection types must be declared with named type alias.
+
+type Foo = { bar: { n: number } & { s: string } };
+// Message: All intersection types must be declared with named type alias.
+
+function foo(bar: { n: number } & { s: string }) {}
+// Message: All intersection types must be declared with named type alias.
+```
+
+The following patterns are not considered problems:
+
+```js
+type Foo = "A" | "B";
+
+type Bar = "A" | "B"; function foo(bar: Bar) {}
+
+type Foo = { disjoint: "A", n: number } | { disjoint: "B", s: string };
+
+type Foo = { n: number } & { s: string };
+
+type Bar = { n: number } & { s: string }; function foo(bar: Bar) {}
+
+// Options: ["never"]
+function foo(bar: "A" | "B") {}
+
+// Options: ["never"]
+function foo(bar: { n: number } & { s: string }) {}
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-exact-type"></a>
 ### <code>require-exact-type</code>
 
 This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
 
-<a name="eslint-plugin-flowtype-rules-require-exact-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options-3"></a>
 #### Options
 
 The rule has one string option:
@@ -1949,6 +2006,8 @@ type foo = {| |};
 
 type foo = {| bar: string |};
 
+type foo = { [key: string]: string };
+
 type foo = number;
 
 // Options: ["always"]
@@ -1977,7 +2036,7 @@ type foo = number;
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-4"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -2115,7 +2174,7 @@ The following patterns are not considered problems:
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-5"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -2425,7 +2484,7 @@ function bar() { return 42; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-6"></a>
 #### Options
 
 The rule has a string option:
@@ -2444,7 +2503,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-7"></a>
 #### Options
 
 The rule has a string option:
@@ -2587,7 +2646,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-8"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -2695,6 +2754,10 @@ type FooType = {}
 // Options: ["never"]
 type FooType = {};
 // Message: Extra semicolon.
+
+// Options: []
+opaque type FooType = {}
+// Message: Missing semicolon.
 ```
 
 The following patterns are not considered problems:
@@ -2720,6 +2783,8 @@ type FooType = {}
 
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = {}
+
+opaque type FooType = {};
 ```
 
 
@@ -2733,7 +2798,7 @@ Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-9"></a>
 #### Options
 
 The first option specifies sort order.
@@ -2958,7 +3023,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-10"></a>
 #### Options
 
 This rule has a string argument.
@@ -4302,7 +4367,7 @@ var x :number = 42;
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-11"></a>
 #### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
@@ -4581,33 +4646,6 @@ declare module A { declare var a: Y }
 // Additional rules: {"no-unused-vars":1}
 
 declare var A: Y
-// Additional rules: {"no-unused-vars":1}
-
-import type A from "a"; (function<T: A>(): T {})
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type A from "a"
-// Additional rules: {"no-unused-vars":1}
-
-import type {A} from "a"; (function<T: A>(): T {})
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type {A} from "a"
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type {a as A} from "a"
-// Additional rules: {"no-unused-vars":1}
-
-type A = {}; function x<Y: A>(i: Y) { i }; x()
-// Additional rules: {"no-unused-vars":1}
-
-function x<Y: A>(i: Y) { i }; type A = {}; x()
-// Additional rules: {"no-unused-vars":1}
-
-type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()
-// Additional rules: {"no-unused-vars":1}
-
-function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 // Additional rules: {"no-unused-vars":1}
 ```
 
