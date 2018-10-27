@@ -55,6 +55,7 @@
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run documentation-add-assertions",
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json",
+    "tests-docs-check": "babel-node ./bin/testsAndDocsCheck",
     "lint": "eslint ./src ./tests",
     "test": "mocha --compilers js:babel-register ./tests/rules/index.js"
   },
