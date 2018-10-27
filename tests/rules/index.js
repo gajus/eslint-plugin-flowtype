@@ -19,6 +19,7 @@ const reportingRules = [
   'generic-spacing',
   'newline-after-flow-annotation',
   'no-dupe-keys',
+  'no-existential-type',
   'no-flow-fix-me-comments',
   'no-mutable-array',
   'no-primitive-constructor-types',
