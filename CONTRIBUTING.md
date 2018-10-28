@@ -6,6 +6,7 @@
 
 When making a commit, the following Pre-Commit hooks run:
 
+* tests and docs checks
 * tests
 * lint
 * commit message validation (see "Commit Messages" below)

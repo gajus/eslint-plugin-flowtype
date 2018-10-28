@@ -1308,7 +1308,44 @@ This rule takes an optional RegExp that comments a text RegExp that makes the su
 }
 ```
 
-<!-- assertions no-flow-fix-me-comments -->
+The following patterns are considered problems:
+
+```js
+// $FlowFixMe I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe TODO abc 47 I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+
+// $$FlowFixMeProps I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMeProps I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+```
+
+The following patterns are not considered problems:
+
+```js
+const text = 'HELLO';
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe TODO 48
+const text = 'HELLO';
+```
+
+
 
 <a name="eslint-plugin-flowtype-rules-no-mutable-array"></a>
 ### <code>no-mutable-array</code>
@@ -2494,7 +2531,65 @@ The rule has a string option:
 
 The default value is `"always"`.
 
-<!-- assertions require-types-at-top -->
+The following patterns are considered problems:
+
+```js
+const foo = 3;
+type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+opaque type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+export type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+export opaque type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+type Foo = number | string;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+import bar from "./bar";
+const foo = 3;
+type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+```
+
+The following patterns are not considered problems:
+
+```js
+type Foo = number;
+const foo = 3;
+
+opaque type Foo = number;
+const foo = 3;
+
+export type Foo = number;
+const foo = 3;
+
+export opaque type Foo = number;
+const foo = 3;
+
+type Foo = number;
+const foo = 3;
+
+import bar from "./bar";
+type Foo = number;
+
+type Foo = number;
+import bar from "./bar";
+
+// Options: ["never"]
+const foo = 3;
+type Foo = number;
+```
+
+
 
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation"></a>
 ### <code>require-valid-file-annotation</code>
@@ -4657,4 +4752,14 @@ declare var A: Y
 **Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
 Checks for simple Flow syntax errors.
+
+The following patterns are not considered problems:
+
+```js
+function x(foo: string = "1") {}
+
+function x(foo: Type = bar()) {}
+```
+
+
 

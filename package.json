@@ -43,7 +43,7 @@
   "husky": {
     "hooks": {
       "post-commit": "npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify",
-      "pre-commit": "npm run lint && npm run test && npm run build && npm run format-json"
+      "pre-commit": "npm run tests-docs-check && npm run lint && npm run test && npm run build && npm run format-json"
     }
   },
   "repository": {
@@ -55,6 +55,7 @@
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run documentation-add-assertions",
     "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
     "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json",
+    "tests-docs-check": "babel-node ./bin/testsAndDocsCheck",
     "lint": "eslint ./src ./tests",
     "test": "mocha --compilers js:babel-register ./tests/rules/index.js"
   },

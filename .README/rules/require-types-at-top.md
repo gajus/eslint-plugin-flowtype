@@ -11,4 +11,4 @@ The rule has a string option:
 
 The default value is `"always"`.
 
-<!-- assertions require-types-at-top -->
+<!-- assertions requireTypesAtTop -->
