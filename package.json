@@ -31,7 +31,6 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify",
       "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json"
     }
   },
