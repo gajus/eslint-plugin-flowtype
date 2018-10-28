@@ -15,5 +15,6 @@ script:
 after_success:
   - export NODE_ENV=production
   - npm run build
+  - "npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify"
   - semantic-release
-  - npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify && git push
+  - git push
