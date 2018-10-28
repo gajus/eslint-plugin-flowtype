@@ -55,7 +55,7 @@
     "check-docs": "babel-node ./src/bin/checkDocs",
     "check-tests": "babel-node ./src/bin/checkTests",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run documentation-add-assertions",
-    "documentation-add-assertions": "babel-node ./bin/addAssertions",
+    "documentation-add-assertions": "babel-node ./src/bin/addAssertions",
     "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json",
     "lint": "eslint ./src ./tests",
     "test": "mocha --compilers js:babel-register ./tests/rules/index.js"
