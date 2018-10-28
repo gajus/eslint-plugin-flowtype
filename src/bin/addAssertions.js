@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 /**
- * This script is used to inline assertions into the README.md documents.
+ * @file This script is used to inline assertions into the README.md documents.
  */
 
 import path from 'path';
