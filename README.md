@@ -1636,15 +1636,6 @@ function foo(thing): Promise<any> {}
 function foo(thing): Promise<Promise<any>> {}
 // Message: Unexpected use of weak type "any"
 
-function foo(thing): mixed {}
-// Message: Unexpected use of weak type "mixed"
-
-function foo(thing): Promise<mixed> {}
-// Message: Unexpected use of weak type "mixed"
-
-function foo(thing): Promise<Promise<mixed>> {}
-// Message: Unexpected use of weak type "mixed"
-
 function foo(thing): Object {}
 // Message: Unexpected use of weak type "Object"
 
@@ -1731,10 +1722,6 @@ type X = any; type Y = Function; type Z = Object
 // Options: [{"any":false,"Object":false}]
 type X = any; type Y = Function; type Z = Object
 // Message: Unexpected use of weak type "Function"
-
-// Options: [{"Function":false,"Object":false}]
-type X = mixed; type Y = Function; type Z = Object
-// Message: Unexpected use of weak type "mixed"
 ```
 
 The following patterns are not considered problems:
@@ -1770,9 +1757,6 @@ class Foo { props: string }
 
 // Options: [{"any":false,"Object":false}]
 type X = any; type Y = Object
-
-// Options: [{"mixed":false,"Object":false}]
-type X = mixed; type Y = Object
 
 // Options: [{"Function":false}]
 type X = Function
