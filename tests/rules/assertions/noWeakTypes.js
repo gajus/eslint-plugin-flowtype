@@ -19,24 +19,6 @@ export default {
       }]
     },
     {
-      code: 'function foo(thing): mixed {}',
-      errors: [{
-        message: 'Unexpected use of weak type "mixed"'
-      }]
-    },
-    {
-      code: 'function foo(thing): Promise<mixed> {}',
-      errors: [{
-        message: 'Unexpected use of weak type "mixed"'
-      }]
-    },
-    {
-      code: 'function foo(thing): Promise<Promise<mixed>> {}',
-      errors: [{
-        message: 'Unexpected use of weak type "mixed"'
-      }]
-    },
-    {
       code: 'function foo(thing): Object {}',
       errors: [{
         message: 'Unexpected use of weak type "Object"'
@@ -209,14 +191,6 @@ export default {
         any: false,
         Object: false
       }]
-    },
-    {
-      code: 'type X = mixed; type Y = Function; type Z = Object',
-      errors: [{message: 'Unexpected use of weak type "mixed"'}],
-      options: [{
-        Function: false,
-        Object: false
-      }]
     }
   ],
   misconfigured: [
@@ -239,9 +213,6 @@ export default {
                 type: 'boolean'
               },
               Function: {
-                type: 'boolean'
-              },
-              mixed: {
                 type: 'boolean'
               },
               Object: {
@@ -323,13 +294,6 @@ export default {
       code: 'type X = any; type Y = Object',
       options: [{
         any: false,
-        Object: false
-      }]
-    },
-    {
-      code: 'type X = mixed; type Y = Object',
-      options: [{
-        mixed: false,
         Object: false
       }]
     },

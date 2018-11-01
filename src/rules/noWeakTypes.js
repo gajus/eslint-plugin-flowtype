@@ -10,9 +10,6 @@ const schema = [
       Function: {
         type: 'boolean'
       },
-      mixed: {
-        type: 'boolean'
-      },
       Object: {
         type: 'boolean'
       }
@@ -43,7 +40,6 @@ const genericTypeEvaluator = (context, {checkFunction, checkObject}) => {
 
 const create = (context) => {
   const checkAny = _.get(context, 'options[0].any', true) === true;
-  const checkMixed = _.get(context, 'options[0].mixed', true) === true;
   const checkFunction = _.get(context, 'options[0].Function', true) === true;
   const checkObject = _.get(context, 'options[0].Object', true) === true;
 
@@ -51,9 +47,6 @@ const create = (context) => {
 
   if (checkAny) {
     checks.AnyTypeAnnotation = reportWeakType(context, 'any');
-  }
-  if (checkMixed) {
-    checks.MixedTypeAnnotation = reportWeakType(context, 'mixed');
   }
 
   if (checkFunction || checkObject) {
