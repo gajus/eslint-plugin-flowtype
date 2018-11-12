@@ -3,10 +3,11 @@ coverage
 dist
 *.log
 .*
+!.babelrc
+!.editorconfig
 !.eslintrc
 !.gitignore
 !.npmignore
-!.babelrc
-!.travis.yml
 !.README
+!.travis.yml
 /package-lock.json
