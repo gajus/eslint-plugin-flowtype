@@ -63,6 +63,9 @@
 npm install eslint --save-dev
 npm install babel-eslint --save-dev
 npm install eslint-plugin-flowtype --save-dev
+
+# Or all at once:
+npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
 <a name="eslint-plugin-flowtype-configuration"></a>
