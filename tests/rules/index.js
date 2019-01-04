@@ -26,6 +26,7 @@ const reportingRules = [
   'no-types-missing-file-annotation',
   'no-unused-expressions',
   'no-weak-types',
+  'no-mixed',
   'object-type-delimiter',
   'require-compound-type-alias',
   'require-exact-type',

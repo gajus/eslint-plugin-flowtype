@@ -29,6 +29,7 @@
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
         * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
+        * [`no-mixed`](#eslint-plugin-flowtype-rules-no-mixed)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
@@ -94,6 +95,7 @@ npm install eslint-plugin-flowtype --save-dev
       2,
       "never"
     ],
+    "flowtype/no-mixed": 2,
     "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
@@ -1589,6 +1591,92 @@ The following patterns are not considered problems:
 (foo: number)
 ```
 
+<a name="eslint-plugin-flowtype-rules-no-mixed"></a>
+### <code>no-mixed</code>
+
+Warns against "mixed" type annotations.
+These types are not strict enough and could often be made more specific.
+
+The following patterns are considered problems:
+
+```js
+function foo(thing): mixed {}
+// Message: Unexpected use of mixed type
+
+function foo(thing): Promise<mixed> {}
+// Message: Unexpected use of mixed type
+
+function foo(thing): Promise<Promise<mixed>> {}
+// Message: Unexpected use of mixed type
+
+(foo: mixed) => {}
+// Message: Unexpected use of mixed type
+
+(foo?: mixed) => {}
+// Message: Unexpected use of mixed type
+
+(foo: { a: mixed }) => {}
+// Message: Unexpected use of mixed type
+
+(foo: mixed[]) => {}
+// Message: Unexpected use of mixed type
+
+type Foo = mixed
+// Message: Unexpected use of mixed type
+
+type Foo = { a: mixed }
+// Message: Unexpected use of mixed type
+
+function foo(thing: mixed) {}
+// Message: Unexpected use of mixed type
+
+class Foo { props: mixed }
+// Message: Unexpected use of mixed type
+
+var foo: mixed
+// Message: Unexpected use of mixed type
+```
+
+The following patterns are not considered problems:
+
+```js
+function foo(thing): string {}
+
+function foo(thing): Promise<string> {}
+
+function foo(thing): Promise<Promise<string>> {}
+
+(foo?: string) => {}
+
+(foo: ?string) => {}
+
+(foo: { a: string }) => {}
+
+(foo: { a: ?string }) => {}
+
+(foo: string[]) => {}
+
+type Foo = string
+
+type Foo = { a: string }
+
+type Foo = { (a: string): string }
+
+function foo(thing: string) {}
+
+var foo: string
+
+class Foo { props: string }
+
+// Options: [{"any":false,"Object":false}]
+type X = any; type Y = Object
+
+// Options: [{"Function":false}]
+type X = Function
+
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+function foo(thing): Function {}
+```
 
 
 <a name="eslint-plugin-flowtype-rules-no-weak-types"></a>
