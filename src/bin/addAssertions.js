@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 /**
- * This script is used to inline assertions into the README.md documents.
+ * @file This script is used to inline assertions into the README.md documents.
  */
 
 import path from 'path';
@@ -34,7 +36,7 @@ const formatCodeSnippet = (setup) => {
 };
 
 const getAssertions = () => {
-  const assertionFiles = glob.sync(path.resolve(__dirname, './../tests/rules/assertions/*.js'));
+  const assertionFiles = glob.sync(path.resolve(__dirname, '../../tests/rules/assertions/*.js'));
 
   const assertionNames = _.map(assertionFiles, (filePath) => {
     return path.basename(filePath, '.js');
@@ -54,7 +56,7 @@ const getAssertions = () => {
 };
 
 const updateDocuments = (assertions) => {
-  const readmeDocumentPath = path.join(__dirname, './../README.md');
+  const readmeDocumentPath = path.join(__dirname, '../../README.md');
   let documentBody;
 
   documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
