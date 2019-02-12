@@ -10,10 +10,10 @@ const create = (context) => {
 
   return {
     TypeAlias (node) {
-      const {id: {name}, right: {type, exact}} = node;
+      const {id: {name}, right: {type, exact, indexers}} = node;
 
       if (type === 'ObjectTypeAnnotation') {
-        if (always && !exact) {
+        if (always && !exact && indexers.length === 0) {
           context.report({
             data: {name},
             message: 'Type identifier \'{{name}}\' must be exact.',

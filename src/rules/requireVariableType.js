@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {
-    isFlowFile,
-    quoteName
-} from './../utilities';
+  isFlowFile,
+  quoteName
+} from '../utilities';
 
 const schema = [
   {

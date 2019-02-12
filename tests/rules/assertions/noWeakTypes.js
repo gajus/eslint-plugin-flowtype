@@ -188,8 +188,8 @@ export default {
       code: 'type X = any; type Y = Function; type Z = Object',
       errors: [{message: 'Unexpected use of weak type "Function"'}],
       options: [{
-        Object: false,
-        any: false
+        any: false,
+        Object: false
       }]
     }
   ],
@@ -209,13 +209,13 @@ export default {
           parentSchema: {
             additionalProperties: false,
             properties: {
+              any: {
+                type: 'boolean'
+              },
               Function: {
                 type: 'boolean'
               },
               Object: {
-                type: 'boolean'
-              },
-              any: {
                 type: 'boolean'
               }
             },
@@ -293,8 +293,8 @@ export default {
     {
       code: 'type X = any; type Y = Object',
       options: [{
-        Object: false,
-        any: false
+        any: false,
+        Object: false
       }]
     },
     {

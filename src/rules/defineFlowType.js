@@ -57,9 +57,8 @@ const create = (context) => {
         makeDefined(qid);
       }
     },
-    InterfaceDeclaration (node) {
-      makeDefined(node.id);
-    },
+
+    // Can be removed once https://github.com/babel/babel-eslint/pull/696 is published
     OpaqueType (node) {
       if (node.id.type === 'Identifier') {
         makeDefined(node.id);
