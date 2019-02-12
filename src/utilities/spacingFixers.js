@@ -22,6 +22,18 @@ export const addSpaceAfter = (node) => {
   };
 };
 
+export const replaceWithSpaceBefore = (node, spaces) => {
+  return (fixer) => {
+    return fixer.replaceTextRange([node.start - spaces, node.start], ' ');
+  };
+};
+
+export const replaceWithSpaceAfter = (node, spaces) => {
+  return (fixer) => {
+    return fixer.replaceTextRange([node.end, node.end + spaces], ' ');
+  };
+};
+
 export const stripSpaces = (direction, node, spaces) => {
   if (direction === 'before') {
     return stripSpacesBefore(node, spaces);
@@ -35,5 +47,13 @@ export const addSpace = (direction, node) => {
     return addSpaceBefore(node);
   } else {
     return addSpaceAfter(node);
+  }
+};
+
+export const replaceWithSpace = (direction, node, spaces) => {
+  if (direction === 'before') {
+    return replaceWithSpaceBefore(node, spaces);
+  } else {
+    return replaceWithSpaceAfter(node, spaces);
   }
 };

@@ -85,6 +85,37 @@ export default {
       output: 'declare class Foo { static (): Foo, }'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'period',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'semicolon',
+              'comma'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'semicolon',
+              'comma'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'semicolon',
+            'comma'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['period']
+    }
+  ],
   valid: [
     {
       code: 'type Foo = { a: Foo; b: Bar }',

@@ -70,7 +70,17 @@ const ARROW_FUNCTION_PARAMS = {
     },
     {
       code: '(foo:\n  { a: string, b: number }) => {}',
-      errors: [{message: 'There must be 1 space after "foo" parameter type annotation colon.'}],
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
+      output: '(foo: { a: string, b: number }) => {}'
+    },
+    {
+      code: '(foo:\n{ a: string, b: number }) => {}',
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
+      output: '(foo: { a: string, b: number }) => {}'
+    },
+    {
+      code: '(foo: \n{ a: string, b: number }) => {}',
+      errors: [{message: 'There must not be a line break after "foo" parameter type annotation colon.'}],
       output: '(foo: { a: string, b: number }) => {}'
     }
   ],
@@ -858,7 +868,6 @@ const OBJECT_TYPE_PROPERTIES = {
   ]
 };
 
-
 const OBJECT_TYPE_INDEXERS = {
   invalid: [
     // [id:key]: value
@@ -899,6 +908,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { +[a: b]: c }'
     },
+
     // [id:key]: value
     //         ^
     {
@@ -919,6 +929,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { [a: b]: c }'
     },
+
     // [id:key]: value
     //    ^    ^
     {
@@ -995,7 +1006,6 @@ const OBJECT_TYPE_INDEXERS = {
   ]
 };
 
-
 const TYPE_CAST_EXPRESSIONS = {
   invalid: [
     {
@@ -1055,6 +1065,42 @@ const TYPE_CAST_EXPRESSIONS = {
   ]
 };
 
+const VARIABLE_EXPRESSIONS = {
+  invalid: [
+    {
+      code: 'const x:number = 7;',
+      errors: [{message: 'There must be a space after const type annotation colon.'}],
+      options: ['always'],
+      output: 'const x: number = 7;'
+    },
+    {
+      code: 'let x:number = 42;',
+      errors: [{message: 'There must be a space after let type annotation colon.'}],
+      options: ['always'],
+      output: 'let x: number = 42;'
+    },
+    {
+      code: 'var x:number = 42;',
+      errors: [{message: 'There must be a space after var type annotation colon.'}],
+      options: ['always'],
+      output: 'var x: number = 42;'
+    }
+  ],
+  valid: [
+    {
+      code: 'const x: number = 7;',
+      options: ['always']
+    },
+    {
+      code: 'let x: number = 42;',
+      options: ['always']
+    },
+    {
+      code: 'var x: number = 42;',
+      options: ['always']
+    }
+  ]
+};
 
 const ALL = [
   ARROW_FUNCTION_PARAMS,
@@ -1065,10 +1111,94 @@ const ALL = [
   CLASS_PROPERTIES,
   OBJECT_TYPE_PROPERTIES,
   OBJECT_TYPE_INDEXERS,
-  TYPE_CAST_EXPRESSIONS
+  TYPE_CAST_EXPRESSIONS,
+  VARIABLE_EXPRESSIONS
+];
+
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'from time to time',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+      }
+    ],
+    options: ['from time to time']
+  },
+  {
+    errors: [
+      {
+        data: {
+          allowEmoji: true
+        },
+        dataPath: '[1]',
+        keyword: 'additionalProperties',
+        message: 'should NOT have additional properties',
+        params: {
+          additionalProperty: 'allowEmoji'
+        },
+        parentSchema: {
+          additionalProperties: false,
+          properties: {
+            allowLineBreak: {
+              type: 'boolean'
+            }
+          },
+          type: 'object'
+        },
+        schema: false,
+        schemaPath: '#/items/1/additionalProperties'
+      }
+    ],
+    options: ['always', {allowEmoji: true}]
+  },
+  {
+    errors: [
+      {
+        data: 'why not?',
+        dataPath: '[1].allowLineBreak',
+        keyword: 'type',
+        message: 'should be boolean',
+        params: {
+          type: 'boolean'
+        },
+        parentSchema: {
+          type: 'boolean'
+        },
+        schema: 'boolean',
+        schemaPath: '#/items/1/properties/allowLineBreak/type'
+      }
+    ],
+    options: ['always', {allowLineBreak: 'why not?'}]
+  }
 ];
 
 export default {
-  invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
-  valid: _.flatMap(ALL, (rules) => { return rules.valid; })
+  invalid: _.flatMap(ALL, (rules) => {
+    return rules.invalid;
+  }),
+  misconfigured: MISCONFIGURED,
+  valid: _.flatMap(ALL, (rules) => {
+    return rules.valid;
+  })
 };

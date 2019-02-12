@@ -122,6 +122,96 @@ export default {
           annotationStyle: 'block'
         }
       ]
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: '// @flow\na;'
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ],
+      output: '/* @flow */\na;'
+    }
+  ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'sometimes',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['sometimes']
+    },
+    {
+      errors: [
+        {
+          data: 'upside-down',
+          dataPath: '[1].annotationStyle',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'none',
+              'line',
+              'block'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'none',
+              'line',
+              'block'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'none',
+            'line',
+            'block'
+          ],
+          schemaPath: '#/items/1/properties/annotationStyle/enum'
+        }
+      ],
+      options: ['never', {annotationStyle: 'upside-down'}]
     }
   ],
   valid: [
@@ -168,6 +258,19 @@ export default {
       ]
     },
     {
+      code: '// @function',
+      options: [
+        'never',
+        {
+          annotationStyle: 'none'
+        }
+      ]
+    },
+    {
+      code: '// @fixable',
+      options: ['never']
+    },
+    {
       code: '/* @flow */',
       options: [
         'always',
@@ -178,5 +281,3 @@ export default {
     }
   ]
 };
-
-

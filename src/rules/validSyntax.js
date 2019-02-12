@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import {
-    getParameterName,
-    iterateFunctionNodes,
-    quoteName
-} from './../utilities';
+  getParameterName,
+  iterateFunctionNodes,
+  quoteName
+} from '../utilities';
+
+const schema = [];
 
 const create = iterateFunctionNodes((context) => {
   return (functionNode) => {
@@ -30,6 +32,7 @@ export default {
   create,
   meta: {
     deprecated: true
-  }
+  },
+  schema
 };
 

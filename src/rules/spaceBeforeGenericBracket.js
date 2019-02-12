@@ -1,15 +1,22 @@
 import {spacingFixers} from '../utilities';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const never = (context.options[0] || 'never') === 'never';
 
   return {
     GenericTypeAnnotation (node) {
       const types = node.typeParameters;
 
-            // Promise<foo>
-            // ^^^^^^^^^^^^ GenericTypeAnnotation (with typeParameters)
-            //         ^^^  GenericTypeAnnotation (without typeParameters)
+      // Promise<foo>
+      // ^^^^^^^^^^^^ GenericTypeAnnotation (with typeParameters)
+      //         ^^^  GenericTypeAnnotation (without typeParameters)
       if (!types) {
         return;
       }
@@ -44,4 +51,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

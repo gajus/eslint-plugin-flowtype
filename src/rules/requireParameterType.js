@@ -1,11 +1,26 @@
 import _ from 'lodash';
 import {
-    getParameterName,
-    iterateFunctionNodes,
-    quoteName
-} from './../utilities';
+  getParameterName,
+  iterateFunctionNodes,
+  quoteName
+} from '../utilities';
 
-export default iterateFunctionNodes((context) => {
+const schema = [
+  {
+    additionalProperties: false,
+    properties: {
+      excludeArrowFunctions: {
+        enum: [false, true, 'expressionsOnly']
+      },
+      excludeParameterMatch: {
+        type: 'string'
+      }
+    },
+    type: 'object'
+  }
+];
+
+const create = iterateFunctionNodes((context) => {
   const skipArrows = _.get(context, 'options[0].excludeArrowFunctions');
   const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
 
@@ -50,3 +65,8 @@ export default iterateFunctionNodes((context) => {
     });
   };
 });
+
+export default {
+  create,
+  schema
+};

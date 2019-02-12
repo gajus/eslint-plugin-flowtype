@@ -20,6 +20,27 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 7,
+          dataPath: '[0]',
+          keyword: 'type',
+          message: 'should be string',
+          params: {
+            type: 'string'
+          },
+          parentSchema: {
+            type: 'string'
+          },
+          schema: 'string',
+          schemaPath: '#/items/0/type'
+        }
+      ],
+      options: [7]
+    }
+  ],
   valid: [
     {
       code: 'type FooType = {};'

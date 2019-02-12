@@ -1,57 +1,64 @@
 {
-  "name": "eslint-plugin-flowtype",
+  "author": {
+    "email": "gajus@gajus.com",
+    "name": "Gajus Kuizinas",
+    "url": "http://gajus.com"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
   "description": "Flowtype linting rules for ESLint.",
-  "version": "2.29.1",
-  "main": "./dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gajus/eslint-plugin-flowtype"
+  "devDependencies": {
+    "ajv": "^6.9.1",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-canonical": "^16.1.0",
+    "gitdown": "^2.5.7",
+    "glob": "^7.1.3",
+    "husky": "^1.3.1",
+    "jsonlint": "^1.6.3",
+    "mocha": "^5.2.0",
+    "semantic-release": "^15.13.3"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "husky": {
+    "hooks": {
+      "post-commit": "npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify",
+      "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json"
+    }
   },
   "keywords": [
     "eslint",
     "plugin",
     "flowtype"
   ],
-  "author": {
-    "name": "Gajus Kuizinas",
-    "email": "gajus@gajus.com",
-    "url": "http://gajus.com"
-  },
   "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "eslint-plugin-flowtype",
   "peerDependencies": {
     "eslint": ">=2.0.0"
   },
-  "dependencies": {
-    "lodash": "^4.15.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/eslint-plugin-flowtype"
   },
   "scripts": {
+    "build": "rm -fr ./dist && babel ./src --out-dir ./dist --copy-files",
+    "check-docs": "babel-node ./src/bin/checkDocs",
+    "check-tests": "babel-node ./src/bin/checkTests",
+    "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run documentation-add-assertions",
+    "documentation-add-assertions": "babel-node ./src/bin/addAssertions",
+    "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json",
     "lint": "eslint ./src ./tests",
-    "test": "mocha --compilers js:babel-register ./tests/rules/index.js",
-    "build": "babel ./src --out-dir ./dist --copy-files",
-    "documentation-add-assertions": "babel-node ./bin/readmeAssertions",
-    "documentation": "gitdown ./.README/README.md --output-file ./README.md; npm run documentation-add-assertions",
-    "create-index": "create-index ./src --update-index",
-    "precommit": "npm run lint && npm run test && npm run format-json",
-    "commitmsg": "conventional-changelog-lint -e",
-    "format-json": "jsonlint --sort-keys --in-place --indent '  ' ./src/configs/recommended.json && echo '' >> ./src/configs/recommended.json"
+    "test": "mocha --compilers js:babel-register ./tests/rules/index.js"
   },
-  "devDependencies": {
-    "babel-cli": "^6.14.0",
-    "babel-eslint": "^6.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.14.0",
-    "chai": "^3.5.0",
-    "conventional-changelog-lint": "^1.0.1",
-    "create-index": "^0.1.3",
-    "eslint": "^3.4.0",
-    "eslint-config-canonical": "1.8.1",
-    "gitdown": "^2.5.0",
-    "husky": "^0.11.7",
-    "jsonlint": "^1.6.2",
-    "mocha": "^3.0.2",
-    "standard-version": "^2.4.0",
-    "travis-after-all": "^1.4.4"
-  }
+  "version": "2.30.1"
 }

@@ -1,16 +1,17 @@
-
 import _ from 'lodash';
-/**
- * Creates an array of letter pairs from a given an array
- * https://github.com/d3/d3-array/blob/master/src/pairs.js
- *
- * @param {any} array
- * @returns array
- */
-/* eslint-disable */
-function d3ArrayPairs (array) {
-  var i = 0, n = array.length - 1, p = array[0], pairs = new Array(n < 0 ? 0 : n);
-  while (i < n) pairs[i] = [p, p = array[++i]];
+
+// Creates an array of letter pairs from a given array
+// origin: https://github.com/d3/d3-array/blob/master/src/pairs.js
+const arrayPairs = (array) => {
+  let ii = 0;
+  const length = array.length - 1;
+  let letter = array[0];
+  const pairs = new Array(length < 0 ? 0 : length);
+
+  while (ii < length) {
+    pairs[ii] = [letter, letter = array[++ii]];
+  }
+
   return pairs;
 };
 /* eslint-enable */
@@ -20,8 +21,8 @@ export default (needle, haystack, weight = 0.5) => {
 
   const stringSimilarity = (str1, str2) => {
     if (str1.length > 0 && str2.length > 0) {
-      const pairs1 = d3ArrayPairs(str1);
-      const pairs2 = d3ArrayPairs(str2);
+      const pairs1 = arrayPairs(str1);
+      const pairs2 = arrayPairs(str2);
       const unionLen = pairs1.length + pairs2.length;
       let hitCount;
 

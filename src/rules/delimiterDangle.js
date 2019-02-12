@@ -1,6 +1,13 @@
 import _ from 'lodash';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'always-multiline', 'only-multiline', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const option = context.options[0] || 'never';
   const sourceCode = context.getSourceCode();
 
@@ -63,8 +70,6 @@ export default (context) => {
 
     if (option === 'only-multiline' && isDangling && !isMultiLine) {
       report.dangle();
-
-      return;
     }
   };
 
@@ -102,4 +107,9 @@ export default (context) => {
       evaluate(node, _.last(node.types));
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

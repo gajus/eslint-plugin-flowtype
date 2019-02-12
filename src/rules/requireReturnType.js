@@ -1,6 +1,38 @@
 import _ from 'lodash';
 
-export default (context) => {
+const schema = [
+  {
+    enum: ['always'],
+    type: 'string'
+  },
+  {
+    additionalProperties: false,
+    properties: {
+      annotateUndefined: {
+        enum: ['always', 'never'],
+        type: 'string'
+      },
+      excludeArrowFunctions: {
+        enum: [false, true, 'expressionsOnly']
+      },
+      excludeMatching: {
+        items: {
+          type: 'string'
+        },
+        type: 'array'
+      },
+      includeOnlyMatching: {
+        items: {
+          type: 'string'
+        },
+        type: 'array'
+      }
+    },
+    type: 'object'
+  }
+];
+
+const create = (context) => {
   const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
   const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
@@ -27,16 +59,33 @@ export default (context) => {
   const getIsReturnTypeAnnotationUndefined = (targetNode) => {
     const isReturnTypeAnnotationLiteralUndefined = _.get(targetNode, 'functionNode.returnType.typeAnnotation.id.name') === 'undefined' && _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'GenericTypeAnnotation';
     const isReturnTypeAnnotationVoid = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'VoidTypeAnnotation';
+    const isAsyncReturnTypeAnnotationVoid = _.get(targetNode, 'functionNode.async') &&
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.id.name') === 'Promise' && (
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].type') === 'VoidTypeAnnotation' ||
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].id.name') === 'undefined' &&
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].type') === 'GenericTypeAnnotation'
+    );
 
-    return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid;
+    return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid || isAsyncReturnTypeAnnotationVoid;
   };
 
   const shouldFilterNode = (functionNode) => {
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
-    const identiferName = _.get(functionNode, isArrow ? 'parent.id.name' : 'id.name');
+    const isMethod = functionNode.parent && functionNode.parent.type === 'MethodDefinition';
+    const isProperty = functionNode.parent && functionNode.parent.type === 'ClassProperty';
+    let selector;
+
+    if (isMethod || isProperty) {
+      selector = 'parent.key.name';
+    } else if (isArrow) {
+      selector = 'parent.id.name';
+    } else {
+      selector = 'id.name';
+    }
+    const identifierName = _.get(functionNode, selector);
 
     const checkRegExp = (regex) => {
-      return regex.test(identiferName);
+      return regex.test(identifierName);
     };
 
     if (excludeMatching.length && _.some(excludeMatching, checkRegExp)) {
@@ -50,6 +99,7 @@ export default (context) => {
     return false;
   };
 
+  // eslint-disable-next-line complexity
   const evaluateFunction = (functionNode) => {
     const targetNode = targetNodes.pop();
 
@@ -59,11 +109,10 @@ export default (context) => {
 
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isArrowFunctionExpression = functionNode.expression;
-    const hasImplicitReturnType = functionNode.async || functionNode.generator;
-    const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
+    const isFunctionReturnUndefined = !isArrowFunctionExpression && !(functionNode.generator && !functionNode.async) && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
     const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
-    if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+    if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow || shouldFilterNode(functionNode)) {
       return;
     }
 
@@ -73,10 +122,8 @@ export default (context) => {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
       context.report(functionNode, 'Must annotate undefined return type.');
-    } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) {
-      if (annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
-        context.report(functionNode, 'Missing return type annotation.');
-      }
+    } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
+      context.report(functionNode, 'Missing return type annotation.');
     }
   };
 
@@ -101,4 +148,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

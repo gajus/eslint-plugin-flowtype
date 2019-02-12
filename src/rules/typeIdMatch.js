@@ -1,10 +1,10 @@
-export const schema = [
+const schema = [
   {
     type: 'string'
   }
 ];
 
-export default (context) => {
+const create = (context) => {
   const pattern = new RegExp(context.options[0] || '^([A-Z][a-z0-9]*)+Type$');
 
   return {
@@ -19,4 +19,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

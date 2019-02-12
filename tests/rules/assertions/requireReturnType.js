@@ -201,7 +201,7 @@ export default {
       code: 'async () => {}',
       errors: [
         {
-          message: 'Missing return type annotation.'
+          message: 'Must annotate undefined return type.'
         }
       ],
       options: [
@@ -215,7 +215,7 @@ export default {
       code: 'async function x() {}',
       errors: [
         {
-          message: 'Missing return type annotation.'
+          message: 'Must annotate undefined return type.'
         }
       ],
       options: [
@@ -226,14 +226,69 @@ export default {
       ]
     },
     {
-      code: 'async () => { return; }',
+      code: 'async (): Promise<void> => { return; }',
+      errors: [
+        {
+          message: 'Must not annotate undefined return type.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'never'
+        }
+      ]
+    },
+    {
+      code: 'async (): Promise<undefined> => { return; }',
+      errors: [
+        {
+          message: 'Must not annotate undefined return type.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'never'
+        }
+      ]
+    },
+    {
+      code: 'class Test { constructor() { } }',
+      errors: [
+        {
+          message: 'Must annotate undefined return type.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always'
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo() { return 42; } }',
       errors: [
         {
           message: 'Missing return type annotation.'
         }
-      ],
-      options: [
-        'always'
+      ]
+    },
+    {
+      code: 'class Test { foo = () => { return 42; } }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => 42; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
       ]
     },
     {
@@ -306,6 +361,185 @@ export default {
           ]
         }
       ]
+    }
+  ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'never',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['never']
+    },
+    {
+      errors: [
+        {
+          data: {
+            excludeOtherStuff: true
+          },
+          dataPath: '[1]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'excludeOtherStuff'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              annotateUndefined: {
+                enum: [
+                  'always',
+                  'never'
+                ],
+                type: 'string'
+              },
+              excludeArrowFunctions: {
+                enum: [
+                  false,
+                  true,
+                  'expressionsOnly'
+                ]
+              },
+              excludeMatching: {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              },
+              includeOnlyMatching: {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/1/additionalProperties'
+        }
+      ],
+      options: ['always', {excludeOtherStuff: true}]
+    },
+    {
+      errors: [
+        {
+          data: 'often',
+          dataPath: '[1].annotateUndefined',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/1/properties/annotateUndefined/enum'
+        }
+      ],
+      options: ['always', {annotateUndefined: 'often'}]
+    },
+    {
+      errors: [
+        {
+          data: 'everything',
+          dataPath: '[1].excludeArrowFunctions',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          schema: [
+            false,
+            true,
+            'expressionsOnly'
+          ],
+          schemaPath: '#/items/1/properties/excludeArrowFunctions/enum'
+        }
+      ],
+      options: ['always', {excludeArrowFunctions: 'everything'}]
+    },
+    {
+      errors: [
+        {
+          data: '^foo',
+          dataPath: '[1].excludeMatching',
+          keyword: 'type',
+          message: 'should be array',
+          params: {
+            type: 'array'
+          },
+          parentSchema: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          },
+          schema: 'array',
+          schemaPath: '#/items/1/properties/excludeMatching/type'
+        }
+      ],
+      options: ['always', {excludeMatching: '^foo'}]
+    },
+    {
+      errors: [
+        {
+          data: false,
+          dataPath: '[1].includeOnlyMatching[0]',
+          keyword: 'type',
+          message: 'should be string',
+          params: {
+            type: 'string'
+          },
+          parentSchema: {
+            type: 'string'
+          },
+          schema: 'string',
+          schemaPath: '#/items/1/properties/includeOnlyMatching/items/type'
+        }
+      ],
+      options: ['always', {includeOnlyMatching: [false]}]
     }
   ],
   valid: [
@@ -444,6 +678,52 @@ export default {
           annotateUndefined: 'always'
         }
       ]
+    },
+    {
+      code: 'class Test { constructor() { } }',
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always',
+          excludeMatching: ['constructor']
+        }
+      ]
+    },
+    {
+      code: 'class Test { constructor() { } }'
+    },
+    {
+      code: 'class Test { foo() { return 42; } }',
+      options: [
+        'always',
+        {
+          excludeMatching: ['foo']
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => { return 42; } }',
+      options: [
+        'always',
+        {
+          excludeMatching: ['foo']
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = () => 42; }',
+      options: [
+        'always',
+        {
+          excludeMatching: ['foo']
+        }
+      ]
+    },
+    {
+      code: 'class Test { foo = (): number => { return 42; } }'
+    },
+    {
+      code: 'class Test { foo = (): number => 42; }'
     },
     {
       code: 'async (foo): Promise<number> => { return 3; }'

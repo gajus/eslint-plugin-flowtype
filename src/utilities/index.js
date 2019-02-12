@@ -1,12 +1,18 @@
-'create index';
+// @flow
 
-export getParameterName from './getParameterName.js';
-export isFlowFile from './isFlowFile.js';
-export isFlowFileAnnotation from './isFlowFileAnnotation.js';
-export iterateFunctionNodes from './iterateFunctionNodes.js';
-export * as spacingFixers from './spacingFixers';
-export quoteName from './quoteName';
-export getTokenBeforeParens from './getTokenBeforeParens';
-export getTokenAfterParens from './getTokenAfterParens';
-export fuzzyStringMatch from './fuzzyStringMatch';
-export checkFlowFileAnnotation from './checkFlowFileAnnotation';
+// eslint-disable-next-line import/no-namespace
+import * as spacingFixers from './spacingFixers';
+
+export {default as checkFlowFileAnnotation} from './checkFlowFileAnnotation';
+export {default as fuzzyStringMatch} from './fuzzyStringMatch';
+export {default as getParameterName} from './getParameterName';
+export {default as getTokenAfterParens} from './getTokenAfterParens';
+export {default as getTokenBeforeParens} from './getTokenBeforeParens';
+export {default as isFlowFile} from './isFlowFile';
+export {default as isFlowFileAnnotation} from './isFlowFileAnnotation';
+export {default as iterateFunctionNodes} from './iterateFunctionNodes';
+export {default as quoteName} from './quoteName';
+
+export {
+  spacingFixers
+};

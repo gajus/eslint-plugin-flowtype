@@ -707,6 +707,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { +[a : b] : c }'
     },
+
     // [id:key]: value
     //         ^
     {
@@ -727,6 +728,7 @@ const OBJECT_TYPE_INDEXERS = {
       options: ['always'],
       output: 'type X = { [a : b] : c }'
     },
+
     // [id:key]: value
     //    ^    ^
     {
@@ -870,6 +872,43 @@ const TYPE_CAST_EXPRESSIONS = {
   ]
 };
 
+const VARIABLE_EXPRESSIONS = {
+  invalid: [
+    {
+      code: 'const x:number = 7;',
+      errors: [{message: 'There must be a space before const type annotation colon.'}],
+      options: ['always'],
+      output: 'const x :number = 7;'
+    },
+    {
+      code: 'let x:number = 42;',
+      errors: [{message: 'There must be a space before let type annotation colon.'}],
+      options: ['always'],
+      output: 'let x :number = 42;'
+    },
+    {
+      code: 'var x:number = 42;',
+      errors: [{message: 'There must be a space before var type annotation colon.'}],
+      options: ['always'],
+      output: 'var x :number = 42;'
+    }
+  ],
+  valid: [
+    {
+      code: 'const x :number = 7;',
+      options: ['always']
+    },
+    {
+      code: 'let x :number = 42;',
+      options: ['always']
+    },
+    {
+      code: 'var x :number = 42;',
+      options: ['always']
+    }
+  ]
+};
+
 const ALL = [
   ARROW_FUNCTION_PARAMS,
   ARROW_FUNCTION_RETURN,
@@ -879,10 +918,48 @@ const ALL = [
   CLASS_PROPERTIES,
   OBJECT_TYPE_PROPERTIES,
   OBJECT_TYPE_INDEXERS,
-  TYPE_CAST_EXPRESSIONS
+  TYPE_CAST_EXPRESSIONS,
+  VARIABLE_EXPRESSIONS
+];
+
+const MISCONFIGURED = [
+  {
+    errors: [
+      {
+        data: 'wherever',
+        dataPath: '[0]',
+        keyword: 'enum',
+        message: 'should be equal to one of the allowed values',
+        params: {
+          allowedValues: [
+            'always',
+            'never'
+          ]
+        },
+        parentSchema: {
+          enum: [
+            'always',
+            'never'
+          ],
+          type: 'string'
+        },
+        schema: [
+          'always',
+          'never'
+        ],
+        schemaPath: '#/items/0/enum'
+      }
+    ],
+    options: ['wherever']
+  }
 ];
 
 export default {
-  invalid: _.flatMap(ALL, (rules) => { return rules.invalid; }),
-  valid: _.flatMap(ALL, (rules) => { return rules.valid; })
+  invalid: _.flatMap(ALL, (rules) => {
+    return rules.invalid;
+  }),
+  misconfigured: MISCONFIGURED,
+  valid: _.flatMap(ALL, (rules) => {
+    return rules.valid;
+  })
 };

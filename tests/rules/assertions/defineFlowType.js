@@ -1,5 +1,5 @@
 import {
-    RuleTester
+  RuleTester
 } from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
 
@@ -33,6 +33,20 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
     code: 'type A = AType',
     errors: [
+      '\'AType\' is not defined.'
+    ]
+  },
+  {
+    code: 'declare type A = number',
+    errors: [
+      '\'A\' is not defined.'
+    ]
+  },
+  {
+    code: 'opaque type A = AType',
+    errors: [
+      // Complaining about 'A' is fixed in https://github.com/babel/babel-eslint/pull/696
+      '\'A\' is not defined.',
       '\'AType\' is not defined.'
     ]
   },
@@ -92,15 +106,16 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     ]
   },
   {
-    code: 'interface AType {}',
+    code: 'declare interface A {}',
     errors: [
-      '\'AType\' is not defined.'
+      '\'A\' is not defined.'
     ]
   },
   {
     code: '({ a: ({b() {}}: AType) })',
-        // `AType` appears twice in `globalScope.through` as distinct
-        // references, this may be a babel-eslint bug.
+
+    // `AType` appears twice in `globalScope.through` as distinct
+    // references, this may be a babel-eslint bug.
     errors: [
       '\'AType\' is not defined.',
       '\'AType\' is not defined.'
@@ -108,13 +123,6 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   },
   {
     code: 'type X = {Y<AType>(): BType}',
-    errors: [
-      '\'AType\' is not defined.',
-      '\'BType\' is not defined.'
-    ]
-  },
-  {
-    code: 'interface AType<BType> {}',
     errors: [
       '\'AType\' is not defined.',
       '\'BType\' is not defined.'
@@ -154,6 +162,9 @@ const ALWAYS_VALID = [
   'var a: Array',
   'var a: Array<string>',
   'type A = Array',
+
+  // This complains about 'A' not being defined. It might be an upstream bug
+  // 'opaque type A = Array',
   'function f(a: string) {}',
   'function f(a): string {}',
   'class C { a: string }',
@@ -172,7 +183,7 @@ const ALWAYS_VALID = [
     parser: 'babel-eslint'
   });
 
-  ruleTester.run('no-under must not trigger an error in these cases', noUndefRule, {
+  ruleTester.run('no-undef must not trigger an error in these cases', noUndefRule, {
     invalid: [],
     valid: ALWAYS_VALID
   });

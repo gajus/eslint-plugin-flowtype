@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import {
-    isFlowFileAnnotation,
-    fuzzyStringMatch
-} from './../utilities';
+  isFlowFileAnnotation,
+  fuzzyStringMatch
+} from '../utilities';
 
 const defaults = {
   annotationStyle: 'none'
 };
 
 const looksLikeFlowFileAnnotation = (comment) => {
-  return /@(?:no)?f/i.test(comment);
+  return /@(?:no)?flo/i.test(comment);
 };
 
 const isValidAnnotationStyle = (node, style) => {
@@ -24,19 +24,38 @@ const checkAnnotationSpelling = (comment) => {
   return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.20);
 };
 
-export const schema = [
+const schema = [
   {
-    enum: ['always']
+    enum: ['always', 'never'],
+    type: 'string'
+  },
+  {
+    additionalProperties: false,
+    properties: {
+      annotationStyle: {
+        enum: ['none', 'line', 'block'],
+        type: 'string'
+      }
+    },
+    type: 'object'
   }
 ];
 
-export default (context) => {
+const create = (context) => {
   const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
 
   return {
     Program (node) {
       const firstToken = node.tokens[0];
+
+      const addAnnotation = () => {
+        return (fixer) => {
+          const annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
+
+          return fixer.replaceTextRange([node.start, node.start], annotation);
+        };
+      };
 
       const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {
         return looksLikeFlowFileAnnotation(comment.value);
@@ -59,8 +78,17 @@ export default (context) => {
           context.report(potentialFlowFileAnnotation, 'Malformed Flow file annotation.');
         }
       } else if (always) {
-        context.report(node, 'Flow file annotation is missing.');
+        context.report({
+          fix: addAnnotation(),
+          message: 'Flow file annotation is missing.',
+          node
+        });
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

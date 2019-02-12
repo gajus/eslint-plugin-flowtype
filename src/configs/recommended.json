@@ -1,5 +1,8 @@
 {
   "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
   "rules": {
     "flowtype/boolean-style": [
       2,
@@ -11,6 +14,8 @@
       2,
       "never"
     ],
+    "flowtype/no-mixed": 0,
+    "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 0,
     "flowtype/require-parameter-type": 0,
     "flowtype/require-return-type": 0,

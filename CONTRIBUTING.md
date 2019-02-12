@@ -6,6 +6,7 @@
 
 When making a commit, the following Pre-Commit hooks run:
 
+* test and documentation checks
 * tests
 * lint
 * commit message validation (see "Commit Messages" below)
@@ -20,11 +21,11 @@ All commit messages must begin with one of the following prefixes:
 * `docs: `
 * `chore: `
 
-The prefix is used to bump the correct segment of the version number automatically during deploy.
+The prefix is used to bump the correct segment of the version number during the automatic release.
 
 ## Tests
 
-Run them with `npm t`.
+Run them with `npm test`.
 
 ## Lint
 
@@ -36,17 +37,17 @@ Run with `npm run lint`.
 
 1. Create a file in `tests/rules/assertions` named the `camelCase` version of your rule name with the following template:
   * `export default { invalid: [], valid: [] }`
-2. Add your test file to `tests/index.js`
+2. Add your test file to `tests/rules/index.js`
 3. Create a file in `src/rules` named the `camelCase` version  of your rule name
 4. Add your rule file to `src/index.js`
 
 ### Adding Documentation
 
-1. Create new file in `./README/rules/[rule-name].md`.
+1. Create new file in `./.README/rules/[rule-name].md`.
   * Use [./.README/rules/require-valid-file-annotation.md](./.README/rules/require-valid-file-annotation.md) as a template.
   * Ensure that rule documentation document includes `<!-- assertions spaceAfterTypeColon -->` declaration.
 1. Update [./.README/README.md](/.README/README.md) to include the new rule.
 
 A CI service will build and publish the new documentation.
 
-Note: The section "The following patterns are considered problems:" and "The following patterns are not considered problems:" is **generated automatically** using the test cases.
+Note: Sections "The following patterns are considered problems:" and "The following patterns are not considered problems:" are **generated automatically** using the test cases.

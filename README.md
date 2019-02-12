@@ -11,19 +11,31 @@
     * [Installation](#eslint-plugin-flowtype-installation)
     * [Configuration](#eslint-plugin-flowtype-configuration)
         * [Shareable configurations](#eslint-plugin-flowtype-configuration-shareable-configurations)
+        * [Community maintained configurations](#eslint-plugin-flowtype-configuration-community-maintained-configurations)
     * [Settings](#eslint-plugin-flowtype-settings)
         * [`onlyFilesWithFlowAnnotation`](#eslint-plugin-flowtype-settings-onlyfileswithflowannotation)
     * [Rules](#eslint-plugin-flowtype-rules)
+        * [`array-style-complex-type`](#eslint-plugin-flowtype-rules-array-style-complex-type)
+        * [`array-style-simple-type`](#eslint-plugin-flowtype-rules-array-style-simple-type)
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`newline-after-flow-annotation`](#eslint-plugin-flowtype-rules-newline-after-flow-annotation)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
+        * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
+        * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
+        * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
+        * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
+        * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
+        * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
+        * [`require-types-at-top`](#eslint-plugin-flowtype-rules-require-types-at-top)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
         * [`require-variable-type`](#eslint-plugin-flowtype-rules-require-variable-type)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
@@ -32,6 +44,7 @@
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
+        * [`type-import-style`](#eslint-plugin-flowtype-rules-type-import-style)
         * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
@@ -50,6 +63,9 @@
 npm install eslint --save-dev
 npm install babel-eslint --save-dev
 npm install eslint-plugin-flowtype --save-dev
+
+# Or all at once: 
+npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
 <a name="eslint-plugin-flowtype-configuration"></a>
@@ -82,6 +98,7 @@ npm install eslint-plugin-flowtype --save-dev
       "never"
     ],
     "flowtype/no-primitive-constructor-types": 2,
+    "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
     "flowtype/object-type-delimiter": [
       2,
@@ -154,6 +171,13 @@ To enable this configuration use the extends property in your `.eslintrc` config
 
 See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information about extending configuration files.
 
+<a name="eslint-plugin-flowtype-configuration-community-maintained-configurations"></a>
+### Community maintained configurations
+
+The following are third-party submitted/ maintained configurations of `eslint-plugin-flowtype`:
+
+* https://github.com/wemake-services/eslint-config-flowtype-essential
+
 <a name="eslint-plugin-flowtype-settings"></a>
 ## Settings
 
@@ -176,6 +200,200 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 ## Rules
 
 <!-- Rules are sorted alphabetically. -->
+
+<a name="eslint-plugin-flowtype-rules-array-style-complex-type"></a>
+### <code>array-style-complex-type</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular annotation style of complex types.
+
+Type is considered complex in these cases:
+
+* [Maybe type](https://flow.org/en/docs/types/maybe/)
+* [Function type](https://flow.org/en/docs/types/functions/)
+* [Object type](https://flow.org/en/docs/types/objects/)
+* [Tuple type](https://flow.org/en/docs/types/tuples/)
+* [Union type](https://flow.org/en/docs/types/unions/)
+* [Intersection type](https://flow.org/en/docs/types/intersections/)
+
+This rule takes one argument.
+
+If it is `'verbose'` then a problem is raised when using `Type[]` instead of `Array<Type>`.
+
+If it is `'shorthand'` then a problem is raised when using `Array<Type>` instead of `Type[]`.
+
+The default value is `'verbose'`.
+
+The following patterns are considered problems:
+
+```js
+type X = (?string)[]
+// Message: Use "Array<?string>", not "(?string)[]"
+
+// Options: ["verbose"]
+type X = (?string)[]
+// Message: Use "Array<?string>", not "(?string)[]"
+
+// Options: ["shorthand"]
+type X = Array<?string>
+// Message: Use "(?string)[]", not "Array<?string>"
+
+// Options: ["shorthand"]
+type X = Array<{foo: string}>
+// Message: Use "{foo: string}[]", not "Array<{foo: string}>"
+
+type X = (string | number)[]
+// Message: Use "Array<string | number>", not "(string | number)[]"
+
+type X = (string & number)[]
+// Message: Use "Array<string & number>", not "(string & number)[]"
+
+type X = [string, number][]
+// Message: Use "Array<[string, number]>", not "[string, number][]"
+
+type X = {foo: string}[]
+// Message: Use "Array<{foo: string}>", not "{foo: string}[]"
+
+type X = (string => number)[]
+// Message: Use "Array<string => number>", not "(string => number)[]"
+
+type X = {
+    foo: string,
+    bar: number
+}[]
+// Message: Use "Array<{ foo: string, bar: number }>", not "{ foo: string, bar: number }[]"
+
+type X = {
+    foo: string,
+    bar: number,
+    quo: boolean,
+    hey: Date
+}[]
+// Message: Use "Array<Type>", not "Type[]"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Array<?string>
+
+// Options: ["verbose"]
+type X = Array<?string>
+
+// Options: ["shorthand"]
+type X = (?string)[]
+
+// Options: ["shorthand"]
+type X = Array<string>
+
+// Options: ["shorthand"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+type X = Array<?string>
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-array-style-simple-type"></a>
+### <code>array-style-simple-type</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular array type annotation style of simple types.
+
+Type is considered simple in these cases:
+
+* [Primitive types](https://flow.org/en/docs/types/primitives/)
+* [Literal types](https://flow.org/en/docs/types/literals/)
+* [Mixed type](https://flow.org/en/docs/types/mixed/)
+* [Any type](https://flow.org/en/docs/types/any/)
+* [Class type](https://flow.org/en/docs/types/classes/)
+* [Generic type](https://flow.org/en/docs/types/generics/)
+* Array type [shorthand notation](https://flow.org/en/docs/types/arrays/#toc-array-type-shorthand-syntax)
+
+This rule takes one argument.
+
+If it is `'verbose'` then a problem is raised when using `Type[]` instead of `Array<Type>`.
+
+If it is `'shorthand'` then a problem is raised when using `Array<Type>` instead of `Type[]`.
+
+The default value is `'verbose'`.
+
+The following patterns are considered problems:
+
+```js
+type X = string[]
+// Message: Use "Array<string>", not "string[]"
+
+// Options: ["verbose"]
+type X = string[]
+// Message: Use "Array<string>", not "string[]"
+
+// Options: ["shorthand"]
+type X = Array<string>
+// Message: Use "string[]", not "Array<string>"
+
+type X = Date[]
+// Message: Use "Array<Date>", not "Date[]"
+
+type X = Promise<string>[]
+// Message: Use "Array<Promise<string>>", not "Promise<string>[]"
+
+type X = $Keys<{foo: string}>[]
+// Message: Use "Array<$Keys<{foo: string}>>", not "$Keys<{foo: string}>[]"
+
+type X = any[]
+// Message: Use "Array<any>", not "any[]"
+
+type X = mixed[]
+// Message: Use "Array<mixed>", not "mixed[]"
+
+type X = void[]
+// Message: Use "Array<void>", not "void[]"
+
+type X = null[]
+// Message: Use "Array<null>", not "null[]"
+
+type X = string[][]
+// Message: Use "Array<string[]>", not "string[][]"
+// Message: Use "Array<string>", not "string[]"
+
+type X = Promise<{
+    foo: string,
+    bar: number
+}>[]
+// Message: Use "Array<Promise<{ foo: string, bar: number }>>", not "Promise<{ foo: string, bar: number }>[]"
+
+type X = Promise<{
+    foo: string,
+    bar: number,
+    quo: boolean
+}>[]
+// Message: Use "Array<Type>", not "Type[]"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = Array<string>
+
+// Options: ["verbose"]
+type X = Array<string>
+
+// Options: ["shorthand"]
+type X = string[]
+
+type X = Array<Array<string>>
+
+// Options: ["verbose"]
+type X = (?string)[]
+
+// Options: ["verbose"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+type X = string[]
+```
+
+
 
 <a name="eslint-plugin-flowtype-rules-boolean-style"></a>
 ### <code>boolean-style</code>
@@ -217,6 +435,7 @@ type X = boolean
 type X = bool
 
 // Options: ["boolean"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = bool
 ```
 
@@ -247,6 +466,12 @@ var a: AType<BType>
 type A = AType
 // Additional rules: {"no-undef":2}
 
+declare type A = number
+// Additional rules: {"no-undef":2}
+
+opaque type A = AType
+// Additional rules: {"no-undef":2}
+
 function f(a: AType) {}
 // Additional rules: {"no-undef":2}
 
@@ -274,16 +499,13 @@ class C { a: AType.a.b }
 class C implements AType {}
 // Additional rules: {"no-undef":2}
 
-interface AType {}
+declare interface A {}
 // Additional rules: {"no-undef":2}
 
 ({ a: ({b() {}}: AType) })
 // Additional rules: {"no-undef":2}
 
 type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2}
-
-interface AType<BType> {}
 // Additional rules: {"no-undef":2}
 
 var a: AType
@@ -301,6 +523,12 @@ var a: AType<BType>
 type A = AType
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
+declare type A = number
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+opaque type A = AType
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
 function f(a: AType) {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
@@ -328,16 +556,13 @@ class C { a: AType.a.b }
 class C implements AType {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
-interface AType {}
+declare interface A {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 ({ a: ({b() {}}: AType) })
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 type X = {Y<AType>(): BType}
-// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
-
-interface AType<BType> {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 ```
 
@@ -859,6 +1084,76 @@ type X = Promise< (foo), bar, (((baz))) >
 
 
 
+<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation"></a>
+### <code>newline-after-flow-annotation</code>
+
+This rule requires an empty line after the Flow annotation.
+
+<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation-options"></a>
+#### Options
+
+The rule has a string option:
+
+* `"always"` (default): Enforces that `@flow` annotations be followed by an empty line, separated by newline (LF)
+* `"always-windows"`: Identical to "always", but will use a CRLF when autofixing
+* `"never"`: Enforces that `@flow` annotations are not followed by empty lines
+
+```js
+{
+  "rules": {
+    "flowtype/newline-after-flow-annotation": [
+      2,
+      "always"
+    ]
+  }
+}
+```
+
+
+The following patterns are considered problems:
+
+```js
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["always"]
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["always-windows"]
+// @flow
+import Foo from './foo';
+// Message: Expected newline after flow annotation
+
+// Options: ["never"]
+// @flow
+
+
+// Message: Expected no newline after flow annotation
+```
+
+The following patterns are not considered problems:
+
+```js
+// Options: ["always"]
+// @flow
+
+import Foo from './foo';
+
+// Options: ["always-windows"]
+// @flow
+
+import Foo from './foo';
+
+// Options: ["never"]
+// @flow
+import Foo from './foo';
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-no-dupe-keys"></a>
 ### <code>no-dupe-keys</code>
 
@@ -877,10 +1172,46 @@ This rule mirrors ESLint's [no-dupe-keys](http://eslint.org/docs/rules/no-dupe-k
 The following patterns are considered problems:
 
 ```js
-type FooType = { a: number, b: string, a: number }
+type f = { a: number, b: string, a: number }
 // Message: Duplicate property.
 
-type FooType = { a: number, b: string, a: string }
+type f = { a: number, b: string, a: string }
+// Message: Duplicate property.
+
+type f = { get(key: "a"): string, get(key: "a"): string }
+// Message: Duplicate property.
+
+type f = { get(key: 1): string, get(key: 1): string }
+// Message: Duplicate property.
+
+type f = { get(key: 1.1): string, get(key: 1.1): string }
+// Message: Duplicate property.
+
+type f = { get(key: true): string, get(key: true): string }
+// Message: Duplicate property.
+
+type f = { get(key: {a: 1}): string, get(key: {a: 1}):string }
+// Message: Duplicate property.
+
+var a = "a"; type f = { get(key: a): string, get(key: a): string }
+// Message: Duplicate property.
+
+var b = 1; type f = { get(key: b): string, get(key: b): string }
+// Message: Duplicate property.
+
+var c = true; type f = { get(key: c): string, get(key: c): string }
+// Message: Duplicate property.
+
+var d = {}; type f = { get(key: d): string, get(key: d): string }
+// Message: Duplicate property.
+
+var e = []; type f = { get(key: e): string, get(key: e): string }
+// Message: Duplicate property.
+
+var e = [1, "a"]; type f = { get(key: e): string, get(key: e): string }
+// Message: Duplicate property.
+
+function fn() {}; type f = { get(key: fn): string, get(key: fn): string }
 // Message: Duplicate property.
 ```
 
@@ -889,7 +1220,183 @@ The following patterns are not considered problems:
 ```js
 type FooType = { a: number, b: string, c: number }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = { a: number, b: string, a: number }
+
+type f = { get(key: "a"): string, get(key: "b"): string }
+
+type f = { get(key: 1): string, get(key: 2): string }
+
+type f = { get(key: 1.1): string, get(key: 1.2): string }
+
+type f = { get(key: true): string, get(key: false): string }
+
+type f = { get(key: ["a", 1]): string, get(key: ["a", 2]): string }
+
+type f = { get(key: ["a", ["b", 1]]): string, get(key: ["a", ["b", 2]]): string }
+
+type f = { a: number, b: string, c: number }
+
+type f = { get(key: "a"): string, get(key: "b"): string }
+
+type f = { get(key: "a"): string, get(key: "a", key2: "b"): string }
+
+type f = { get(key: "a"): string, get(key: 1): string }
+
+type f = { get(key: { a: 1 }): string, get(key: { a: 2 }): string}
+
+var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
+
+var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-existential-type"></a>
+### <code>no-existential-type</code>
+
+Disallows use of the existential type (*). [See more](https://flow.org/en/docs/types/utilities/#toc-existential-type)
+
+```js
+{
+  "rules": {
+    "flowtype/no-existential-type": 2
+  }
+}
+```
+
+
+The following patterns are considered problems:
+
+```js
+type T = *;
+// Message: Unexpected use of existential type (*).
+
+type T = U<*, *>;
+// Message: Unexpected use of existential type (*).
+// Message: Unexpected use of existential type (*).
+
+const f: (*) => null = () => null;
+// Message: Unexpected use of existential type (*).
+```
+
+The following patterns are not considered problems:
+
+```js
+type T = string | null
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments"></a>
+### <code>no-flow-fix-me-comments</code>
+
+Disallows `$FlowFixMe` comment suppressions.
+
+This is especially useful as a warning to ensure instances of `$FlowFixMe` in your codebase get fixed over time.
+
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options-1"></a>
+#### Options
+
+This rule takes an optional RegExp that comments a text RegExp that makes the supression valid.
+
+```js
+{
+    "rules": {
+        "flowtype/no-flow-fix-me-comments": [
+            1,
+            "TODO\s+[0-9]+"
+        ]
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+// $FlowFixMe I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe TODO abc 47 I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+
+// $$FlowFixMeProps I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed.
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMeProps I am doing something evil here
+const text = 'HELLO';
+// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+```
+
+The following patterns are not considered problems:
+
+```js
+const text = 'HELLO';
+
+// Options: ["TODO [0-9]+"]
+// $FlowFixMe TODO 48
+const text = 'HELLO';
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-mutable-array"></a>
+### <code>no-mutable-array</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Requires use of [`$ReadOnlyArray`](https://github.com/facebook/flow/blob/v0.46.0/lib/core.js#L185) instead of just `Array` or array [shorthand notation](https://flow.org/en/docs/types/arrays/#toc-array-type-shorthand-syntax). `$ReadOnlyArray` is immutable array collection type and the superclass of Array and tuple types in Flow. Use of `$ReadOnlyArray` instead of `Array` can solve some "problems" in typing with Flow (e.g., [1](https://github.com/facebook/flow/issues/3425), [2](https://github.com/facebook/flow/issues/4251)).
+
+General reasons for using immutable data structures:
+
+* They are simpler to construct, test, and use
+* They help to avoid temporal coupling
+* Their usage is side-effect free (no defensive copies)
+* Identity mutability problem is avoided
+* They always have failure atomicity
+* They are much easier to cache
+
+Note that initialization of a variable with an empty array is considered valid (e.g., `const values: Array<string> = [];`). This behavior resembles the behavior of Flow's [unsealed objects](https://flow.org/en/docs/types/objects/#toc-unsealed-objects), as it is assumed that empty array is intended to be mutated.
+
+The following patterns are considered problems:
+
+```js
+type X = Array<string>
+// Message: Use "$ReadOnlyArray" instead of "Array"
+
+type X = string[]
+// Message: Use "$ReadOnlyArray" instead of array shorthand notation
+
+const values: Array<Array<string>> = [];
+// Message: Use "$ReadOnlyArray" instead of "Array"
+
+let values: Array<Array<string>>;
+// Message: Use "$ReadOnlyArray" instead of "Array"
+// Message: Use "$ReadOnlyArray" instead of "Array"
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = $ReadOnlyArray<string>
+
+const values: Array<$ReadOnlyArray<string>> = [];
+
+const values: $ReadOnlyArray<string>[] = [];
+
+const values: Array<$ReadOnlyArray<string>> = new Array();
+
+const values: Array<$ReadOnlyArray<string>> = Array();
 ```
 
 
@@ -964,6 +1471,125 @@ type x = MyNumber
 type x = MyString
 
 type x = MyBoolean
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-types-missing-file-annotation"></a>
+### <code>no-types-missing-file-annotation</code>
+
+Disallows Flow type imports, aliases, and annotations in files missing a valid Flow file declaration (or a @noflow annotation).
+
+```js
+{
+    "rules": {
+        "flowtype/no-types-missing-file-annotation": 2
+    }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+const x: number = 42;
+// Message: Type annotations require valid Flow declaration.
+
+type FooType = number;
+// Message: Type aliases require valid Flow declaration.
+
+import type A from "a"
+// Message: Type imports require valid Flow declaration.
+
+import type {A} from "a"
+// Message: Type imports require valid Flow declaration.
+
+import {type A} from "a"
+// Message: Type imports require valid Flow declaration.
+
+export type {A} from "a"
+// Message: Type exports require valid Flow declaration.
+
+function t<T>(): T{}
+// Message: Type annotations require valid Flow declaration.
+
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+const x: number = 42;
+// Message: Type annotations require valid Flow declaration.
+```
+
+The following patterns are not considered problems:
+
+```js
+// @flow
+const x: number = 42;
+
+/* @flow weak */
+type FooType = number;
+
+/* @noflow */
+type FooType = number;
+
+/* @noflow */
+import type A from "a"
+
+/* @noflow */
+import {type A} from "a"
+
+/* @noflow */
+export type {A} from "a"
+
+// an unrelated comment
+// @flow
+export type {A} from "a"
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-unused-expressions"></a>
+### <code>no-unused-expressions</code>
+
+An extension of [ESLint's `no-unused-expressions`](https://eslint.org/docs/rules/no-unused-expressions).
+This rule ignores type cast expressions, but otherwise behaves the same as ESLint's
+`no-unused-expressions`.
+
+Bare type casts are useful, for example to assert the exhaustiveness of a `switch`:
+
+```js
+type Action
+  = { type: 'FOO', doFoo: (_: number) => void }
+  | { type: 'BAR', doBar: (_: string) => void };
+
+type State = { foo: number, bar: string };
+
+function runFooBar(action: Action, state: State): void {
+  switch (action.type) {
+    case 'FOO':
+      doFoo(state.foo);
+      break;
+    case 'BAR':
+      doBar(state.bar);
+      break;
+    default:
+      (action: empty);  // type error when `Action` is extended with new types
+      console.error(`Impossible action: ${action.toString()}`);
+  }
+}
+```
+
+This rule takes the same arguments as ESLint's `no-unused-expressions`. See
+[that rule's documentation](https://eslint.org/docs/rules/no-unused-expressions) for details.
+
+The following patterns are considered problems:
+
+```js
+foo + 1
+// Message: Expected an assignment or function call and instead saw an expression.
+```
+
+The following patterns are not considered problems:
+
+```js
+(foo: number)
 ```
 
 
@@ -1096,7 +1722,7 @@ type X = any; type Y = Function; type Z = Object
 // Message: Unexpected use of weak type "any"
 // Message: Unexpected use of weak type "Object"
 
-// Options: [{"Object":false,"any":false}]
+// Options: [{"any":false,"Object":false}]
 type X = any; type Y = Function; type Z = Object
 // Message: Unexpected use of weak type "Function"
 ```
@@ -1132,12 +1758,13 @@ var foo: string
 
 class Foo { props: string }
 
-// Options: [{"Object":false,"any":false}]
+// Options: [{"any":false,"Object":false}]
 type X = any; type Y = Object
 
 // Options: [{"Function":false}]
 type X = Function
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 function foo(thing): Function {}
 ```
 
@@ -1266,7 +1893,164 @@ declare class Foo { (): Foo; }
 declare class Foo { (): Foo, }
 
 // Options: ["semicolon"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type Foo = { a: Foo, b: Bar }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias"></a>
+### <code>require-compound-type-alias</code>
+
+Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy&paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
+
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-2"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"`
+* `"always"`
+
+The default value is `"always"`.
+
+The following patterns are considered problems:
+
+```js
+function foo(bar: "A" | "B") {}
+// Message: All union types must be declared with named type alias.
+
+const foo: "A" | "B" = "A";
+// Message: All union types must be declared with named type alias.
+
+type Foo = { bar: "A" | "B" };
+// Message: All union types must be declared with named type alias.
+
+function foo(bar: { n: number } | { s: string }) {}
+// Message: All union types must be declared with named type alias.
+
+function foo(bar: { n: number } & { s: string }) {}
+// Message: All intersection types must be declared with named type alias.
+
+const foo: { n: number } & { s: string } = { n: 0, s: "" };
+// Message: All intersection types must be declared with named type alias.
+
+type Foo = { bar: { n: number } & { s: string } };
+// Message: All intersection types must be declared with named type alias.
+
+function foo(bar: { n: number } & { s: string }) {}
+// Message: All intersection types must be declared with named type alias.
+```
+
+The following patterns are not considered problems:
+
+```js
+type Foo = "A" | "B";
+
+type Bar = "A" | "B"; function foo(bar: Bar) {}
+
+type Foo = { disjoint: "A", n: number } | { disjoint: "B", s: string };
+
+type Foo = { n: number } & { s: string };
+
+type Bar = { n: number } & { s: string }; function foo(bar: Bar) {}
+
+// Options: ["never"]
+function foo(bar: "A" | "B") {}
+
+// Options: ["never"]
+function foo(bar: { n: number } & { s: string }) {}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-require-exact-type"></a>
+### <code>require-exact-type</code>
+
+This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
+
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options-3"></a>
+#### Options
+
+The rule has one string option:
+
+* `"always"` (default): Report all object type definitions that aren't exact.
+* `"never"`: Report all object type definitions that are exact.
+
+```js
+{
+  "rules": {
+    "flowtype/require-exact-type": [
+      2,
+      "always"
+    ]
+  }
+}
+
+{
+  "rules": {
+    "flowtype/require-exact-type": [
+      2,
+      "never"
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type foo = {};
+// Message: Type identifier 'foo' must be exact.
+
+type foo = { bar: string };
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["always"]
+type foo = {};
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["always"]
+type foo = { bar: string };
+// Message: Type identifier 'foo' must be exact.
+
+// Options: ["never"]
+type foo = {| |};
+// Message: Type identifier 'foo' must not be exact.
+
+// Options: ["never"]
+type foo = {| bar: string |};
+// Message: Type identifier 'foo' must not be exact.
+```
+
+The following patterns are not considered problems:
+
+```js
+type foo = {| |};
+
+type foo = {| bar: string |};
+
+type foo = { [key: string]: string };
+
+type foo = number;
+
+// Options: ["always"]
+type foo = {| |};
+
+// Options: ["always"]
+type foo = {| bar: string |};
+
+// Options: ["always"]
+type foo = number;
+
+// Options: ["never"]
+type foo = { };
+
+// Options: ["never"]
+type foo = { bar: string };
+
+// Options: ["never"]
+type foo = number;
 ```
 
 
@@ -1276,7 +2060,7 @@ type Foo = { a: Foo, b: Bar }
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-4"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -1353,6 +2137,7 @@ function x(foo) {}
 ({foo = 1} = {}) => {}
 // Message: Missing "{foo = 1}" parameter type annotation.
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
 (foo) => {}
 // Message: Missing "foo" parameter type annotation.
@@ -1387,6 +2172,7 @@ The following patterns are not considered problems:
 
 ([foo]: Array) => {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => {}
 
 // Options: [{"excludeArrowFunctions":true}]
@@ -1401,6 +2187,7 @@ The following patterns are not considered problems:
 // Options: [{"excludeParameterMatch":"^_"}]
 (_foo: number, bar: string) => {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => {}
 ```
 
@@ -1411,12 +2198,12 @@ The following patterns are not considered problems:
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-5"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
 
-Alternatively, you can want to exclude only concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
+Alternatively, you can exclude a concise arrow function (e.g. `() => 2`). Provide `excludeArrowFunctions` with `expressionsOnly` for this.
 
 ```js
 {
@@ -1443,6 +2230,43 @@ Alternatively, you can want to exclude only concise arrow function (e.g. `() => 
     }
 }
 ```
+
+You can exclude or include specific tests with the `includeOnlyMatching` and `excludeMatching` rules.
+
+```js
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "includeOnlyMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+{
+    "rules": {
+        "flowtype/require-return-type": [
+            2,
+            "always",
+            {
+              "excludeMatching": [
+                  "^F.*",
+                  "Ba(r|z)"
+              ]
+            }
+        ]
+    }
+}
+
+```
+
+Both rules take an array that can contain either strings or valid RegExp statements.
 
 The following patterns are considered problems:
 
@@ -1497,11 +2321,13 @@ The following patterns are considered problems:
 (foo) => { return void 0; }
 // Message: Must annotate undefined return type.
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
 (foo) => { return 1; }
 // Message: Missing return type annotation.
 
 // Options: ["always",{"annotateUndefined":"always"}]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 // @flow
  (foo) => { return undefined; }
 // Message: Must annotate undefined return type.
@@ -1512,14 +2338,31 @@ async () => { return 2; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
 async () => {}
-// Message: Missing return type annotation.
+// Message: Must annotate undefined return type.
 
 // Options: ["always",{"annotateUndefined":"always"}]
 async function x() {}
+// Message: Must annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+async (): Promise<void> => { return; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+async (): Promise<undefined> => { return; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+class Test { constructor() { } }
+// Message: Must annotate undefined return type.
+
+class Test { foo() { return 42; } }
 // Message: Missing return type annotation.
 
-// Options: ["always"]
-async () => { return; }
+class Test { foo = () => { return 42; } }
+// Message: Missing return type annotation.
+
+class Test { foo = () => 42; }
 // Message: Missing return type annotation.
 
 // Options: ["always"]
@@ -1533,11 +2376,23 @@ function* x() {}
 // Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
 async () => { return 4; }
 // Message: Missing return type annotation.
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+function foo() { return 42; }
+function bar() { return 42; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+const foo = () => { return 42; };
+const bar = () => { return 42; }
+// Message: Missing return type annotation.
 ```
 
 The following patterns are not considered problems:
 
 ```js
+return;
+
 (foo): string => {}
 
 // Options: ["always"]
@@ -1573,9 +2428,11 @@ The following patterns are not considered problems:
 (foo): void => { return void 0; }
 
 // Options: ["always"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return 1; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return undefined; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
@@ -1583,6 +2440,24 @@ async function doThing(): Promise<void> {}
 
 // Options: ["always",{"annotateUndefined":"always"}]
 function* doThing(): Generator<number, void, void> { yield 2; }
+
+// Options: ["always",{"annotateUndefined":"always","excludeMatching":["constructor"]}]
+class Test { constructor() { } }
+
+class Test { constructor() { } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo() { return 42; } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo = () => { return 42; } }
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+class Test { foo = () => 42; }
+
+class Test { foo = (): number => { return 42; } }
+
+class Test { foo = (): number => 42; }
 
 async (foo): Promise<number> => { return 3; }
 
@@ -1606,6 +2481,103 @@ async (foo): Promise<number> => { return 3; }
 
 // Options: ["always",{"excludeArrowFunctions":"expressionsOnly"}]
 async () => 3
+
+// Options: ["always",{"excludeMatching":["foo"]}]
+function foo() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+function foo() { return 42; }
+
+// Options: ["always",{"excludeMatching":["bar"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["foo","baz"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"excludeMatching":["^b.*","qux"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["^f.*"]}]
+function foo(): number { return 42; }
+function bar() { return 42; }
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-require-types-at-top"></a>
+### <code>require-types-at-top</code>
+
+Requires all type declarations to be at the top of the file, after any import declarations.
+
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-6"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"`
+* `"always"`
+
+The default value is `"always"`.
+
+The following patterns are considered problems:
+
+```js
+const foo = 3;
+type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+opaque type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+export type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+export opaque type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+const foo = 3;
+type Foo = number | string;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+
+import bar from "./bar";
+const foo = 3;
+type Foo = number;
+// Message: All type declaration should be at the top of the file, after any import declarations.
+```
+
+The following patterns are not considered problems:
+
+```js
+type Foo = number;
+const foo = 3;
+
+opaque type Foo = number;
+const foo = 3;
+
+export type Foo = number;
+const foo = 3;
+
+export opaque type Foo = number;
+const foo = 3;
+
+type Foo = number;
+const foo = 3;
+
+import bar from "./bar";
+type Foo = number;
+
+type Foo = number;
+import bar from "./bar";
+
+// Options: ["never"]
+const foo = 3;
+type Foo = number;
 ```
 
 
@@ -1617,7 +2589,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-7"></a>
 #### Options
 
 The rule has a string option:
@@ -1698,6 +2670,14 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 // @noflow
 // Message: Flow file annotation style must be `/* @noflow */`
+
+// Options: ["always"]
+a;
+// Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"block"}]
+a;
+// Message: Flow file annotation is missing.
 ```
 
 The following patterns are not considered problems:
@@ -1729,10 +2709,17 @@ a;
 a;
 
 // Options: ["always"]
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 a;
 
 // Options: ["always",{"annotationStyle":"line"}]
 // @flow
+
+// Options: ["never",{"annotationStyle":"none"}]
+// @function
+
+// Options: ["never"]
+// @fixable
 
 // Options: ["always",{"annotationStyle":"block"}]
 /* @flow */
@@ -1745,7 +2732,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-8"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -1853,6 +2840,10 @@ type FooType = {}
 // Options: ["never"]
 type FooType = {};
 // Message: Extra semicolon.
+
+// Options: []
+opaque type FooType = {}
+// Message: Missing semicolon.
 ```
 
 The following patterns are not considered problems:
@@ -1876,7 +2867,10 @@ type FooType = { a: number;
 // Options: ["never"]
 type FooType = {}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = {}
+
+opaque type FooType = {};
 ```
 
 
@@ -1884,11 +2878,13 @@ type FooType = {}
 <a name="eslint-plugin-flowtype-rules-sort-keys"></a>
 ### <code>sort-keys</code>
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-9"></a>
 #### Options
 
 The first option specifies sort order.
@@ -1950,6 +2946,125 @@ type FooType = { a: number, C: number, c: number, b: string }
 // Options: ["asc",{"natural":true}]
 type FooType = { 1: number, 10: number, 2: boolean }
 // Message: Expected type annotations to be in natural ascending order. "2" should be before "10".
+
+type FooType = { a: number, c: number, b: string }
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          +a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          -a: number,
+          c: number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a?: number,
+          c: ?number,
+          b: string,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: (number) => void,
+          c: number,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b: (param: string) => number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "k" should be before "l".
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          +c: number,
+          -b: number,
+          a: number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "a" should be before "b".
+
+
+        type FooType = {|
+          +c: number,
+          -b: number,
+          a: number,
+        |}
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
 
 The following patterns are not considered problems:
@@ -1981,6 +3096,7 @@ type FooType = { a: number, b: number, C: number, c: number }
 // Options: ["asc",{"natural":true}]
 type FooType = { 1:number, 2: number, 10: number }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = { b: number, a: number }
 ```
 
@@ -1993,7 +3109,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-10"></a>
 #### Options
 
 This rule has a string argument.
@@ -2065,7 +3181,15 @@ The following patterns are considered problems:
 
 (foo:
   { a: string, b: number }) => {}
-// Message: There must be 1 space after "foo" parameter type annotation colon.
+// Message: There must not be a line break after "foo" parameter type annotation colon.
+
+(foo:
+{ a: string, b: number }) => {}
+// Message: There must not be a line break after "foo" parameter type annotation colon.
+
+(foo: 
+{ a: string, b: number }) => {}
+// Message: There must not be a line break after "foo" parameter type annotation colon.
 
 // Options: ["always"]
 ():Object => {}
@@ -2398,6 +3522,18 @@ const x = ({}:  {})
 // Options: ["always"]
 ((x):  (string))
 // Message: There must be 1 space after type cast colon.
+
+// Options: ["always"]
+const x:number = 7;
+// Message: There must be a space after const type annotation colon.
+
+// Options: ["always"]
+let x:number = 42;
+// Message: There must be a space after let type annotation colon.
+
+// Options: ["always"]
+var x:number = 42;
+// Message: There must be a space after var type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -2679,6 +3815,15 @@ const x = ({}: {})
 
 // Options: ["always"]
 ((x): (string))
+
+// Options: ["always"]
+const x: number = 7;
+
+// Options: ["always"]
+let x: number = 42;
+
+// Options: ["always"]
+var x: number = 42;
 ```
 
 
@@ -3053,6 +4198,18 @@ const x = ({}  :{})
 // Options: ["always"]
 ((x)  : string)
 // Message: There must be 1 space before type cast colon.
+
+// Options: ["always"]
+const x:number = 7;
+// Message: There must be a space before const type annotation colon.
+
+// Options: ["always"]
+let x:number = 42;
+// Message: There must be a space before let type annotation colon.
+
+// Options: ["always"]
+var x:number = 42;
+// Message: There must be a space before var type annotation colon.
 ```
 
 The following patterns are not considered problems:
@@ -3278,6 +4435,15 @@ const x = ({} :{})
 
 // Options: ["always"]
 ((x) : string)
+
+// Options: ["always"]
+const x :number = 7;
+
+// Options: ["always"]
+let x :number = 42;
+
+// Options: ["always"]
+var x :number = 42;
 ```
 
 
@@ -3287,7 +4453,7 @@ const x = ({} :{})
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-11"></a>
 #### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
@@ -3303,7 +4469,7 @@ This rule needs a text RegExp to operate with Its signature is as follows:
 }
 ```
 
-`'^([A-Z][a-z0-9]*)+Type$'` is the default pattern.
+`'^([A-Z][a-z0-9]*)+Type$$'` is the default pattern.
 
 The following patterns are considered problems:
 
@@ -3324,7 +4490,68 @@ type FooType = {};
 // Options: ["^foo$"]
 type foo = {};
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type foo = {};
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-type-import-style"></a>
+### <code>type-import-style</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces a particular style for type imports:
+
+```
+// 'identifier' style
+import {type T, type U, type V} from '...';
+
+// 'declaration' style
+import type {T, U, V} from '...';
+```
+
+The rule has a string option:
+
+* `"identifier"` (default): Enforces that type imports are all in the
+  'identifier' style.
+* `"declaration"`: Enforces that type imports are all in the 'declaration'
+  style.
+
+The following patterns are considered problems:
+
+```js
+import type {A, B} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type {A, B} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type {A, B as C} from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["identifier"]
+import type A from 'a';
+// Message: Unexpected "import type"
+
+// Options: ["declaration"]
+import {type A, type B} from 'a';
+// Message: Unexpected type import
+// Message: Unexpected type import
+```
+
+The following patterns are not considered problems:
+
+```js
+import {type A, type B} from 'a';
+
+// Options: ["identifier"]
+import {type A, type B} from 'a';
+
+// Options: ["declaration"]
+import type {A, B} from 'a';
 ```
 
 
@@ -3452,6 +4679,7 @@ type X =
 | number
 }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = string| number;
 
 type X = string & number;
@@ -3475,6 +4703,7 @@ type X =
 & number
 }
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = string& number;
 ```
 
@@ -3504,33 +4733,6 @@ declare module A { declare var a: Y }
 
 declare var A: Y
 // Additional rules: {"no-unused-vars":1}
-
-import type A from "a"; (function<T: A>(): T {})
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type A from "a"
-// Additional rules: {"no-unused-vars":1}
-
-import type {A} from "a"; (function<T: A>(): T {})
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type {A} from "a"
-// Additional rules: {"no-unused-vars":1}
-
-(function<T: A>(): T {}); import type {a as A} from "a"
-// Additional rules: {"no-unused-vars":1}
-
-type A = {}; function x<Y: A>(i: Y) { i }; x()
-// Additional rules: {"no-unused-vars":1}
-
-function x<Y: A>(i: Y) { i }; type A = {}; x()
-// Additional rules: {"no-unused-vars":1}
-
-type A = {}; function x<Y: A.B.C>(i: Y) { i }; x()
-// Additional rules: {"no-unused-vars":1}
-
-function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
-// Additional rules: {"no-unused-vars":1}
 ```
 
 
@@ -3541,4 +4743,14 @@ function x<Y: A.B.C>(i: Y) { i }; type A = {}; x()
 **Deprecated** Babylon (the Babel parser) v6.10.0 fixes parsing of the invalid syntax this plugin warned against.
 
 Checks for simple Flow syntax errors.
+
+The following patterns are not considered problems:
+
+```js
+function x(foo: string = "1") {}
+
+function x(foo: Type = bar()) {}
+```
+
+
 

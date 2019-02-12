@@ -1,5 +1,5 @@
- // ported from babel/flow-object-type; original author: Nat Mote
- // https://github.com/babel/eslint-plugin-babel/blob/c0a49d25a97feb12c1d07073a0b37317359a5fe5/rules/flow-object-type.js
+// ported from babel/flow-object-type; original author: Nat Mote
+// https://github.com/babel/eslint-plugin-babel/blob/c0a49d25a97feb12c1d07073a0b37317359a5fe5/rules/flow-object-type.js
 
 const SEMICOLON = {
   char: ';',
@@ -24,8 +24,18 @@ const create = (context) => {
   }
 
   const requireProperPunctuation = (node) => {
-    const tokens = context.getSourceCode().getTokens(node);
-    const lastToken = tokens[tokens.length - 1];
+    const sourceCode = context.getSourceCode();
+    const tokens = sourceCode.getTokens(node);
+    let lastToken;
+
+    lastToken = tokens[tokens.length - 1];
+    if (lastToken.type !== 'Punctuator' ||
+        !(lastToken.value === SEMICOLON.char ||
+          lastToken.value === COMMA.char)) {
+      const parentTokens = sourceCode.getTokens(node.parent);
+
+      lastToken = parentTokens[parentTokens.indexOf(lastToken) + 1];
+    }
 
     if (lastToken.type === 'Punctuator') {
       if (lastToken.value === BAD.char) {
@@ -49,7 +59,8 @@ const create = (context) => {
 
 const schema = [
   {
-    enum: ['semicolon', 'comma']
+    enum: ['semicolon', 'comma'],
+    type: 'string'
   }
 ];
 

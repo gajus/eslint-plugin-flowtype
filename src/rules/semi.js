@@ -1,10 +1,18 @@
-export default (context) => {
+const schema = [
+  {
+    enum: ['always', 'never'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const never = (context.options[0] || 'always') === 'never';
   const sourceCode = context.getSourceCode();
 
   const report = (node, missing) => {
     const lastToken = sourceCode.getLastToken(node);
-    let fix, message;
+    let fix;
+    let message;
     let {loc} = lastToken;
 
     if (missing) {
@@ -47,6 +55,12 @@ export default (context) => {
   };
 
   return {
+    OpaqueType: checkForSemicolon,
     TypeAlias: checkForSemicolon
   };
+};
+
+export default {
+  create,
+  schema
 };

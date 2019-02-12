@@ -29,6 +29,37 @@ export default {
       output: 'type X = Promise <string>'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'whenever',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'always',
+              'never'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'always',
+              'never'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'always',
+            'never'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['whenever']
+    }
+  ],
   valid: [
     {
       code: 'type X = Promise<string>'

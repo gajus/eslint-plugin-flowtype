@@ -188,9 +188,63 @@ export default {
       code: 'type X = any; type Y = Function; type Z = Object',
       errors: [{message: 'Unexpected use of weak type "Function"'}],
       options: [{
-        Object: false,
-        any: false
+        any: false,
+        Object: false
       }]
+    }
+  ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: {
+            nonExistentWeakType: false
+          },
+          dataPath: '[0]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'nonExistentWeakType'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              any: {
+                type: 'boolean'
+              },
+              Function: {
+                type: 'boolean'
+              },
+              Object: {
+                type: 'boolean'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/0/additionalProperties'
+        }
+      ],
+      options: [{nonExistentWeakType: false}]
+    },
+    {
+      errors: [
+        {
+          data: 'irrelevant',
+          dataPath: '[0].Object',
+          keyword: 'type',
+          message: 'should be boolean',
+          params: {
+            type: 'boolean'
+          },
+          parentSchema: {
+            type: 'boolean'
+          },
+          schema: 'boolean',
+          schemaPath: '#/items/0/properties/Object/type'
+        }
+      ],
+      options: [{Object: 'irrelevant'}]
     }
   ],
   valid: [
@@ -239,8 +293,8 @@ export default {
     {
       code: 'type X = any; type Y = Object',
       options: [{
-        Object: false,
-        any: false
+        any: false,
+        Object: false
       }]
     },
     {

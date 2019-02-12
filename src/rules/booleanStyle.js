@@ -1,4 +1,11 @@
-export default (context) => {
+const schema = [
+  {
+    enum: ['bool', 'boolean'],
+    type: 'string'
+  }
+];
+
+const create = (context) => {
   const longForm = (context.options[0] || 'boolean') === 'boolean';
 
   return {
@@ -26,4 +33,9 @@ export default (context) => {
       }
     }
   };
+};
+
+export default {
+  create,
+  schema
 };

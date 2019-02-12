@@ -135,6 +135,92 @@ export default {
       ]
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: {
+            excludeOtherStuff: true
+          },
+          dataPath: '[0]',
+          keyword: 'additionalProperties',
+          message: 'should NOT have additional properties',
+          params: {
+            additionalProperty: 'excludeOtherStuff'
+          },
+          parentSchema: {
+            additionalProperties: false,
+            properties: {
+              excludeArrowFunctions: {
+                enum: [
+                  false,
+                  true,
+                  'expressionsOnly'
+                ]
+              },
+              excludeParameterMatch: {
+                type: 'string'
+              }
+            },
+            type: 'object'
+          },
+          schema: false,
+          schemaPath: '#/items/0/additionalProperties'
+        }
+      ],
+      options: [{excludeOtherStuff: true}]
+    },
+    {
+      errors: [
+        {
+          data: 'everything',
+          dataPath: '[0].excludeArrowFunctions',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              false,
+              true,
+              'expressionsOnly'
+            ]
+          },
+          schema: [
+            false,
+            true,
+            'expressionsOnly'
+          ],
+          schemaPath: '#/items/0/properties/excludeArrowFunctions/enum'
+        }
+      ],
+      options: [{excludeArrowFunctions: 'everything'}]
+    },
+    {
+      errors: [
+        {
+          data: 3,
+          dataPath: '[0].excludeParameterMatch',
+          keyword: 'type',
+          message: 'should be string',
+          params: {
+            type: 'string'
+          },
+          parentSchema: {
+            type: 'string'
+          },
+          schema: 'string',
+          schemaPath: '#/items/0/properties/excludeParameterMatch/type'
+        }
+      ],
+      options: [{excludeParameterMatch: 3}]
+    }
+  ],
   valid: [
     {
       code: '(foo: string) => {}'

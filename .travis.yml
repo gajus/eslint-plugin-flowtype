@@ -1,12 +1,10 @@
 language: node_js
 node_js:
-  - 7
+  - node
+  - 8
   - 6
-  - 5
-  - 4
 before_install:
   - npm config set depth 0
-  - npm install --global npm@latest
 notifications:
   email: false
 sudo: false
@@ -14,6 +12,7 @@ script:
   - npm run test
   - npm run lint
   - npm run build
-  - conventional-changelog-lint --from=HEAD~$(git --no-pager rev-list master..HEAD --count)
 after_success:
-  - travis-after-all && ./.scripts/release.sh
+  - export NODE_ENV=production
+  - npm run build
+  - semantic-release

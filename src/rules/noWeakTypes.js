@@ -1,5 +1,23 @@
 import _ from 'lodash';
 
+const schema = [
+  {
+    additionalProperties: false,
+    properties: {
+      any: {
+        type: 'boolean'
+      },
+      Function: {
+        type: 'boolean'
+      },
+      Object: {
+        type: 'boolean'
+      }
+    },
+    type: 'object'
+  }
+];
+
 const reportWeakType = (context, weakType) => {
   return (node) => {
     context.report({
@@ -20,7 +38,7 @@ const genericTypeEvaluator = (context, {checkFunction, checkObject}) => {
   };
 };
 
-export default (context) => {
+const create = (context) => {
   const checkAny = _.get(context, 'options[0].any', true) === true;
   const checkFunction = _.get(context, 'options[0].Function', true) === true;
   const checkObject = _.get(context, 'options[0].Object', true) === true;
@@ -39,4 +57,9 @@ export default (context) => {
   }
 
   return checks;
+};
+
+export default {
+  create,
+  schema
 };

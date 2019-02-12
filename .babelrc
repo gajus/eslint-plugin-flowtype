@@ -1,9 +1,16 @@
 {
-    "presets": [
-        "es2015",
-        "stage-0"
-    ],
-    "plugins": [
-        "add-module-exports"
+  "plugins": [
+    "transform-object-rest-spread",
+    "add-module-exports"
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": 4
+        }
+      }
     ]
+  ]
 }

@@ -18,6 +18,37 @@ export default {
       output: 'type X = bool'
     }
   ],
+  misconfigured: [
+    {
+      errors: [
+        {
+          data: 'integer',
+          dataPath: '[0]',
+          keyword: 'enum',
+          message: 'should be equal to one of the allowed values',
+          params: {
+            allowedValues: [
+              'bool',
+              'boolean'
+            ]
+          },
+          parentSchema: {
+            enum: [
+              'bool',
+              'boolean'
+            ],
+            type: 'string'
+          },
+          schema: [
+            'bool',
+            'boolean'
+          ],
+          schemaPath: '#/items/0/enum'
+        }
+      ],
+      options: ['integer']
+    }
+  ],
   valid: [
     {
       code: 'type X = boolean'
