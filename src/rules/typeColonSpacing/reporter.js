@@ -22,7 +22,8 @@ const getSpaces = (direction, colon, context) => {
 
 export default (direction, context, {always, allowLineBreak}) => {
   return ({colon, node, name = '', type = 'type annotation'}) => {
-    let lineBreak, spaces;
+    let lineBreak;
+    let spaces;
 
     // Support optional names
     // type X = { [string]: a }

@@ -201,7 +201,7 @@ export default {
       code: 'async () => {}',
       errors: [
         {
-          message: 'Missing return type annotation.'
+          message: 'Must annotate undefined return type.'
         }
       ],
       options: [
@@ -215,13 +215,41 @@ export default {
       code: 'async function x() {}',
       errors: [
         {
-          message: 'Missing return type annotation.'
+          message: 'Must annotate undefined return type.'
         }
       ],
       options: [
         'always',
         {
           annotateUndefined: 'always'
+        }
+      ]
+    },
+    {
+      code: 'async (): Promise<void> => { return; }',
+      errors: [
+        {
+          message: 'Must not annotate undefined return type.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'never'
+        }
+      ]
+    },
+    {
+      code: 'async (): Promise<undefined> => { return; }',
+      errors: [
+        {
+          message: 'Must not annotate undefined return type.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'never'
         }
       ]
     },
@@ -261,17 +289,6 @@ export default {
         {
           message: 'Missing return type annotation.'
         }
-      ]
-    },
-    {
-      code: 'async () => { return; }',
-      errors: [
-        {
-          message: 'Missing return type annotation.'
-        }
-      ],
-      options: [
-        'always'
       ]
     },
     {

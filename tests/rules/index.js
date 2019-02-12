@@ -6,7 +6,7 @@ import Ajv from 'ajv';
 import {
   RuleTester
 } from 'eslint';
-import plugin from './../../src';
+import plugin from '../../src';
 
 const ruleTester = new RuleTester();
 
@@ -19,13 +19,16 @@ const reportingRules = [
   'generic-spacing',
   'newline-after-flow-annotation',
   'no-dupe-keys',
+  'no-existential-type',
   'no-flow-fix-me-comments',
   'no-mutable-array',
   'no-primitive-constructor-types',
   'no-types-missing-file-annotation',
   'no-unused-expressions',
   'no-weak-types',
+  'no-mixed',
   'object-type-delimiter',
+  'require-compound-type-alias',
   'require-exact-type',
   'require-parameter-type',
   'require-return-type',

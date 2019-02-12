@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import {
-    getParameterName,
-    iterateFunctionNodes,
-    quoteName
-} from './../utilities';
+  getParameterName,
+  iterateFunctionNodes,
+  quoteName
+} from '../utilities';
 
 const schema = [
   {

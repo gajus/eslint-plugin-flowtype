@@ -29,6 +29,16 @@ export default {
       ],
       options: ['never'],
       output: 'type FooType = {}'
+    },
+    {
+      code: 'opaque type FooType = {}',
+      errors: [
+        {
+          message: 'Missing semicolon.'
+        }
+      ],
+      options: [],
+      output: 'opaque type FooType = {};'
     }
   ],
   misconfigured: [
@@ -89,6 +99,9 @@ export default {
           onlyFilesWithFlowAnnotation: true
         }
       }
+    },
+    {
+      code: 'opaque type FooType = {};'
     }
   ]
 };

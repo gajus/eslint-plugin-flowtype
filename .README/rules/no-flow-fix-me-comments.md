@@ -19,4 +19,4 @@ This rule takes an optional RegExp that comments a text RegExp that makes the su
 }
 ```
 
-<!-- assertions no-flow-fix-me-comments -->
+<!-- assertions noFlowFixMeComments -->

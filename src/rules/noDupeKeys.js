@@ -1,7 +1,7 @@
 import _ from 'lodash/';
 import {
   getParameterName
-} from './../utilities';
+} from '../utilities';
 
 const schema = [];
 
@@ -51,9 +51,10 @@ const create = (context) => {
     return _.map(properties, (property) => {
       const element = analizeElement(property.value);
 
-      return Object.assign(element, {
+      return {
+        ...element,
         name: getParameterName(property, context)
-      });
+      };
     });
   };
 

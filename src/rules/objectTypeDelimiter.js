@@ -1,5 +1,5 @@
- // ported from babel/flow-object-type; original author: Nat Mote
- // https://github.com/babel/eslint-plugin-babel/blob/c0a49d25a97feb12c1d07073a0b37317359a5fe5/rules/flow-object-type.js
+// ported from babel/flow-object-type; original author: Nat Mote
+// https://github.com/babel/eslint-plugin-babel/blob/c0a49d25a97feb12c1d07073a0b37317359a5fe5/rules/flow-object-type.js
 
 const SEMICOLON = {
   char: ';',

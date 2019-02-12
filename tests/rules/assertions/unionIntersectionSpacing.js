@@ -19,16 +19,16 @@ const UNION = {
     {
       code: 'type X = string|number;',
       errors: [
-                {message: 'There must be a space before union type annotation separator'},
-                {message: 'There must be a space after union type annotation separator'}
+        {message: 'There must be a space before union type annotation separator'},
+        {message: 'There must be a space after union type annotation separator'}
       ],
       output: 'type X = string | number;'
     },
     {
       code: 'type X = {x: string}|{y: number};',
       errors: [
-                {message: 'There must be a space before union type annotation separator'},
-                {message: 'There must be a space after union type annotation separator'}
+        {message: 'There must be a space before union type annotation separator'},
+        {message: 'There must be a space after union type annotation separator'}
       ],
       output: 'type X = {x: string} | {y: number};'
     },
@@ -40,10 +40,10 @@ const UNION = {
     {
       code: 'type X = string|number|boolean;',
       errors: [
-                {message: 'There must be a space before union type annotation separator'},
-                {message: 'There must be a space after union type annotation separator'},
-                {message: 'There must be a space before union type annotation separator'},
-                {message: 'There must be a space after union type annotation separator'}
+        {message: 'There must be a space before union type annotation separator'},
+        {message: 'There must be a space after union type annotation separator'},
+        {message: 'There must be a space before union type annotation separator'},
+        {message: 'There must be a space after union type annotation separator'}
       ],
       output: 'type X = string | number | boolean;'
     },
@@ -55,8 +55,8 @@ const UNION = {
     {
       code: 'type X = ((string))|(number | foo);',
       errors: [
-                {message: 'There must be a space before union type annotation separator'},
-                {message: 'There must be a space after union type annotation separator'}
+        {message: 'There must be a space before union type annotation separator'},
+        {message: 'There must be a space after union type annotation separator'}
       ],
       output: 'type X = ((string)) | (number | foo);'
     },
@@ -126,16 +126,16 @@ const INTERSECTION = {
     {
       code: 'type X = {x: string}&{y: number};',
       errors: [
-                {message: 'There must be a space before intersection type annotation separator'},
-                {message: 'There must be a space after intersection type annotation separator'}
+        {message: 'There must be a space before intersection type annotation separator'},
+        {message: 'There must be a space after intersection type annotation separator'}
       ],
       output: 'type X = {x: string} & {y: number};'
     },
     {
       code: 'type X = string&number;',
       errors: [
-                {message: 'There must be a space before intersection type annotation separator'},
-                {message: 'There must be a space after intersection type annotation separator'}
+        {message: 'There must be a space before intersection type annotation separator'},
+        {message: 'There must be a space after intersection type annotation separator'}
       ],
       output: 'type X = string & number;'
     },
@@ -147,10 +147,10 @@ const INTERSECTION = {
     {
       code: 'type X = string&number&boolean;',
       errors: [
-                {message: 'There must be a space before intersection type annotation separator'},
-                {message: 'There must be a space after intersection type annotation separator'},
-                {message: 'There must be a space before intersection type annotation separator'},
-                {message: 'There must be a space after intersection type annotation separator'}
+        {message: 'There must be a space before intersection type annotation separator'},
+        {message: 'There must be a space after intersection type annotation separator'},
+        {message: 'There must be a space before intersection type annotation separator'},
+        {message: 'There must be a space after intersection type annotation separator'}
       ],
       output: 'type X = string & number & boolean;'
     },
@@ -162,8 +162,8 @@ const INTERSECTION = {
     {
       code: 'type X = ((string))&(number & foo);',
       errors: [
-                {message: 'There must be a space before intersection type annotation separator'},
-                {message: 'There must be a space after intersection type annotation separator'}
+        {message: 'There must be a space before intersection type annotation separator'},
+        {message: 'There must be a space after intersection type annotation separator'}
       ],
       output: 'type X = ((string)) & (number & foo);'
     },

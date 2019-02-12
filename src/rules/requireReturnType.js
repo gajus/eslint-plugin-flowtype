@@ -59,8 +59,14 @@ const create = (context) => {
   const getIsReturnTypeAnnotationUndefined = (targetNode) => {
     const isReturnTypeAnnotationLiteralUndefined = _.get(targetNode, 'functionNode.returnType.typeAnnotation.id.name') === 'undefined' && _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'GenericTypeAnnotation';
     const isReturnTypeAnnotationVoid = _.get(targetNode, 'functionNode.returnType.typeAnnotation.type') === 'VoidTypeAnnotation';
+    const isAsyncReturnTypeAnnotationVoid = _.get(targetNode, 'functionNode.async') &&
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.id.name') === 'Promise' && (
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].type') === 'VoidTypeAnnotation' ||
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].id.name') === 'undefined' &&
+      _.get(targetNode, 'functionNode.returnType.typeAnnotation.typeParameters.params[0].type') === 'GenericTypeAnnotation'
+    );
 
-    return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid;
+    return isReturnTypeAnnotationLiteralUndefined || isReturnTypeAnnotationVoid || isAsyncReturnTypeAnnotationVoid;
   };
 
   const shouldFilterNode = (functionNode) => {
@@ -93,6 +99,7 @@ const create = (context) => {
     return false;
   };
 
+  // eslint-disable-next-line complexity
   const evaluateFunction = (functionNode) => {
     const targetNode = targetNodes.pop();
 
@@ -102,16 +109,13 @@ const create = (context) => {
 
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isArrowFunctionExpression = functionNode.expression;
-    const hasImplicitReturnType = functionNode.async || functionNode.generator;
-    const isFunctionReturnUndefined = !isArrowFunctionExpression && !hasImplicitReturnType && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
+    const isFunctionReturnUndefined = !isArrowFunctionExpression && !(functionNode.generator && !functionNode.async) && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
     const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
-    if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+    if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow || shouldFilterNode(functionNode)) {
       return;
     }
-    if (shouldFilterNode(functionNode)) {
-      return;
-    }
+
     if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {

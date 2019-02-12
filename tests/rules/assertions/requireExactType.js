@@ -1,7 +1,6 @@
 export default {
   invalid: [
-
-      // Always
+    // Always
 
     {
       code: 'type foo = {};',
@@ -38,7 +37,7 @@ export default {
       options: ['always']
     },
 
-      // Never
+    // Never
 
     {
       code: 'type foo = {| |};',
@@ -61,13 +60,16 @@ export default {
   ],
   valid: [
 
-      // Always
+    // Always
 
     {
       code: 'type foo = {| |};'
     },
     {
       code: 'type foo = {| bar: string |};'
+    },
+    {
+      code: 'type foo = { [key: string]: string };'
     },
     {
       code: 'type foo = number;'
@@ -85,7 +87,7 @@ export default {
       options: ['always']
     },
 
-      // Never
+    // Never
 
     {
       code: 'type foo = { };',

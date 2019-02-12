@@ -4,13 +4,13 @@ const schema = [
   {
     additionalProperties: false,
     properties: {
+      any: {
+        type: 'boolean'
+      },
       Function: {
         type: 'boolean'
       },
       Object: {
-        type: 'boolean'
-      },
-      any: {
         type: 'boolean'
       }
     },
