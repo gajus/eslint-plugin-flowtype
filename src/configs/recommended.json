@@ -38,7 +38,7 @@
       2,
       "always"
     ],
-    "flowtype/use-flow-type": 1,
+    "flowtype/use-flow-type": 1
   },
   "settings": {
     "flowtype": {
