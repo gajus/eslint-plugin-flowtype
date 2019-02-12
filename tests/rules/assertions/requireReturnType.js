@@ -550,10 +550,16 @@ export default {
       code: '(foo): string => {}'
     },
     {
+      code: 'const f: Foo = (a, b) => 42;'
+    },
+    {
       code: '(foo): string => {}',
       options: [
         'always'
       ]
+    },
+    {
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => { return 42; }'
     },
     {
       code: '(foo) => { return; }'

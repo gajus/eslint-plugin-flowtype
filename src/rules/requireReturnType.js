@@ -116,16 +116,13 @@ const create = (context) => {
       return;
     }
 
+    const returnType = functionNode.returnType || isArrow && _.get(functionNode, 'parent.id.typeAnnotation');
+
     if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
       context.report(functionNode, 'Must annotate undefined return type.');
-    } else if (
-      !isFunctionReturnUndefined &&
-      !isReturnTypeAnnotationUndefined &&
-      annotateReturn &&
-      !functionNode.returnType
-    ) {
+    } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
       context.report(functionNode, 'Missing return type annotation.');
     }
   };

@@ -25,6 +25,19 @@ const create = iterateFunctionNodes((context) => {
   const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
 
   return (functionNode) => {
+    // It is save to ignore FunctionTypeAnnotation nodes in this rule.
+    if (functionNode.type === 'FunctionTypeAnnotation') {
+      return;
+    }
+
+    const isArrow = functionNode.type === 'ArrowFunctionExpression';
+    const isArrowFunctionExpression = functionNode.expression;
+    const functionAnnotation = isArrow && _.get(functionNode, 'parent.id.typeAnnotation');
+
+    if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
+      return;
+    }
+
     _.forEach(functionNode.params, (identifierNode) => {
       const parameterName = getParameterName(identifierNode, context);
 
@@ -32,13 +45,12 @@ const create = iterateFunctionNodes((context) => {
         return;
       }
 
-      const typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
+      let typeAnnotation;
 
-      const isArrow = functionNode.type === 'ArrowFunctionExpression';
-      const isArrowFunctionExpression = functionNode.expression;
+      typeAnnotation = _.get(identifierNode, 'typeAnnotation') || _.get(identifierNode, 'left.typeAnnotation');
 
-      if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow) {
-        return;
+      if (isArrow && functionAnnotation) {
+        typeAnnotation = true;
       }
 
       if (!typeAnnotation) {
