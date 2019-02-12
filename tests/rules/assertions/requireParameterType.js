@@ -232,10 +232,16 @@ export default {
       code: '(...foo: string) => {}'
     },
     {
+      code: 'const f: Foo = (a, b) => 42;'
+    },
+    {
       code: '({foo}: {foo: string}) => {}'
     },
     {
       code: '([foo]: Array) => {}'
+    },
+    {
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => {}'
     },
     {
       code: '(foo) => {}',
