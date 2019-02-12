@@ -63,6 +63,9 @@
 npm install eslint --save-dev
 npm install babel-eslint --save-dev
 npm install eslint-plugin-flowtype --save-dev
+
+# Or all at once: 
+npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
 <a name="eslint-plugin-flowtype-configuration"></a>
@@ -2335,11 +2338,19 @@ async () => { return 2; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
 async () => {}
-// Message: Missing return type annotation.
+// Message: Must annotate undefined return type.
 
 // Options: ["always",{"annotateUndefined":"always"}]
 async function x() {}
-// Message: Missing return type annotation.
+// Message: Must annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+async (): Promise<void> => { return; }
+// Message: Must not annotate undefined return type.
+
+// Options: ["always",{"annotateUndefined":"never"}]
+async (): Promise<undefined> => { return; }
+// Message: Must not annotate undefined return type.
 
 // Options: ["always",{"annotateUndefined":"always"}]
 class Test { constructor() { } }
@@ -2352,10 +2363,6 @@ class Test { foo = () => { return 42; } }
 // Message: Missing return type annotation.
 
 class Test { foo = () => 42; }
-// Message: Missing return type annotation.
-
-// Options: ["always"]
-async () => { return; }
 // Message: Missing return type annotation.
 
 // Options: ["always"]
@@ -4462,7 +4469,7 @@ This rule needs a text RegExp to operate with Its signature is as follows:
 }
 ```
 
-`'^([A-Z][a-z0-9]*)+Type$'` is the default pattern.
+`'^([A-Z][a-z0-9]*)+Type$$'` is the default pattern.
 
 The following patterns are considered problems:
 
