@@ -361,6 +361,34 @@ export default {
           ]
         }
       ]
+    },
+    {
+      code: 'function * foo() { yield 2; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always'
+        }
+      ]
+    },
+    {
+      code: 'async function * foo() { yield 2; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always'
+        }
+      ]
     }
   ],
   misconfigured: [
@@ -858,6 +886,24 @@ export default {
           includeOnlyMatching: [
             '^f.*'
           ]
+        }
+      ]
+    },
+    {
+      code: 'function * foo(): Iterable<number> { yield 2; }',
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always'
+        }
+      ]
+    },
+    {
+      code: 'async function * foo(): AsyncIterable<number> { yield 2; }',
+      options: [
+        'always',
+        {
+          annotateUndefined: 'always'
         }
       ]
     }

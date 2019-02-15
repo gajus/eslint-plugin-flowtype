@@ -109,7 +109,7 @@ const create = (context) => {
 
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isArrowFunctionExpression = functionNode.expression;
-    const isFunctionReturnUndefined = !isArrowFunctionExpression && !(functionNode.generator && !functionNode.async) && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
+    const isFunctionReturnUndefined = !isArrowFunctionExpression && !functionNode.generator && (!targetNode.returnStatementNode || isUndefinedReturnType(targetNode.returnStatementNode));
     const isReturnTypeAnnotationUndefined = getIsReturnTypeAnnotationUndefined(targetNode);
 
     if (skipArrows === 'expressionsOnly' && isArrowFunctionExpression || skipArrows === true && isArrow || shouldFilterNode(functionNode)) {
