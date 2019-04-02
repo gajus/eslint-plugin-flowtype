@@ -5,8 +5,8 @@ _The `--fix` option on the command line automatically fixes problems reported by
 Enforces consistent use of trailing commas in Object and Tuple annotations.
 
 This rule takes two arguments which both mirror ESLint's default `comma-dangle` rule.
-The first argument is for Object and Tuble annotations.
-The second argument is used for Interface annotations as ESLint's default `comma-dangle` doesn't apply to interfaces. 
+The first argument is for Object and Tuple annotations.
+The second argument is used for Interface annotations as ESLint's default `comma-dangle` doesn't apply to interfaces - this defaults to whatever the first argument is.
 
 If it is `'never'` then a problem is raised when there is a trailing comma.
 
