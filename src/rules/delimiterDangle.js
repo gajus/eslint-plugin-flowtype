@@ -4,11 +4,16 @@ const schema = [
   {
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
     type: 'string'
+  },
+  {
+    enum: ['always', 'always-multiline', 'only-multiline', 'never'],
+    type: 'string'
   }
 ];
 
 const create = (context) => {
   const option = context.options[0] || 'never';
+  const interfaceOption = context.options[1] || option;
   const sourceCode = context.getSourceCode();
 
   const reporter = (node, message, fix) => {
@@ -43,32 +48,33 @@ const create = (context) => {
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
     const report = makeReporters(lastChildNode, penultimateToken);
+    const nodeOption = node.parent.type === 'InterfaceDeclaration' ? interfaceOption : option;
 
-    if (option === 'always' && !isDangling) {
+    if (nodeOption === 'always' && !isDangling) {
       report.noDangle();
 
       return;
     }
 
-    if (option === 'never' && isDangling) {
+    if (nodeOption === 'never' && isDangling) {
       report.dangle();
 
       return;
     }
 
-    if (option === 'always-multiline' && !isDangling && isMultiLine) {
+    if (nodeOption === 'always-multiline' && !isDangling && isMultiLine) {
       report.noDangle();
 
       return;
     }
 
-    if (option === 'always-multiline' && isDangling && !isMultiLine) {
+    if (nodeOption === 'always-multiline' && isDangling && !isMultiLine) {
       report.dangle();
 
       return;
     }
 
-    if (option === 'only-multiline' && isDangling && !isMultiLine) {
+    if (nodeOption === 'only-multiline' && isDangling && !isMultiLine) {
       report.dangle();
     }
   };

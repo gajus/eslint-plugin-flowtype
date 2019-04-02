@@ -54,6 +54,14 @@ const OBJECT_TYPE_ANNOTATION = {
       output: 'type X = { foo: string }'
     },
 
+    // interface override
+    {
+      code: 'interface X { foo: string; }',
+      errors: [{message: 'Unexpected trailing delimiter'}],
+      options: ['always', 'never'],
+      output: 'interface X { foo: string }'
+    },
+
     // Only indexers...
     {
       code: 'type X = { [key: string]: number, }',
@@ -267,6 +275,12 @@ const OBJECT_TYPE_ANNOTATION = {
     {
       code: 'type X = {\nfoo: string;\n}',
       options: ['only-multiline']
+    },
+
+    // interface override
+    {
+      code: 'interface X { foo: string; }',
+      options: ['never', 'always']
     },
 
     // Empty...
