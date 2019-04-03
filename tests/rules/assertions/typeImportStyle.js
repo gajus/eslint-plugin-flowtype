@@ -51,6 +51,10 @@ export default {
     {
       code: 'import type A from \'a\';',
       options: ['identifier', {ignoreTypeDefault: true}]
+    },
+    {
+      code: 'declare module "m" { import type A from \'a\'; }',
+      options: ['identifier']
     }
   ]
 };

@@ -34,10 +34,23 @@ const create = (context) => {
     // Default to 'identifier'
     const ignoreTypeDefault = context.options[1] &&
       context.options[1].ignoreTypeDefault;
+    let isInsideDeclareModule = false;
 
     return {
+      DeclareModule () {
+        isInsideDeclareModule = true;
+      },
+      'DeclareModule:exit' () {
+        isInsideDeclareModule = false;
+      },
       ImportDeclaration (node) {
         if (node.importKind !== 'type') {
+          return;
+        }
+
+        // type specifiers are not allowed inside module declarations:
+        // https://github.com/facebook/flow/issues/7609
+        if (isInsideDeclareModule) {
           return;
         }
 
