@@ -43,6 +43,14 @@ export default {
     {
       code: 'import type {A, B} from \'a\';',
       options: ['declaration']
+    },
+    {
+      code: 'import typeof * as A from \'a\';',
+      options: ['identifier']
+    },
+    {
+      code: 'import type A from \'a\';',
+      options: ['identifier', {ignoreTypeDefault: true}]
     }
   ]
 };
