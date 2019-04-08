@@ -34,6 +34,7 @@ import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
+import spreadExactType from './rules/spreadExactType';
 import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
@@ -66,6 +67,7 @@ const rules = {
   'space-after-type-colon': spaceAfterTypeColon,
   'space-before-generic-bracket': spaceBeforeGenericBracket,
   'space-before-type-colon': spaceBeforeTypeColon,
+  'spread-exact-type': spreadExactType,
   'type-id-match': typeIdMatch,
   'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
@@ -109,6 +111,7 @@ export default {
     'space-after-type-colon': 0,
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
+    'spread-exact-type': 0,
     'type-id-match': 0,
     'type-import-style': 0,
     'union-intersection-spacing': 0,
