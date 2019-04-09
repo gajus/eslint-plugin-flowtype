@@ -72,7 +72,8 @@ const create = (context) => {
   const shouldFilterNode = (functionNode) => {
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isMethod = functionNode.parent && functionNode.parent.type === 'MethodDefinition';
-    const isProperty = functionNode.parent && functionNode.parent.type === 'ClassProperty';
+    const propertyNodes = ['Property', 'ClassProperty'];
+    const isProperty = functionNode.parent && propertyNodes.includes(functionNode.parent.type);
     let selector;
 
     if (isMethod || isProperty) {
