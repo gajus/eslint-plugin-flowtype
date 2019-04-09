@@ -926,7 +926,7 @@ export default {
     },
 
     {
-      code: 'const foo = { bar(): number { return 42; } }',
+      code: 'const foo = { baz() { return 42; } }',
       options: [
         'always',
         {
@@ -938,11 +938,6 @@ export default {
     },
     {
       code: 'const foo = { bar() { return 42; } }',
-      errors: [
-        {
-          message: 'Missing return type annotation.'
-        }
-      ],
       options: [
         'always',
         {
