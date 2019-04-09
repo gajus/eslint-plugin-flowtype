@@ -25,6 +25,7 @@
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
         * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
+        * [`no-mixed`](#eslint-plugin-flowtype-rules-no-mixed)
         * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
@@ -97,6 +98,7 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
       2,
       "never"
     ],
+    "flowtype/no-mixed": 2,
     "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-types-missing-file-annotation": 2,
     "flowtype/no-weak-types": 2,
@@ -1350,6 +1352,61 @@ const text = 'HELLO';
 
 
 
+<a name="eslint-plugin-flowtype-rules-no-mixed"></a>
+### <code>no-mixed</code>
+
+Warns against "mixed" type annotations.
+These types are not strict enough and could often be made more specific.
+
+The following patterns are considered problems:
+
+The following patterns are considered problems:
+
+```js
+function foo(thing): mixed {}
+// Message: Unexpected use of mixed type
+
+function foo(thing): Promise<mixed> {}
+// Message: Unexpected use of mixed type
+
+function foo(thing): Promise<Promise<mixed>> {}
+// Message: Unexpected use of mixed type
+```
+
+The following patterns are not considered problems:
+
+```js
+function foo(thing): string {}
+
+function foo(thing): Promise<string> {}
+
+function foo(thing): Promise<Promise<string>> {}
+
+(foo?: string) => {}
+
+(foo: ?string) => {}
+
+(foo: { a: string }) => {}
+
+(foo: { a: ?string }) => {}
+
+(foo: string[]) => {}
+
+type Foo = string
+
+type Foo = { a: string }
+
+type Foo = { (a: string): string }
+
+function foo(thing: string) {}
+
+var foo: string
+
+class Foo { props: string }
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-no-mutable-array"></a>
 ### <code>no-mutable-array</code>
 
@@ -2168,9 +2225,14 @@ The following patterns are not considered problems:
 
 (...foo: string) => {}
 
+const f: Foo = (a, b) => 42;
+
 ({foo}: {foo: string}) => {}
 
 ([foo]: Array) => {}
+
+type fn = (a: string, b: number) => number;
+const f: fn = (a, b) => {}
 
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => {}
@@ -2386,6 +2448,23 @@ function bar() { return 42; }
 const foo = () => { return 42; };
 const bar = () => { return 42; }
 // Message: Missing return type annotation.
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+const foo = { bar() { return 42; }, foobar: function() { return 42; } }
+// Message: Missing return type annotation.
+// Message: Missing return type annotation.
+
+// Options: ["always",{"excludeMatching":["bar"]}]
+const foo = { bar() { return 42; }, baz() { return 42; } }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+function * foo() { yield 2; }
+// Message: Missing return type annotation.
+
+// Options: ["always",{"annotateUndefined":"always"}]
+async function * foo() { yield 2; }
+// Message: Missing return type annotation.
 ```
 
 The following patterns are not considered problems:
@@ -2395,8 +2474,13 @@ return;
 
 (foo): string => {}
 
+const f: Foo = (a, b) => 42;
+
 // Options: ["always"]
 (foo): string => {}
+
+type fn = (a: string, b: number) => number;
+const f: fn = (a, b) => { return 42; }
 
 (foo) => { return; }
 
@@ -2503,6 +2587,18 @@ function bar() { return 42; }
 // Options: ["always",{"includeOnlyMatching":["^f.*"]}]
 function foo(): number { return 42; }
 function bar() { return 42; }
+
+// Options: ["always",{"includeOnlyMatching":["bar"]}]
+const foo = { baz() { return 42; } }
+
+// Options: ["always",{"excludeMatching":["bar"]}]
+const foo = { bar() { return 42; } }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+function * foo(): Iterable<number> { yield 2; }
+
+// Options: ["always",{"annotateUndefined":"always"}]
+async function * foo(): AsyncIterable<number> { yield 2; }
 ```
 
 
@@ -4511,12 +4607,19 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-12"></a>
+#### Options
+
 The rule has a string option:
 
 * `"identifier"` (default): Enforces that type imports are all in the
   'identifier' style.
 * `"declaration"`: Enforces that type imports are all in the 'declaration'
   style.
+
+This rule has an object option:
+
+* `ignoreTypeDefault` - if `true`, when in "identifier" mode, default type imports will be ignored. Default is `false`.
 
 The following patterns are considered problems:
 
@@ -4552,6 +4655,15 @@ import {type A, type B} from 'a';
 
 // Options: ["declaration"]
 import type {A, B} from 'a';
+
+// Options: ["identifier"]
+import typeof * as A from 'a';
+
+// Options: ["identifier",{"ignoreTypeDefault":true}]
+import type A from 'a';
+
+// Options: ["identifier"]
+declare module "m" { import type A from 'a'; }
 ```
 
 
