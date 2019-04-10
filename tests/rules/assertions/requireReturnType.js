@@ -363,6 +363,41 @@ export default {
       ]
     },
     {
+      code: 'const foo = { bar() { return 42; }, foobar: function() { return 42; } }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        },
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'const foo = { bar() { return 42; }, baz() { return 42; } }',
+      errors: [
+        {
+          message: 'Missing return type annotation.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          excludeMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
       code: 'function * foo() { yield 2; }',
       errors: [
         {
@@ -885,6 +920,29 @@ export default {
         {
           includeOnlyMatching: [
             '^f.*'
+          ]
+        }
+      ]
+    },
+
+    {
+      code: 'const foo = { baz() { return 42; } }',
+      options: [
+        'always',
+        {
+          includeOnlyMatching: [
+            'bar'
+          ]
+        }
+      ]
+    },
+    {
+      code: 'const foo = { bar() { return 42; } }',
+      options: [
+        'always',
+        {
+          excludeMatching: [
+            'bar'
           ]
         }
       ]
