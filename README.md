@@ -44,6 +44,7 @@
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
+        * [`spread-exact-type`](#eslint-plugin-flowtype-rules-spread-exact-type)
         * [`type-id-match`](#eslint-plugin-flowtype-rules-type-id-match)
         * [`type-import-style`](#eslint-plugin-flowtype-rules-type-import-style)
         * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
@@ -4540,6 +4541,31 @@ let x :number = 42;
 
 // Options: ["always"]
 var x :number = 42;
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-spread-exact-type"></a>
+### <code>spread-exact-type</code>
+
+Enforce object types, that are spread to be exact type explicitly.
+
+The following patterns are considered problems:
+
+```js
+type bar = {...{test: string}}
+// Message: Use $Exact to make type spreading safe.
+
+type foo = {test: number}; type bar = {...foo}
+// Message: Use $Exact to make type spreading safe.
+```
+
+The following patterns are not considered problems:
+
+```js
+type bar = {...$Exact<{test: string}>}
+
+type foo = {test: number}; type bar = {...$Exact<foo>}
 ```
 
 
