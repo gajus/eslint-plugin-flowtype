@@ -66,7 +66,7 @@ npm install eslint --save-dev
 npm install babel-eslint --save-dev
 npm install eslint-plugin-flowtype --save-dev
 
-# Or all at once: 
+# Or all at once:
 npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
@@ -2500,6 +2500,12 @@ const f: fn = (a, b) => { return 42; }
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return; }
 
+// Options: ["always",{"annotateUndefined":"ignore"}]
+(foo): void => { return; }
+
+// Options: ["always",{"annotateUndefined":"ignore"}]
+(foo) => { return; }
+
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return undefined; }
 
@@ -3053,7 +3059,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3062,7 +3068,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3071,7 +3077,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3080,7 +3086,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3089,7 +3095,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3098,7 +3104,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3107,7 +3113,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
 
@@ -3120,7 +3126,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
@@ -3138,7 +3144,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
@@ -3149,7 +3155,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 
@@ -3159,7 +3165,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
@@ -3284,7 +3290,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo: 
+(foo:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
@@ -4889,6 +4895,3 @@ function x(foo: string = "1") {}
 
 function x(foo: Type = bar()) {}
 ```
-
-
-
