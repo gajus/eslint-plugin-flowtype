@@ -20,6 +20,7 @@
     "flowtype/require-parameter-type": 0,
     "flowtype/require-return-type": 0,
     "flowtype/require-valid-file-annotation": 0,
+    "flowtype/require-readonly-react-props": 0,
     "flowtype/semi": 0,
     "flowtype/space-after-type-colon": [
       2,

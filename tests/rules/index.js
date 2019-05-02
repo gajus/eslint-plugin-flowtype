@@ -31,6 +31,7 @@ const reportingRules = [
   'require-compound-type-alias',
   'require-exact-type',
   'require-parameter-type',
+  'require-readonly-react-props',
   'require-return-type',
   'require-types-at-top',
   'require-valid-file-annotation',

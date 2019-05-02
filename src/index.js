@@ -20,6 +20,7 @@ import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
 import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
+import requireReadOnlyReactProps from './rules/requireReadOnlyReactProps';
 import requireReturnType from './rules/requireReturnType';
 import requireTypesAtTop from './rules/requireTypesAtTop';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -58,6 +59,7 @@ const rules = {
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
   'require-parameter-type': requireParameterType,
+  'require-readonly-react-props': requireReadOnlyReactProps,
   'require-return-type': requireReturnType,
   'require-types-at-top': requireTypesAtTop,
   'require-valid-file-annotation': requireValidFileAnnotation,
@@ -104,6 +106,7 @@ export default {
     'require-compound-type-alias': 0,
     'require-exact-type': 0,
     'require-parameter-type': 0,
+    'require-readonly-react-props': 0,
     'require-return-type': 0,
     'require-variable-type': 0,
     semi: 0,
