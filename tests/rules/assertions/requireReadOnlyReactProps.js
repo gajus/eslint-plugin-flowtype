@@ -6,7 +6,7 @@ export default {
       code: 'type Props = { }; class Foo extends React.Component<Props> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -14,7 +14,7 @@ export default {
       code: 'type OtherProps = { foo: string }; class Foo extends React.Component<OtherProps> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for OtherProps'
+          message: 'OtherProps must be $ReadOnly'
         }
       ]
     },
@@ -22,7 +22,7 @@ export default {
       code: 'class Foo extends React.Component<{}> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for class Foo'
+          message: 'Foo class props must be $ReadOnly'
         }
       ]
     },
@@ -30,7 +30,7 @@ export default {
       code: 'type Props = { bar: {} }; class Foo extends React.Component<Props, State> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -38,7 +38,7 @@ export default {
       code: 'type Props = { }; class Foo extends Component<Props> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -46,7 +46,7 @@ export default {
       code: 'type Props = { }; class Foo extends PureComponent<Props> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -54,7 +54,7 @@ export default {
       code: 'class Foo extends React.Component<UnknownProps> { }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for UnknownProps'
+          message: 'UnknownProps must be $ReadOnly'
         }
       ]
     },
@@ -64,7 +64,7 @@ export default {
       code: 'type Props = { }; function Foo(props: Props) { return <p /> }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -72,7 +72,7 @@ export default {
       code: 'type Props = { }; function Foo(props: Props) { return foo ? <p /> : <span /> }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for Props'
+          message: 'Props must be $ReadOnly'
         }
       ]
     },
@@ -80,7 +80,7 @@ export default {
       code: 'function Foo(props: {}) { return <p /> }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for component Foo'
+          message: 'Foo component props must be $ReadOnly'
         }
       ]
     },
@@ -88,7 +88,7 @@ export default {
       code: 'function Foo(props: UnknownProps) { return <p /> }',
       errors: [
         {
-          message: 'You gotta use $ReadOnly for UnknownProps'
+          message: 'UnknownProps must be $ReadOnly'
         }
       ]
     }

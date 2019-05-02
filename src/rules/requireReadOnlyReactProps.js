@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const schema = [];
 
 const reComponentName = /^(Pure)?Component$/;
@@ -19,7 +17,6 @@ const isReactComponent = (node) => {
 };
 
 const create = (context) => {
-
   const readOnlyTypes = [];
   const reportedFunctionalComponents = [];
 
@@ -42,12 +39,12 @@ const create = (context) => {
     ClassDeclaration (node) {
       if (isReactComponent(node) && isReadOnly(node)) {
         context.report({
-          message: 'You gotta use $ReadOnly for ' + node.superTypeParameters.params[0].id.name,
+          message: node.superTypeParameters.params[0].id.name + ' must be $ReadOnly',
           node
         });
       } else if (node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation') {
         context.report({
-          message: 'You gotta use $ReadOnly for class ' + node.id.name,
+          message: node.id.name + ' class props must be $ReadOnly',
           node
         });
       }
@@ -62,7 +59,7 @@ const create = (context) => {
       while (currentNode && currentNode.type !== 'FunctionDeclaration') {
         currentNode = currentNode.parent;
       }
-      
+
       // functional components can only have 1 param
       if (currentNode.params.length !== 1) {
         return;
@@ -79,7 +76,7 @@ const create = (context) => {
           }
 
           context.report({
-            message: 'You gotta use $ReadOnly for ' + identifier.name,
+            message: identifier.name + ' must be $ReadOnly',
             node
           });
 
@@ -90,7 +87,7 @@ const create = (context) => {
 
         if (typeAnnotation.typeAnnotation.type === 'ObjectTypeAnnotation') {
           context.report({
-            message: 'You gotta use $ReadOnly for component ' + currentNode.id.name,
+            message: currentNode.id.name + ' component props must be $ReadOnly',
             node
           });
         }
