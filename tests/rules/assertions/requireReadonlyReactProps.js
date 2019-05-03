@@ -120,6 +120,9 @@ export default {
     {
       code: 'type FooType = {}; class Foo extends Bar<FooType> { }'
     },
+    {
+      code: 'class Foo { }'
+    },
 
     // functional components
     {
@@ -130,6 +133,9 @@ export default {
     },
     {
       code: 'type Props = {}; function Foo(props: OtherProps) { }'
+    },
+    {
+      code: 'function Foo() { return <p /> }'
     }
   ]
 };

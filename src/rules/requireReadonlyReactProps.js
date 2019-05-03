@@ -3,6 +3,10 @@ const schema = [];
 const reComponentName = /^(Pure)?Component$/;
 
 const isReactComponent = (node) => {
+  if (!node.superClass) {
+    return false;
+  }
+
   return (
 
     // class Foo extends Component { }
@@ -42,7 +46,7 @@ const create = (context) => {
           message: node.superTypeParameters.params[0].id.name + ' must be $ReadOnly',
           node
         });
-      } else if (node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation') {
+      } else if (node.superTypeParameters && node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation') {
         context.report({
           message: node.id.name + ' class props must be $ReadOnly',
           node
@@ -61,7 +65,7 @@ const create = (context) => {
       }
 
       // functional components can only have 1 param
-      if (currentNode.params.length !== 1) {
+      if (!currentNode || currentNode.params.length !== 1) {
         return;
       }
 
