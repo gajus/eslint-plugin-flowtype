@@ -24,16 +24,25 @@ const create = (context) => {
   const readOnlyTypes = [];
   const reportedFunctionalComponents = [];
 
-  const isReadOnly = (node) => {
+  const isReadOnlyClassProp = (node) => {
     return node.superTypeParameters.params[0].id &&
           node.superTypeParameters.params[0].id.name !== '$ReadOnly' &&
           !readOnlyTypes.includes(node.superTypeParameters.params[0].id.name);
   };
 
-  // type Props = $ReadOnly<{}>
+  const isReadOnlyType = (node) => {
+    return node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly';
+  };
+
   for (const node of context.getSourceCode().ast.body) {
-    if (node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly') {
-      readOnlyTypes.push(node.id.name);
+    // type Props = $ReadOnly<{}>
+    if (isReadOnlyType(node) ||
+
+        // export type Props = $ReadOnly<{}>
+        node.type === 'ExportNamedDeclaration' &&
+        node.declaration &&
+        isReadOnlyType(node.declaration)) {
+      readOnlyTypes.push(node.id ? node.id.name : node.declaration.id.name);
     }
   }
 
@@ -41,7 +50,7 @@ const create = (context) => {
 
     // class components
     ClassDeclaration (node) {
-      if (isReactComponent(node) && isReadOnly(node)) {
+      if (isReactComponent(node) && isReadOnlyClassProp(node)) {
         context.report({
           message: node.superTypeParameters.params[0].id.name + ' must be $ReadOnly',
           node

@@ -58,6 +58,14 @@ export default {
         }
       ]
     },
+    {
+      code: 'export type Props = {}; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly'
+        }
+      ]
+    },
 
     // functional components
     {
@@ -91,6 +99,14 @@ export default {
           message: 'UnknownProps must be $ReadOnly'
         }
       ]
+    },
+    {
+      code: 'export type Props = {}; function Foo(props: Props) { return <p /> }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly'
+        }
+      ]
     }
   ],
   valid: [
@@ -122,6 +138,9 @@ export default {
     },
     {
       code: 'class Foo { }'
+    },
+    {
+      code: 'export type Props = $ReadOnly<{}>; class Foo extends Component<Props> { }'
     },
 
     // functional components
