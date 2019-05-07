@@ -39,7 +39,7 @@ function MyComponent(props: Props) {
 }
 ```
 
-The rule only works for locally defined props that are marked with a `$ReadOnly`. It doesn't work with imported props or props marked as read-only via covariant notation:
+The rule only works for locally defined props that are marked with a `$ReadOnly` or using covariant notation. It doesn't work with imported props:
 
 ```js
 // the rule has no way of knowing whether ImportedProps are read-only
@@ -53,14 +53,15 @@ type Props = {|
 |};
 class Bar extends React.Component<Props> { }
 
-// this fails because the object is not fully ReadOnly
+// this fails because the object is not fully read-only
 type Props = {|
     +foo: string,
     bar: number,
 |};
 class Bar extends React.Component<Props> { }
 
-// this also fails because spreading makes object mutable (as of Flow 0.98)
+// this fails because spreading makes object mutable (as of Flow 0.98)
+// https://github.com/gajus/eslint-plugin-flowtype/pull/400#issuecomment-489813899
 type Props = {|
     +foo: string,
     ...bar,
