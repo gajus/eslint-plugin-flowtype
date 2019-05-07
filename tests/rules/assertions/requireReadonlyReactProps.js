@@ -66,6 +66,30 @@ export default {
         }
       ]
     },
+    {
+      code: 'type Props = {| foo: string |}; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly'
+        }
+      ]
+    },
+    {
+      code: 'type Props = {| +foo: string, ...bar |}; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly'
+        }
+      ]
+    },
+    {
+      code: 'type Props = {| +foo: string, -bar: number |}; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly'
+        }
+      ]
+    },
 
     // functional components
     {
@@ -140,7 +164,16 @@ export default {
       code: 'class Foo { }'
     },
     {
-      code: 'export type Props = $ReadOnly<{}>; class Foo extends Component<Props> { }'
+      code: 'export type Props = $ReadOnly<{}>; class Foo extends Component<Props, State> { }'
+    },
+    {
+      code: 'export type Props = $ReadOnly<{}>; export class Foo extends Component<Props> { }'
+    },
+    {
+      code: 'type Props = {| +foo: string |}; class Foo extends Component<Props> { }'
+    },
+    {
+      code: 'type Props = {| +foo: string, +bar: number |}; class Foo extends Component<Props> { }'
     },
 
     // functional components

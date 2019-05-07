@@ -30,8 +30,18 @@ const create = (context) => {
           !readOnlyTypes.includes(node.superTypeParameters.params[0].id.name);
   };
 
+  const isReadOnlyObjectType = (node) => {
+    return node.type === 'TypeAlias' &&
+          node.right &&
+          node.right.type === 'ObjectTypeAnnotation' &&
+          node.right.properties.length > 0 &&
+          node.right.properties.every((prop) => {
+            return prop.variance && prop.variance.kind === 'plus';
+          });
+  };
+
   const isReadOnlyType = (node) => {
-    return node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly';
+    return node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly' || isReadOnlyObjectType(node);
   };
 
   for (const node of context.getSourceCode().ast.body) {

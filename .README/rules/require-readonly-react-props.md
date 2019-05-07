@@ -47,9 +47,23 @@ import { type ImportedProps } from './somewhere';
 class Foo extends React.Component<ImportedProps> { }
 
 
-// the rule doesn't check for covariant properties, even though technically this object is entirely read-only
+// the rule also checks for covariant properties
 type Props = {|
     +foo: string
+|};
+class Bar extends React.Component<Props> { }
+
+// this fails because the object is not fully ReadOnly
+type Props = {|
+    +foo: string,
+    bar: number,
+|};
+class Bar extends React.Component<Props> { }
+
+// this also fails because spreading makes object mutable (as of Flow 0.98)
+type Props = {|
+    +foo: string,
+    ...bar,
 |};
 class Bar extends React.Component<Props> { }
 ```
