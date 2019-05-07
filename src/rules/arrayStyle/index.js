@@ -47,7 +47,7 @@ export default (defaultConfig, simpleType) => {
       // verbose
       GenericTypeAnnotation (node) {
         if (node.id.name === 'Array') {
-          if (node.typeParameters.params.length === 1) {
+          if (node.typeParameters && node.typeParameters.params.length === 1) {
             const elementTypeNode = node.typeParameters.params[0];
             const rawElementType = context.getSourceCode().getText(elementTypeNode);
             const inlinedType = inlineType(rawElementType);

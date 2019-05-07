@@ -106,6 +106,9 @@ export default {
       code: 'type X = Array<string>'
     },
     {
+      code: 'type X = Array'
+    },
+    {
       code: 'type X = Array<string>',
       options: ['verbose']
     },
