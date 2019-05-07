@@ -127,6 +127,25 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
       '\'AType\' is not defined.',
       '\'BType\' is not defined.'
     ]
+  },
+
+  // This tests to ensure we have a robust handling of @flow comments
+  {
+    // eslint-disable-next-line no-restricted-syntax
+    code: `
+/**
+* Copyright 2019 no corp
+* @flow
+*/
+type Foo = $ReadOnly<{}>`,
+    errors: [
+      '\'$ReadOnly\' is not defined.'
+    ],
+    settings: {
+      flowtype: {
+        onlyFilesWithFlowAnnotation: true
+      }
+    }
   }
 ];
 
@@ -211,7 +230,8 @@ export default {
         code: subject.code,
         rules: {
           'no-undef': 2
-        }
+        },
+        settings: subject.settings
       };
     }),
     ...VALID_WITH_DEFINE_FLOW_TYPE.map((subject) => {
@@ -223,7 +243,8 @@ export default {
             2,
             'nofunc'
           ]
-        }
+        },
+        settings: subject.settings
       };
     })
   ]
