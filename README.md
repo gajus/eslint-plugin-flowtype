@@ -380,6 +380,8 @@ The following patterns are not considered problems:
 ```js
 type X = Array<string>
 
+type X = Array
+
 // Options: ["verbose"]
 type X = Array<string>
 
