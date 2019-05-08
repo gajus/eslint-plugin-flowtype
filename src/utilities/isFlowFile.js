@@ -15,9 +15,6 @@ export default (context, strict = true) => {
   }
 
   return comments.some((comment) => {
-    return (
-      isFlowFileAnnotation(comment.value) &&
-      !(strict && /no/.test(comment.value))
-    );
+    return isFlowFileAnnotation(comment.value, strict);
   });
 };
