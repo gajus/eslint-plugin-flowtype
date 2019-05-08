@@ -128,6 +128,16 @@ export default {
           onlyFilesWithFlowAnnotation: true
         }
       }
+    },
+
+    // While this isn't valid flow, we shouldn't disallow it.
+    {
+      code: 'type X = Array'
+    },
+
+    // Valid flow.
+    {
+      code: 'type X = typeof Array'
     }
   ]
 };
