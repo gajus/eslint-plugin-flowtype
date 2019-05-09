@@ -471,7 +471,8 @@ export default {
               annotateUndefined: {
                 enum: [
                   'always',
-                  'never'
+                  'never',
+                  'ignore'
                 ],
                 type: 'string'
               },
@@ -513,19 +514,22 @@ export default {
           params: {
             allowedValues: [
               'always',
-              'never'
+              'never',
+              'ignore'
             ]
           },
           parentSchema: {
             enum: [
               'always',
-              'never'
+              'never',
+              'ignore'
             ],
             type: 'string'
           },
           schema: [
             'always',
-            'never'
+            'never',
+            'ignore'
           ],
           schemaPath: '#/items/1/properties/annotateUndefined/enum'
         }
@@ -730,6 +734,24 @@ export default {
         'always',
         {
           annotateUndefined: 'always'
+        }
+      ]
+    },
+    {
+      code: 'async function doThing(): Promise<void> {}',
+      options: [
+        'always',
+        {
+          annotateUndefined: 'ignore'
+        }
+      ]
+    },
+    {
+      code: 'async function doThing() {}',
+      options: [
+        'always',
+        {
+          annotateUndefined: 'ignore'
         }
       ]
     },
