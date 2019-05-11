@@ -1,7 +1,7 @@
 <a name="eslint-plugin-flowtype"></a>
 # eslint-plugin-flowtype
 
-[![GitSpo Mentions](https://gitspo.com/badges/gajus/eslint-plugin-flowtype?style=flat-square)](https://gitspo.com/mentions/gajus/eslint-plugin-flowtype)
+[![GitSpo Mentions](https://gitspo.com/badges/mentions/gajus/eslint-plugin-flowtype?style=flat-square)](https://gitspo.com/mentions/gajus/eslint-plugin-flowtype)
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-flowtype.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-flowtype)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-flowtype/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-flowtype)
 [![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -395,6 +395,10 @@ type X = (?string)[]
 // Options: ["verbose"]
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type X = string[]
+
+type X = Array
+
+type X = typeof Array
 ```
 
 
@@ -512,6 +516,15 @@ declare interface A {}
 type X = {Y<AType>(): BType}
 // Additional rules: {"no-undef":2}
 
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+
+/**
+* Copyright 2019 no corp
+* @flow
+*/
+type Foo = $ReadOnly<{}>
+// Additional rules: {"no-undef":2}
+
 var a: AType
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
@@ -567,6 +580,15 @@ declare interface A {}
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 
 type X = {Y<AType>(): BType}
+// Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
+
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+
+/**
+* Copyright 2019 no corp
+* @flow
+*/
+type Foo = $ReadOnly<{}>
 // Additional rules: {"no-undef":2,"no-use-before-define":[2,"nofunc"]}
 ```
 
@@ -2501,12 +2523,6 @@ const f: fn = (a, b) => { return 42; }
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return; }
 
-// Options: ["always",{"annotateUndefined":"ignore"}]
-(foo): void => { return; }
-
-// Options: ["always",{"annotateUndefined":"ignore"}]
-(foo) => { return; }
-
 // Options: ["always",{"annotateUndefined":"never"}]
 (foo) => { return undefined; }
 
@@ -2529,6 +2545,12 @@ const f: fn = (a, b) => { return 42; }
 
 // Options: ["always",{"annotateUndefined":"always"}]
 async function doThing(): Promise<void> {}
+
+// Options: ["always",{"annotateUndefined":"ignore"}]
+async function doThing(): Promise<void> {}
+
+// Options: ["always",{"annotateUndefined":"ignore"}]
+async function doThing() {}
 
 // Options: ["always",{"annotateUndefined":"always"}]
 function* doThing(): Generator<number, void, void> { yield 2; }
@@ -3060,7 +3082,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3069,7 +3091,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3078,7 +3100,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3087,7 +3109,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3096,7 +3118,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3105,7 +3127,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3114,7 +3136,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
 
@@ -3127,7 +3149,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
@@ -3145,7 +3167,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
@@ -3156,7 +3178,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 
@@ -3166,7 +3188,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
@@ -3291,7 +3313,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo:
+(foo: 
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
@@ -4896,3 +4918,6 @@ function x(foo: string = "1") {}
 
 function x(foo: Type = bar()) {}
 ```
+
+
+
