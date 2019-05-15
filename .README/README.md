@@ -63,6 +63,7 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
       "comma"
     ],
     "flowtype/require-parameter-type": 2,
+    "flowtype/require-readonly-react-props": 0,
     "flowtype/require-return-type": [
       2,
       "always",
