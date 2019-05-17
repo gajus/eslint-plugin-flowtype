@@ -1,6 +1,7 @@
 const schema = [];
 
 const reComponentName = /^(Pure)?Component$/;
+const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/;
 
 const isReactComponent = (node) => {
   if (!node.superClass) {
@@ -25,9 +26,9 @@ const create = (context) => {
   const reportedFunctionalComponents = [];
 
   const isReadOnlyClassProp = (node) => {
-    return node.superTypeParameters.params[0].id &&
-          node.superTypeParameters.params[0].id.name !== '$ReadOnly' &&
-          !readOnlyTypes.includes(node.superTypeParameters.params[0].id.name);
+    const id = node.superTypeParameters.params[0].id;
+
+    return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name);
   };
 
   const isReadOnlyObjectType = (node) => {
@@ -41,7 +42,7 @@ const create = (context) => {
   };
 
   const isReadOnlyType = (node) => {
-    return node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly' || isReadOnlyObjectType(node);
+    return node.type === 'TypeAlias' && node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node);
   };
 
   for (const node of context.getSourceCode().ast.body) {
@@ -92,7 +93,7 @@ const create = (context) => {
           (typeAnnotation = currentNode.params[0].typeAnnotation)) {
         if ((identifier = typeAnnotation.typeAnnotation.id) &&
             !readOnlyTypes.includes(identifier.name) &&
-            identifier.name !== '$ReadOnly') {
+            !reReadOnly.test(identifier.name)) {
           if (reportedFunctionalComponents.includes(identifier)) {
             return;
           }
