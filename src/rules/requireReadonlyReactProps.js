@@ -100,7 +100,6 @@ const create = (context) => {
 
       if (currentNode.params[0].type === 'Identifier' &&
           (typeAnnotation = currentNode.params[0].typeAnnotation)) {
-
         if ((identifier = typeAnnotation.typeAnnotation.id) &&
             !readOnlyTypes.includes(identifier.name) &&
             !reReadOnly.test(identifier.name)) {
