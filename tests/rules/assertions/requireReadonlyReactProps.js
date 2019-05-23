@@ -175,6 +175,15 @@ export default {
     {
       code: 'type Props = {| +foo: string, +bar: number |}; class Foo extends Component<Props> { }'
     },
+    {
+      code: 'type Props = $FlowFixMe; class Foo extends Component<Props> { }'
+    },
+    {
+      code: 'type Props = {||}; class Foo extends Component<Props> { }'
+    },
+    {
+      code: 'class Foo extends Component<{||}> { }'
+    },
 
     // functional components
     {
@@ -188,6 +197,12 @@ export default {
     },
     {
       code: 'function Foo() { return <p /> }'
+    },
+    {
+      code: 'function Foo(props: $FlowFixMe) { return <p /> }'
+    },
+    {
+      code: 'function Foo(props: {||}) { return <p /> }'
     }
   ]
 };

@@ -1,6 +1,7 @@
 const schema = [];
 
 const reComponentName = /^(Pure)?Component$/;
+const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/;
 
 const isReactComponent = (node) => {
   if (!node.superClass) {
@@ -25,23 +26,30 @@ const create = (context) => {
   const reportedFunctionalComponents = [];
 
   const isReadOnlyClassProp = (node) => {
-    return node.superTypeParameters.params[0].id &&
-          node.superTypeParameters.params[0].id.name !== '$ReadOnly' &&
-          !readOnlyTypes.includes(node.superTypeParameters.params[0].id.name);
+    const id = node.superTypeParameters.params[0].id;
+
+    return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name);
   };
 
   const isReadOnlyObjectType = (node) => {
-    return node.type === 'TypeAlias' &&
-          node.right &&
-          node.right.type === 'ObjectTypeAnnotation' &&
-          node.right.properties.length > 0 &&
-          node.right.properties.every((prop) => {
+    if (!node || node.type !== 'ObjectTypeAnnotation') {
+      return false;
+    }
+
+    // we consider `{||}` to be ReadOnly since it's exact AND has no props
+    if (node.exact && node.properties.length === 0) {
+      return true;
+    }
+
+    // { +foo: ..., +bar: ..., ... }
+    return node.properties.length > 0 &&
+          node.properties.every((prop) => {
             return prop.variance && prop.variance.kind === 'plus';
           });
   };
 
   const isReadOnlyType = (node) => {
-    return node.type === 'TypeAlias' && node.right.id && node.right.id.name === '$ReadOnly' || isReadOnlyObjectType(node);
+    return node.type === 'TypeAlias' && node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
   };
 
   for (const node of context.getSourceCode().ast.body) {
@@ -65,7 +73,9 @@ const create = (context) => {
           message: node.superTypeParameters.params[0].id.name + ' must be $ReadOnly',
           node
         });
-      } else if (node.superTypeParameters && node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation') {
+      } else if (node.superTypeParameters &&
+                 node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation' &&
+                 !isReadOnlyObjectType(node.superTypeParameters.params[0])) {
         context.report({
           message: node.id.name + ' class props must be $ReadOnly',
           node
@@ -92,7 +102,7 @@ const create = (context) => {
           (typeAnnotation = currentNode.params[0].typeAnnotation)) {
         if ((identifier = typeAnnotation.typeAnnotation.id) &&
             !readOnlyTypes.includes(identifier.name) &&
-            identifier.name !== '$ReadOnly') {
+            !reReadOnly.test(identifier.name)) {
           if (reportedFunctionalComponents.includes(identifier)) {
             return;
           }
@@ -107,7 +117,8 @@ const create = (context) => {
           return;
         }
 
-        if (typeAnnotation.typeAnnotation.type === 'ObjectTypeAnnotation') {
+        if (typeAnnotation.typeAnnotation.type === 'ObjectTypeAnnotation' &&
+            !isReadOnlyObjectType(typeAnnotation.typeAnnotation)) {
           context.report({
             message: currentNode.id.name + ' component props must be $ReadOnly',
             node
