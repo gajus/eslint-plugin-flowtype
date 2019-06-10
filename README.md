@@ -2203,6 +2203,10 @@ The following patterns are not considered problems:
 ```js
 type foo = { foo: string, ... };
 
+interface Foo { foo: string }
+
+declare class Foo { foo: string }
+
 type foo = {| |};
 
 type foo = {| bar: string |};
