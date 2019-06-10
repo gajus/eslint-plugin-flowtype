@@ -35,7 +35,9 @@
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
+        * [`require-inexact-type`](#eslint-plugin-flowtype-rules-require-inexact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
+        * [`require-readonly-react-props`](#eslint-plugin-flowtype-rules-require-readonly-react-props)
         * [`require-return-type`](#eslint-plugin-flowtype-rules-require-return-type)
         * [`require-types-at-top`](#eslint-plugin-flowtype-rules-require-types-at-top)
         * [`require-valid-file-annotation`](#eslint-plugin-flowtype-rules-require-valid-file-annotation)
@@ -109,6 +111,7 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
       "comma"
     ],
     "flowtype/require-parameter-type": 2,
+    "flowtype/require-readonly-react-props": 0,
     "flowtype/require-return-type": [
       2,
       "always",
@@ -2136,12 +2139,117 @@ type foo = number;
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-inexact-type"></a>
+### <code>require-inexact-type</code>
+
+This rule enforces explicit inexact object types.
+
+<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-4"></a>
+#### Options
+
+The rule has one string option:
+
+- `"always"` (default): Report all object type definitions that aren't explicit inexact, but ignore exact objects.
+- `"never"`: Report all object type definitions that are explicit inexact.
+
+```js
+{
+  "rules": {
+    "flowtype/require-inexact-type": [
+      2,
+      "always"
+    ]
+  }
+}
+
+{
+  "rules": {
+    "flowtype/require-inexact-type": [
+      2,
+      "never"
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type foo = {};
+// Message: Type must be explicit inexact.
+
+type foo = { bar: string };
+// Message: Type must be explicit inexact.
+
+// Options: ["always"]
+type foo = {};
+// Message: Type must be explicit inexact.
+
+// Options: ["always"]
+type foo = { bar: string };
+// Message: Type must be explicit inexact.
+
+// Options: ["never"]
+type foo = {...};
+// Message: Type must not be explicit inexact.
+
+// Options: ["never"]
+type foo = { bar: string, ... };
+// Message: Type must not be explicit inexact.
+```
+
+The following patterns are not considered problems:
+
+```js
+type foo = { foo: string, ... };
+
+type foo = {| |};
+
+type foo = {| bar: string |};
+
+type foo = { [key: string]: string, ... };
+
+type foo = number;
+
+// Options: ["always"]
+type foo = {| |};
+
+// Options: ["always"]
+type foo = {...};
+
+// Options: ["always"]
+type foo = { bar: string, ... };
+
+// Options: ["always"]
+type foo = {| bar: string |};
+
+// Options: ["always"]
+type foo = number;
+
+// Options: ["never"]
+type foo = { };
+
+// Options: ["never"]
+type foo = {| |};
+
+// Options: ["never"]
+type foo = { bar: string };
+
+// Options: ["never"]
+type foo = {| bar: string |};
+
+// Options: ["never"]
+type foo = number;
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-parameter-type"></a>
 ### <code>require-parameter-type</code>
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-4"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-5"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -2279,12 +2387,196 @@ const f: fn = (a, b) => {}
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-readonly-react-props"></a>
+### <code>require-readonly-react-props</code>
+
+This rule validates that React props are marked as $ReadOnly. React props are immutable and modifying them could lead to unexpected results. Marking prop shapes as $ReadOnly avoids these issues.
+
+The rule tries its best to work with both class and functional components. For class components, it does a fuzzy check for one of "Component", "PureComponent", "React.Component" and "React.PureComponent". It doesn't actually infer that those identifiers resolve to a proper `React.Component` object.
+
+For example, this will NOT be checked:
+
+```js
+import MyReact from 'react';
+class Foo extends MyReact.Component { }
+```
+
+As a result, you can safely use other classes without getting warnings from this rule:
+
+```js
+class MyClass extends MySuperClass { }
+```
+
+React's functional components are hard to detect statically. The way it's done here is by searching for JSX within a function. When present, a function is considered a React component:
+
+```js
+// this gets checked
+type Props = { };
+function MyComponent(props: Props) {
+    return <p />;
+}
+
+// this doesn't get checked since no JSX is present in a function
+type Options = { };
+function SomeHelper(options: Options) {
+    // ...
+}
+
+// this doesn't get checked since no JSX is present directly in a function
+function helper() { return <p /> }
+function MyComponent(props: Props) {
+    return helper();
+}
+```
+
+The rule only works for locally defined props that are marked with a `$ReadOnly` or using covariant notation. It doesn't work with imported props:
+
+```js
+// the rule has no way of knowing whether ImportedProps are read-only
+import { type ImportedProps } from './somewhere';
+class Foo extends React.Component<ImportedProps> { }
+
+
+// the rule also checks for covariant properties
+type Props = {|
+    +foo: string
+|};
+class Bar extends React.Component<Props> { }
+
+// this fails because the object is not fully read-only
+type Props = {|
+    +foo: string,
+    bar: number,
+|};
+class Bar extends React.Component<Props> { }
+
+// this fails because spreading makes object mutable (as of Flow 0.98)
+// https://github.com/gajus/eslint-plugin-flowtype/pull/400#issuecomment-489813899
+type Props = {|
+    +foo: string,
+    ...bar,
+|};
+class Bar extends React.Component<Props> { }
+```
+
+
+```js
+{
+    "rules": {
+        "flowtype/require-readonly-react-props": 2
+    }
+}
+```
+
+
+The following patterns are considered problems:
+
+```js
+type Props = { }; class Foo extends React.Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type OtherProps = { foo: string }; class Foo extends React.Component<OtherProps> { }
+// Message: OtherProps must be $ReadOnly
+
+class Foo extends React.Component<{}> { }
+// Message: Foo class props must be $ReadOnly
+
+type Props = { bar: {} }; class Foo extends React.Component<Props, State> { }
+// Message: Props must be $ReadOnly
+
+type Props = { }; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type Props = { }; class Foo extends PureComponent<Props> { }
+// Message: Props must be $ReadOnly
+
+class Foo extends React.Component<UnknownProps> { }
+// Message: UnknownProps must be $ReadOnly
+
+export type Props = {}; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type Props = {| foo: string |}; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type Props = {| +foo: string, ...bar |}; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type Props = {| +foo: string, -bar: number |}; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+type Props = { }; function Foo(props: Props) { return <p /> }
+// Message: Props must be $ReadOnly
+
+type Props = { }; function Foo(props: Props) { return foo ? <p /> : <span /> }
+// Message: Props must be $ReadOnly
+
+function Foo(props: {}) { return <p /> }
+// Message: Foo component props must be $ReadOnly
+
+function Foo(props: UnknownProps) { return <p /> }
+// Message: UnknownProps must be $ReadOnly
+
+export type Props = {}; function Foo(props: Props) { return <p /> }
+// Message: Props must be $ReadOnly
+```
+
+The following patterns are not considered problems:
+
+```js
+class Foo extends React.Component<$ReadOnly<{}>> { }
+
+type Props = $ReadOnly<{}>; class Foo extends React.Component<Props> { }
+
+type Props = $ReadOnly<{}>; class Foo extends React.PureComponent<Props> { }
+
+class Foo extends React.Component<$ReadOnly<{}, State>> { }
+
+type Props = $ReadOnly<{}>; class Foo extends React.Component<Props, State> { }
+
+type Props = $ReadOnly<{}>; class Foo extends Component<Props> { }
+
+type Props = $ReadOnly<{}>; class Foo extends PureComponent<Props> { }
+
+type FooType = {}; class Foo extends Bar<FooType> { }
+
+class Foo { }
+
+export type Props = $ReadOnly<{}>; class Foo extends Component<Props, State> { }
+
+export type Props = $ReadOnly<{}>; export class Foo extends Component<Props> { }
+
+type Props = {| +foo: string |}; class Foo extends Component<Props> { }
+
+type Props = {| +foo: string, +bar: number |}; class Foo extends Component<Props> { }
+
+type Props = $FlowFixMe; class Foo extends Component<Props> { }
+
+type Props = {||}; class Foo extends Component<Props> { }
+
+class Foo extends Component<{||}> { }
+
+type Props = {}; function Foo() { }
+
+type Props = $ReadOnly<{}>; function Foo(props: Props) { }
+
+type Props = {}; function Foo(props: OtherProps) { }
+
+function Foo() { return <p /> }
+
+function Foo(props: $FlowFixMe) { return <p /> }
+
+function Foo(props: {||}) { return <p /> }
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-return-type"></a>
 ### <code>require-return-type</code>
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options-5"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-6"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -2638,7 +2930,7 @@ async function * foo(): AsyncIterable<number> { yield 2; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-6"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-7"></a>
 #### Options
 
 The rule has a string option:
@@ -2715,7 +3007,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-7"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-8"></a>
 #### Options
 
 The rule has a string option:
@@ -2858,7 +3150,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options-8"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-9"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -3010,7 +3302,7 @@ Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options-9"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-10"></a>
 #### Options
 
 The first option specifies sort order.
@@ -3235,7 +3527,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-10"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-11"></a>
 #### Options
 
 This rule has a string argument.
@@ -4604,7 +4896,7 @@ type foo = {test: number}; type bar = {...$Exact<foo>}
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options-11"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-12"></a>
 #### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
@@ -4662,7 +4954,7 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
-<a name="eslint-plugin-flowtype-rules-type-import-style-options-12"></a>
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-13"></a>
 #### Options
 
 The rule has a string option:
