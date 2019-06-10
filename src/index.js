@@ -18,6 +18,7 @@ import noWeakTypes from './rules/noWeakTypes';
 import noMixed from './rules/noMixed';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
+import requireInexactType from './rules/requireInexactType';
 import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
 import requireReadonlyReactProps from './rules/requireReadonlyReactProps';
@@ -58,6 +59,7 @@ const rules = {
   'object-type-delimiter': objectTypeDelimiter,
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
+  'require-inexact-type': requireInexactType,
   'require-parameter-type': requireParameterType,
   'require-readonly-react-props': requireReadonlyReactProps,
   'require-return-type': requireReturnType,

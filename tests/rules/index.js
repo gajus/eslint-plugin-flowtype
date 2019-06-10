@@ -29,6 +29,7 @@ const reportingRules = [
   'no-mixed',
   'object-type-delimiter',
   'require-compound-type-alias',
+  'require-inexact-type',
   'require-exact-type',
   'require-parameter-type',
   'require-readonly-react-props',
