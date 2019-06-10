@@ -12,6 +12,10 @@ const create = (context) => {
     ObjectTypeAnnotation (node) {
       const {inexact, exact} = node;
 
+      if (!node.hasOwnProperty('inexact')) {
+        return;
+      }
+
       if (always && !inexact && !exact) {
         context.report({
           message: 'Type must be explicit inexact.',

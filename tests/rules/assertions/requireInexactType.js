@@ -66,6 +66,12 @@ export default {
       code: 'type foo = { foo: string, ... };'
     },
     {
+      code: 'interface Foo { foo: string }'
+    },
+    {
+      code: 'declare class Foo { foo: string }'
+    },
+    {
       code: 'type foo = {| |};'
     },
     {
