@@ -40,6 +40,12 @@ const VALID_WITH_USE_FLOW_TYPE = [
     errors: [
       '\'A\' is defined but never used.'
     ]
+  },
+  {
+    code: 'import type A from "a"; type X<B = A<string>> = { b: B }; let x: X; console.log(x);',
+    errors: [
+      '\'A\' is defined but never used.'
+    ]
   }
 ];
 
