@@ -49,7 +49,11 @@ const create = (context) => {
 
   const builObjectStructure = (properties) => {
     return _.map(properties, (property) => {
-      const element = analizeElement(property.value);
+      const element = analizeElement(
+        property.type === 'ObjectTypeSpreadProperty' ?
+          property.argument :
+          property.value
+      );
 
       return {
         ...element,
