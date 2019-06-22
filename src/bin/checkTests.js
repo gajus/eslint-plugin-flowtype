@@ -46,7 +46,7 @@ const checkTests = (rulesNames) => {
 
   const invalid = rulesNames.filter((names) => {
     const testExists = isFile(path.resolve(__dirname, '../../tests/rules/assertions', names[0] + '.js'));
-    const inIndex = testIndexRules.indexOf(names[1]) !== -1;
+    const inIndex = testIndexRules.includes(names[1]);
 
     return !(testExists && inIndex);
   });

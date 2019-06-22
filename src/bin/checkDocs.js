@@ -75,7 +75,7 @@ const checkDocs = (rulesNames) => {
   const invalid = rulesNames.filter((names) => {
     const docPath = path.resolve(__dirname, '../../.README/rules', names[1] + '.md');
     const docExists = isFile(docPath);
-    const inIndex = docIndexRules.indexOf(names[1]) !== -1;
+    const inIndex = docIndexRules.includes(names[1]);
     const hasAssertions = docExists ? hasCorrectAssertions(docPath, names[0]) : false;
 
     return !(docExists && inIndex && hasAssertions);

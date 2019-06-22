@@ -21,7 +21,7 @@ const isValidAnnotationStyle = (node, style) => {
 };
 
 const checkAnnotationSpelling = (comment) => {
-  return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.20);
+  return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.2);
 };
 
 const schema = [

@@ -39,7 +39,7 @@ const create = (context) => {
 
     const [penultimateToken, lastToken] = sourceCode.getLastTokens(node, 2);
 
-    const isDangling = [';', ','].indexOf(penultimateToken.value) > -1;
+    const isDangling = [';', ','].includes(penultimateToken.value);
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
     const report = makeReporters(lastChildNode, penultimateToken);
