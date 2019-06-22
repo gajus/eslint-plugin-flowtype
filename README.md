@@ -1277,6 +1277,8 @@ type f = { get(key: { a: 1 }): string, get(key: { a: 2 }): string}
 var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
 
 var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
+
+type a = { b: <C>(config: { ...C, key: string}) => C }
 ```
 
 
@@ -5195,6 +5197,12 @@ declare module A { declare var a: Y }
 // Additional rules: {"no-unused-vars":1}
 
 declare var A: Y
+// Additional rules: {"no-unused-vars":1}
+
+import type A from "a"; type X<B = ComponentType<A>> = { b: B }; let x: X; console.log(x);
+// Additional rules: {"no-unused-vars":1}
+
+import type A from "a"; type X<B = A<string>> = { b: B }; let x: X; console.log(x);
 // Additional rules: {"no-unused-vars":1}
 ```
 
