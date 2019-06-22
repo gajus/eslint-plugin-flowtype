@@ -11,3 +11,4 @@ dist
 !.README
 !.travis.yml
 /package-lock.json
+/yack.lock
