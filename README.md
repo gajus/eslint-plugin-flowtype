@@ -3163,6 +3163,9 @@ a;
 // @flow
 
 // Options: ["always",{"annotationStyle":"line","strict":true}]
+// @noflow
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
 // @flow strict
 
 // Options: ["never",{"annotationStyle":"none"}]

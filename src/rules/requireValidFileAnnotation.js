@@ -26,7 +26,11 @@ const checkAnnotationSpelling = (comment) => {
 };
 
 const isFlowStrict = (comment) => {
-  return /@flow\sstrict\b/.test(comment);
+  return /^@flow\sstrict\b/.test(comment);
+};
+
+const noFlowAnnotation = (comment) => {
+  return /^@noflow\b/.test(comment);
 };
 
 const schema = [
@@ -87,15 +91,15 @@ const create = (context) => {
         if (firstToken && firstToken.start < potentialFlowFileAnnotation.start) {
           context.report(potentialFlowFileAnnotation, 'Flow file annotation not at the top of the file.');
         }
-
-        if (isFlowFileAnnotation(potentialFlowFileAnnotation.value.trim())) {
+        const annotationValue = potentialFlowFileAnnotation.value.trim();
+        if (isFlowFileAnnotation(annotationValue)) {
           if (!isValidAnnotationStyle(potentialFlowFileAnnotation, style)) {
-            const str = style === 'line' ? '`// ' + potentialFlowFileAnnotation.value.trim() + '`' : '`/* ' + potentialFlowFileAnnotation.value.trim() + ' */`';
+            const str = style === 'line' ? '`// ' + annotationValue + '`' : '`/* ' + annotationValue + ' */`';
 
             context.report(potentialFlowFileAnnotation, 'Flow file annotation style must be ' + str);
           }
-          if (flowStrict) {
-            if (!isFlowStrict(potentialFlowFileAnnotation.value.trim())) {
+          if (!noFlowAnnotation(annotationValue) && flowStrict) {
+            if (!isFlowStrict(annotationValue)) {
               const str = style === 'line' ? '`// @flow strict`' : '`/* @flow strict */`';
               context.report({
                 fix: addStrictAnnotation(),
@@ -104,7 +108,7 @@ const create = (context) => {
               });
             }
           }
-        } else if (checkAnnotationSpelling(potentialFlowFileAnnotation.value.trim())) {
+        } else if (checkAnnotationSpelling(annotationValue)) {
           context.report(potentialFlowFileAnnotation, 'Misspelled or malformed Flow file annotation.');
         } else {
           context.report(potentialFlowFileAnnotation, 'Malformed Flow file annotation.');
