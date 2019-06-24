@@ -3087,6 +3087,14 @@ a;
 // @flow
 // Message: Flow file annotation style must be `/* @flow */`
 
+// Options: ["always",{"annotationStyle":"block"}]
+// @flow
+// Message: Flow file annotation style must be `/* @flow */`
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow
+// Message: Strict Flow file annotation is required, should be `// @flow strict`
+
 // Options: ["always",{"annotationStyle":"line"}]
 /* @noflow */
 // Message: Flow file annotation style must be `// @noflow`
@@ -3102,6 +3110,16 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 a;
 // Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+a;
+// Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow
+a;
+b;
+// Message: Strict Flow file annotation is required, should be `// @flow strict`
 ```
 
 The following patterns are not considered problems:
@@ -3138,6 +3156,9 @@ a;
 
 // Options: ["always",{"annotationStyle":"line"}]
 // @flow
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow strict
 
 // Options: ["never",{"annotationStyle":"none"}]
 // @function
