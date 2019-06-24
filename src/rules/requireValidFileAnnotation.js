@@ -75,7 +75,7 @@ const create = (context) => {
         return (fixer) => {
           const annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
 
-          return fixer.replaceTextRange(node.range, annotation);
+          return fixer.replaceTextRange([node.start, node.range[0]], annotation);
         };
       };
 

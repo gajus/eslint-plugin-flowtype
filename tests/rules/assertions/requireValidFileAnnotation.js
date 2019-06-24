@@ -196,7 +196,7 @@ export default {
       output: '// @flow strict\na;'
     },
     {
-      code: '// @flow',
+      code: '// @flow\na;\nb;',
       errors: [
         {
           message: 'Strict Flow file annotation is required, should be `// @flow strict`'
@@ -209,7 +209,7 @@ export default {
           strict: true
         }
       ],
-      output: '// @flow strict\n'
+      output: '// @flow strict\na;\nb;'
     }
   ],
   misconfigured: [
