@@ -3028,6 +3028,10 @@ This rule has an object option:
     * `"line"`: Require single line annotations (i.e. `// @flow`).
     * `"block"`: Require block annotations (i.e. `/* @flow */`).
 
+* `"strict"` - Enforce a strict flow file annotation.
+    * `false` (default): strict flow annotation is not required.
+    * `true`: Require strict flow annotation (i.e. `// @flow strict`).
+
 ```js
 {
   "rules": {
@@ -3044,6 +3048,7 @@ This rule has an object option:
       2,
       "always", {
         "annotationStyle": "block"
+        "strict": true,
       }
     ]
   }
