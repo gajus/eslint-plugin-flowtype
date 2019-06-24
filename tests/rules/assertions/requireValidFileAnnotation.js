@@ -96,6 +96,35 @@ export default {
       ]
     },
     {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `/* @flow */`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block'
+        }
+      ]
+    },
+    {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Strict Flow file annotation is required, should be `// @flow strict`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true
+        }
+      ]
+    },
+    {
       code: '/* @noflow */',
       errors: [
         {
@@ -149,6 +178,38 @@ export default {
         }
       ],
       output: '/* @flow */\na;'
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true
+        }
+      ],
+      output: '// @flow strict\na;'
+    },
+    {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Strict Flow file annotation is required, should be `// @flow strict`'
+        }
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true
+        }
+      ],
+      output: '// @flow strict\n'
     }
   ],
   misconfigured: [
@@ -254,6 +315,16 @@ export default {
         'always',
         {
           annotationStyle: 'line'
+        }
+      ]
+    },
+    {
+      code: '// @flow strict',
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true
         }
       ]
     },
