@@ -319,6 +319,16 @@ export default {
       ]
     },
     {
+      code: '// @noflow',
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true
+        }
+      ]
+    },
+    {
       code: '// @flow strict',
       options: [
         'always',
