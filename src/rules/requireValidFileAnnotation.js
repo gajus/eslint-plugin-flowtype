@@ -5,7 +5,8 @@ import {
 } from '../utilities';
 
 const defaults = {
-  annotationStyle: 'none'
+  annotationStyle: 'none',
+  strict: false
 };
 
 const looksLikeFlowFileAnnotation = (comment) => {
@@ -24,6 +25,10 @@ const checkAnnotationSpelling = (comment) => {
   return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.2);
 };
 
+const isFlowStrict = (comment) => {
+  return /@flow\sstrict\b/.test(comment);
+};
+
 const schema = [
   {
     enum: ['always', 'never'],
@@ -35,6 +40,10 @@ const schema = [
       annotationStyle: {
         enum: ['none', 'line', 'block'],
         type: 'string'
+      },
+      strict: {
+        enum: [true, false],
+        type: 'boolean'
       }
     },
     type: 'object'
@@ -44,16 +53,29 @@ const schema = [
 const create = (context) => {
   const always = context.options[0] === 'always';
   const style = _.get(context, 'options[1].annotationStyle', defaults.annotationStyle);
+  const flowStrict = _.get(context, 'options[1].strict', defaults.strict);
 
   return {
     Program (node) {
       const firstToken = node.tokens[0];
-
       const addAnnotation = () => {
         return (fixer) => {
-          const annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
+          let annotation;
+          if (flowStrict) {
+            annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
+          } else {
+            annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
+          }
 
           return fixer.replaceTextRange([node.start, node.start], annotation);
+        };
+      };
+
+      const addStrictAnnotation = () => {
+        return (fixer) => {
+          const annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
+
+          return fixer.replaceTextRange([node.start, node.range[0]], annotation);
         };
       };
 
@@ -71,6 +93,16 @@ const create = (context) => {
             const str = style === 'line' ? '`// ' + potentialFlowFileAnnotation.value.trim() + '`' : '`/* ' + potentialFlowFileAnnotation.value.trim() + ' */`';
 
             context.report(potentialFlowFileAnnotation, 'Flow file annotation style must be ' + str);
+          }
+          if (flowStrict) {
+            if (!isFlowStrict(potentialFlowFileAnnotation.value.trim())) {
+              const str = style === 'line' ? '`// @flow strict`' : '`/* @flow strict */`';
+              context.report({
+                fix: addStrictAnnotation(),
+                message: 'Strict Flow file annotation is required, should be ' + str,
+                node
+              });
+            }
           }
         } else if (checkAnnotationSpelling(potentialFlowFileAnnotation.value.trim())) {
           context.report(potentialFlowFileAnnotation, 'Misspelled or malformed Flow file annotation.');

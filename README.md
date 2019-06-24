@@ -3028,6 +3028,10 @@ This rule has an object option:
     * `"line"`: Require single line annotations (i.e. `// @flow`).
     * `"block"`: Require block annotations (i.e. `/* @flow */`).
 
+* `"strict"` - Enforce a strict flow file annotation.
+    * `false` (default): strict flow annotation is not required.
+    * `true`: Require strict flow annotation (i.e. `// @flow strict`).
+
 ```js
 {
   "rules": {
@@ -3044,6 +3048,7 @@ This rule has an object option:
       2,
       "always", {
         "annotationStyle": "block"
+        "strict": true,
       }
     ]
   }
@@ -3087,6 +3092,14 @@ a;
 // @flow
 // Message: Flow file annotation style must be `/* @flow */`
 
+// Options: ["always",{"annotationStyle":"block"}]
+// @flow
+// Message: Flow file annotation style must be `/* @flow */`
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow
+// Message: Strict Flow file annotation is required, should be `// @flow strict`
+
 // Options: ["always",{"annotationStyle":"line"}]
 /* @noflow */
 // Message: Flow file annotation style must be `// @noflow`
@@ -3102,6 +3115,16 @@ a;
 // Options: ["always",{"annotationStyle":"block"}]
 a;
 // Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+a;
+// Message: Flow file annotation is missing.
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow
+a;
+b;
+// Message: Strict Flow file annotation is required, should be `// @flow strict`
 ```
 
 The following patterns are not considered problems:
@@ -3138,6 +3161,9 @@ a;
 
 // Options: ["always",{"annotationStyle":"line"}]
 // @flow
+
+// Options: ["always",{"annotationStyle":"line","strict":true}]
+// @flow strict
 
 // Options: ["never",{"annotationStyle":"none"}]
 // @function
