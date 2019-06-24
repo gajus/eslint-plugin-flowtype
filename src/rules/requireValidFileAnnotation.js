@@ -26,11 +26,11 @@ const checkAnnotationSpelling = (comment) => {
 };
 
 const isFlowStrict = (comment) => {
-  return /@flow\sstrict\b/.test(comment);
+  return /^@flow\sstrict\b/.test(comment);
 };
 
 const noFlowAnnotation = (comment) => {
-  return /@noflow\b/.test(comment);
+  return /^@noflow\b/.test(comment);
 };
 
 const schema = [
