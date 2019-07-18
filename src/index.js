@@ -37,11 +37,13 @@ import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
 import spreadExactType from './rules/spreadExactType';
+import arrowParens from './rules/arrowParens';
 import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
   'array-style-complex-type': arrayStyleComplexType,
   'array-style-simple-type': arrayStyleSimpleType,
+  'arrow-parens': arrowParens,
   'boolean-style': booleanStyle,
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
