@@ -331,6 +331,8 @@ export default {
     {code: '<T>(a: T) => { return a; }',
       options: ['always', {requireForBlockBody: true}]},
     {code: '<T>(a: T) => { return a; }',
+      options: ['as-needed', {requireForBlockBody: true}]},
+    {code: '(a): %checks => typeof a === "number"',
       options: ['as-needed', {requireForBlockBody: true}]}
 
   ]

@@ -50,6 +50,12 @@ export default {
         return;
       }
 
+      // Similarly, a predicate always requires parens just like a return type
+      // does, and therefore this case can also be safely ignored.
+      if (node.predicate) {
+        return;
+      }
+
       // "as-needed", { "requireForBlockBody": true }: x => x
       if (
         requireForBlockBody &&
