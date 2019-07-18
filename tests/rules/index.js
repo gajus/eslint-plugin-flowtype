@@ -13,6 +13,7 @@ const ruleTester = new RuleTester();
 const reportingRules = [
   'array-style-complex-type',
   'array-style-simple-type',
+  'arrow-parens',
   'boolean-style',
   'define-flow-type',
   'delimiter-dangle',
