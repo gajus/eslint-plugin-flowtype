@@ -18,6 +18,7 @@
     * [Rules](#eslint-plugin-flowtype-rules)
         * [`array-style-complex-type`](#eslint-plugin-flowtype-rules-array-style-complex-type)
         * [`array-style-simple-type`](#eslint-plugin-flowtype-rules-array-style-simple-type)
+        * [`arrow-parens`](#eslint-plugin-flowtype-rules-arrow-parens)
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
@@ -402,6 +403,222 @@ type X = string[]
 type X = Array
 
 type X = typeof Array
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-arrow-parens"></a>
+### <code>arrow-parens</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces the consistent use of parentheses in arrow functions.
+
+This rule has a string option and an object one.
+
+String options are:
+
+- `"always"` (default) requires parens around arguments in all cases.
+- `"as-needed"` enforces no braces where they can be omitted.
+
+Object properties for variants of the `"as-needed"` option:
+
+- `"requireForBlockBody": true` modifies the as-needed rule in order to require parens if the function body is in an instructions block (surrounded by braces).
+
+The following patterns are considered problems:
+
+```js
+a => {}
+// Message: undefined
+
+a => a
+// Message: undefined
+
+a => {
+}
+// Message: undefined
+
+a.then(foo => {});
+// Message: undefined
+
+a.then(foo => a);
+// Message: undefined
+
+a(foo => { if (true) {}; });
+// Message: undefined
+
+a(async foo => { if (true) {}; });
+// Message: undefined
+
+// Options: ["as-needed"]
+(a) => a
+// Message: undefined
+
+// Options: ["as-needed"]
+(a,) => a
+// Message: undefined
+
+// Options: ["as-needed"]
+async (a) => a
+// Message: undefined
+
+// Options: ["as-needed"]
+async(a) => a
+// Message: undefined
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+a => {}
+// Message: undefined
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a) => a
+// Message: undefined
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+async a => {}
+// Message: undefined
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+async (a) => a
+// Message: undefined
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+async(a) => a
+// Message: undefined
+```
+
+The following patterns are not considered problems:
+
+```js
+() => {}
+
+(a) => {}
+
+(a) => a
+
+(a) => {
+}
+
+a.then((foo) => {});
+
+a.then((foo) => { if (true) {}; });
+
+a.then(async (foo) => { if (true) {}; });
+
+// Options: ["always"]
+() => {}
+
+// Options: ["always"]
+(a) => {}
+
+// Options: ["always"]
+(a) => a
+
+// Options: ["always"]
+(a) => {
+}
+
+// Options: ["always"]
+a.then((foo) => {});
+
+// Options: ["always"]
+a.then((foo) => { if (true) {}; });
+
+// Options: ["always"]
+a.then(async (foo) => { if (true) {}; });
+
+// Options: ["as-needed"]
+() => {}
+
+// Options: ["as-needed"]
+a => {}
+
+// Options: ["as-needed"]
+a => a
+
+// Options: ["as-needed"]
+([a, b]) => {}
+
+// Options: ["as-needed"]
+({ a, b }) => {}
+
+// Options: ["as-needed"]
+(a = 10) => {}
+
+// Options: ["as-needed"]
+(...a) => a[0]
+
+// Options: ["as-needed"]
+(a, b) => {}
+
+// Options: ["as-needed"]
+async ([a, b]) => {}
+
+// Options: ["as-needed"]
+async (a, b) => {}
+
+// Options: ["as-needed"]
+(a: T) => a
+
+// Options: ["as-needed"]
+(a): T => a
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+() => {}
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+a => a
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+([a, b]) => {}
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+([a, b]) => a
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+({ a, b }) => {}
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+({ a, b }) => a + b
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a = 10) => {}
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(...a) => a[0]
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a, b) => {}
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+a => ({})
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+async a => ({})
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+async a => a
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a: T) => a
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a): T => a
+
+// Options: ["always",{"requireForBlockBody":true}]
+<T>(a: T) => a
+
+// Options: ["as-needed",{"requireForBlockBody":false}]
+<T>(a: T) => { return a; }
+
+// Options: ["always",{"requireForBlockBody":true}]
+<T>(a: T) => { return a; }
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+<T>(a: T) => { return a; }
+
+// Options: ["as-needed",{"requireForBlockBody":true}]
+(a): %checks => typeof a === "number"
 ```
 
 
@@ -2505,9 +2722,6 @@ type Props = { }; class Foo extends Component<Props> { }
 type Props = { }; class Foo extends PureComponent<Props> { }
 // Message: Props must be $ReadOnly
 
-class Foo extends React.Component<UnknownProps> { }
-// Message: UnknownProps must be $ReadOnly
-
 export type Props = {}; class Foo extends Component<Props> { }
 // Message: Props must be $ReadOnly
 
@@ -2528,9 +2742,6 @@ type Props = { }; function Foo(props: Props) { return foo ? <p /> : <span /> }
 
 function Foo(props: {}) { return <p /> }
 // Message: Foo component props must be $ReadOnly
-
-function Foo(props: UnknownProps) { return <p /> }
-// Message: UnknownProps must be $ReadOnly
 
 export type Props = {}; function Foo(props: Props) { return <p /> }
 // Message: Props must be $ReadOnly
@@ -2570,6 +2781,10 @@ type Props = $FlowFixMe; class Foo extends Component<Props> { }
 type Props = {||}; class Foo extends Component<Props> { }
 
 class Foo extends Component<{||}> { }
+
+class Foo extends React.Component<UnknownProps> { }
+
+import { type Props } from "file"; class Foo extends React.Component<Props> { }
 
 type Props = {}; function Foo() { }
 
