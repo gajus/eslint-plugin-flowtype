@@ -23,12 +23,13 @@ const isReactComponent = (node) => {
 
 const create = (context) => {
   const readOnlyTypes = [];
+  const foundTypes = [];
   const reportedFunctionalComponents = [];
 
   const isReadOnlyClassProp = (node) => {
     const id = node.superTypeParameters.params[0].id;
 
-    return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name);
+    return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name) && foundTypes.includes(id.name);
   };
 
   const isReadOnlyObjectType = (node) => {
@@ -49,18 +50,31 @@ const create = (context) => {
   };
 
   const isReadOnlyType = (node) => {
-    return node.type === 'TypeAlias' && node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
+    return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
   };
 
   for (const node of context.getSourceCode().ast.body) {
-    // type Props = $ReadOnly<{}>
-    if (isReadOnlyType(node) ||
+    let idName;
+    let typeNode;
 
-        // export type Props = $ReadOnly<{}>
-        node.type === 'ExportNamedDeclaration' &&
+    // type Props = $ReadOnly<{}>
+    if (node.type === 'TypeAlias') {
+      idName = node.id.name;
+      typeNode = node;
+
+      // export type Props = $ReadOnly<{}>
+    } else if (node.type === 'ExportNamedDeclaration' &&
         node.declaration &&
-        isReadOnlyType(node.declaration)) {
-      readOnlyTypes.push(node.id ? node.id.name : node.declaration.id.name);
+        node.declaration.type === 'TypeAlias') {
+      idName = node.declaration.id.name;
+      typeNode = node.declaration;
+    }
+
+    if (idName) {
+      foundTypes.push(idName);
+      if (isReadOnlyType(typeNode)) {
+        readOnlyTypes.push(idName);
+      }
     }
   }
 
@@ -101,6 +115,7 @@ const create = (context) => {
       if (currentNode.params[0].type === 'Identifier' &&
           (typeAnnotation = currentNode.params[0].typeAnnotation)) {
         if ((identifier = typeAnnotation.typeAnnotation.id) &&
+            foundTypes.includes(identifier.name) &&
             !readOnlyTypes.includes(identifier.name) &&
             !reReadOnly.test(identifier.name)) {
           if (reportedFunctionalComponents.includes(identifier)) {
