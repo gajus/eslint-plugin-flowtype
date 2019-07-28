@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   getRules,
-  isFile
+  isFile,
 } from './utilities';
 
 const windows = (array, size) => {

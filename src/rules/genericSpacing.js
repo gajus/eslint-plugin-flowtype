@@ -3,8 +3,8 @@ import {spacingFixers} from '../utilities';
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -35,7 +35,7 @@ const create = (context) => {
             data: {name: node.id.name},
             fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
             message: 'There must be no space at start of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         }
 
@@ -44,7 +44,7 @@ const create = (context) => {
             data: {name: node.id.name},
             fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter),
             message: 'There must be no space at end of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         }
       } else {
@@ -53,14 +53,14 @@ const create = (context) => {
             data: {name: node.id.name},
             fix: spacingFixers.stripSpacesAfter(opener, spacesBefore - 1),
             message: 'There must be one space at start of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         } else if (spacesBefore === 0) {
           context.report({
             data: {name: node.id.name},
             fix: spacingFixers.addSpaceAfter(opener),
             message: 'There must be a space at start of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         }
 
@@ -69,22 +69,22 @@ const create = (context) => {
             data: {name: node.id.name},
             fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter - 1),
             message: 'There must be one space at end of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         } else if (spacesAfter === 0) {
           context.report({
             data: {name: node.id.name},
             fix: spacingFixers.addSpaceAfter(lastInnerToken),
             message: 'There must be a space at end of "{{name}}" generic type annotation',
-            node: types
+            node: types,
           });
         }
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

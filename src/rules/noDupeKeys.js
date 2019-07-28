@@ -1,6 +1,6 @@
 import _ from 'lodash/';
 import {
-  getParameterName
+  getParameterName,
 } from '../utilities';
 
 const schema = [];
@@ -10,7 +10,7 @@ const create = (context) => {
     context.report({
       loc: node.loc,
       message: 'Duplicate property.',
-      node
+      node,
     });
   };
 
@@ -37,7 +37,7 @@ const create = (context) => {
 
     return {
       type,
-      value
+      value,
     };
   };
 
@@ -57,7 +57,7 @@ const create = (context) => {
 
       return {
         ...element,
-        name: getParameterName(property, context)
+        name: getParameterName(property, context),
       };
     });
   };
@@ -90,11 +90,11 @@ const create = (context) => {
   };
 
   return {
-    ObjectTypeAnnotation: checkForDuplicates
+    ObjectTypeAnnotation: checkForDuplicates,
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

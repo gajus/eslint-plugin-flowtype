@@ -3,20 +3,20 @@ export default {
     {
       code: 'type X = bool',
       errors: [{message: 'Use "boolean", not "bool"'}],
-      output: 'type X = boolean'
+      output: 'type X = boolean',
     },
     {
       code: 'type X = bool',
       errors: [{message: 'Use "boolean", not "bool"'}],
       options: ['boolean'],
-      output: 'type X = boolean'
+      output: 'type X = boolean',
     },
     {
       code: 'type X = boolean',
       errors: [{message: 'Use "bool", not "boolean"'}],
       options: ['bool'],
-      output: 'type X = bool'
-    }
+      output: 'type X = bool',
+    },
   ],
   misconfigured: [
     {
@@ -29,46 +29,46 @@ export default {
           params: {
             allowedValues: [
               'bool',
-              'boolean'
-            ]
+              'boolean',
+            ],
           },
           parentSchema: {
             enum: [
               'bool',
-              'boolean'
+              'boolean',
             ],
-            type: 'string'
+            type: 'string',
           },
           schema: [
             'bool',
-            'boolean'
+            'boolean',
           ],
-          schemaPath: '#/items/0/enum'
-        }
+          schemaPath: '#/items/0/enum',
+        },
       ],
-      options: ['integer']
-    }
+      options: ['integer'],
+    },
   ],
   valid: [
     {
-      code: 'type X = boolean'
+      code: 'type X = boolean',
     },
     {
       code: 'type X = boolean',
-      options: ['boolean']
+      options: ['boolean'],
     },
     {
       code: 'type X = bool',
-      options: ['bool']
+      options: ['bool'],
     },
     {
       code: 'type X = bool',
       options: ['boolean'],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true
-        }
-      }
-    }
-  ]
+          onlyFilesWithFlowAnnotation: true,
+        },
+      },
+    },
+  ],
 };

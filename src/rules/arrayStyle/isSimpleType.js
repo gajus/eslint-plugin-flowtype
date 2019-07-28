@@ -20,7 +20,7 @@
 
 const simpleTypePatterns = [
   /^(?:Any|Array|Boolean|Generic|Mixed|Number|String|Void)TypeAnnotation$/,
-  /.+LiteralTypeAnnotation$/
+  /.+LiteralTypeAnnotation$/,
 ];
 
 export default (node) => {

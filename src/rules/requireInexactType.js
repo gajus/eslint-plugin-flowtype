@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -19,21 +19,21 @@ const create = (context) => {
       if (always && !inexact && !exact) {
         context.report({
           message: 'Type must be explicit inexact.',
-          node
+          node,
         });
       }
 
       if (!always && inexact) {
         context.report({
           message: 'Type must not be explicit inexact.',
-          node
+          node,
         });
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

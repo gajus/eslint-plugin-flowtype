@@ -3,8 +3,8 @@ import _ from 'lodash';
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -36,7 +36,7 @@ const create = (context) => {
       // opaque type Foo = ...
       (node) => {
         return node.type === 'OpaqueType';
-      }
+      },
     ];
 
     const isIgnoredNode = (node) => {
@@ -68,10 +68,10 @@ const create = (context) => {
         if (node.range[0] > regularCodeStartRange[0]) {
           context.report({
             message: 'All type declaration should be at the top of the file, after any import declarations.',
-            node
+            node,
           });
         }
-      }
+      },
     };
   } else {
     return {};
@@ -80,5 +80,5 @@ const create = (context) => {
 
 export default {
   create,
-  schema
+  schema,
 };

@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -18,16 +18,16 @@ const create = (context) => {
             argumentType !== 'GenericTypeAnnotation' || argumentId.name !== '$Exact') {
             context.report({
               message: 'Use $Exact to make type spreading safe.',
-              node
+              node,
             });
           }
         }
       });
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

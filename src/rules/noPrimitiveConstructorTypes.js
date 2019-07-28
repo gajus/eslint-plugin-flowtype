@@ -12,18 +12,18 @@ const create = (context) => {
       if (regex.test(name)) {
         context.report({
           data: {
-            name
+            name,
           },
           loc: node.loc,
           message: 'Unexpected use of {{name}} constructor type.',
-          node
+          node,
         });
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

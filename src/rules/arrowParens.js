@@ -1,7 +1,7 @@
 const getLocation = (node) => {
   return {
     end: node.params[node.params.length - 1].loc.end,
-    start: node.params[0].loc.start
+    start: node.params[0].loc.start,
   };
 };
 
@@ -40,7 +40,7 @@ export default {
 
         return fixer.replaceTextRange([
           firstTokenOfParam.range[0],
-          closingParenToken.range[1]
+          closingParenToken.range[1],
         ], `${shouldAddSpaceForAsync ? ' ' : ''}${paramToken.value}`);
       };
 
@@ -70,7 +70,7 @@ export default {
             fix: fixParamsWithParenthesis,
             loc: getLocation(node),
             messageId: 'unexpectedParensInline',
-            node
+            node,
           });
         }
 
@@ -88,7 +88,7 @@ export default {
             },
             loc: getLocation(node),
             messageId: 'expectedParensBlock',
-            node
+            node,
           });
         }
 
@@ -107,7 +107,7 @@ export default {
             fix: fixParamsWithParenthesis,
             loc: getLocation(node),
             messageId: 'unexpectedParens',
-            node
+            node,
           });
         }
 
@@ -125,14 +125,14 @@ export default {
             },
             loc: getLocation(node),
             messageId: 'expectedParens',
-            node
+            node,
           });
         }
       }
     };
 
     return {
-      ArrowFunctionExpression: parens
+      ArrowFunctionExpression: parens,
     };
   },
 
@@ -141,7 +141,7 @@ export default {
       category: 'ECMAScript 6',
       description: 'require parentheses around arrow function arguments',
       recommended: false,
-      url: 'https://eslint.org/docs/rules/arrow-parens'
+      url: 'https://eslint.org/docs/rules/arrow-parens',
     },
 
     fixable: 'code',
@@ -151,25 +151,25 @@ export default {
       expectedParensBlock: 'Expected parentheses around arrow function argument having a body with curly braces.',
 
       unexpectedParens: 'Unexpected parentheses around single function argument.',
-      unexpectedParensInline: 'Unexpected parentheses around single function argument having a body with no curly braces.'
+      unexpectedParensInline: 'Unexpected parentheses around single function argument having a body with no curly braces.',
     },
 
-    type: 'layout'
+    type: 'layout',
   },
 
   schema: [
     {
-      enum: ['always', 'as-needed']
+      enum: ['always', 'as-needed'],
     },
     {
       additionalProperties: false,
       properties: {
         requireForBlockBody: {
           default: false,
-          type: 'boolean'
-        }
+          type: 'boolean',
+        },
       },
-      type: 'object'
-    }
-  ]
+      type: 'object',
+    },
+  ],
 };

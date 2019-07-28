@@ -3,55 +3,55 @@ const OBJECT_TYPE_ANNOTATION = {
     {
       code: 'type X = { foo: string, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
-      output: 'type X = { foo: string }'
+      output: 'type X = { foo: string }',
     },
     {
       code: 'type X = { foo: string, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = { foo: string }'
+      output: 'type X = { foo: string }',
     },
     {
       code: 'type X = { foo: string; }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = { foo: string }'
+      output: 'type X = { foo: string }',
     },
     {
       code: 'type X = {\nfoo: string,\n}',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = {\nfoo: string\n}'
+      output: 'type X = {\nfoo: string\n}',
     },
     {
       code: 'type X = { foo: string }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = { foo: string, }'
+      output: 'type X = { foo: string, }',
     },
     {
       code: 'type X = {\nfoo: string\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = {\nfoo: string,\n}'
+      output: 'type X = {\nfoo: string,\n}',
     },
     {
       code: 'type X = { foo: string, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = { foo: string }'
+      output: 'type X = { foo: string }',
     },
     {
       code: 'type X = {\nfoo: string\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = {\nfoo: string,\n}'
+      output: 'type X = {\nfoo: string,\n}',
     },
     {
       code: 'type X = { foo: string; }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
-      output: 'type X = { foo: string }'
+      output: 'type X = { foo: string }',
     },
 
     // Only indexers...
@@ -59,31 +59,31 @@ const OBJECT_TYPE_ANNOTATION = {
       code: 'type X = { [key: string]: number, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = { [key: string]: number }'
+      output: 'type X = { [key: string]: number }',
     },
     {
       code: 'type X = { [key: string]: number }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = { [key: string]: number, }'
+      output: 'type X = { [key: string]: number, }',
     },
     {
       code: 'type X = { [key: string]: number, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = { [key: string]: number }'
+      output: 'type X = { [key: string]: number }',
     },
     {
       code: 'type X = {\n[key: string]: number\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = {\n[key: string]: number,\n}'
+      output: 'type X = {\n[key: string]: number,\n}',
     },
     {
       code: 'type X = { [key: string]: number; }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
-      output: 'type X = { [key: string]: number }'
+      output: 'type X = { [key: string]: number }',
     },
 
     // Indexer, Prop...
@@ -93,10 +93,10 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the prop, not the indexer
         column: 35,
         line: 1,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = { [key: string]: number, foo: string }'
+      output: 'type X = { [key: string]: number, foo: string }',
     },
     {
       code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
@@ -104,10 +104,10 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the prop, not the indexer
         column: 1,
         line: 3,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = {\n[key: string]: number,\nfoo: string\n}'
+      output: 'type X = {\n[key: string]: number,\nfoo: string\n}',
     },
     {
       code: 'type X = {\n[key: string]: number,\naReallyLongPropertyNameHere: string,\n}',
@@ -115,40 +115,40 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the prop, not the indexer
         column: 1,
         line: 3,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = {\n[key: string]: number,\naReallyLongPropertyNameHere: string\n}'
+      output: 'type X = {\n[key: string]: number,\naReallyLongPropertyNameHere: string\n}',
     },
     {
       code: 'type X = { [key: string]: number, foo: string }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = { [key: string]: number, foo: string, }'
+      output: 'type X = { [key: string]: number, foo: string, }',
     },
     {
       code: 'type X = {\n[key: string]: number;\nfoo: string\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = {\n[key: string]: number;\nfoo: string,\n}'
+      output: 'type X = {\n[key: string]: number;\nfoo: string,\n}',
     },
     {
       code: 'type X = { [key: string]: number, foo: string, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = { [key: string]: number, foo: string }'
+      output: 'type X = { [key: string]: number, foo: string }',
     },
     {
       code: 'type X = {\n[key: string]: number,\nfoo: string\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = {\n[key: string]: number,\nfoo: string,\n}'
+      output: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
     },
     {
       code: 'type X = { [key: string]: number, foo: string, }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
-      output: 'type X = { [key: string]: number, foo: string }'
+      output: 'type X = { [key: string]: number, foo: string }',
     },
 
     // Prop, Indexer...
@@ -158,10 +158,10 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the indexer, not the prop
         column: 25,
         line: 1,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = { foo: string, [key: string]: number }'
+      output: 'type X = { foo: string, [key: string]: number }',
     },
     {
       code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
@@ -169,10 +169,10 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the prop, not the indexer
         column: 1,
         line: 3,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = {\nfoo: string,\n[key: string]: number\n}'
+      output: 'type X = {\nfoo: string,\n[key: string]: number\n}',
     },
     {
       code: 'type X = {\naReallyLongPropertyNameHere: string,\n[key: string]: number,\n}',
@@ -180,215 +180,215 @@ const OBJECT_TYPE_ANNOTATION = {
         // be sure it's reporting the prop, not the indexer
         column: 1,
         line: 3,
-        message: 'Unexpected trailing delimiter'
+        message: 'Unexpected trailing delimiter',
       }],
       options: ['never'],
-      output: 'type X = {\naReallyLongPropertyNameHere: string,\n[key: string]: number\n}'
+      output: 'type X = {\naReallyLongPropertyNameHere: string,\n[key: string]: number\n}',
     },
     {
       code: 'type X = { foo: string, [key: string]: number }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = { foo: string, [key: string]: number, }'
+      output: 'type X = { foo: string, [key: string]: number, }',
     },
     {
       code: 'type X = { foo: string; [key: string]: number }',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = { foo: string; [key: string]: number, }'
+      output: 'type X = { foo: string; [key: string]: number, }',
     },
     {
       code: 'type X = { foo: string, [key: string]: number; }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = { foo: string, [key: string]: number }'
+      output: 'type X = { foo: string, [key: string]: number }',
     },
     {
       code: 'type X = {\nfoo: string,\n[key: string]: number\n}',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = {\nfoo: string,\n[key: string]: number,\n}'
+      output: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
     },
     {
       code: 'type X = { foo: string, [key: string]: number; }',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
-      output: 'type X = { foo: string, [key: string]: number }'
-    }
+      output: 'type X = { foo: string, [key: string]: number }',
+    },
   ],
   valid: [
     {
-      code: 'type X = { foo: string }'
+      code: 'type X = { foo: string }',
     },
     {
       code: 'type X = { foo: string }',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = { foo: string, }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { foo: string; }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = {\nfoo: string\n}',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = {\nfoo: string,\n}',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { foo: string }',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\nfoo: string,\n}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\nfoo: string;\n}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = { foo: string }',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\nfoo: string\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\nfoo: string,\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\nfoo: string;\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
 
     // Empty...
     {
       code: 'type X = {}',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = {}',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = {}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
 
     // Only indexers...
     {
       code: 'type X = { [key: string]: number }',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = { [key: string]: number, }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { [key: string]: number; }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { [key: string]: number }',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number,\n}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number,\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = { [key: string]: number }',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
 
     // Indexer, Prop...
     {
       code: 'type X = { [key: string]: number, foo: string }',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = { [key: string]: number, foo: string, }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { [key: string]: number; foo: string; }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { [key: string]: number, foo: string }',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number,\nfoo: string,\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\n[key: string]: number;\nfoo: string\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = { [key: string]: number, foo: string }',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
 
     // Prop, Indexer...
     {
       code: 'type X = { foo: string, [key: string]: number }',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = { foo: string, [key: string]: number, }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { foo: string; [key: string]: number; }',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = { foo: string, [key: string]: number }',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = {\nfoo: string,\n[key: string]: number,\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = {\nfoo: string;\n[key: string]: number\n}',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = { foo: string, [key: string]: number }',
-      options: ['only-multiline']
-    }
-  ]
+      options: ['only-multiline'],
+    },
+  ],
 };
 
 const TUPLE_TYPE_ANNOTATION = {
@@ -396,108 +396,108 @@ const TUPLE_TYPE_ANNOTATION = {
     {
       code: 'type X = [string, number,]',
       errors: [{message: 'Unexpected trailing delimiter'}],
-      output: 'type X = [string, number]'
+      output: 'type X = [string, number]',
     },
     {
       code: 'type X = [string, number,]',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = [string, number]'
+      output: 'type X = [string, number]',
     },
     {
       code: 'type X = [\nstring,\nnumber,\n]',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['never'],
-      output: 'type X = [\nstring,\nnumber\n]'
+      output: 'type X = [\nstring,\nnumber\n]',
     },
     {
       code: 'type X = [string, number]',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = [string, number,]'
+      output: 'type X = [string, number,]',
     },
     {
       code: 'type X = [\nstring,\nnumber\n]',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always'],
-      output: 'type X = [\nstring,\nnumber,\n]'
+      output: 'type X = [\nstring,\nnumber,\n]',
     },
     {
       code: 'type X = [string, number,]',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = [string, number]'
+      output: 'type X = [string, number]',
     },
     {
       code: 'type X = [\nfoo, string\n]',
       errors: [{message: 'Missing trailing delimiter'}],
       options: ['always-multiline'],
-      output: 'type X = [\nfoo, string,\n]'
+      output: 'type X = [\nfoo, string,\n]',
     },
     {
       code: 'type X = [ number, string, ]',
       errors: [{message: 'Unexpected trailing delimiter'}],
       options: ['only-multiline'],
-      output: 'type X = [ number, string ]'
-    }
+      output: 'type X = [ number, string ]',
+    },
   ],
   valid: [
     {
-      code: 'type X = [string, number]'
+      code: 'type X = [string, number]',
     },
     {
       code: 'type X = [string, number]',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = [\nstring,\nnumber\n]',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = [string, number,]',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = [\nstring,\nnumber,\n]',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = [ foo, string ]',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = [\nfoo, string,\n]',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = [ number, string ]',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = [\nnumber,\nstring\n]',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = [\nnumber,\nstring,\n]',
-      options: ['only-multiline']
+      options: ['only-multiline'],
     },
     {
       code: 'type X = []',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: 'type X = []',
-      options: ['always']
+      options: ['always'],
     },
     {
       code: 'type X = []',
-      options: ['always-multiline']
+      options: ['always-multiline'],
     },
     {
       code: 'type X = []',
-      options: ['only-multiline']
-    }
-  ]
+      options: ['only-multiline'],
+    },
+  ],
 };
 
 const MISCONFIGURED = [
@@ -513,40 +513,40 @@ const MISCONFIGURED = [
             'always',
             'always-multiline',
             'only-multiline',
-            'never'
-          ]
+            'never',
+          ],
         },
         parentSchema: {
           enum: [
             'always',
             'always-multiline',
             'only-multiline',
-            'never'
+            'never',
           ],
-          type: 'string'
+          type: 'string',
         },
         schema: [
           'always',
           'always-multiline',
           'only-multiline',
-          'never'
+          'never',
         ],
-        schemaPath: '#/items/0/enum'
+        schemaPath: '#/items/0/enum',
 
-      }
+      },
     ],
-    options: ['occasionally']
-  }
+    options: ['occasionally'],
+  },
 ];
 
 export default {
   invalid: [
     ...OBJECT_TYPE_ANNOTATION.invalid,
-    ...TUPLE_TYPE_ANNOTATION.invalid
+    ...TUPLE_TYPE_ANNOTATION.invalid,
   ],
   misconfigured: MISCONFIGURED,
   valid: [
     ...OBJECT_TYPE_ANNOTATION.valid,
-    ...TUPLE_TYPE_ANNOTATION.valid
-  ]
+    ...TUPLE_TYPE_ANNOTATION.valid,
+  ],
 };

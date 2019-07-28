@@ -4,7 +4,7 @@ const reporter = (context) => {
   return (node) => {
     context.report({
       message: 'Unexpected use of existential type (*).',
-      node
+      node,
     });
   };
 };
@@ -12,11 +12,11 @@ const reporter = (context) => {
 const create = (context) => {
   return {
     ExistentialTypeParam: reporter(context),
-    ExistsTypeAnnotation: reporter(context)
+    ExistsTypeAnnotation: reporter(context),
   };
 };
 
 export default {
-  create
+  create,
 };
 

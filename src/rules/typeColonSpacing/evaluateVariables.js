@@ -15,7 +15,7 @@ export default (context, report) => {
           colon: sourceCode.getFirstToken(typeAnnotation),
           name: quoteName(getParameterName(leaf, context)),
           node: leaf,
-          type: node.kind + ' type annotation'
+          type: node.kind + ' type annotation',
         });
       }
     });

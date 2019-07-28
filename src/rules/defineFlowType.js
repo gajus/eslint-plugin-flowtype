@@ -71,11 +71,11 @@ const create = (context) => {
       node.params.forEach((param) => {
         makeDefined(param);
       });
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

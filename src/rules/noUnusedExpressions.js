@@ -13,11 +13,11 @@ const create = (context) => {
       if (node.expression.type !== 'TypeCastExpression') {
         coreChecks.ExpressionStatement(node);
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  meta
+  meta,
 };
