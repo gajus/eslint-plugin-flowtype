@@ -4,51 +4,51 @@ export default {
       code: '// $FlowFixMe I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and should be fixed.',
-        },
-      ],
+          message: '$FlowFixMe is treated as `any` and should be fixed.'
+        }
+      ]
     },
     {
       code: '// $FlowFixMe I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.',
-        },
+          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.'
+        }
       ],
       options: [
-        'TODO [0-9]+',
-      ],
+        'TODO [0-9]+'
+      ]
     },
     {
       code: '// $FlowFixMe TODO abc 47 I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.',
-        },
+          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.'
+        }
       ],
       options: [
-        'TODO [0-9]+',
-      ],
+        'TODO [0-9]+'
+      ]
     },
     {
       code: '// $$FlowFixMeProps I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and should be fixed.',
-        },
-      ],
+          message: '$FlowFixMe is treated as `any` and should be fixed.'
+        }
+      ]
     },
     {
       code: '// $FlowFixMeProps I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.',
-        },
+          message: '$FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.'
+        }
       ],
       options: [
-        'TODO [0-9]+',
-      ],
-    },
+        'TODO [0-9]+'
+      ]
+    }
   ],
   misconfigured: [
     {
@@ -59,27 +59,27 @@ export default {
           keyword: 'type',
           message: 'should be string',
           params: {
-            type: 'string',
+            type: 'string'
           },
           parentSchema: {
-            type: 'string',
+            type: 'string'
           },
           schema: 'string',
-          schemaPath: '#/items/0/type',
-        },
+          schemaPath: '#/items/0/type'
+        }
       ],
-      options: [7],
-    },
+      options: [7]
+    }
   ],
   valid: [
     {
-      code: 'const text = \'HELLO\';',
+      code: 'const text = \'HELLO\';'
     },
     {
       code: '// $FlowFixMe TODO 48\nconst text = \'HELLO\';',
       options: [
-        'TODO [0-9]+',
-      ],
-    },
-  ],
+        'TODO [0-9]+'
+      ]
+    }
+  ]
 };

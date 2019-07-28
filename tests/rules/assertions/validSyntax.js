@@ -5,10 +5,10 @@ export default {
   ],
   valid: [
     {
-      code: 'function x(foo: string = "1") {}',
+      code: 'function x(foo: string = "1") {}'
     },
     {
-      code: 'function x(foo: Type = bar()) {}',
-    },
-  ],
+      code: 'function x(foo: Type = bar()) {}'
+    }
+  ]
 };

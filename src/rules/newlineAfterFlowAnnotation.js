@@ -7,8 +7,8 @@ const looksLikeFlowFileAnnotation = (comment) => {
 const schema = [
   {
     enum: ['always', 'always-windows', 'never'],
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
@@ -41,7 +41,7 @@ const create = (context) => {
               );
             },
             message: 'Expected newline after flow annotation',
-            node,
+            node
           });
         }
 
@@ -55,22 +55,22 @@ const create = (context) => {
                   potentialFlowFileAnnotation.end,
                   potentialFlowFileAnnotation.end + (
                     lineBreak === '\r' ? 2 : 1
-                  ),
+                  )
                 ],
                 ''
               );
             },
             message: 'Expected no newline after flow annotation',
-            node,
+            node
           });
         }
       }
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };
 

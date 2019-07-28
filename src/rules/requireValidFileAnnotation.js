@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import {
   isFlowFileAnnotation,
-  fuzzyStringMatch,
+  fuzzyStringMatch
 } from '../utilities';
 
 const defaults = {
   annotationStyle: 'none',
-  strict: false,
+  strict: false
 };
 
 const looksLikeFlowFileAnnotation = (comment) => {
@@ -36,22 +36,22 @@ const noFlowAnnotation = (comment) => {
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string',
+    type: 'string'
   },
   {
     additionalProperties: false,
     properties: {
       annotationStyle: {
         enum: ['none', 'line', 'block'],
-        type: 'string',
+        type: 'string'
       },
       strict: {
         enum: [true, false],
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
-    type: 'object',
-  },
+    type: 'object'
+  }
 ];
 
 const create = (context) => {
@@ -104,7 +104,7 @@ const create = (context) => {
               context.report({
                 fix: addStrictAnnotation(),
                 message: 'Strict Flow file annotation is required, should be ' + str,
-                node,
+                node
               });
             }
           }
@@ -117,14 +117,14 @@ const create = (context) => {
         context.report({
           fix: addAnnotation(),
           message: 'Flow file annotation is missing.',
-          node,
+          node
         });
       }
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

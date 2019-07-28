@@ -17,7 +17,7 @@ const create = (context) => {
     context.report({
       data: {type},
       message: 'Type {{type}} require valid Flow declaration.',
-      node,
+      node
     });
   };
 
@@ -43,11 +43,11 @@ const create = (context) => {
     },
     TypeAnnotation (node) {
       reporter(node, 'annotations');
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

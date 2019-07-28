@@ -1,7 +1,7 @@
 const schema = [
   {
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
@@ -14,14 +14,14 @@ const create = (context) => {
       if (!pattern.test(typeIdentifierName)) {
         context.report(typeAliasNode, 'Type identifier \'{{name}}\' does not match pattern \'{{pattern}}\'.', {
           name: typeIdentifierName,
-          pattern: pattern.toString(),
+          pattern: pattern.toString()
         });
       }
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

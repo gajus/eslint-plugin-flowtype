@@ -37,7 +37,7 @@ export default (context, report) => {
     report({
       colon: getColon(context, objectTypeProperty),
       name: quoteName(getParameterName(objectTypeProperty, context)),
-      node: objectTypeProperty,
+      node: objectTypeProperty
     });
   };
 };

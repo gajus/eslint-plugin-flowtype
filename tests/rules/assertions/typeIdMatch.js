@@ -4,21 +4,21 @@ export default {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
-        },
-      ],
+          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.'
+        }
+      ]
     },
     {
       code: 'type FooType = {};',
       errors: [
         {
-          message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/\'.',
-        },
+          message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/\'.'
+        }
       ],
       options: [
-        '^foo$',
-      ],
-    },
+        '^foo$'
+      ]
+    }
   ],
   misconfigured: [
     {
@@ -29,35 +29,35 @@ export default {
           keyword: 'type',
           message: 'should be string',
           params: {
-            type: 'string',
+            type: 'string'
           },
           parentSchema: {
-            type: 'string',
+            type: 'string'
           },
           schema: 'string',
-          schemaPath: '#/items/0/type',
-        },
+          schemaPath: '#/items/0/type'
+        }
       ],
-      options: [7],
-    },
+      options: [7]
+    }
   ],
   valid: [
     {
-      code: 'type FooType = {};',
+      code: 'type FooType = {};'
     },
     {
       code: 'type foo = {};',
       options: [
-        '^foo$',
-      ],
+        '^foo$'
+      ]
     },
     {
       code: 'type foo = {};',
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
-    },
-  ],
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
+    }
+  ]
 };

@@ -4,42 +4,42 @@ export default {
       code: 'type FooType = {}',
       errors: [
         {
-          message: 'Missing semicolon.',
-        },
+          message: 'Missing semicolon.'
+        }
       ],
       options: [],
-      output: 'type FooType = {};',
+      output: 'type FooType = {};'
     },
     {
       code: 'type FooType = {}',
       errors: [
         {
-          message: 'Missing semicolon.',
-        },
+          message: 'Missing semicolon.'
+        }
       ],
       options: ['always'],
-      output: 'type FooType = {};',
+      output: 'type FooType = {};'
     },
     {
       code: 'type FooType = {};',
       errors: [
         {
-          message: 'Extra semicolon.',
-        },
+          message: 'Extra semicolon.'
+        }
       ],
       options: ['never'],
-      output: 'type FooType = {}',
+      output: 'type FooType = {}'
     },
     {
       code: 'opaque type FooType = {}',
       errors: [
         {
-          message: 'Missing semicolon.',
-        },
+          message: 'Missing semicolon.'
+        }
       ],
       options: [],
-      output: 'opaque type FooType = {};',
-    },
+      output: 'opaque type FooType = {};'
+    }
   ],
   misconfigured: [
     {
@@ -52,56 +52,56 @@ export default {
           params: {
             allowedValues: [
               'always',
-              'never',
-            ],
+              'never'
+            ]
           },
           parentSchema: {
             enum: [
               'always',
-              'never',
+              'never'
             ],
-            type: 'string',
+            type: 'string'
           },
           schema: [
             'always',
-            'never',
+            'never'
           ],
-          schemaPath: '#/items/0/enum',
-        },
+          schemaPath: '#/items/0/enum'
+        }
       ],
-      options: ['temporarily'],
-    },
+      options: ['temporarily']
+    }
   ],
   valid: [
     {
-      code: 'type FooType = {};',
+      code: 'type FooType = {};'
     },
     {
       code: 'type FooType = {};',
-      options: ['always'],
+      options: ['always']
     },
     {
       code: 'type FooType = { a: number;\n b: string;\n };',
-      options: ['always'],
+      options: ['always']
     },
     {
       code: 'type FooType = { a: number;\n b: string;\n }',
-      options: ['never'],
+      options: ['never']
     },
     {
       code: 'type FooType = {}',
-      options: ['never'],
+      options: ['never']
     },
     {
       code: 'type FooType = {}',
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     },
     {
-      code: 'opaque type FooType = {};',
-    },
-  ],
+      code: 'opaque type FooType = {};'
+    }
+  ]
 };

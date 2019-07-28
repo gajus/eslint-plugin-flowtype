@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
   getParameterName,
   iterateFunctionNodes,
-  quoteName,
+  quoteName
 } from '../utilities';
 
 const schema = [];
@@ -18,10 +18,10 @@ const create = iterateFunctionNodes((context) => {
       if (isAssignmentPattern && hasTypeAnnotation && !leftAnnotated) {
         context.report({
           data: {
-            name: quoteName(getParameterName(identifierNode, context)),
+            name: quoteName(getParameterName(identifierNode, context))
           },
           message: '{{name}}parameter type annotation must be placed on left-hand side of assignment.',
-          node: identifierNode,
+          node: identifierNode
         });
       }
     });
@@ -31,8 +31,8 @@ const create = iterateFunctionNodes((context) => {
 export default {
   create,
   meta: {
-    deprecated: true,
+    deprecated: true
   },
-  schema,
+  schema
 };
 

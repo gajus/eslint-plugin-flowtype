@@ -5,7 +5,7 @@ export default (context, report) => {
     report({
       colon: sourceCode.getFirstToken(typeCastExpression.typeAnnotation),
       node: typeCastExpression,
-      type: 'type cast',
+      type: 'type cast'
     });
   };
 };

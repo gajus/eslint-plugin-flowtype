@@ -1,10 +1,10 @@
 import assert from 'assert';
 import {
-  camelCase,
+  camelCase
 } from 'lodash';
 import Ajv from 'ajv';
 import {
-  RuleTester,
+  RuleTester
 } from 'eslint';
 import plugin from '../../src';
 
@@ -48,12 +48,12 @@ const reportingRules = [
   'type-import-style',
   'union-intersection-spacing',
   'use-flow-type',
-  'valid-syntax',
+  'valid-syntax'
 ];
 
 const parser = require.resolve('babel-eslint');
 const ajv = new Ajv({
-  verbose: true,
+  verbose: true
 });
 
 for (const ruleName of reportingRules) {
@@ -73,7 +73,7 @@ for (const ruleName of reportingRules) {
 
             const validateSchema = ajv.compile({
               items: schema,
-              type: 'array',
+              type: 'array'
             });
 
             validateSchema(misconfiguration.options);

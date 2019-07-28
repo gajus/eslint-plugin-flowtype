@@ -6,7 +6,7 @@ export default (iterator) => {
       ArrowFunctionExpression: nodeIterator,
       FunctionDeclaration: nodeIterator,
       FunctionExpression: nodeIterator,
-      FunctionTypeAnnotation: nodeIterator,
+      FunctionTypeAnnotation: nodeIterator
     };
   };
 };

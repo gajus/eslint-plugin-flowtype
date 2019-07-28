@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {
   isFlowFile,
-  quoteName,
+  quoteName
 } from '../utilities';
 
 const schema = [
@@ -9,26 +9,26 @@ const schema = [
     additionalProperties: false,
     properties: {
       excludeVariableMatch: {
-        type: 'string',
+        type: 'string'
       },
       excludeVariableTypes: {
         additionalProperties: false,
         properties: {
           const: {
-            type: 'boolean',
+            type: 'boolean'
           },
           let: {
-            type: 'boolean',
+            type: 'boolean'
           },
           var: {
-            type: 'boolean',
-          },
+            type: 'boolean'
+          }
         },
-        type: 'object',
-      },
+        type: 'object'
+      }
     },
-    type: 'object',
-  },
+    type: 'object'
+  }
 ];
 
 const create = (context) => {
@@ -62,18 +62,18 @@ const create = (context) => {
         if (!typeAnnotation) {
           context.report({
             data: {
-              name: quoteName(identifierName),
+              name: quoteName(identifierName)
             },
             message: 'Missing {{name}}variable type annotation.',
-            node: identifierNode,
+            node: identifierNode
           });
         }
       });
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

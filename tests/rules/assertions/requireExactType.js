@@ -6,35 +6,35 @@ export default {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
-        },
-      ],
+          message: 'Type identifier \'foo\' must be exact.'
+        }
+      ]
     },
     {
       code: 'type foo = { bar: string };',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
-        },
-      ],
+          message: 'Type identifier \'foo\' must be exact.'
+        }
+      ]
     },
     {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
-        },
+          message: 'Type identifier \'foo\' must be exact.'
+        }
       ],
-      options: ['always'],
+      options: ['always']
     },
     {
       code: 'type foo = { bar: string };',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
-        },
+          message: 'Type identifier \'foo\' must be exact.'
+        }
       ],
-      options: ['always'],
+      options: ['always']
     },
 
     // Never
@@ -43,63 +43,63 @@ export default {
       code: 'type foo = {| |};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must not be exact.',
-        },
+          message: 'Type identifier \'foo\' must not be exact.'
+        }
       ],
-      options: ['never'],
+      options: ['never']
     },
     {
       code: 'type foo = {| bar: string |};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must not be exact.',
-        },
+          message: 'Type identifier \'foo\' must not be exact.'
+        }
       ],
-      options: ['never'],
-    },
+      options: ['never']
+    }
   ],
   valid: [
 
     // Always
 
     {
+      code: 'type foo = {| |};'
+    },
+    {
+      code: 'type foo = {| bar: string |};'
+    },
+    {
+      code: 'type foo = { [key: string]: string };'
+    },
+    {
+      code: 'type foo = number;'
+    },
+    {
       code: 'type foo = {| |};',
+      options: ['always']
     },
     {
       code: 'type foo = {| bar: string |};',
-    },
-    {
-      code: 'type foo = { [key: string]: string };',
-    },
-    {
-      code: 'type foo = number;',
-    },
-    {
-      code: 'type foo = {| |};',
-      options: ['always'],
-    },
-    {
-      code: 'type foo = {| bar: string |};',
-      options: ['always'],
+      options: ['always']
     },
     {
       code: 'type foo = number;',
-      options: ['always'],
+      options: ['always']
     },
 
     // Never
 
     {
       code: 'type foo = { };',
-      options: ['never'],
+      options: ['never']
     },
     {
       code: 'type foo = { bar: string };',
-      options: ['never'],
+      options: ['never']
     },
     {
       code: 'type foo = number;',
-      options: ['never'],
-    },
-  ],
+      options: ['never']
+    }
+  ]
 };

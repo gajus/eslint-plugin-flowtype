@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
@@ -17,7 +17,7 @@ const create = (context) => {
           context.report({
             data: {name},
             message: 'Type identifier \'{{name}}\' must be exact.',
-            node,
+            node
           });
         }
 
@@ -25,15 +25,15 @@ const create = (context) => {
           context.report({
             data: {name},
             message: 'Type identifier \'{{name}}\' must not be exact.',
-            node,
+            node
           });
         }
       }
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

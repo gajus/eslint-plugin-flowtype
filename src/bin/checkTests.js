@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   getRules,
-  isFile,
+  isFile
 } from './utilities';
 
 const getTestIndexRules = () => {
@@ -24,7 +24,7 @@ const getTestIndexRules = () => {
     return acc;
   }, {
     inRulesArray: false,
-    rules: [],
+    rules: []
   });
 
   const rules = result.rules;
