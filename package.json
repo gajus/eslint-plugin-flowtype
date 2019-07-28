@@ -5,11 +5,11 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "description": "Flowtype linting rules for ESLint.",
   "devDependencies": {
-    "ajv": "^6.10.0",
+    "ajv": "^6.10.2",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.2",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -18,13 +18,13 @@
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.13.0",
-    "eslint-config-canonical": "^17.1.1",
-    "gitdown": "^2.6.1",
+    "eslint-config-canonical": "^17.3.2",
+    "gitdown": "^3.1.1",
     "glob": "^7.1.4",
-    "husky": "^2.4.1",
+    "husky": "^3.0.1",
     "jsonlint": "^1.6.3",
-    "mocha": "^6.1.4",
-    "semantic-release": "^15.13.16"
+    "mocha": "^6.2.0",
+    "semantic-release": "^15.13.18"
   },
   "engines": {
     "node": ">=4"
@@ -44,7 +44,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-flowtype",
   "peerDependencies": {
-    "eslint": ">=6.0.0"
+    "eslint": ">=6.1.0"
   },
   "repository": {
     "type": "git",
