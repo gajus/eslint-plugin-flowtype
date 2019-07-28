@@ -3,13 +3,13 @@ export default {
     {
       code: 'foo + 1',
       errors: [{
-        message: 'Expected an assignment or function call and instead saw an expression.',
-      }],
-    },
+        message: 'Expected an assignment or function call and instead saw an expression.'
+      }]
+    }
   ],
   valid: [
     {
-      code: '(foo: number)',
-    },
-  ],
+      code: '(foo: number)'
+    }
+  ]
 };

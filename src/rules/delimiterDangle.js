@@ -3,12 +3,17 @@ import _ from 'lodash';
 const schema = [
   {
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
-    type: 'string',
+    type: 'string'
   },
+  {
+    enum: ['always', 'always-multiline', 'only-multiline', 'never'],
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
   const option = context.options[0] || 'never';
+  const interfaceOption = context.options[1] || option;
   const sourceCode = context.getSourceCode();
 
   const reporter = (node, message, fix) => {
@@ -16,7 +21,7 @@ const create = (context) => {
       context.report({
         fix,
         message,
-        node,
+        node
       });
     };
   };
@@ -28,7 +33,7 @@ const create = (context) => {
       }),
       noDangle: reporter(node, 'Missing trailing delimiter', (fixer) => {
         return fixer.insertTextAfter(tokenToFix, ',');
-      }),
+      })
     };
   };
 
@@ -43,32 +48,33 @@ const create = (context) => {
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
     const report = makeReporters(lastChildNode, penultimateToken);
+    const nodeOption = node.parent.type === 'InterfaceDeclaration' ? interfaceOption : option;
 
-    if (option === 'always' && !isDangling) {
+    if (nodeOption === 'always' && !isDangling) {
       report.noDangle();
 
       return;
     }
 
-    if (option === 'never' && isDangling) {
+    if (nodeOption === 'never' && isDangling) {
       report.dangle();
 
       return;
     }
 
-    if (option === 'always-multiline' && !isDangling && isMultiLine) {
+    if (nodeOption === 'always-multiline' && !isDangling && isMultiLine) {
       report.noDangle();
 
       return;
     }
 
-    if (option === 'always-multiline' && isDangling && !isMultiLine) {
+    if (nodeOption === 'always-multiline' && isDangling && !isMultiLine) {
       report.dangle();
 
       return;
     }
 
-    if (option === 'only-multiline' && isDangling && !isMultiLine) {
+    if (nodeOption === 'only-multiline' && isDangling && !isMultiLine) {
       report.dangle();
     }
   };
@@ -105,11 +111,11 @@ const create = (context) => {
 
     TupleTypeAnnotation (node) {
       evaluate(node, _.last(node.types));
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

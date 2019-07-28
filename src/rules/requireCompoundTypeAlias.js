@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
@@ -14,7 +14,7 @@ const create = (context) => {
         if (node.parent.type !== 'TypeAlias') {
           context.report({
             message: 'All intersection types must be declared with named type alias.',
-            node,
+            node
           });
         }
       },
@@ -22,10 +22,10 @@ const create = (context) => {
         if (node.parent.type !== 'TypeAlias') {
           context.report({
             message: 'All union types must be declared with named type alias.',
-            node,
+            node
           });
         }
-      },
+      }
     };
   } else {
     return {};
@@ -34,5 +34,5 @@ const create = (context) => {
 
 export default {
   create,
-  schema,
+  schema
 };

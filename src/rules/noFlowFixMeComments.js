@@ -1,7 +1,7 @@
 const schema = [
   {
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const message = '$FlowFixMe is treated as `any` and should be fixed.';
@@ -35,7 +35,7 @@ const create = (context) => {
       if (isIdentifier(node.id, /\$FlowFixMe/)) {
         context.report({
           message,
-          node: node.id,
+          node: node.id
         });
       }
     },
@@ -48,11 +48,11 @@ const create = (context) => {
           return comment.type === 'Block' || comment.type === 'Line';
         })
         .forEach(handleComment);
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

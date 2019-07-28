@@ -3,12 +3,12 @@
 
 const SEMICOLON = {
   char: ';',
-  name: 'semicolon',
+  name: 'semicolon'
 };
 
 const COMMA = {
   char: ',',
-  name: 'comma',
+  name: 'comma'
 };
 
 const create = (context) => {
@@ -44,7 +44,7 @@ const create = (context) => {
             return fixer.replaceText(lastToken, GOOD.char);
           },
           message: 'Prefer ' + GOOD.name + 's to ' + BAD.name + 's in object and class types',
-          node: lastToken,
+          node: lastToken
         });
       }
     }
@@ -53,18 +53,18 @@ const create = (context) => {
   return {
     ObjectTypeCallProperty: requireProperPunctuation,
     ObjectTypeIndexer: requireProperPunctuation,
-    ObjectTypeProperty: requireProperPunctuation,
+    ObjectTypeProperty: requireProperPunctuation
   };
 };
 
 const schema = [
   {
     enum: ['semicolon', 'comma'],
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 export default {
   create,
-  schema,
+  schema
 };

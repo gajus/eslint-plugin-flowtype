@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
   getParameterName,
   iterateFunctionNodes,
-  quoteName,
+  quoteName
 } from '../utilities';
 
 const schema = [
@@ -10,14 +10,14 @@ const schema = [
     additionalProperties: false,
     properties: {
       excludeArrowFunctions: {
-        enum: [false, true, 'expressionsOnly'],
+        enum: [false, true, 'expressionsOnly']
       },
       excludeParameterMatch: {
-        type: 'string',
-      },
+        type: 'string'
+      }
     },
-    type: 'object',
-  },
+    type: 'object'
+  }
 ];
 
 const create = iterateFunctionNodes((context) => {
@@ -56,10 +56,10 @@ const create = iterateFunctionNodes((context) => {
       if (!typeAnnotation) {
         context.report({
           data: {
-            name: quoteName(parameterName),
+            name: quoteName(parameterName)
           },
           message: 'Missing {{name}}parameter type annotation.',
-          node: identifierNode,
+          node: identifierNode
         });
       }
     });
@@ -68,5 +68,5 @@ const create = iterateFunctionNodes((context) => {
 
 export default {
   create,
-  schema,
+  schema
 };

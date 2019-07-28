@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string',
-  },
+    type: 'string'
+  }
 ];
 
 const create = (context) => {
@@ -33,7 +33,7 @@ const create = (context) => {
       fix,
       loc,
       message,
-      node,
+      node
     });
   };
 
@@ -56,11 +56,11 @@ const create = (context) => {
 
   return {
     OpaqueType: checkForSemicolon,
-    TypeAlias: checkForSemicolon,
+    TypeAlias: checkForSemicolon
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

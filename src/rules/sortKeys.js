@@ -1,30 +1,30 @@
 import _ from 'lodash';
 import {
-  getParameterName,
+  getParameterName
 } from '../utilities';
 
 const defaults = {
   caseSensitive: true,
-  natural: false,
+  natural: false
 };
 
 const schema = [
   {
     enum: ['asc', 'desc'],
-    type: 'string',
+    type: 'string'
   },
   {
     additionalProperties: false,
     properties: {
       caseSensitive: {
-        type: 'boolean',
+        type: 'boolean'
       },
       natural: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
-    type: 'object',
-  },
+    type: 'object'
+  }
 ];
 
 /**
@@ -62,12 +62,12 @@ const isValidOrders = {
   },
   naturalCompare (str1, str2) {
     return str1.localeCompare(str2, 'en-US', {numeric: true});
-  },
+  }
 };
 
 const variances = {
   minus: '-',
-  plus: '+',
+  plus: '+'
 };
 
 const getVariance = (node) => {
@@ -163,7 +163,7 @@ const create = (context) => {
             insensitive: insensitive ? 'insensitive ' : '',
             last,
             natural: natural ? 'natural ' : '',
-            order,
+            order
           },
           fix (fixer) {
             const nodeText = generateFix(node, context, isValidOrder);
@@ -172,18 +172,18 @@ const create = (context) => {
           },
           loc: identifierNode.loc,
           message: 'Expected type annotations to be in {{natural}}{{insensitive}}{{order}}ending order. "{{current}}" should be before "{{last}}".',
-          node: identifierNode,
+          node: identifierNode
         });
       }
     });
   };
 
   return {
-    ObjectTypeAnnotation: checkKeyOrder,
+    ObjectTypeAnnotation: checkKeyOrder
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

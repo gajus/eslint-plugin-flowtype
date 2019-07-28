@@ -5,13 +5,13 @@ const create = (context) => {
     MixedTypeAnnotation (node) {
       context.report({
         message: 'Unexpected use of mixed type',
-        node,
+        node
       });
-    },
+    }
   };
 };
 
 export default {
   create,
-  schema,
+  schema
 };

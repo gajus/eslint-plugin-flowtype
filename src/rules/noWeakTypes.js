@@ -5,17 +5,17 @@ const schema = [
     additionalProperties: false,
     properties: {
       any: {
-        type: 'boolean',
+        type: 'boolean'
       },
       Function: {
-        type: 'boolean',
+        type: 'boolean'
       },
       Object: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
-    type: 'object',
-  },
+    type: 'object'
+  }
 ];
 
 const reportWeakType = (context, weakType) => {
@@ -23,7 +23,7 @@ const reportWeakType = (context, weakType) => {
     context.report({
       data: {weakType},
       message: 'Unexpected use of weak type "{{weakType}}"',
-      node,
+      node
     });
   };
 };
@@ -52,7 +52,7 @@ const create = (context) => {
   if (checkFunction || checkObject) {
     checks.GenericTypeAnnotation = genericTypeEvaluator(context, {
       checkFunction,
-      checkObject,
+      checkObject
     });
   }
 
@@ -61,5 +61,5 @@ const create = (context) => {
 
 export default {
   create,
-  schema,
+  schema
 };

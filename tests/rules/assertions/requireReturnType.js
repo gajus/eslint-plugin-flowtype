@@ -4,427 +4,427 @@ export default {
       code: '(foo) => { return "foo"; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
-      ],
+          message: 'Missing return type annotation.'
+        }
+      ]
     },
     {
       code: '(foo) => { return "foo"; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
-        'always',
-      ],
+        'always'
+      ]
     },
     {
       code: '(foo) => "foo"',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
-        'always',
-      ],
+        'always'
+      ]
     },
     {
       code: '(foo) => ({})',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
-      ],
+          message: 'Missing return type annotation.'
+        }
+      ]
     },
     {
       code: '(foo): undefined => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
-      ],
+          message: 'Must not annotate undefined return type.'
+        }
+      ]
     },
     {
       code: '(foo): void => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
-      ],
+          message: 'Must not annotate undefined return type.'
+        }
+      ]
     },
     {
       code: '(foo): undefined => { return undefined; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
-      ],
+          message: 'Must not annotate undefined return type.'
+        }
+      ]
     },
     {
       code: '(foo): void => { return void 0; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
-      ],
+          message: 'Must not annotate undefined return type.'
+        }
+      ]
     },
     {
       code: '(foo): undefined => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
+          message: 'Must not annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo): void => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
+          message: 'Must not annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo) => { return; }',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo): undefined => { return undefined; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
+          message: 'Must not annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo) => { return undefined; }',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo) => { return void 0; }',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '// @flow\n(foo) => { return 1; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     },
     {
       code: '// @flow\n (foo) => { return undefined; }',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
+          annotateUndefined: 'always'
+        }
       ],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     },
     {
       code: 'async () => { return 2; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
-        'always',
-      ],
+        'always'
+      ]
     },
     {
       code: 'async () => {}',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'async function x() {}',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'async (): Promise<void> => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
+          message: 'Must not annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: 'async (): Promise<undefined> => { return; }',
       errors: [
         {
-          message: 'Must not annotate undefined return type.',
-        },
+          message: 'Must not annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: 'class Test { constructor() { } }',
       errors: [
         {
-          message: 'Must annotate undefined return type.',
-        },
+          message: 'Must annotate undefined return type.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'class Test { foo() { return 42; } }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
-      ],
+          message: 'Missing return type annotation.'
+        }
+      ]
     },
     {
       code: 'class Test { foo = () => { return 42; } }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
-      ],
+          message: 'Missing return type annotation.'
+        }
+      ]
     },
     {
       code: 'class Test { foo = () => 42; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
-      ],
+          message: 'Missing return type annotation.'
+        }
+      ]
     },
     {
       code: 'function* x() {}',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
-        'always',
-      ],
+        'always'
+      ]
     },
     {
       code: '() => { return 3; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
-          excludeArrowFunctions: 'expressionsOnly',
-        },
-      ],
+          excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
     },
     {
       code: 'async () => { return 4; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
-          excludeArrowFunctions: 'expressionsOnly',
-        },
-      ],
+          excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
     },
     {
       code: 'function foo() { return 42; }\nfunction bar() { return 42; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
           includeOnlyMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'const foo = () => { return 42; };\nconst bar = () => { return 42; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
           includeOnlyMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'const foo = { bar() { return 42; }, foobar: function() { return 42; } }',
       errors: [
         {
-          message: 'Missing return type annotation.',
+          message: 'Missing return type annotation.'
         },
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
           includeOnlyMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'const foo = { bar() { return 42; }, baz() { return 42; } }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
           excludeMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'function * foo() { yield 2; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'async function * foo() { yield 2; }',
       errors: [
         {
-          message: 'Missing return type annotation.',
-        },
+          message: 'Missing return type annotation.'
+        }
       ],
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
-    },
+          annotateUndefined: 'always'
+        }
+      ]
+    }
   ],
   misconfigured: [
     {
@@ -436,34 +436,34 @@ export default {
           message: 'should be equal to one of the allowed values',
           params: {
             allowedValues: [
-              'always',
-            ],
+              'always'
+            ]
           },
           parentSchema: {
             enum: [
-              'always',
+              'always'
             ],
-            type: 'string',
+            type: 'string'
           },
           schema: [
-            'always',
+            'always'
           ],
-          schemaPath: '#/items/0/enum',
-        },
+          schemaPath: '#/items/0/enum'
+        }
       ],
-      options: ['never'],
+      options: ['never']
     },
     {
       errors: [
         {
           data: {
-            excludeOtherStuff: true,
+            excludeOtherStuff: true
           },
           dataPath: '[1]',
           keyword: 'additionalProperties',
           message: 'should NOT have additional properties',
           params: {
-            additionalProperty: 'excludeOtherStuff',
+            additionalProperty: 'excludeOtherStuff'
           },
           parentSchema: {
             additionalProperties: false,
@@ -472,37 +472,37 @@ export default {
                 enum: [
                   'always',
                   'never',
-                  'ignore',
+                  'ignore'
                 ],
-                type: 'string',
+                type: 'string'
               },
               excludeArrowFunctions: {
                 enum: [
                   false,
                   true,
-                  'expressionsOnly',
-                ],
+                  'expressionsOnly'
+                ]
               },
               excludeMatching: {
                 items: {
-                  type: 'string',
+                  type: 'string'
                 },
-                type: 'array',
+                type: 'array'
               },
               includeOnlyMatching: {
                 items: {
-                  type: 'string',
+                  type: 'string'
                 },
-                type: 'array',
-              },
+                type: 'array'
+              }
             },
-            type: 'object',
+            type: 'object'
           },
           schema: false,
-          schemaPath: '#/items/1/additionalProperties',
-        },
+          schemaPath: '#/items/1/additionalProperties'
+        }
       ],
-      options: ['always', {excludeOtherStuff: true}],
+      options: ['always', {excludeOtherStuff: true}]
     },
     {
       errors: [
@@ -515,26 +515,26 @@ export default {
             allowedValues: [
               'always',
               'never',
-              'ignore',
-            ],
+              'ignore'
+            ]
           },
           parentSchema: {
             enum: [
               'always',
               'never',
-              'ignore',
+              'ignore'
             ],
-            type: 'string',
+            type: 'string'
           },
           schema: [
             'always',
             'never',
-            'ignore',
+            'ignore'
           ],
-          schemaPath: '#/items/1/properties/annotateUndefined/enum',
-        },
+          schemaPath: '#/items/1/properties/annotateUndefined/enum'
+        }
       ],
-      options: ['always', {annotateUndefined: 'often'}],
+      options: ['always', {annotateUndefined: 'often'}]
     },
     {
       errors: [
@@ -547,25 +547,25 @@ export default {
             allowedValues: [
               false,
               true,
-              'expressionsOnly',
-            ],
+              'expressionsOnly'
+            ]
           },
           parentSchema: {
             enum: [
               false,
               true,
-              'expressionsOnly',
-            ],
+              'expressionsOnly'
+            ]
           },
           schema: [
             false,
             true,
-            'expressionsOnly',
+            'expressionsOnly'
           ],
-          schemaPath: '#/items/1/properties/excludeArrowFunctions/enum',
-        },
+          schemaPath: '#/items/1/properties/excludeArrowFunctions/enum'
+        }
       ],
-      options: ['always', {excludeArrowFunctions: 'everything'}],
+      options: ['always', {excludeArrowFunctions: 'everything'}]
     },
     {
       errors: [
@@ -575,19 +575,19 @@ export default {
           keyword: 'type',
           message: 'should be array',
           params: {
-            type: 'array',
+            type: 'array'
           },
           parentSchema: {
             items: {
-              type: 'string',
+              type: 'string'
             },
-            type: 'array',
+            type: 'array'
           },
           schema: 'array',
-          schemaPath: '#/items/1/properties/excludeMatching/type',
-        },
+          schemaPath: '#/items/1/properties/excludeMatching/type'
+        }
       ],
-      options: ['always', {excludeMatching: '^foo'}],
+      options: ['always', {excludeMatching: '^foo'}]
     },
     {
       errors: [
@@ -597,172 +597,172 @@ export default {
           keyword: 'type',
           message: 'should be string',
           params: {
-            type: 'string',
+            type: 'string'
           },
           parentSchema: {
-            type: 'string',
+            type: 'string'
           },
           schema: 'string',
-          schemaPath: '#/items/1/properties/includeOnlyMatching/items/type',
-        },
+          schemaPath: '#/items/1/properties/includeOnlyMatching/items/type'
+        }
       ],
-      options: ['always', {includeOnlyMatching: [false]}],
-    },
+      options: ['always', {includeOnlyMatching: [false]}]
+    }
   ],
   valid: [
     {
-      code: 'return;',
+      code: 'return;'
     },
     {
-      code: '(foo): string => {}',
+      code: '(foo): string => {}'
     },
     {
-      code: 'const f: Foo = (a, b) => 42;',
+      code: 'const f: Foo = (a, b) => 42;'
     },
     {
       code: '(foo): string => {}',
       options: [
-        'always',
-      ],
+        'always'
+      ]
     },
     {
-      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => { return 42; }',
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => { return 42; }'
     },
     {
-      code: '(foo) => { return; }',
+      code: '(foo) => { return; }'
     },
     {
-      code: '(foo): Object => ( {} )',
+      code: '(foo): Object => ( {} )'
     },
     {
-      code: '(foo) => { return undefined; }',
+      code: '(foo) => { return undefined; }'
     },
     {
-      code: '(foo) => { return void 0; }',
+      code: '(foo) => { return void 0; }'
     },
     {
       code: '(foo): undefined => { return; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo): void => { return; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo) => { return; }',
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo) => { return undefined; }',
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo) => { return void 0; }',
       options: [
         'always',
         {
-          annotateUndefined: 'never',
-        },
-      ],
+          annotateUndefined: 'never'
+        }
+      ]
     },
     {
       code: '(foo): undefined => { return undefined; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo): void => { return void 0; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: '(foo) => { return 1; }',
       options: [
-        'always',
+        'always'
       ],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     },
     {
       code: '(foo) => { return undefined; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
+          annotateUndefined: 'always'
+        }
       ],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true,
-        },
-      },
+          onlyFilesWithFlowAnnotation: true
+        }
+      }
     },
     {
       code: 'async function doThing(): Promise<void> {}',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'async function doThing(): Promise<void> {}',
       options: [
         'always',
         {
-          annotateUndefined: 'ignore',
-        },
-      ],
+          annotateUndefined: 'ignore'
+        }
+      ]
     },
     {
       code: 'async function doThing() {}',
       options: [
         'always',
         {
-          annotateUndefined: 'ignore',
-        },
-      ],
+          annotateUndefined: 'ignore'
+        }
+      ]
     },
     {
       code: 'function* doThing(): Generator<number, void, void> { yield 2; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'class Test { constructor() { } }',
@@ -770,75 +770,75 @@ export default {
         'always',
         {
           annotateUndefined: 'always',
-          excludeMatching: ['constructor'],
-        },
-      ],
+          excludeMatching: ['constructor']
+        }
+      ]
     },
     {
-      code: 'class Test { constructor() { } }',
+      code: 'class Test { constructor() { } }'
     },
     {
       code: 'class Test { foo() { return 42; } }',
       options: [
         'always',
         {
-          excludeMatching: ['foo'],
-        },
-      ],
+          excludeMatching: ['foo']
+        }
+      ]
     },
     {
       code: 'class Test { foo = () => { return 42; } }',
       options: [
         'always',
         {
-          excludeMatching: ['foo'],
-        },
-      ],
+          excludeMatching: ['foo']
+        }
+      ]
     },
     {
       code: 'class Test { foo = () => 42; }',
       options: [
         'always',
         {
-          excludeMatching: ['foo'],
-        },
-      ],
+          excludeMatching: ['foo']
+        }
+      ]
     },
     {
-      code: 'class Test { foo = (): number => { return 42; } }',
+      code: 'class Test { foo = (): number => { return 42; } }'
     },
     {
-      code: 'class Test { foo = (): number => 42; }',
+      code: 'class Test { foo = (): number => 42; }'
     },
     {
-      code: 'async (foo): Promise<number> => { return 3; }',
+      code: 'async (foo): Promise<number> => { return 3; }'
     },
     {
       code: '() => 3',
       options: [
         'always',
         {
-          excludeArrowFunctions: true,
-        },
-      ],
+          excludeArrowFunctions: true
+        }
+      ]
     },
     {
       code: '() => { return 4; }',
       options: [
         'always',
         {
-          excludeArrowFunctions: true,
-        },
-      ],
+          excludeArrowFunctions: true
+        }
+      ]
     },
     {
       code: '() => undefined',
       options: [
         'always',
         {
-          excludeArrowFunctions: true,
-        },
-      ],
+          excludeArrowFunctions: true
+        }
+      ]
     },
     {
       code: '() => undefined',
@@ -846,9 +846,9 @@ export default {
         'always',
         {
           annotateUndefined: 'always',
-          excludeArrowFunctions: true,
-        },
-      ],
+          excludeArrowFunctions: true
+        }
+      ]
     },
     {
       code: '() => { return undefined; }',
@@ -856,27 +856,27 @@ export default {
         'always',
         {
           annotateUndefined: 'always',
-          excludeArrowFunctions: true,
-        },
-      ],
+          excludeArrowFunctions: true
+        }
+      ]
     },
     {
       code: '() => 3',
       options: [
         'always',
         {
-          excludeArrowFunctions: 'expressionsOnly',
-        },
-      ],
+          excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
     },
     {
       code: 'async () => 3',
       options: [
         'always',
         {
-          excludeArrowFunctions: 'expressionsOnly',
-        },
-      ],
+          excludeArrowFunctions: 'expressionsOnly'
+        }
+      ]
     },
     {
       code: 'function foo() { return 42; }',
@@ -884,10 +884,10 @@ export default {
         'always',
         {
           excludeMatching: [
-            'foo',
-          ],
-        },
-      ],
+            'foo'
+          ]
+        }
+      ]
     },
     {
       code: 'function foo() { return 42; }',
@@ -895,10 +895,10 @@ export default {
         'always',
         {
           includeOnlyMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
@@ -906,10 +906,10 @@ export default {
         'always',
         {
           excludeMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
@@ -918,10 +918,10 @@ export default {
         {
           includeOnlyMatching: [
             'foo',
-            'baz',
-          ],
-        },
-      ],
+            'baz'
+          ]
+        }
+      ]
     },
     {
       code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
@@ -930,10 +930,10 @@ export default {
         {
           excludeMatching: [
             '^b.*',
-            'qux',
-          ],
-        },
-      ],
+            'qux'
+          ]
+        }
+      ]
     },
     {
       code: 'function foo(): number { return 42; }\nfunction bar() { return 42; }',
@@ -941,10 +941,10 @@ export default {
         'always',
         {
           includeOnlyMatching: [
-            '^f.*',
-          ],
-        },
-      ],
+            '^f.*'
+          ]
+        }
+      ]
     },
 
     {
@@ -953,10 +953,10 @@ export default {
         'always',
         {
           includeOnlyMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'const foo = { bar() { return 42; } }',
@@ -964,28 +964,28 @@ export default {
         'always',
         {
           excludeMatching: [
-            'bar',
-          ],
-        },
-      ],
+            'bar'
+          ]
+        }
+      ]
     },
     {
       code: 'function * foo(): Iterable<number> { yield 2; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
+          annotateUndefined: 'always'
+        }
+      ]
     },
     {
       code: 'async function * foo(): AsyncIterable<number> { yield 2; }',
       options: [
         'always',
         {
-          annotateUndefined: 'always',
-        },
-      ],
-    },
-  ],
+          annotateUndefined: 'always'
+        }
+      ]
+    }
+  ]
 };
