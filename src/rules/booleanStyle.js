@@ -1,8 +1,8 @@
 const schema = [
   {
     enum: ['bool', 'boolean'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -18,7 +18,7 @@ const create = (context) => {
             return fixer.replaceText(node, 'boolean');
           },
           message: 'Use "boolean", not "bool"',
-          node
+          node,
         });
       }
 
@@ -28,14 +28,14 @@ const create = (context) => {
             return fixer.replaceText(node, 'bool');
           },
           message: 'Use "bool", not "boolean"',
-          node
+          node,
         });
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

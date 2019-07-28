@@ -78,12 +78,12 @@ const rules = {
   'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
-  'valid-syntax': validSyntax
+  'valid-syntax': validSyntax,
 };
 
 export default {
   configs: {
-    recommended
+    recommended,
   },
   rules: _.mapValues(rules, (rule, key) => {
     if (key === 'no-types-missing-file-annotation') {
@@ -92,7 +92,7 @@ export default {
 
     return {
       ...rule,
-      create: _.partial(checkFlowFileAnnotation, rule.create)
+      create: _.partial(checkFlowFileAnnotation, rule.create),
     };
   }),
   rulesConfig: {
@@ -123,6 +123,6 @@ export default {
     'type-import-style': 0,
     'union-intersection-spacing': 0,
     'use-flow-type': 0,
-    'valid-syntax': 0
-  }
+    'valid-syntax': 0,
+  },
 };

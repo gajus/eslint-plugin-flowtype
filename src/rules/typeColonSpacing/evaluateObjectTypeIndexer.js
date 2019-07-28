@@ -8,14 +8,14 @@ export default (context, report) => {
     //              ^
     report({
       colon: getTokenBeforeParens(sourceCode, objectTypeIndexer.key),
-      node: objectTypeIndexer
+      node: objectTypeIndexer,
     });
 
     // type X = { [a: b]: c }
     //                  ^
     report({
       colon: sourceCode.getTokenAfter(getTokenAfterParens(sourceCode, objectTypeIndexer.key)),
-      node: objectTypeIndexer
+      node: objectTypeIndexer,
     });
   };
 };

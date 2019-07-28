@@ -13,8 +13,8 @@ export default {
         column: 1,
         endColumn: 2,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a => a',
@@ -24,8 +24,8 @@ export default {
         column: 1,
         endColumn: 2,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a => {\n}',
@@ -35,8 +35,8 @@ export default {
         column: 1,
         endColumn: 2,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a.then(foo => {});',
@@ -46,8 +46,8 @@ export default {
         column: 8,
         endColumn: 11,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a.then(foo => a);',
@@ -57,8 +57,8 @@ export default {
         column: 8,
         endColumn: 11,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a(foo => { if (true) {}; });',
@@ -68,8 +68,8 @@ export default {
         column: 3,
         endColumn: 6,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'a(async foo => { if (true) {}; });',
@@ -80,8 +80,8 @@ export default {
         column: 9,
         endColumn: 12,
         messageId: 'expectedParens',
-        type
-      }]
+        type,
+      }],
     },
 
     // "as-needed"
@@ -94,8 +94,8 @@ export default {
         column: 2,
         endColumn: 3,
         messageId: 'unexpectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: '(a,) => a',
@@ -107,8 +107,8 @@ export default {
         column: 2,
         endColumn: 3,
         messageId: 'unexpectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'async (a) => a',
@@ -120,8 +120,8 @@ export default {
         column: 8,
         endColumn: 9,
         messageId: 'unexpectedParens',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'async(a) => a',
@@ -133,8 +133,8 @@ export default {
         column: 7,
         endColumn: 8,
         messageId: 'unexpectedParens',
-        type
-      }]
+        type,
+      }],
     },
 
     // "as-needed", { "requireForBlockBody": true }
@@ -147,8 +147,8 @@ export default {
         column: 1,
         endColumn: 2,
         messageId: 'expectedParensBlock',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: '(a) => a',
@@ -159,8 +159,8 @@ export default {
         column: 2,
         endColumn: 3,
         messageId: 'unexpectedParensInline',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'async a => {}',
@@ -172,8 +172,8 @@ export default {
         column: 7,
         endColumn: 8,
         messageId: 'expectedParensBlock',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'async (a) => a',
@@ -185,8 +185,8 @@ export default {
         column: 8,
         endColumn: 9,
         messageId: 'unexpectedParensInline',
-        type
-      }]
+        type,
+      }],
     },
     {
       code: 'async(a) => a',
@@ -198,9 +198,9 @@ export default {
         column: 7,
         endColumn: 8,
         messageId: 'unexpectedParensInline',
-        type
-      }]
-    }
+        type,
+      }],
+    },
   ],
 
   // can't figure out how to get this working
@@ -285,10 +285,10 @@ export default {
       options: ['as-needed'],
       parserOptions: {ecmaVersion: 8}},
     {code: '(a: T) => a',
-      options: ['as-needed']
+      options: ['as-needed'],
     },
     {code: '(a): T => a',
-      options: ['as-needed']
+      options: ['as-needed'],
     },
 
     // "as-needed", { "requireForBlockBody": true }
@@ -333,7 +333,7 @@ export default {
     {code: '<T>(a: T) => { return a; }',
       options: ['as-needed', {requireForBlockBody: true}]},
     {code: '(a): %checks => typeof a === "number"',
-      options: ['as-needed', {requireForBlockBody: true}]}
+      options: ['as-needed', {requireForBlockBody: true}]},
 
-  ]
+  ],
 };

@@ -3,8 +3,8 @@ import {spacingFixers} from '../utilities';
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -28,7 +28,7 @@ const create = (context) => {
           data: {name: node.id.name},
           fix: spacingFixers.stripSpacesAfter(node.id, spaceBefore),
           message: 'There must be no space before "{{name}}" generic type annotation bracket',
-          node
+          node,
         });
       }
 
@@ -37,7 +37,7 @@ const create = (context) => {
           data: {name: node.id.name},
           fix: spacingFixers.addSpaceAfter(node.id),
           message: 'There must be a space before "{{name}}" generic type annotation bracket',
-          node
+          node,
         });
       }
 
@@ -46,14 +46,14 @@ const create = (context) => {
           data: {name: node.id.name},
           fix: spacingFixers.stripSpacesAfter(node.id, spaceBefore - 1),
           message: 'There must be one space before "{{name}}" generic type annotation bracket',
-          node
+          node,
         });
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

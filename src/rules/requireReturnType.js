@@ -3,33 +3,33 @@ import _ from 'lodash';
 const schema = [
   {
     enum: ['always'],
-    type: 'string'
+    type: 'string',
   },
   {
     additionalProperties: false,
     properties: {
       annotateUndefined: {
         enum: ['always', 'never', 'ignore'],
-        type: 'string'
+        type: 'string',
       },
       excludeArrowFunctions: {
-        enum: [false, true, 'expressionsOnly']
+        enum: [false, true, 'expressionsOnly'],
       },
       excludeMatching: {
         items: {
-          type: 'string'
+          type: 'string',
         },
-        type: 'array'
+        type: 'array',
       },
       includeOnlyMatching: {
         items: {
-          type: 'string'
+          type: 'string',
         },
-        type: 'array'
-      }
+        type: 'array',
+      },
     },
-    type: 'object'
-  }
+    type: 'object',
+  },
 ];
 
 const create = (context) => {
@@ -48,7 +48,7 @@ const create = (context) => {
 
   const registerFunction = (functionNode) => {
     targetNodes.push({
-      functionNode
+      functionNode,
     });
   };
 
@@ -147,11 +147,11 @@ const create = (context) => {
       if (targetNodes.length) {
         targetNodes[targetNodes.length - 1].returnStatementNode = node;
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

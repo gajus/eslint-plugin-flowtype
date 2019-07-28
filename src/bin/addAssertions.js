@@ -48,7 +48,7 @@ const getAssertions = () => {
 
     return {
       invalid: _.map(codes.invalid, formatCodeSnippet),
-      valid: _.map(codes.valid, formatCodeSnippet)
+      valid: _.map(codes.valid, formatCodeSnippet),
     };
   });
 
