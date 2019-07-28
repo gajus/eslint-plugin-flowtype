@@ -18,8 +18,10 @@ import noWeakTypes from './rules/noWeakTypes';
 import noMixed from './rules/noMixed';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
+import requireInexactType from './rules/requireInexactType';
 import requireExactType from './rules/requireExactType';
 import requireParameterType from './rules/requireParameterType';
+import requireReadonlyReactProps from './rules/requireReadonlyReactProps';
 import requireReturnType from './rules/requireReturnType';
 import requireTypesAtTop from './rules/requireTypesAtTop';
 import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
@@ -35,11 +37,13 @@ import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import validSyntax from './rules/validSyntax';
 import spreadExactType from './rules/spreadExactType';
+import arrowParens from './rules/arrowParens';
 import {checkFlowFileAnnotation} from './utilities';
 
 const rules = {
   'array-style-complex-type': arrayStyleComplexType,
   'array-style-simple-type': arrayStyleSimpleType,
+  'arrow-parens': arrowParens,
   'boolean-style': booleanStyle,
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
@@ -57,7 +61,9 @@ const rules = {
   'object-type-delimiter': objectTypeDelimiter,
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
+  'require-inexact-type': requireInexactType,
   'require-parameter-type': requireParameterType,
+  'require-readonly-react-props': requireReadonlyReactProps,
   'require-return-type': requireReturnType,
   'require-types-at-top': requireTypesAtTop,
   'require-valid-file-annotation': requireValidFileAnnotation,
@@ -72,12 +78,12 @@ const rules = {
   'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
-  'valid-syntax': validSyntax
+  'valid-syntax': validSyntax,
 };
 
 export default {
   configs: {
-    recommended
+    recommended,
   },
   rules: _.mapValues(rules, (rule, key) => {
     if (key === 'no-types-missing-file-annotation') {
@@ -86,7 +92,7 @@ export default {
 
     return {
       ...rule,
-      create: _.partial(checkFlowFileAnnotation, rule.create)
+      create: _.partial(checkFlowFileAnnotation, rule.create),
     };
   }),
   rulesConfig: {
@@ -104,6 +110,7 @@ export default {
     'require-compound-type-alias': 0,
     'require-exact-type': 0,
     'require-parameter-type': 0,
+    'require-readonly-react-props': 0,
     'require-return-type': 0,
     'require-variable-type': 0,
     semi: 0,
@@ -116,6 +123,6 @@ export default {
     'type-import-style': 0,
     'union-intersection-spacing': 0,
     'use-flow-type': 0,
-    'valid-syntax': 0
-  }
+    'valid-syntax': 0,
+  },
 };

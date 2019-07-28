@@ -1,5 +1,5 @@
 import {
-  RuleTester
+  RuleTester,
 } from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
 
@@ -7,109 +7,109 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
     code: 'var a: AType',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'var a: AType; var b: AType',
     errors: [
       '\'AType\' is not defined.',
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'var a; (a: AType)',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'var a: AType<BType>',
     errors: [
       '\'AType\' is not defined.',
-      '\'BType\' is not defined.'
-    ]
+      '\'BType\' is not defined.',
+    ],
   },
   {
     code: 'type A = AType',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'declare type A = number',
     errors: [
-      '\'A\' is not defined.'
-    ]
+      '\'A\' is not defined.',
+    ],
   },
   {
     code: 'opaque type A = AType',
     errors: [
       // Complaining about 'A' is fixed in https://github.com/babel/babel-eslint/pull/696
       '\'A\' is not defined.',
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'function f(a: AType) {}',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'function f(a: AType.a) {}',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'function f(a: AType.a.b) {}',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'function f(a): AType {}; var a: AType',
     errors: [
       '\'AType\' is not defined.',
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'function f(a): AType {}',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'class C { a: AType }',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'class C { a: AType.a }',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'class C { a: AType.a.b }',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'class C implements AType {}',
     errors: [
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'declare interface A {}',
     errors: [
-      '\'A\' is not defined.'
-    ]
+      '\'A\' is not defined.',
+    ],
   },
   {
     code: '({ a: ({b() {}}: AType) })',
@@ -118,43 +118,62 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
     // references, this may be a babel-eslint bug.
     errors: [
       '\'AType\' is not defined.',
-      '\'AType\' is not defined.'
-    ]
+      '\'AType\' is not defined.',
+    ],
   },
   {
     code: 'type X = {Y<AType>(): BType}',
     errors: [
       '\'AType\' is not defined.',
-      '\'BType\' is not defined.'
-    ]
-  }
+      '\'BType\' is not defined.',
+    ],
+  },
+
+  // This tests to ensure we have a robust handling of @flow comments
+  {
+    // eslint-disable-next-line no-restricted-syntax
+    code: `
+/**
+* Copyright 2019 no corp
+* @flow
+*/
+type Foo = $ReadOnly<{}>`,
+    errors: [
+      '\'$ReadOnly\' is not defined.',
+    ],
+    settings: {
+      flowtype: {
+        onlyFilesWithFlowAnnotation: true,
+      },
+    },
+  },
 ];
 
 const ALWAYS_INVALID = [
   {
     code: 'var a = b',
     errors: [
-      '\'b\' is not defined.'
-    ]
+      '\'b\' is not defined.',
+    ],
   },
   {
     code: 'function f(a = b) {}',
     errors: [
-      '\'b\' is not defined.'
-    ]
+      '\'b\' is not defined.',
+    ],
   },
   {
     code: 'class C extends b {}',
     errors: [
-      '\'b\' is not defined.'
-    ]
+      '\'b\' is not defined.',
+    ],
   },
   {
     code: 'class C { static S = b }',
     errors: [
-      '\'b\' is not defined.'
-    ]
-  }
+      '\'b\' is not defined.',
+    ],
+  },
 ];
 
 const ALWAYS_VALID = [
@@ -169,7 +188,7 @@ const ALWAYS_VALID = [
   'function f(a): string {}',
   'class C { a: string }',
   'var AType = {}; class C { a: AType.a }',
-  'declare module A { declare var a: AType }'
+  'declare module A { declare var a: AType }',
 ];
 
 /**
@@ -180,26 +199,26 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   });
 
   ruleTester.run('no-undef must not trigger an error in these cases', noUndefRule, {
     invalid: [],
-    valid: ALWAYS_VALID
+    valid: ALWAYS_VALID,
   });
 }
 
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   });
 
   ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {
     invalid: [
       ...ALWAYS_INVALID,
-      ...VALID_WITH_DEFINE_FLOW_TYPE
+      ...VALID_WITH_DEFINE_FLOW_TYPE,
     ],
-    valid: []
+    valid: [],
   });
 }
 
@@ -210,8 +229,9 @@ export default {
       return {
         code: subject.code,
         rules: {
-          'no-undef': 2
-        }
+          'no-undef': 2,
+        },
+        settings: subject.settings,
       };
     }),
     ...VALID_WITH_DEFINE_FLOW_TYPE.map((subject) => {
@@ -221,10 +241,11 @@ export default {
           'no-undef': 2,
           'no-use-before-define': [
             2,
-            'nofunc'
-          ]
-        }
+            'nofunc',
+          ],
+        },
+        settings: subject.settings,
       };
-    })
-  ]
+    }),
+  ],
 };

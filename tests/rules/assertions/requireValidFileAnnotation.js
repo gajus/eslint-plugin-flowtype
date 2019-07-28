@@ -4,152 +4,213 @@ export default {
       code: ';// @flow',
       errors: [
         {
-          message: 'Flow file annotation not at the top of the file.'
-        }
-      ]
+          message: 'Flow file annotation not at the top of the file.',
+        },
+      ],
     },
     {
       code: ';\n// @flow',
       errors: [
         {
-          message: 'Flow file annotation not at the top of the file.'
-        }
-      ]
+          message: 'Flow file annotation not at the top of the file.',
+        },
+      ],
     },
     {
       code: '// @Flow',
       errors: [
         {
-          message: 'Malformed Flow file annotation.'
-        }
-      ]
+          message: 'Malformed Flow file annotation.',
+        },
+      ],
     },
     {
       code: '// @NoFlow',
       errors: [
         {
-          message: 'Malformed Flow file annotation.'
-        }
-      ]
+          message: 'Malformed Flow file annotation.',
+        },
+      ],
     },
     {
       code: '// @Noflow',
       errors: [
         {
-          message: 'Malformed Flow file annotation.'
-        }
-      ]
+          message: 'Malformed Flow file annotation.',
+        },
+      ],
     },
     {
       code: '// @floweeeeeee',
       errors: [
         {
-          message: 'Misspelled or malformed Flow file annotation.'
-        }
-      ]
+          message: 'Misspelled or malformed Flow file annotation.',
+        },
+      ],
     },
     {
       code: '// @nofloweeeeeee',
       errors: [
         {
-          message: 'Misspelled or malformed Flow file annotation.'
-        }
-      ]
+          message: 'Misspelled or malformed Flow file annotation.',
+        },
+      ],
     },
     {
       code: 'a;',
       errors: [
         {
-          message: 'Flow file annotation is missing.'
-        }
+          message: 'Flow file annotation is missing.',
+        },
       ],
       options: [
-        'always'
-      ]
+        'always',
+      ],
     },
     {
       code: '/* @flow */',
       errors: [
         {
-          message: 'Flow file annotation style must be `// @flow`'
-        }
+          message: 'Flow file annotation style must be `// @flow`',
+        },
       ],
       options: [
         'always',
         {
-          annotationStyle: 'line'
-        }
-      ]
+          annotationStyle: 'line',
+        },
+      ],
     },
     {
       code: '// @flow',
       errors: [
         {
-          message: 'Flow file annotation style must be `/* @flow */`'
-        }
+          message: 'Flow file annotation style must be `/* @flow */`',
+        },
       ],
       options: [
         'always',
         {
-          annotationStyle: 'block'
-        }
-      ]
+          annotationStyle: 'block',
+        },
+      ],
+    },
+    {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `/* @flow */`',
+        },
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'block',
+        },
+      ],
+    },
+    {
+      code: '// @flow',
+      errors: [
+        {
+          message: 'Strict Flow file annotation is required, should be `// @flow strict`',
+        },
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true,
+        },
+      ],
     },
     {
       code: '/* @noflow */',
       errors: [
         {
-          message: 'Flow file annotation style must be `// @noflow`'
-        }
+          message: 'Flow file annotation style must be `// @noflow`',
+        },
       ],
       options: [
         'always',
         {
-          annotationStyle: 'line'
-        }
-      ]
+          annotationStyle: 'line',
+        },
+      ],
     },
     {
       code: '// @noflow',
       errors: [
         {
-          message: 'Flow file annotation style must be `/* @noflow */`'
-        }
+          message: 'Flow file annotation style must be `/* @noflow */`',
+        },
       ],
       options: [
         'always',
         {
-          annotationStyle: 'block'
-        }
-      ]
+          annotationStyle: 'block',
+        },
+      ],
     },
     {
       code: 'a;',
       errors: [
         {
-          message: 'Flow file annotation is missing.'
-        }
+          message: 'Flow file annotation is missing.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
-      output: '// @flow\na;'
+      output: '// @flow\na;',
     },
     {
       code: 'a;',
       errors: [
         {
-          message: 'Flow file annotation is missing.'
-        }
+          message: 'Flow file annotation is missing.',
+        },
       ],
       options: [
         'always',
         {
-          annotationStyle: 'block'
-        }
+          annotationStyle: 'block',
+        },
       ],
-      output: '/* @flow */\na;'
-    }
+      output: '/* @flow */\na;',
+    },
+    {
+      code: 'a;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.',
+        },
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true,
+        },
+      ],
+      output: '// @flow strict\na;',
+    },
+    {
+      code: '// @flow\na;\nb;',
+      errors: [
+        {
+          message: 'Strict Flow file annotation is required, should be `// @flow strict`',
+        },
+      ],
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true,
+        },
+      ],
+      output: '// @flow strict\na;\nb;',
+    },
   ],
   misconfigured: [
     {
@@ -162,24 +223,24 @@ export default {
           params: {
             allowedValues: [
               'always',
-              'never'
-            ]
+              'never',
+            ],
           },
           parentSchema: {
             enum: [
               'always',
-              'never'
+              'never',
             ],
-            type: 'string'
+            type: 'string',
           },
           schema: [
             'always',
-            'never'
+            'never',
           ],
-          schemaPath: '#/items/0/enum'
-        }
+          schemaPath: '#/items/0/enum',
+        },
       ],
-      options: ['sometimes']
+      options: ['sometimes'],
     },
     {
       errors: [
@@ -192,92 +253,112 @@ export default {
             allowedValues: [
               'none',
               'line',
-              'block'
-            ]
+              'block',
+            ],
           },
           parentSchema: {
             enum: [
               'none',
               'line',
-              'block'
+              'block',
             ],
-            type: 'string'
+            type: 'string',
           },
           schema: [
             'none',
             'line',
-            'block'
+            'block',
           ],
-          schemaPath: '#/items/1/properties/annotationStyle/enum'
-        }
+          schemaPath: '#/items/1/properties/annotationStyle/enum',
+        },
       ],
-      options: ['never', {annotationStyle: 'upside-down'}]
-    }
+      options: ['never', {annotationStyle: 'upside-down'}],
+    },
   ],
   valid: [
     {
-      code: 'a;'
+      code: 'a;',
     },
     {
-      code: '// @flow\na;'
+      code: '// @flow\na;',
     },
     {
-      code: '//@flow\na;'
+      code: '//@flow\na;',
     },
     {
-      code: '//**@flow\na;'
+      code: '//**@flow\na;',
     },
     {
-      code: '/* foo @flow bar */\na;'
+      code: '/* foo @flow bar */\na;',
     },
     {
-      code: '\n\n// @flow\na;'
+      code: '\n\n// @flow\na;',
     },
     {
-      code: '// @flow\n// @FLow'
+      code: '// @flow\n// @FLow',
     },
     {
-      code: '// @noflow\na;'
+      code: '// @noflow\na;',
     },
     {
       code: 'a;',
       options: ['always'],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true
-        }
-      }
+          onlyFilesWithFlowAnnotation: true,
+        },
+      },
     },
     {
       code: '// @flow',
       options: [
         'always',
         {
-          annotationStyle: 'line'
-        }
-      ]
+          annotationStyle: 'line',
+        },
+      ],
+    },
+    {
+      code: '// @noflow',
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true,
+        },
+      ],
+    },
+    {
+      code: '// @flow strict',
+      options: [
+        'always',
+        {
+          annotationStyle: 'line',
+          strict: true,
+        },
+      ],
     },
     {
       code: '// @function',
       options: [
         'never',
         {
-          annotationStyle: 'none'
-        }
-      ]
+          annotationStyle: 'none',
+        },
+      ],
     },
     {
       code: '// @fixable',
-      options: ['never']
+      options: ['never'],
     },
     {
       code: '/* @flow */',
       options: [
         'always',
         {
-          annotationStyle: 'block'
-        }
-      ]
-    }
-  ]
+          annotationStyle: 'block',
+        },
+      ],
+    },
+  ],
 };

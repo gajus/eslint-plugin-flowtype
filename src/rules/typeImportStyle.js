@@ -1,17 +1,17 @@
 const schema = [
   {
     enum: ['declaration', 'identifier'],
-    type: 'string'
+    type: 'string',
   },
   {
     additionalProperties: false,
     properties: {
       ignoreTypeDefault: {
-        type: 'boolean'
-      }
+        type: 'boolean',
+      },
     },
-    type: 'object'
-  }
+    type: 'object',
+  },
 ];
 
 const create = (context) => {
@@ -23,12 +23,12 @@ const create = (context) => {
             if (specifier.importKind === 'type') {
               context.report({
                 message: 'Unexpected type import',
-                node
+                node,
               });
             }
           });
         }
-      }
+      },
     };
   } else {
     // Default to 'identifier'
@@ -78,14 +78,14 @@ const create = (context) => {
             return fixer.replaceText(node, 'import {' + imports.join(', ') + '} from \'' + source + '\';');
           },
           message: 'Unexpected "import type"',
-          node
+          node,
         });
-      }
+      },
     };
   }
 };
 
 export default {
   create,
-  schema
+  schema,
 };

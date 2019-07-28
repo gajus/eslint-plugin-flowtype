@@ -4,10 +4,6 @@ const schema = [
   {
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
     type: 'string'
-  },
-  {
-    enum: ['always', 'always-multiline', 'only-multiline', 'never'],
-    type: 'string'
   }
 ];
 
@@ -21,7 +17,7 @@ const create = (context) => {
       context.report({
         fix,
         message,
-        node
+        node,
       });
     };
   };
@@ -33,7 +29,7 @@ const create = (context) => {
       }),
       noDangle: reporter(node, 'Missing trailing delimiter', (fixer) => {
         return fixer.insertTextAfter(tokenToFix, ',');
-      })
+      }),
     };
   };
 
@@ -44,7 +40,7 @@ const create = (context) => {
 
     const [penultimateToken, lastToken] = sourceCode.getLastTokens(node, 2);
 
-    const isDangling = [';', ','].indexOf(penultimateToken.value) > -1;
+    const isDangling = [';', ','].includes(penultimateToken.value);
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
     const report = makeReporters(lastChildNode, penultimateToken);
@@ -111,11 +107,11 @@ const create = (context) => {
 
     TupleTypeAnnotation (node) {
       evaluate(node, _.last(node.types));
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

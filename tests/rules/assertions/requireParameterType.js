@@ -4,149 +4,149 @@ export default {
       code: '(foo) => {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "foo" parameter type annotation.',
+        },
+      ],
     },
     {
       code: 'function x(foo) {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "foo" parameter type annotation.',
+        },
+      ],
     },
     {
       code: 'function x(foo) {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
+          message: 'Missing "foo" parameter type annotation.',
+        },
       ],
       options: [
         {
-          excludeArrowFunctions: true
-        }
-      ]
+          excludeArrowFunctions: true,
+        },
+      ],
     },
     {
       code: '(foo = \'FOO\') => {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "foo" parameter type annotation.',
+        },
+      ],
     },
     {
       code: '(...foo) => {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "foo" parameter type annotation.',
+        },
+      ],
     },
     {
       code: '({foo}) => {}',
       errors: [
         {
-          message: 'Missing "{foo}" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "{foo}" parameter type annotation.',
+        },
+      ],
     },
     {
       code: '([foo]) => {}',
       errors: [
         {
-          message: 'Missing "[foo]" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "[foo]" parameter type annotation.',
+        },
+      ],
     },
     {
       code: '({foo = 1} = {}) => {}',
       errors: [
         {
-          message: 'Missing "{foo = 1}" parameter type annotation.'
-        }
-      ]
+          message: 'Missing "{foo = 1}" parameter type annotation.',
+        },
+      ],
     },
     {
       code: '// @flow\n(foo) => {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
+          message: 'Missing "foo" parameter type annotation.',
+        },
       ],
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true
-        }
-      }
+          onlyFilesWithFlowAnnotation: true,
+        },
+      },
     },
     {
       code: '(foo) => {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
+          message: 'Missing "foo" parameter type annotation.',
+        },
       ],
       options: [
         {
-          excludeArrowFunctions: 'expressionsOnly'
-        }
-      ]
+          excludeArrowFunctions: 'expressionsOnly',
+        },
+      ],
     },
     {
       code: 'function x(foo) {}',
       errors: [
         {
-          message: 'Missing "foo" parameter type annotation.'
-        }
+          message: 'Missing "foo" parameter type annotation.',
+        },
       ],
       options: [
         {
-          excludeArrowFunctions: 'expressionsOnly'
-        }
-      ]
+          excludeArrowFunctions: 'expressionsOnly',
+        },
+      ],
     },
     {
       code: '(_foo: number, bar) => {}',
       errors: [
         {
-          message: 'Missing "bar" parameter type annotation.'
-        }
+          message: 'Missing "bar" parameter type annotation.',
+        },
       ],
       options: [
         {
-          excludeParameterMatch: '^_'
-        }
-      ]
+          excludeParameterMatch: '^_',
+        },
+      ],
     },
     {
       code: '(_foo, bar) => {}',
       errors: [
         {
-          message: 'Missing "bar" parameter type annotation.'
-        }
+          message: 'Missing "bar" parameter type annotation.',
+        },
       ],
       options: [
         {
-          excludeParameterMatch: '^_'
-        }
-      ]
-    }
+          excludeParameterMatch: '^_',
+        },
+      ],
+    },
   ],
   misconfigured: [
     {
       errors: [
         {
           data: {
-            excludeOtherStuff: true
+            excludeOtherStuff: true,
           },
           dataPath: '[0]',
           keyword: 'additionalProperties',
           message: 'should NOT have additional properties',
           params: {
-            additionalProperty: 'excludeOtherStuff'
+            additionalProperty: 'excludeOtherStuff',
           },
           parentSchema: {
             additionalProperties: false,
@@ -155,20 +155,20 @@ export default {
                 enum: [
                   false,
                   true,
-                  'expressionsOnly'
-                ]
+                  'expressionsOnly',
+                ],
               },
               excludeParameterMatch: {
-                type: 'string'
-              }
+                type: 'string',
+              },
             },
-            type: 'object'
+            type: 'object',
           },
           schema: false,
-          schemaPath: '#/items/0/additionalProperties'
-        }
+          schemaPath: '#/items/0/additionalProperties',
+        },
       ],
-      options: [{excludeOtherStuff: true}]
+      options: [{excludeOtherStuff: true}],
     },
     {
       errors: [
@@ -181,25 +181,25 @@ export default {
             allowedValues: [
               false,
               true,
-              'expressionsOnly'
-            ]
+              'expressionsOnly',
+            ],
           },
           parentSchema: {
             enum: [
               false,
               true,
-              'expressionsOnly'
-            ]
+              'expressionsOnly',
+            ],
           },
           schema: [
             false,
             true,
-            'expressionsOnly'
+            'expressionsOnly',
           ],
-          schemaPath: '#/items/0/properties/excludeArrowFunctions/enum'
-        }
+          schemaPath: '#/items/0/properties/excludeArrowFunctions/enum',
+        },
       ],
-      options: [{excludeArrowFunctions: 'everything'}]
+      options: [{excludeArrowFunctions: 'everything'}],
     },
     {
       errors: [
@@ -209,87 +209,87 @@ export default {
           keyword: 'type',
           message: 'should be string',
           params: {
-            type: 'string'
+            type: 'string',
           },
           parentSchema: {
-            type: 'string'
+            type: 'string',
           },
           schema: 'string',
-          schemaPath: '#/items/0/properties/excludeParameterMatch/type'
-        }
+          schemaPath: '#/items/0/properties/excludeParameterMatch/type',
+        },
       ],
-      options: [{excludeParameterMatch: 3}]
-    }
+      options: [{excludeParameterMatch: 3}],
+    },
   ],
   valid: [
     {
-      code: '(foo: string) => {}'
+      code: '(foo: string) => {}',
     },
     {
-      code: '(foo: string = \'FOO\') => {}'
+      code: '(foo: string = \'FOO\') => {}',
     },
     {
-      code: '(...foo: string) => {}'
+      code: '(...foo: string) => {}',
     },
     {
-      code: 'const f: Foo = (a, b) => 42;'
+      code: 'const f: Foo = (a, b) => 42;',
     },
     {
-      code: '({foo}: {foo: string}) => {}'
+      code: '({foo}: {foo: string}) => {}',
     },
     {
-      code: '([foo]: Array) => {}'
+      code: '([foo]: Array) => {}',
     },
     {
-      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => {}'
+      code: 'type fn = (a: string, b: number) => number;\nconst f: fn = (a, b) => {}',
     },
     {
       code: '(foo) => {}',
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true
-        }
-      }
+          onlyFilesWithFlowAnnotation: true,
+        },
+      },
     },
     {
       code: '(foo) => {}',
       options: [
         {
-          excludeArrowFunctions: true
-        }
-      ]
+          excludeArrowFunctions: true,
+        },
+      ],
     },
     {
       code: '(foo) => 3',
       options: [
         {
-          excludeArrowFunctions: 'expressionsOnly'
-        }
-      ]
+          excludeArrowFunctions: 'expressionsOnly',
+        },
+      ],
     },
     {
       code: '(_foo, bar: string) => {}',
       options: [
         {
-          excludeParameterMatch: '^_'
-        }
-      ]
+          excludeParameterMatch: '^_',
+        },
+      ],
     },
     {
       code: '(_foo: number, bar: string) => {}',
       options: [
         {
-          excludeParameterMatch: '^_'
-        }
-      ]
+          excludeParameterMatch: '^_',
+        },
+      ],
     },
     {
       code: '(foo) => {}',
       settings: {
         flowtype: {
-          onlyFilesWithFlowAnnotation: true
-        }
-      }
-    }
-  ]
+          onlyFilesWithFlowAnnotation: true,
+        },
+      },
+    },
+  ],
 };

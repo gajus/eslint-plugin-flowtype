@@ -15,6 +15,6 @@ export default (direction, context, options) => {
     ObjectTypeIndexer: evaluateObjectTypeIndexer(context, report),
     ObjectTypeProperty: evaluateObjectTypeProperty(context, report),
     TypeCastExpression: evaluateTypeCastExpression(context, report),
-    VariableDeclaration: evaluateVariables(context, report)
+    VariableDeclaration: evaluateVariables(context, report),
   };
 };

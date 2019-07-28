@@ -37,11 +37,11 @@ export default (needle, haystack, weight = 0.5) => {
       });
 
       if (hitCount > 0) {
-        return 2.0 * hitCount / unionLen;
+        return 2 * hitCount / unionLen;
       }
     }
 
-    return 0.0;
+    return 0;
   };
 
   return stringSimilarity(needle, haystack) >= Number(weight);

@@ -3,5 +3,5 @@ import isSimpleType from './isSimpleType';
 const complexTypesWithoutWrap = ['TupleTypeAnnotation', 'ObjectTypeAnnotation'];
 
 export default (node) => {
-  return !isSimpleType(node) && complexTypesWithoutWrap.indexOf(node.type) === -1;
+  return !isSimpleType(node) && !complexTypesWithoutWrap.includes(node.type);
 };

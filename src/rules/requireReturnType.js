@@ -3,38 +3,38 @@ import _ from 'lodash';
 const schema = [
   {
     enum: ['always'],
-    type: 'string'
+    type: 'string',
   },
   {
     additionalProperties: false,
     properties: {
       annotateUndefined: {
-        enum: ['always', 'never'],
-        type: 'string'
+        enum: ['always', 'never', 'ignore'],
+        type: 'string',
       },
       excludeArrowFunctions: {
-        enum: [false, true, 'expressionsOnly']
+        enum: [false, true, 'expressionsOnly'],
       },
       excludeMatching: {
         items: {
-          type: 'string'
+          type: 'string',
         },
-        type: 'array'
+        type: 'array',
       },
       includeOnlyMatching: {
         items: {
-          type: 'string'
+          type: 'string',
         },
-        type: 'array'
-      }
+        type: 'array',
+      },
     },
-    type: 'object'
-  }
+    type: 'object',
+  },
 ];
 
 const create = (context) => {
   const annotateReturn = (_.get(context, 'options[0]') || 'always') === 'always';
-  const annotateUndefined = (_.get(context, 'options[1].annotateUndefined') || 'never') === 'always';
+  const annotateUndefined = _.get(context, 'options[1].annotateUndefined') || 'never';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
 
   const makeRegExp = (str) => {
@@ -48,7 +48,7 @@ const create = (context) => {
 
   const registerFunction = (functionNode) => {
     targetNodes.push({
-      functionNode
+      functionNode,
     });
   };
 
@@ -72,7 +72,8 @@ const create = (context) => {
   const shouldFilterNode = (functionNode) => {
     const isArrow = functionNode.type === 'ArrowFunctionExpression';
     const isMethod = functionNode.parent && functionNode.parent.type === 'MethodDefinition';
-    const isProperty = functionNode.parent && functionNode.parent.type === 'ClassProperty';
+    const propertyNodes = ['Property', 'ClassProperty'];
+    const isProperty = functionNode.parent && propertyNodes.includes(functionNode.parent.type);
     let selector;
 
     if (isMethod || isProperty) {
@@ -118,9 +119,9 @@ const create = (context) => {
 
     const returnType = functionNode.returnType || isArrow && _.get(functionNode, 'parent.id.typeAnnotation');
 
-    if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && !annotateUndefined) {
+    if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && annotateUndefined === 'never') {
       context.report(functionNode, 'Must not annotate undefined return type.');
-    } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined) {
+    } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined === 'always') {
       context.report(functionNode, 'Must annotate undefined return type.');
     } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
       context.report(functionNode, 'Missing return type annotation.');
@@ -146,11 +147,11 @@ const create = (context) => {
       if (targetNodes.length) {
         targetNodes[targetNodes.length - 1].returnStatementNode = node;
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

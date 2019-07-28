@@ -4,8 +4,8 @@ import needWrap from './needWrap';
 const schema = [
   {
     enum: ['verbose', 'shorthand'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const inlineType = (type) => {
@@ -33,13 +33,13 @@ export default (defaultConfig, simpleType) => {
           context.report({
             data: {
               type: inlinedType,
-              wrappedType: wrappedInlinedType
+              wrappedType: wrappedInlinedType,
             },
             fix (fixer) {
               return fixer.replaceText(node, 'Array<' + rawElementType + '>');
             },
             message: 'Use "Array<{{ type }}>", not "{{ wrappedType }}[]"',
-            node
+            node,
           });
         }
       },
@@ -47,7 +47,9 @@ export default (defaultConfig, simpleType) => {
       // verbose
       GenericTypeAnnotation (node) {
         if (node.id.name === 'Array') {
-          if (node.typeParameters.params.length === 1) {
+          // Don't report on un-parameterized Array annotations. There are valid cases for this,
+          // but regardless, we should not crash when encountering them.
+          if (node.typeParameters && node.typeParameters.params.length === 1) {
             const elementTypeNode = node.typeParameters.params[0];
             const rawElementType = context.getSourceCode().getText(elementTypeNode);
             const inlinedType = inlineType(rawElementType);
@@ -57,7 +59,7 @@ export default (defaultConfig, simpleType) => {
               context.report({
                 data: {
                   type: inlinedType,
-                  wrappedType: wrappedInlinedType
+                  wrappedType: wrappedInlinedType,
                 },
                 fix (fixer) {
                   if (needWrap(elementTypeNode)) {
@@ -67,17 +69,17 @@ export default (defaultConfig, simpleType) => {
                   }
                 },
                 message: 'Use "{{ wrappedType }}[]", not "Array<{{ type }}>"',
-                node
+                node,
               });
             }
           }
         }
-      }
+      },
     };
   };
 
   return {
     create,
-    schema
+    schema,
   };
 };

@@ -1,5 +1,6 @@
 # eslint-plugin-flowtype
 
+[![GitSpo Mentions](https://gitspo.com/badges/mentions/gajus/eslint-plugin-flowtype?style=flat-square)](https://gitspo.com/mentions/gajus/eslint-plugin-flowtype)
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-flowtype.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-flowtype)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-flowtype/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-flowtype)
 [![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -21,7 +22,7 @@ npm install eslint --save-dev
 npm install babel-eslint --save-dev
 npm install eslint-plugin-flowtype --save-dev
 
-# Or all at once: 
+# Or all at once:
 npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
@@ -62,6 +63,7 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
       "comma"
     ],
     "flowtype/require-parameter-type": 2,
+    "flowtype/require-readonly-react-props": 0,
     "flowtype/require-return-type": [
       2,
       "always",
@@ -154,6 +156,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 
 {"gitdown": "include", "file": "./rules/array-style-complex-type.md"}
 {"gitdown": "include", "file": "./rules/array-style-simple-type.md"}
+{"gitdown": "include", "file": "./rules/arrow-parens.md"}
 {"gitdown": "include", "file": "./rules/boolean-style.md"}
 {"gitdown": "include", "file": "./rules/define-flow-type.md"}
 {"gitdown": "include", "file": "./rules/delimiter-dangle.md"}
@@ -171,7 +174,9 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/object-type-delimiter.md"}
 {"gitdown": "include", "file": "./rules/require-compound-type-alias.md"}
 {"gitdown": "include", "file": "./rules/require-exact-type.md"}
+{"gitdown": "include", "file": "./rules/require-inexact-type.md"}
 {"gitdown": "include", "file": "./rules/require-parameter-type.md"}
+{"gitdown": "include", "file": "./rules/require-readonly-react-props.md"}
 {"gitdown": "include", "file": "./rules/require-return-type.md"}
 {"gitdown": "include", "file": "./rules/require-types-at-top.md"}
 {"gitdown": "include", "file": "./rules/require-valid-file-annotation.md"}
