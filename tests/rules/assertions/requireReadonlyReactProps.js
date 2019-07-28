@@ -51,14 +51,6 @@ export default {
       ],
     },
     {
-      code: 'class Foo extends React.Component<UnknownProps> { }',
-      errors: [
-        {
-          message: 'UnknownProps must be $ReadOnly',
-        },
-      ],
-    },
-    {
       code: 'export type Props = {}; class Foo extends Component<Props> { }',
       errors: [
         {
@@ -113,14 +105,6 @@ export default {
       errors: [
         {
           message: 'Foo component props must be $ReadOnly',
-        },
-      ],
-    },
-    {
-      code: 'function Foo(props: UnknownProps) { return <p /> }',
-      errors: [
-        {
-          message: 'UnknownProps must be $ReadOnly',
         },
       ],
     },
@@ -184,6 +168,12 @@ export default {
     {
       code: 'class Foo extends Component<{||}> { }',
     },
+    {
+      code: 'class Foo extends React.Component<UnknownProps> { }',
+    },
+    {
+      code: 'import { type Props } from "file"; class Foo extends React.Component<Props> { }',
+    },
 
     // functional components
     {
@@ -203,6 +193,12 @@ export default {
     },
     {
       code: 'function Foo(props: {||}) { return <p /> }',
+    },
+    {
+      code: 'function Foo(props: UnknownProps) { return <p /> }',
+    },
+    {
+      code: 'import { type Props } from "file"; function Foo(props: Props) { return <p /> }',
     },
   ],
 };
