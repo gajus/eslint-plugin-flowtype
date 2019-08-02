@@ -44,7 +44,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-flowtype",
   "peerDependencies": {
-    "eslint": ">=6.1.0"
+    "eslint": ">=5.0.0"
   },
   "repository": {
     "type": "git",
