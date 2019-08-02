@@ -4,90 +4,90 @@ export default {
       code: 'var foo = "bar"',
       errors: [
         {
-          message: 'Missing "foo" variable type annotation.'
-        }
-      ]
+          message: 'Missing "foo" variable type annotation.',
+        },
+      ],
     },
     {
       code: 'var foo : string = "bar", bar = 1',
       errors: [
         {
-          message: 'Missing "bar" variable type annotation.'
-        }
-      ]
+          message: 'Missing "bar" variable type annotation.',
+        },
+      ],
     },
     {
       code: 'var _foo = "bar", bar = 1',
       errors: [
         {
-          message: 'Missing "bar" variable type annotation.'
-        }
+          message: 'Missing "bar" variable type annotation.',
+        },
       ],
       options: [
         {
-          excludeVariableMatch: '^_'
-        }
-      ]
+          excludeVariableMatch: '^_',
+        },
+      ],
     },
     {
       code: 'var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"',
       errors: [
         {
-          message: 'Missing "hey" variable type annotation.'
-        }
+          message: 'Missing "hey" variable type annotation.',
+        },
       ],
       options: [
         {
           excludeVariableTypes: {
             let: false,
-            var: true
-          }
-        }
-      ]
-    }
+            var: true,
+          },
+        },
+      ],
+    },
   ],
   misconfigured: [
     {
       errors: [
         {
           data: {
-            excludeOtherStuff: true
+            excludeOtherStuff: true,
           },
           dataPath: '[0]',
           keyword: 'additionalProperties',
           message: 'should NOT have additional properties',
           params: {
-            additionalProperty: 'excludeOtherStuff'
+            additionalProperty: 'excludeOtherStuff',
           },
           parentSchema: {
             additionalProperties: false,
             properties: {
               excludeVariableMatch: {
-                type: 'string'
+                type: 'string',
               },
               excludeVariableTypes: {
                 additionalProperties: false,
                 properties: {
                   const: {
-                    type: 'boolean'
+                    type: 'boolean',
                   },
                   let: {
-                    type: 'boolean'
+                    type: 'boolean',
                   },
                   var: {
-                    type: 'boolean'
-                  }
+                    type: 'boolean',
+                  },
                 },
-                type: 'object'
-              }
+                type: 'object',
+              },
             },
-            type: 'object'
+            type: 'object',
           },
           schema: false,
-          schemaPath: '#/items/0/additionalProperties'
-        }
+          schemaPath: '#/items/0/additionalProperties',
+        },
       ],
-      options: [{excludeOtherStuff: true}]
+      options: [{excludeOtherStuff: true}],
     },
     {
       errors: [
@@ -97,49 +97,49 @@ export default {
           keyword: 'type',
           message: 'should be string',
           params: {
-            type: 'string'
+            type: 'string',
           },
           parentSchema: {
-            type: 'string'
+            type: 'string',
           },
           schema: 'string',
-          schemaPath: '#/items/0/properties/excludeVariableMatch/type'
-        }
+          schemaPath: '#/items/0/properties/excludeVariableMatch/type',
+        },
       ],
-      options: [{excludeVariableMatch: 99}]
+      options: [{excludeVariableMatch: 99}],
     },
     {
       errors: [
         {
           data: {
-            declare: false
+            declare: false,
           },
           dataPath: '[0].excludeVariableTypes',
           keyword: 'additionalProperties',
           message: 'should NOT have additional properties',
           params: {
-            additionalProperty: 'declare'
+            additionalProperty: 'declare',
           },
           parentSchema: {
             additionalProperties: false,
             properties: {
               const: {
-                type: 'boolean'
+                type: 'boolean',
               },
               let: {
-                type: 'boolean'
+                type: 'boolean',
               },
               var: {
-                type: 'boolean'
-              }
+                type: 'boolean',
+              },
             },
-            type: 'object'
+            type: 'object',
           },
           schema: false,
-          schemaPath: '#/items/0/properties/excludeVariableTypes/additionalProperties'
-        }
+          schemaPath: '#/items/0/properties/excludeVariableTypes/additionalProperties',
+        },
       ],
-      options: [{excludeVariableTypes: {declare: false}}]
+      options: [{excludeVariableTypes: {declare: false}}],
     },
     {
       errors: [
@@ -149,42 +149,42 @@ export default {
           keyword: 'type',
           message: 'should be boolean',
           params: {
-            type: 'boolean'
+            type: 'boolean',
           },
           parentSchema: {
-            type: 'boolean'
+            type: 'boolean',
           },
           schema: 'boolean',
-          schemaPath: '#/items/0/properties/excludeVariableTypes/properties/let/type'
-        }
+          schemaPath: '#/items/0/properties/excludeVariableTypes/properties/let/type',
+        },
       ],
-      options: [{excludeVariableTypes: {let: 'yes'}}]
-    }
+      options: [{excludeVariableTypes: {let: 'yes'}}],
+    },
   ],
   valid: [
     {
-      code: 'var foo : string = "bar"'
+      code: 'var foo : string = "bar"',
     },
     {
-      code: 'var foo : string = "bar", bar : number = 1'
+      code: 'var foo : string = "bar", bar : number = 1',
     },
     {
       code: 'var _foo = "bar", bar : number = 1',
       options: [
         {
-          excludeVariableMatch: '^_'
-        }
-      ]
+          excludeVariableMatch: '^_',
+        },
+      ],
     },
     {
       code: 'var foo = "bar", bar = 1',
       options: [
         {
           excludeVariableTypes: {
-            var: true
-          }
-        }
-      ]
+            var: true,
+          },
+        },
+      ],
     },
     {
       code: 'var foo = "bar", bar = 1; const oob : string = "oob"; let hey = "yah"',
@@ -192,10 +192,10 @@ export default {
         {
           excludeVariableTypes: {
             let: true,
-            var: true
-          }
-        }
-      ]
-    }
-  ]
+            var: true,
+          },
+        },
+      ],
+    },
+  ],
 };

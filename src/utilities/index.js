@@ -14,5 +14,5 @@ export {default as iterateFunctionNodes} from './iterateFunctionNodes';
 export {default as quoteName} from './quoteName';
 
 export {
-  spacingFixers
+  spacingFixers,
 };

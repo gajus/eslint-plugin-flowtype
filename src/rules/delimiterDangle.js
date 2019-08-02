@@ -3,12 +3,12 @@ import _ from 'lodash';
 const schema = [
   {
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
-    type: 'string'
+    type: 'string',
   },
   {
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
@@ -21,7 +21,7 @@ const create = (context) => {
       context.report({
         fix,
         message,
-        node
+        node,
       });
     };
   };
@@ -33,7 +33,7 @@ const create = (context) => {
       }),
       noDangle: reporter(node, 'Missing trailing delimiter', (fixer) => {
         return fixer.insertTextAfter(tokenToFix, ',');
-      })
+      }),
     };
   };
 
@@ -111,11 +111,11 @@ const create = (context) => {
 
     TupleTypeAnnotation (node) {
       evaluate(node, _.last(node.types));
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

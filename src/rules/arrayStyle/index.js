@@ -4,8 +4,8 @@ import needWrap from './needWrap';
 const schema = [
   {
     enum: ['verbose', 'shorthand'],
-    type: 'string'
-  }
+    type: 'string',
+  },
 ];
 
 const inlineType = (type) => {
@@ -33,13 +33,13 @@ export default (defaultConfig, simpleType) => {
           context.report({
             data: {
               type: inlinedType,
-              wrappedType: wrappedInlinedType
+              wrappedType: wrappedInlinedType,
             },
             fix (fixer) {
               return fixer.replaceText(node, 'Array<' + rawElementType + '>');
             },
             message: 'Use "Array<{{ type }}>", not "{{ wrappedType }}[]"',
-            node
+            node,
           });
         }
       },
@@ -59,7 +59,7 @@ export default (defaultConfig, simpleType) => {
               context.report({
                 data: {
                   type: inlinedType,
-                  wrappedType: wrappedInlinedType
+                  wrappedType: wrappedInlinedType,
                 },
                 fix (fixer) {
                   if (needWrap(elementTypeNode)) {
@@ -69,17 +69,17 @@ export default (defaultConfig, simpleType) => {
                   }
                 },
                 message: 'Use "{{ wrappedType }}[]", not "Array<{{ type }}>"',
-                node
+                node,
               });
             }
           }
         }
-      }
+      },
     };
   };
 
   return {
     create,
-    schema
+    schema,
   };
 };

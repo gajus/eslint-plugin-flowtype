@@ -21,10 +21,10 @@
     "eslint-config-canonical": "^17.3.2",
     "gitdown": "^3.1.1",
     "glob": "^7.1.4",
-    "husky": "^3.0.1",
+    "husky": "^3.0.2",
     "jsonlint": "^1.6.3",
     "mocha": "^6.2.0",
-    "semantic-release": "^15.13.18"
+    "semantic-release": "^15.13.19"
   },
   "engines": {
     "node": ">=4"

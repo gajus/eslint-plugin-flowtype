@@ -85,14 +85,14 @@ const create = (context) => {
       if (isReactComponent(node) && isReadOnlyClassProp(node)) {
         context.report({
           message: node.superTypeParameters.params[0].id.name + ' must be $ReadOnly',
-          node
+          node,
         });
       } else if (node.superTypeParameters &&
                  node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation' &&
                  !isReadOnlyObjectType(node.superTypeParameters.params[0])) {
         context.report({
           message: node.id.name + ' class props must be $ReadOnly',
-          node
+          node,
         });
       }
     },
@@ -124,7 +124,7 @@ const create = (context) => {
 
           context.report({
             message: identifier.name + ' must be $ReadOnly',
-            node
+            node,
           });
 
           reportedFunctionalComponents.push(identifier);
@@ -136,15 +136,15 @@ const create = (context) => {
             !isReadOnlyObjectType(typeAnnotation.typeAnnotation)) {
           context.report({
             message: currentNode.id.name + ' component props must be $ReadOnly',
-            node
+            node,
           });
         }
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

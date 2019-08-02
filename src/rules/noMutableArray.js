@@ -38,7 +38,7 @@ const create = (context) => {
             return fixer.replaceText(node, '$ReadOnlyArray<' + rawElementType + '>');
           },
           message: 'Use "$ReadOnlyArray" instead of array shorthand notation',
-          node
+          node,
         });
       }
     },
@@ -49,14 +49,14 @@ const create = (context) => {
             return fixer.replaceText(node.id, '$ReadOnlyArray');
           },
           message: 'Use "$ReadOnlyArray" instead of "Array"',
-          node
+          node,
         });
       }
-    }
+    },
   };
 };
 
 export default {
   create,
-  schema
+  schema,
 };

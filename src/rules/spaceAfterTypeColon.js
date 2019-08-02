@@ -4,27 +4,27 @@ import makeSpacing from './typeColonSpacing';
 const schema = [
   {
     enum: ['always', 'never'],
-    type: 'string'
+    type: 'string',
   },
   {
     additionalProperties: false,
     properties: {
       allowLineBreak: {
-        type: 'boolean'
-      }
+        type: 'boolean',
+      },
     },
-    type: 'object'
-  }
+    type: 'object',
+  },
 ];
 
 const create = (context) => {
   return makeSpacing('after', context, {
     allowLineBreak: _.get(context, ['options', '1', 'allowLineBreak'], false),
-    always: _.get(context, ['options', '0'], 'always') === 'always'
+    always: _.get(context, ['options', '0'], 'always') === 'always',
   });
 };
 
 export default {
   create,
-  schema
+  schema,
 };

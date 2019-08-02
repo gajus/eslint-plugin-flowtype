@@ -9,7 +9,7 @@ export default (context, report) => {
       report({
         colon: sourceCode.getFirstToken(functionNode.returnType),
         node: functionNode,
-        type: 'return type'
+        type: 'return type',
       });
     }
   };
