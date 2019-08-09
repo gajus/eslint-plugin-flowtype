@@ -36,6 +36,7 @@
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
+        * [`require-indexer-name`](#eslint-plugin-flowtype-rules-require-indexer-name)
         * [`require-inexact-type`](#eslint-plugin-flowtype-rules-require-inexact-type)
         * [`require-parameter-type`](#eslint-plugin-flowtype-rules-require-parameter-type)
         * [`require-readonly-react-props`](#eslint-plugin-flowtype-rules-require-readonly-react-props)
@@ -2367,12 +2368,59 @@ type foo = number;
 
 
 
+<a name="eslint-plugin-flowtype-rules-require-indexer-name"></a>
+### <code>require-indexer-name</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+This rule validates Flow object indexer name.
+
+<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-4"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"` (default): Never report files that are missing an indexer key name.
+* `"always"`: Always report files that are missing an indexer key name.
+
+```js
+{
+  "rules": {
+    "flowtype/require-indexer-name": [
+      2,
+      "always"
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type foo = { [string]: number };
+// Message: All indexers must be declared with key name.
+```
+
+The following patterns are not considered problems:
+
+```js
+type foo = { [key: string]: number };
+
+// Options: ["never"]
+type foo = { [key: string]: number };
+
+// Options: ["never"]
+type foo = { [string]: number };
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-inexact-type"></a>
 ### <code>require-inexact-type</code>
 
 This rule enforces explicit inexact object types.
 
-<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-4"></a>
+<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-5"></a>
 #### Options
 
 The rule has one string option:
@@ -2481,7 +2529,7 @@ type foo = number;
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-5"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-6"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -2806,7 +2854,7 @@ function Foo(props: {||}) { return <p /> }
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options-6"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-7"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3160,7 +3208,7 @@ async function * foo(): AsyncIterable<number> { yield 2; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-7"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-8"></a>
 #### Options
 
 The rule has a string option:
@@ -3237,7 +3285,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-8"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-9"></a>
 #### Options
 
 The rule has a string option:
@@ -3409,7 +3457,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options-9"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-10"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -3561,7 +3609,7 @@ Enforces sorting of Object annotations.
 
 This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options-10"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-11"></a>
 #### Options
 
 The first option specifies sort order.
@@ -3786,7 +3834,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-11"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-12"></a>
 #### Options
 
 This rule has a string argument.
@@ -5155,7 +5203,7 @@ type foo = {test: number}; type bar = {...$Exact<foo>}
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options-12"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-13"></a>
 #### Options
 
 This rule needs a text RegExp to operate with Its signature is as follows:
@@ -5213,7 +5261,7 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
-<a name="eslint-plugin-flowtype-rules-type-import-style-options-13"></a>
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-14"></a>
 #### Options
 
 The rule has a string option:
