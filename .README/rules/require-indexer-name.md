@@ -1,5 +1,7 @@
 ### `require-indexer-name`
 
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
 This rule validates Flow object indexer name.
 
 #### Options
