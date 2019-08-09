@@ -18,10 +18,10 @@
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.13.0",
-    "eslint-config-canonical": "^17.3.2",
+    "eslint-config-canonical": "^17.3.4",
     "gitdown": "^3.1.1",
     "glob": "^7.1.4",
-    "husky": "^3.0.2",
+    "husky": "^3.0.3",
     "jsonlint": "^1.6.3",
     "mocha": "^6.2.0",
     "semantic-release": "^15.13.19"
@@ -44,7 +44,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-flowtype",
   "peerDependencies": {
-    "eslint": ">=5.0.0"
+    "eslint": ">=6.1.0"
   },
   "repository": {
     "type": "git",
