@@ -14,8 +14,12 @@ const create = (context) => {
     return {
       ObjectTypeIndexer (node) {
         const id = getParameterName(node, context);
+        const rawKeyType = context.getSourceCode().getText(node.key);
         if (id === null) {
           context.report({
+            fix (fixer) {
+              return fixer.replaceText(node.key, 'key: ' + rawKeyType);
+            },
             message: 'All indexers must be declared with key name.',
             node,
           });
