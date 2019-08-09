@@ -33,6 +33,30 @@ export default (identifierNode, context) => {
     return context.getSourceCode().getFirstToken(identifierNode, tokenIndex).value;
   }
 
+  if (identifierNode.type === 'ObjectTypeIndexer') {
+    let tokenIndex;
+
+    tokenIndex = 0;
+
+    if (identifierNode.static) {
+      tokenIndex++;
+    }
+
+    if (identifierNode.variance) {
+      tokenIndex++;
+    }
+
+    tokenIndex++;
+
+    const id = context.getSourceCode().getFirstToken(identifierNode, tokenIndex);
+    const colonOrBrace = context.getSourceCode().getTokenAfter(id);
+    if (colonOrBrace.value === ':') {
+      return id.value;
+    } else {
+      return null;
+    }
+  }
+
   if (identifierNode.type === 'FunctionTypeParam') {
     return context.getSourceCode().getFirstToken(identifierNode).value;
   }

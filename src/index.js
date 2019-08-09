@@ -17,6 +17,7 @@ import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import noMixed from './rules/noMixed';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
+import requireIndexerName from './rules/requireIndexerName';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
 import requireInexactType from './rules/requireInexactType';
 import requireExactType from './rules/requireExactType';
@@ -61,6 +62,7 @@ const rules = {
   'object-type-delimiter': objectTypeDelimiter,
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
+  'require-indexer-name': requireIndexerName,
   'require-inexact-type': requireInexactType,
   'require-parameter-type': requireParameterType,
   'require-readonly-react-props': requireReadonlyReactProps,
