@@ -31,6 +31,7 @@ const reportingRules = [
   'object-type-delimiter',
   'require-compound-type-alias',
   'require-inexact-type',
+  'require-indexer-name',
   'require-exact-type',
   'require-parameter-type',
   'require-readonly-react-props',
