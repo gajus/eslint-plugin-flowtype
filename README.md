@@ -1328,6 +1328,12 @@ type X = Promise<(string)>
 
 type X = Promise<(foo), bar, (((baz)))>
 
+type X = Promise<
+  (foo),
+  bar,
+  (((baz))),
+>
+
 // Options: ["always"]
 type X = Promise< string >
 
