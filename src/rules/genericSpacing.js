@@ -31,21 +31,25 @@ const create = (context) => {
 
       if (never) {
         if (spacesBefore) {
-          context.report({
-            data: {name: node.id.name},
-            fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
-            message: 'There must be no space at start of "{{name}}" generic type annotation',
-            node: types,
-          });
+          if (sourceCode.text[opener.end] !== '\n') {
+            context.report({
+              data: {name: node.id.name},
+              fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
+              message: 'There must be no space at start of "{{name}}" generic type annotation',
+              node: types,
+            });
+          }
         }
 
         if (spacesAfter) {
-          context.report({
-            data: {name: node.id.name},
-            fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter),
-            message: 'There must be no space at end of "{{name}}" generic type annotation',
-            node: types,
-          });
+          if (sourceCode.text[closer.start - 1] !== '\n') {
+            context.report({
+              data: {name: node.id.name},
+              fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter),
+              message: 'There must be no space at end of "{{name}}" generic type annotation',
+              node: types,
+            });
+          }
         }
       } else {
         if (spacesBefore > 1) {

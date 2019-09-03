@@ -129,6 +129,12 @@ export default {
     {code: 'type X = Promise<string>'},
     {code: 'type X = Promise<(string)>'},
     {code: 'type X = Promise<(foo), bar, (((baz)))>'},
+    {code:
+`type X = Promise<
+  (foo),
+  bar,
+  (((baz))),
+>`},
 
     // Always
 

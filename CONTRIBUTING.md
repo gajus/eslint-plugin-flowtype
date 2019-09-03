@@ -31,6 +31,10 @@ Run them with `npm test`.
 
 Run with `npm run lint`.
 
+## Submitting a PR
+
+Just before submitting a PR, run `npm run create-readme` to generate the new README.md
+
 ## Adding a Rule
 
 ### Source & Tests
