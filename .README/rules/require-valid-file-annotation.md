@@ -37,7 +37,7 @@ This rule has an object option:
     "flowtype/require-valid-file-annotation": [
       2,
       "always", {
-        "annotationStyle": "block"
+        "annotationStyle": "block",
         "strict": true,
       }
     ]
