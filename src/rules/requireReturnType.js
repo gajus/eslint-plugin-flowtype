@@ -9,7 +9,7 @@ const schema = [
     additionalProperties: false,
     properties: {
       annotateUndefined: {
-        enum: ['always', 'never', 'ignore'],
+        enum: ['always', 'never', 'ignore', 'always-enforce'],
         type: 'string',
       },
       excludeArrowFunctions: {
@@ -123,7 +123,10 @@ const create = (context) => {
       context.report(functionNode, 'Must not annotate undefined return type.');
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined === 'always') {
       context.report(functionNode, 'Must annotate undefined return type.');
-    } else if (!isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateReturn && !returnType && !shouldFilterNode(functionNode)) {
+    } else if (
+      (annotateUndefined === 'always-enforce' || !isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) &&
+        annotateReturn && !returnType && !shouldFilterNode(functionNode)
+    ) {
       context.report(functionNode, 'Missing return type annotation.');
     }
   };
