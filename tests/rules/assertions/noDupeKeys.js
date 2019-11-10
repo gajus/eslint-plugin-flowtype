@@ -111,5 +111,8 @@ export default {
     {
       code: 'type a = { b: <C>(config: { ...C, key: string}) => C }',
     },
+    {
+      code: 'export interface Foo { get foo(): boolean; get bar(): string; }',
+    },
   ],
 };
