@@ -27,7 +27,7 @@ const create = (context) => {
   const reportedFunctionalComponents = [];
 
   const isReadOnlyClassProp = (node) => {
-    const id = node.superTypeParameters.params[0].id;
+    const id = node.superTypeParameters && node.superTypeParameters.params[0].id;
 
     return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name) && foundTypes.includes(id.name);
   };
