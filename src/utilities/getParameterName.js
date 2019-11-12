@@ -30,6 +30,10 @@ export default (identifierNode, context) => {
       tokenIndex++;
     }
 
+    if (identifierNode.kind === 'set' || identifierNode.kind === 'get') {
+      tokenIndex++;
+    }
+
     return context.getSourceCode().getFirstToken(identifierNode, tokenIndex).value;
   }
 
