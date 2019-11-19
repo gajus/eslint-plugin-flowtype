@@ -9,12 +9,29 @@ const schema = [
     enum: ['always', 'always-multiline', 'only-multiline', 'never'],
     type: 'string',
   },
+  {
+    enum: ['always', 'always-multiline', 'only-multiline', 'never'],
+    type: 'string',
+  },
 ];
 
 const create = (context) => {
   const option = context.options[0] || 'never';
   const interfaceOption = context.options[1] || option;
+  const inexactNotationOption = context.options[2] || 'never';
   const sourceCode = context.getSourceCode();
+
+  const getNodeOption = (node) => {
+    if (node.parent.type === 'InterfaceDeclaration') {
+      return interfaceOption;
+    }
+
+    if (node.inexact) {
+      return inexactNotationOption;
+    }
+
+    return option;
+  };
 
   const reporter = (node, message, fix) => {
     return () => {
@@ -38,7 +55,7 @@ const create = (context) => {
   };
 
   const evaluate = (node, lastChildNode) => {
-    if (!lastChildNode) {
+    if (!lastChildNode && !node.inexact) {
       return;
     }
 
@@ -47,8 +64,9 @@ const create = (context) => {
     const isDangling = [';', ','].includes(penultimateToken.value);
     const isMultiLine = penultimateToken.loc.start.line !== lastToken.loc.start.line;
 
-    const report = makeReporters(lastChildNode, penultimateToken);
-    const nodeOption = node.parent.type === 'InterfaceDeclaration' ? interfaceOption : option;
+    // Use the object node if it's inexact since there's no child node for the inexact notation
+    const report = makeReporters(node.inexact ? node : lastChildNode, penultimateToken);
+    const nodeOption = getNodeOption(node);
 
     if (nodeOption === 'always' && !isDangling) {
       report.noDangle();

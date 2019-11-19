@@ -822,9 +822,11 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent use of trailing commas in Object and Tuple annotations.
 
-This rule takes two arguments which both mirror ESLint's default `comma-dangle` rule.
-The first argument is for Object and Tuple annotations.
-The second argument is used for Interface annotations as ESLint's default `comma-dangle` doesn't apply to interfaces - this defaults to whatever the first argument is.
+This rule takes three arguments where the possible values are the same as ESLint's default `comma-dangle` rule:
+
+1. The first argument is for Object and Tuple annotations. The default value is `'never'`.
+2. The second argument is used for Interface annotations. This defaults to the value of the first argument.
+3. The third argument is used for inexact object notation (trailing `...`). The default value is `'never'`.
 
 If it is `'never'` then a problem is raised when there is a trailing comma.
 
@@ -833,8 +835,6 @@ If it is `'always'` then a problem is raised when there is no trailing comma.
 If it is `'always-multiline'` then a problem is raised when there is no trailing comma on a multi-line definition, or there _is_ a trailing comma on a single-line definition.
 
 If it is `'only-multiline'` then a problem is raised when there is a trailing comma on a single-line definition. It allows, but does not enforce, trailing commas on multi-line definitions.
-
-The default value is `'never'`.
 
 The following patterns are considered problems:
 
@@ -990,6 +990,43 @@ foo: string,
 // Options: ["only-multiline"]
 type X = { foo: string, [key: string]: number; }
 // Message: Unexpected trailing delimiter
+
+// Options: ["never", "never", "never"]
+type X = { foo: string, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never", "never", "always"]
+type X = { foo: string, ... }
+// Message: Missing trailing delimiter
+
+// Options: ["never", "never", "always-multiline"]
+type X = { foo: string, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never", "never", "only-multiline"]
+type X = { foo: string, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never", "never", "never"]
+type X = {
+  foo: string,
+  ...,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never", "never", "always"]
+type X = {
+  foo: string,
+  ...
+}
+// Message: Missing trailing delimiter
+
+// Options: ["never", "never", "always-multiline"]
+type X = {
+  foo: string,
+  ...
+}
+// Message: Missing trailing delimiter
 
 type X = [string, number,]
 // Message: Unexpected trailing delimiter
@@ -1196,6 +1233,48 @@ foo: string;
 
 // Options: ["only-multiline"]
 type X = { foo: string, [key: string]: number }
+
+// Options: ["never", "never", "never"]
+type X = { foo: string, ... }
+
+// Options: ["never", "never", "always"]
+type X = { foo: string, ..., }
+
+// Options: ["never", "never", "always-multiline"]
+type X = { foo: string, ... }
+
+// Options: ["never", "never", "only-multiline"]
+type X = { foo: string, ... }
+
+// Options: ["never", "never", "never"]
+type X = {
+  foo: string,
+  ...
+}
+
+// Options: ["never", "never", "always"]
+type X = {
+  foo: string,
+  ...,
+}
+
+// Options: ["never", "never", "always-multiline"]
+type X = {
+  foo: string,
+  ...,
+}
+
+// Options: ["never", "never", "only-multiline"]
+type X = {
+  foo: string,
+  ...,
+}
+
+// Options: ["never", "never", "only-multiline"]
+type X = {
+  foo: string,
+  ...
+}
 
 type X = [string, number]
 
@@ -3687,7 +3766,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3696,7 +3775,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3705,7 +3784,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3714,7 +3793,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3723,7 +3802,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3732,7 +3811,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3741,7 +3820,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
 
@@ -3754,7 +3833,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
@@ -3772,7 +3851,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
@@ -3783,7 +3862,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 
@@ -3793,7 +3872,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-      
+
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
@@ -3918,7 +3997,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo: 
+(foo:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
