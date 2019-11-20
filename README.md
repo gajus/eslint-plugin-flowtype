@@ -991,40 +991,219 @@ foo: string,
 type X = { foo: string, [key: string]: number; }
 // Message: Unexpected trailing delimiter
 
-// Options: ["never", "never", "never"]
+type X = { ..., }
+// Message: Unexpected trailing delimiter
+
+type X = { ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
+type X = { ... }
+// Message: Missing trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = { ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = { ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","only-multiline"]
+type X = { ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","only-multiline"]
+type X = { ...; }
+// Message: Unexpected trailing delimiter
+
+type X = {
+...,
+}
+// Message: Unexpected trailing delimiter
+
+type X = {
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+...,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
+type X = {
+...
+}
+// Message: Missing trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = {
+...
+}
+// Message: Missing trailing delimiter
+
 type X = { foo: string, ..., }
 // Message: Unexpected trailing delimiter
 
-// Options: ["never", "never", "always"]
+type X = { foo: string; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { foo: string, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { foo: string; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
 type X = { foo: string, ... }
 // Message: Missing trailing delimiter
 
-// Options: ["never", "never", "always-multiline"]
+// Options: ["never","never","always-multiline"]
 type X = { foo: string, ..., }
 // Message: Unexpected trailing delimiter
 
-// Options: ["never", "never", "only-multiline"]
+// Options: ["never","never","always-multiline"]
+type X = { foo: string; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","only-multiline"]
 type X = { foo: string, ..., }
 // Message: Unexpected trailing delimiter
 
-// Options: ["never", "never", "never"]
+// Options: ["never","never","only-multiline"]
+type X = { foo: string; ...; }
+// Message: Unexpected trailing delimiter
+
 type X = {
-  foo: string,
-  ...,
+foo: string,
+...,
 }
 // Message: Unexpected trailing delimiter
 
-// Options: ["never", "never", "always"]
 type X = {
-  foo: string,
-  ...
+foo: string;
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+foo: string,
+...,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+foo: string;
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
+type X = {
+foo: string,
+...
 }
 // Message: Missing trailing delimiter
 
-// Options: ["never", "never", "always-multiline"]
+// Options: ["never","never","always-multiline"]
 type X = {
-  foo: string,
-  ...
+foo: string,
+...
+}
+// Message: Missing trailing delimiter
+
+type X = { [key: string]: number, ..., }
+// Message: Unexpected trailing delimiter
+
+type X = { [key: string]: number; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { [key: string]: number, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = { [key: string]: number; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
+type X = { [key: string]: number, ... }
+// Message: Missing trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = { [key: string]: number, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = { [key: string]: number; ...; }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","only-multiline"]
+type X = { [key: string]: number, ..., }
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","only-multiline"]
+type X = { [key: string]: number; ...; }
+// Message: Unexpected trailing delimiter
+
+type X = {
+[key: string]: number,
+...,
+}
+// Message: Unexpected trailing delimiter
+
+type X = {
+[key: string]: number;
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+[key: string]: number,
+...,
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","never"]
+type X = {
+[key: string]: number;
+...;
+}
+// Message: Unexpected trailing delimiter
+
+// Options: ["never","never","always"]
+type X = {
+[key: string]: number,
+...
+}
+// Message: Missing trailing delimiter
+
+// Options: ["never","never","always-multiline"]
+type X = {
+[key: string]: number,
+...
 }
 // Message: Missing trailing delimiter
 
@@ -1234,46 +1413,195 @@ foo: string;
 // Options: ["only-multiline"]
 type X = { foo: string, [key: string]: number }
 
-// Options: ["never", "never", "never"]
+type X = { ... }
+
+// Options: ["never","never","never"]
+type X = { ... }
+
+// Options: ["never","never","always"]
+type X = { ..., }
+
+// Options: ["never","never","always-multiline"]
+type X = { ... }
+
+// Options: ["never","never","only-multiline"]
+type X = { ... }
+
+type X = {
+...
+}
+
+// Options: ["never","never","never"]
+type X = {
+...
+}
+
+// Options: ["never","never","always"]
+type X = {
+...,
+ }
+
+// Options: ["never","never","always"]
+type X = {
+...;
+ }
+
+// Options: ["never","never","always-multiline"]
+type X = {
+...,
+}
+
+// Options: ["never","never","always-multiline"]
+type X = {
+...;
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+...
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+...,
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+...;
+}
+
 type X = { foo: string, ... }
 
-// Options: ["never", "never", "always"]
+// Options: ["never","never","never"]
+type X = { foo: string, ... }
+
+// Options: ["never","never","always"]
 type X = { foo: string, ..., }
 
-// Options: ["never", "never", "always-multiline"]
+// Options: ["never","never","always"]
+type X = { foo: string; ...; }
+
+// Options: ["never","never","always-multiline"]
 type X = { foo: string, ... }
 
-// Options: ["never", "never", "only-multiline"]
+// Options: ["never","never","only-multiline"]
 type X = { foo: string, ... }
 
-// Options: ["never", "never", "never"]
 type X = {
-  foo: string,
-  ...
+foo: string,
+...
 }
 
-// Options: ["never", "never", "always"]
+// Options: ["never","never","never"]
 type X = {
-  foo: string,
-  ...,
+foo: string,
+...
 }
 
-// Options: ["never", "never", "always-multiline"]
+// Options: ["never","never","always"]
 type X = {
-  foo: string,
-  ...,
+foo: string,
+...,
 }
 
-// Options: ["never", "never", "only-multiline"]
+// Options: ["never","never","always"]
 type X = {
-  foo: string,
-  ...,
+foo: string;
+...;
 }
 
-// Options: ["never", "never", "only-multiline"]
+// Options: ["never","never","always-multiline"]
 type X = {
-  foo: string,
-  ...
+foo: string,
+...,
+}
+
+// Options: ["never","never","always-multiline"]
+type X = {
+foo: string;
+...;
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+foo: string,
+...
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+foo: string,
+...,
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+foo: string,
+...;
+}
+
+// Options: ["never","never","never"]
+type X = { [key: string]: number, ... }
+
+// Options: ["never","never","always"]
+type X = { [key: string]: number, ..., }
+
+// Options: ["never","never","always"]
+type X = { [key: string]: number; ...; }
+
+// Options: ["never","never","always-multiline"]
+type X = { [key: string]: number, ... }
+
+// Options: ["never","never","only-multiline"]
+type X = { [key: string]: number, ... }
+
+// Options: ["never","never","never"]
+type X = {
+[key: string]: number,
+...
+}
+
+// Options: ["never","never","always"]
+type X = {
+[key: string]: number,
+...,
+}
+
+// Options: ["never","never","always"]
+type X = {
+[key: string]: number;
+...;
+}
+
+// Options: ["never","never","always-multiline"]
+type X = {
+[key: string]: number,
+...,
+}
+
+// Options: ["never","never","always-multiline"]
+type X = {
+[key: string]: number;
+...;
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+[key: string]: number,
+...
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+[key: string]: number,
+...,
+}
+
+// Options: ["never","never","only-multiline"]
+type X = {
+[key: string]: number;
+...;
 }
 
 type X = [string, number]
@@ -1591,6 +1919,8 @@ var a = {}; var b = {}; type f = { get(key: a): string, get(key: b): string }
 var a = 1; var b = 1; type f = { get(key: a): string, get(key: b): string }
 
 type a = { b: <C>(config: { ...C, key: string}) => C }
+
+export interface Foo { get foo(): boolean; get bar(): string; }
 ```
 
 
@@ -3404,7 +3734,7 @@ This rule has an object option:
     "flowtype/require-valid-file-annotation": [
       2,
       "always", {
-        "annotationStyle": "block"
+        "annotationStyle": "block",
         "strict": true,
       }
     ]
@@ -3766,7 +4096,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3775,7 +4105,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3784,7 +4114,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3793,7 +4123,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3802,7 +4132,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3811,7 +4141,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
 
@@ -3820,7 +4150,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
 
@@ -3833,7 +4163,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
 
@@ -3851,7 +4181,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "k" should be before "l".
 // Message: Expected type annotations to be in ascending order. "x" should be before "z".
 // Message: Expected type annotations to be in ascending order. "a" should be before "c".
@@ -3862,7 +4192,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 
@@ -3872,7 +4202,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-
+      
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
 ```
@@ -3997,7 +4327,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo:
+(foo: 
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
