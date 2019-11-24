@@ -16,4 +16,3 @@ export default (comment, strict) => {
     return !strict || match[0] === '@flow';
   });
 };
-

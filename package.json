@@ -17,6 +17,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "eclint": "^2.8.1",
     "eslint": "^5.13.0",
     "eslint-config-canonical": "^17.3.4",
     "gitdown": "^3.1.1",
@@ -32,7 +33,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json"
+      "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json && eclint fix ./src/**/* ./tests/**/*"
     }
   },
   "keywords": [

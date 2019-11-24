@@ -73,4 +73,3 @@ export default {
   create,
   schema,
 };
-

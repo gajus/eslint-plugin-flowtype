@@ -88,8 +88,8 @@ const create = (context) => {
           node,
         });
       } else if (node.superTypeParameters &&
-                 node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation' &&
-                 !isReadOnlyObjectType(node.superTypeParameters.params[0])) {
+                node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation' &&
+                !isReadOnlyObjectType(node.superTypeParameters.params[0])) {
         context.report({
           message: node.id.name + ' class props must be $ReadOnly',
           node,
