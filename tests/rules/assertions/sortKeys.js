@@ -68,6 +68,179 @@ export default {
     {
       code: `
         type FooType = {
+          a: $ReadOnlyArray<number>,
+          c: $ReadOnlyMap<string, number>,
+          b: Map<string, Array<Map<string, number>>>,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: $ReadOnlyArray<number>,
+          b: Map<string, Array<Map<string, number>>>,
+          c: $ReadOnlyMap<string, number>,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          ...ErrorsInRecursiveGenericTypeArgsButDoesNotFix<{
+            y: boolean,
+            x: string,
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+          }>,
+          a: number,
+          c: string,
+          b: Map<string, Array<ErrorsInRecursiveGenericTypeArgsButDoesNotFix<{
+            y: boolean,
+            x: string,
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+          }>>>,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "y".'},
+        {message: 'Expected type annotations to be in ascending order. "k" should be before "l".'},
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "y".'},
+        {message: 'Expected type annotations to be in ascending order. "k" should be before "l".'},
+      ],
+      output: `
+        type FooType = {
+          ...ErrorsInRecursiveGenericTypeArgsButDoesNotFix<{
+            y: boolean,
+            x: string,
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+          }>,
+          a: number,
+          b: Map<string, Array<ErrorsInRecursiveGenericTypeArgsButDoesNotFix<{
+            y: boolean,
+            x: string,
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+          }>>>,
+          c: string,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          ...BPreservesSpreadOrder,
+          ...APreservesSpreadOrder,
+          c: string,
+          b: number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          ...BPreservesSpreadOrder,
+          ...APreservesSpreadOrder,
+          b: number,
+          c: string,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          ...BPreservesSpreadSpans,
+          ...APreservesSpreadSpans,
+          c: string,
+          b: number,
+          ...CPreservesSpreadSpans,
+          e: string,
+          d: number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "d" should be before "e".'},
+      ],
+      output: `
+        type FooType = {
+          ...BPreservesSpreadSpans,
+          ...APreservesSpreadSpans,
+          b: number,
+          c: string,
+          ...CPreservesSpreadSpans,
+          d: number,
+          e: string,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          ...BPreservesSpreadOrderAndTypeArgs<string, number>,
+          ...APreservesSpreadOrderAndTypeArgs<number>,
+          c: string,
+          b: number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          ...BPreservesSpreadOrderAndTypeArgs<string, number>,
+          ...APreservesSpreadOrderAndTypeArgs<number>,
+          b: number,
+          c: string,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          /* preserves block comment before spread BType */
+          // preserves line comment before spread BType
+          ... /* preserves comment in spread BType */ BType<Generic> /* preserves trailing comment in spread AType */,
+          /* preserves block comment before spread AType */
+          // preserves line comment before spread AType
+          ... /* preserves comment in spread AType */ AType /* preserves trailing comment in spread AType */,
+          /* preserves block comment before reordered key "c" */
+          // preserves line comment before reordered key "c"
+          c:/* preserves comment and white space or lack of it */string/* preserves trailing comment for key "c" */,
+          b: number,
+          dWithoutComma: boolean
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          /* preserves block comment before spread BType */
+          // preserves line comment before spread BType
+          ... /* preserves comment in spread BType */ BType<Generic> /* preserves trailing comment in spread AType */,
+          /* preserves block comment before spread AType */
+          // preserves line comment before spread AType
+          ... /* preserves comment in spread AType */ AType /* preserves trailing comment in spread AType */,
+          b: number,
+          /* preserves block comment before reordered key "c" */
+          // preserves line comment before reordered key "c"
+          c:/* preserves comment and white space or lack of it */string/* preserves trailing comment for key "c" */,
+          dWithoutComma: boolean
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
           +a: number,
           c: number,
           b: string,
