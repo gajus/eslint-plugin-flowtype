@@ -65,47 +65,98 @@ const isValidOrders = {
   },
 };
 
-const variances = {
-  minus: '-',
-  plus: '+',
-};
-
-const getVariance = (node) => {
-  if (_.isString(node.variance)) {
-    return variances[node.variance] || '';
-  } else if (_.get(node, 'variance.type') === 'Variance') {
-    return variances[node.variance.kind] || '';
-  } else {
-    return '';
-  }
-};
-
 const generateOrderedList = (context, sort, properties) => {
-  return properties.map((property) => {
-    const name = getParameterName(property, context);
-    let value;
+  const source = context.getSourceCode();
 
-    if (property.type === 'ObjectTypeSpreadProperty') {
-      return ['...' + property.argument.id.name];
-    } else if (property.value.type === 'ObjectTypeAnnotation') {
-      // eslint-disable-next-line no-use-before-define
-      value = generateFix(property.value, context, sort);
-    } else {
-      value = context.getSourceCode().getText(property.value);
+  const items = properties.map((property) => {
+    const name = getParameterName(property, context);
+
+    const commentsBefore = source.getCommentsBefore(property);
+    const startIndex = commentsBefore.length > 0 ?
+      commentsBefore[0].start :
+      property.start;
+
+    if (property.type === 'ObjectTypeSpreadProperty' || !property.value) {
+      // NOTE: It could but currently does not fix recursive generic type arguments in GenericTypeAnnotation within ObjectTypeSpreadProperty.
+
+      // Maintain everything between the start of property including leading comments and the nextPunctuator `,` or `}`:
+      const nextPunctuator = source.getTokenAfter(property, {
+        filter: (token) => {
+          return token.type === 'Punctuator';
+        },
+      });
+      const beforePunctuator = source.getTokenBefore(nextPunctuator, {
+        includeComments: true,
+      });
+      const text = source.getText().substring(startIndex, beforePunctuator.end);
+
+      return [property, text];
     }
 
-    return [name, getVariance(property) + name + (property.optional ? '?' : ''), value];
-  })
-    .sort((first, second) => {
-      return sort(first[0], second[0]) ? -1 : 1;
-    })
-    .map((item) => {
-      if (item.length === 1) {
-        return item[0];
+    const colonToken = source.getTokenBefore(property.value, {
+      filter: (token) => {
+        return token.value === ':';
+      },
+    });
+
+    // Preserve all code until the colon verbatim:
+    const key = source.getText().substring(startIndex, colonToken.start);
+    let value;
+
+    if (property.value.type === 'ObjectTypeAnnotation') {
+      // eslint-disable-next-line no-use-before-define
+      value = ' ' + generateFix(property.value, context, sort);
+    } else {
+      // NOTE: It could but currently does not fix recursive generic type arguments in GenericTypeAnnotation.
+
+      // Maintain everything between the `:` and the next Punctuator `,` or `}`:
+      const nextPunctuator = source.getTokenAfter(property, {
+        filter: (token) => {
+          return token.type === 'Punctuator';
+        },
+      });
+      const beforePunctuator = source.getTokenBefore(nextPunctuator, {
+        includeComments: true,
+      });
+      const text = source.getText().substring(colonToken.end, beforePunctuator.end);
+
+      value = text;
+    }
+
+    return [property, name, key, value];
+  });
+
+  const itemGroups = [[]];
+  let itemGroupIndex = 0;
+  items.forEach((item) => {
+    if (item[0].type === 'ObjectTypeSpreadProperty') {
+      ++itemGroupIndex;
+      itemGroups[itemGroupIndex] = [item];
+      ++itemGroupIndex;
+      itemGroups[itemGroupIndex] = [];
+    } else {
+      itemGroups[itemGroupIndex].push(item);
+    }
+  });
+
+  const orderedList = [];
+  itemGroups.forEach((itemGroup) => {
+    if (itemGroup[0] && itemGroup[0].type !== 'ObjectTypeSpreadProperty') {
+      itemGroup
+        .sort((first, second) => {
+          return sort(first[1], second[1]) ? -1 : 1;
+        });
+    }
+    orderedList.push(...itemGroup.map((item) => {
+      if (item.length === 2) {
+        return item[1];
       }
 
-      return item[1] + ': ' + item[2];
-    });
+      return item[2] + ':' + item[3];
+    }));
+  });
+
+  return orderedList;
 };
 
 const generateFix = (node, context, sort) => {
@@ -121,10 +172,24 @@ const generateFix = (node, context, sort) => {
   nodeText = originalSubstring;
 
   node.properties.forEach((property, index) => {
-    const subString = source.getText(property);
-    const addComma = subString[subString.length - 1] === ',';
+    const nextPunctuator = source.getTokenAfter(property, {
+      filter: (token) => {
+        return token.type === 'Punctuator';
+      },
+    });
+    const beforePunctuator = source.getTokenBefore(nextPunctuator, {
+      includeComments: true,
+    });
+    const commentsBefore = source.getCommentsBefore(property);
+    const startIndex = commentsBefore.length > 0 ?
+      commentsBefore[0].start :
+      property.start;
+    const subString = source.getText().substring(
+      startIndex,
+      beforePunctuator.end
+    );
 
-    nodeText = nodeText.replace(subString, '$' + index + (addComma ? ',' : ''));
+    nodeText = nodeText.replace(subString, '$' + index);
   });
 
   newTypes.forEach((item, index) => {
