@@ -94,9 +94,18 @@ const create = (context) => {
         const annotationValue = potentialFlowFileAnnotation.value.trim();
         if (isFlowFileAnnotation(annotationValue)) {
           if (!isValidAnnotationStyle(potentialFlowFileAnnotation, style)) {
-            const str = style === 'line' ? '`// ' + annotationValue + '`' : '`/* ' + annotationValue + ' */`';
+            const annotation = style === 'line' ? '// ' + annotationValue : '/* ' + annotationValue + ' */';
 
-            context.report(potentialFlowFileAnnotation, 'Flow file annotation style must be ' + str);
+            context.report({
+              fix: (fixer) => {
+                return fixer.replaceTextRange(
+                  [potentialFlowFileAnnotation.start, potentialFlowFileAnnotation.end],
+                  annotation
+                );
+              },
+              message: 'Flow file annotation style must be `' + annotation + '`',
+              node: potentialFlowFileAnnotation,
+            });
           }
           if (!noFlowAnnotation(annotationValue) && flowStrict) {
             if (!isFlowStrict(annotationValue)) {

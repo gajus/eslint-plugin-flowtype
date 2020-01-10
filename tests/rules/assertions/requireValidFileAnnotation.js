@@ -211,6 +211,21 @@ export default {
       ],
       output: '// @flow strict\na;\nb;',
     },
+    {
+      code: '/* @flow */\na;\nb;',
+      errors: [
+        {
+          message: 'Flow file annotation style must be `// @flow`',
+        },
+      ],
+      options: [
+        'never',
+        {
+          annotationStyle: 'line',
+        },
+      ],
+      output: '// @flow\na;\nb;',
+    },
   ],
   misconfigured: [
     {
