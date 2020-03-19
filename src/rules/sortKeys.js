@@ -88,7 +88,7 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().substring(startIndex, beforePunctuator.end);
+      const text = source.getText().slice(startIndex, beforePunctuator.end);
 
       return [property, text];
     }
@@ -100,7 +100,7 @@ const generateOrderedList = (context, sort, properties) => {
     });
 
     // Preserve all code until the colon verbatim:
-    const key = source.getText().substring(startIndex, colonToken.start);
+    const key = source.getText().slice(startIndex, colonToken.start);
     let value;
 
     if (property.value.type === 'ObjectTypeAnnotation') {
@@ -118,7 +118,7 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().substring(colonToken.end, beforePunctuator.end);
+      const text = source.getText().slice(colonToken.end, beforePunctuator.end);
 
       value = text;
     }
@@ -184,7 +184,7 @@ const generateFix = (node, context, sort) => {
     const startIndex = commentsBefore.length > 0 ?
       commentsBefore[0].start :
       property.start;
-    const subString = source.getText().substring(
+    const subString = source.getText().slice(
       startIndex,
       beforePunctuator.end
     );
