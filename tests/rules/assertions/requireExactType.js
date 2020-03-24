@@ -40,6 +40,26 @@ export default {
       options: ['always'],
       output: '(foo: Array<{|bar: string|}>) => {};',
     },
+    {
+      code: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: { name: string };
+      }`,
+      errors: [
+        {
+          message: 'Object type must be exact.',
+        },
+      ],
+      options: ['always'],
+      output: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
+    },
 
     // Never
 
@@ -92,6 +112,26 @@ export default {
       ],
       options: ['never'],
       output: '(foo: Array<{ bar: string }>) => {};',
+    },
+    {
+      code: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
+      errors: [
+        {
+          message: 'Object type must not be exact.',
+        },
+      ],
+      options: ['never'],
+      output: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: { name: string };
+      }`,
     },
   ],
   valid: [
