@@ -131,6 +131,22 @@ export default {
       options: ['always'],
     },
 
+    {
+      code: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
+      options: ['always'],
+      output: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
+    },
+
     // Never
 
     {
@@ -152,6 +168,22 @@ export default {
     {
       code: 'type foo = number;',
       options: ['never'],
+    },
+
+    {
+      code: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
+      options: ['always'],
+      output: `interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }`,
     },
   ],
 };

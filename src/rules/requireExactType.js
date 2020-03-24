@@ -17,7 +17,7 @@ const create = (context) => {
     ObjectTypeAnnotation (node) {
       const {exact, indexers} = node;
 
-      if (always && !exact && indexers.length === 0) {
+      if (node.parent.type !== 'InterfaceDeclaration' && always && !exact && indexers.length === 0) {
         context.report({
           fix: (fixer) => {
             return [
