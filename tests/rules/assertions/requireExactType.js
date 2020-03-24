@@ -6,35 +6,39 @@ export default {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
+          message: 'Object type must be exact.',
         },
       ],
+      output: 'type foo = {||};',
     },
     {
       code: 'type foo = { bar: string };',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
+          message: 'Object type must be exact.',
         },
       ],
+      output: 'type foo = {| bar: string |};',
     },
     {
-      code: 'type foo = {};',
+      code: 'type foo = Array<{bar: string}>;',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
+          message: 'Object type must be exact.',
         },
       ],
       options: ['always'],
+      output: 'type foo = Array<{|bar: string|}>;',
     },
     {
-      code: 'type foo = { bar: string };',
+      code: '(foo: Array<{bar: string}>) => {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must be exact.',
+          message: 'Object type must be exact.',
         },
       ],
       options: ['always'],
+      output: '(foo: Array<{|bar: string|}>) => {};',
     },
 
     // Never
@@ -43,19 +47,51 @@ export default {
       code: 'type foo = {| |};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must not be exact.',
+          message: 'Object type must not be exact.',
         },
       ],
       options: ['never'],
+      output: 'type foo = { };',
     },
     {
       code: 'type foo = {| bar: string |};',
       errors: [
         {
-          message: 'Type identifier \'foo\' must not be exact.',
+          message: 'Object type must not be exact.',
         },
       ],
       options: ['never'],
+      output: 'type foo = { bar: string };',
+    },
+    {
+      code: 'type foo = { bar: {| baz: string |} };',
+      errors: [
+        {
+          message: 'Object type must not be exact.',
+        },
+      ],
+      options: ['never'],
+      output: 'type foo = { bar: { baz: string } };',
+    },
+    {
+      code: 'type foo = Array<{| bar: string |}>;',
+      errors: [
+        {
+          message: 'Object type must not be exact.',
+        },
+      ],
+      options: ['never'],
+      output: 'type foo = Array<{ bar: string }>;',
+    },
+    {
+      code: '(foo: Array<{| bar: string |}>) => {};',
+      errors: [
+        {
+          message: 'Object type must not be exact.',
+        },
+      ],
+      options: ['never'],
+      output: '(foo: Array<{ bar: string }>) => {};',
     },
   ],
   valid: [
@@ -83,6 +119,14 @@ export default {
       options: ['always'],
     },
     {
+      code: 'type foo = {| bar: {| baz: string |} |};',
+      options: ['always'],
+    },
+    {
+      code: 'type foo = Array<{| bar: string |}>;',
+      options: ['always'],
+    },
+    {
       code: 'type foo = number;',
       options: ['always'],
     },
@@ -95,6 +139,14 @@ export default {
     },
     {
       code: 'type foo = { bar: string };',
+      options: ['never'],
+    },
+    {
+      code: 'type foo = { bar: { baz: string } };',
+      options: ['never'],
+    },
+    {
+      code: 'type foo = Array<{bar: string}>;',
       options: ['never'],
     },
     {
