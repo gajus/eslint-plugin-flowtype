@@ -3724,7 +3724,7 @@ type Foo = number;
 
 This rule validates Flow file annotations.
 
-This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistant annotation style.
+This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistent annotation style.
 
 <a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-9"></a>
 #### Options
@@ -3736,7 +3736,7 @@ The rule has a string option:
 
 This rule has an object option:
 
-* `"annotationStyle"` - Enforce a consistant file annotation style.
+* `"annotationStyle"` - Enforce a consistent file annotation style.
     * `"none"` (default): Either annotation style is accepted.
     * `"line"`: Require single line annotations (i.e. `// @flow`).
     * `"block"`: Require block annotations (i.e. `/* @flow */`).
