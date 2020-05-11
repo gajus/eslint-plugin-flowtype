@@ -19,7 +19,7 @@
     "chai": "^4.2.0",
     "eclint": "^2.8.1",
     "eslint": "^7.0.0",
-    "eslint-config-canonical": "^18.1.1",
+    "eslint-config-canonical": "^19.0.4",
     "gitdown": "^3.1.1",
     "glob": "^7.1.4",
     "husky": "^3.0.3",
