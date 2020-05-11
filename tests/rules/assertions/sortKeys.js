@@ -3,44 +3,53 @@ export default {
     {
       code: 'type FooType = { a: number, c: number, b: string }',
       errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: 'type FooType = { a: number, b: string, c: number }',
     },
     {
       code: 'type FooType = { a: number, b: number, C: number }',
       errors: [{message: 'Expected type annotations to be in ascending order. "C" should be before "b".'}],
+      output: 'type FooType = { C: number, a: number, b: number }',
     },
     {
       code: 'type FooType = { 1: number, 2: number, 10: number }',
       errors: [{message: 'Expected type annotations to be in ascending order. "10" should be before "2".'}],
+      output: 'type FooType = { 1: number, 10: number, 2: number }',
     },
     {
       code: 'type FooType = { a: number, b: number }',
       errors: [{message: 'Expected type annotations to be in descending order. "b" should be before "a".'}],
       options: ['desc'],
+      output: 'type FooType = { b: number, a: number }',
     },
     {
       code: 'type FooType = { C: number, b: number, a: string }',
       errors: [{message: 'Expected type annotations to be in descending order. "b" should be before "C".'}],
       options: ['desc'],
+      output: 'type FooType = { b: number, a: string, C: number }',
     },
     {
       code: 'type FooType = { 10: number, 2: number, 1: number }',
       errors: [{message: 'Expected type annotations to be in descending order. "2" should be before "10".'}],
       options: ['desc'],
+      output: 'type FooType = { 2: number, 10: number, 1: number }',
     },
     {
       code: 'type FooType = { a: number, c: number, C: number, b: string }',
       errors: [{message: 'Expected type annotations to be in insensitive ascending order. "b" should be before "C".'}],
       options: ['asc', {caseSensitive: false}],
+      output: 'type FooType = { a: number, b: string, c: number, C: number }',
     },
     {
       code: 'type FooType = { a: number, C: number, c: number, b: string }',
       errors: [{message: 'Expected type annotations to be in insensitive ascending order. "b" should be before "c".'}],
       options: ['asc', {caseSensitive: false}],
+      output: 'type FooType = { a: number, b: string, C: number, c: number }',
     },
     {
       code: 'type FooType = { 1: number, 10: number, 2: boolean }',
       errors: [{message: 'Expected type annotations to be in natural ascending order. "2" should be before "10".'}],
       options: ['asc', {natural: true}],
+      output: 'type FooType = { 1: number, 2: boolean, 10: number }',
     },
     {
       code: 'type FooType = { a: number, c: number, b: string }',

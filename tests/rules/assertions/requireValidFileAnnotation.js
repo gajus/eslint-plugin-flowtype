@@ -66,6 +66,7 @@ export default {
       options: [
         'always',
       ],
+      output: '// @flow\na;'
     },
     {
       code: '/* @flow */',
@@ -80,6 +81,7 @@ export default {
           annotationStyle: 'line',
         },
       ],
+      output: '// @flow',
     },
     {
       code: '// @flow',
@@ -94,6 +96,7 @@ export default {
           annotationStyle: 'block',
         },
       ],
+      output: '/* @flow */',
     },
     {
       code: '// @flow',
@@ -108,6 +111,7 @@ export default {
           annotationStyle: 'block',
         },
       ],
+      output: '/* @flow */',
     },
     {
       code: '// @flow',
@@ -123,6 +127,7 @@ export default {
           strict: true,
         },
       ],
+      output: '// @flow strict',
     },
     {
       code: '/* @noflow */',
@@ -137,6 +142,7 @@ export default {
           annotationStyle: 'line',
         },
       ],
+      output: '// @noflow',
     },
     {
       code: '// @noflow',
@@ -151,6 +157,7 @@ export default {
           annotationStyle: 'block',
         },
       ],
+      output: '/* @noflow */',
     },
     {
       code: 'a;',

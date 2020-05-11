@@ -58,6 +58,7 @@ export default {
         {message: 'Use "Array<string[]>", not "string[][]"'},
         {message: 'Use "Array<string>", not "string[]"'},
       ],
+      output: 'type X = Array<string[]>',
     },
     {
       code: 'type X = Promise<{\n    foo: string,\n    bar: number\n}>[]',
