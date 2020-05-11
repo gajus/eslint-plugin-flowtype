@@ -199,7 +199,7 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint',
+    parser: require.resolve('babel-eslint'),
   });
 
   ruleTester.run('no-undef must not trigger an error in these cases', noUndefRule, {
@@ -210,7 +210,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint',
+    parser: require.resolve('babel-eslint'),
   });
 
   ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {

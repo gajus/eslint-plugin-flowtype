@@ -92,7 +92,7 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint',
+    parser: require.resolve('babel-eslint'),
   });
 
   ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
@@ -103,7 +103,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint',
+    parser: require.resolve('babel-eslint'),
   });
 
   ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
@@ -117,7 +117,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: 'babel-eslint',
+    parser: require.resolve('babel-eslint'),
     rules: {
       'use-flow-type': 1,
     },
