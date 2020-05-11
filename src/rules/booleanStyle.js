@@ -10,7 +10,7 @@ const create = (context) => {
 
   return {
     BooleanTypeAnnotation (node) {
-      const diff = node.end - node.start;
+      const diff = node.range[1] - node.range[0];
 
       if (longForm && diff === 4) {
         context.report({

@@ -71,7 +71,7 @@ const create = (context) => {
             annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
           }
 
-          return fixer.replaceTextRange([node.start, node.start], annotation);
+          return fixer.replaceTextRange([node.range[0], node.range[0]], annotation);
         };
       };
 
@@ -79,7 +79,7 @@ const create = (context) => {
         return (fixer) => {
           const annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
 
-          return fixer.replaceTextRange([node.start, node.range[0]], annotation);
+          return fixer.replaceTextRange([node.range[0], node.range[0]], annotation);
         };
       };
 
@@ -88,7 +88,7 @@ const create = (context) => {
       });
 
       if (potentialFlowFileAnnotation) {
-        if (firstToken && firstToken.start < potentialFlowFileAnnotation.start) {
+        if (firstToken && firstToken.range[0] < potentialFlowFileAnnotation.range[0]) {
           context.report(potentialFlowFileAnnotation, 'Flow file annotation not at the top of the file.');
         }
         const annotationValue = potentialFlowFileAnnotation.value.trim();
@@ -99,7 +99,7 @@ const create = (context) => {
             context.report({
               fix: (fixer) => {
                 return fixer.replaceTextRange(
-                  [potentialFlowFileAnnotation.start, potentialFlowFileAnnotation.end],
+                  [potentialFlowFileAnnotation.range[0], potentialFlowFileAnnotation.range[1]],
                   annotation
                 );
               },

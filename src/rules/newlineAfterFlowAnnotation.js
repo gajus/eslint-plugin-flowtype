@@ -48,12 +48,12 @@ const create = (context) => {
         if (never && nextLineIsEmpty) {
           context.report({
             fix: (fixer) => {
-              const lineBreak = sourceCode.text[potentialFlowFileAnnotation.end];
+              const lineBreak = sourceCode.text[potentialFlowFileAnnotation.range[1]];
 
               return fixer.replaceTextRange(
                 [
-                  potentialFlowFileAnnotation.end,
-                  potentialFlowFileAnnotation.end + (
+                  potentialFlowFileAnnotation.range[1],
+                  potentialFlowFileAnnotation.range[1] + (
                     lineBreak === '\r' ? 2 : 1
                   ),
                 ],

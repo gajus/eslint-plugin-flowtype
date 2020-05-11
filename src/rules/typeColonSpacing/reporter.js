@@ -14,9 +14,9 @@ const getSpaces = (direction, colon, context) => {
   const sourceCode = context.getSourceCode();
 
   if (direction === 'before') {
-    return colon.start - sourceCode.getTokenBefore(colon).end;
+    return colon.range[0] - sourceCode.getTokenBefore(colon).range[1];
   } else {
-    return sourceCode.getTokenAfter(colon).start - colon.end;
+    return sourceCode.getTokenAfter(colon).range[0] - colon.range[1];
   }
 };
 

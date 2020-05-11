@@ -73,8 +73,8 @@ const generateOrderedList = (context, sort, properties) => {
 
     const commentsBefore = source.getCommentsBefore(property);
     const startIndex = commentsBefore.length > 0 ?
-      commentsBefore[0].start :
-      property.start;
+      commentsBefore[0].range[0] :
+      property.range[0];
 
     if (property.type === 'ObjectTypeSpreadProperty' || !property.value) {
       // NOTE: It could but currently does not fix recursive generic type arguments in GenericTypeAnnotation within ObjectTypeSpreadProperty.
@@ -88,7 +88,7 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().slice(startIndex, beforePunctuator.end);
+      const text = source.getText().slice(startIndex, beforePunctuator.range[1]);
 
       return [property, text];
     }
@@ -100,7 +100,7 @@ const generateOrderedList = (context, sort, properties) => {
     });
 
     // Preserve all code until the colon verbatim:
-    const key = source.getText().slice(startIndex, colonToken.start);
+    const key = source.getText().slice(startIndex, colonToken.range[0]);
     let value;
 
     if (property.value.type === 'ObjectTypeAnnotation') {
@@ -118,7 +118,7 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().slice(colonToken.end, beforePunctuator.end);
+      const text = source.getText().slice(colonToken.range[1], beforePunctuator.range[1]);
 
       value = text;
     }
@@ -182,11 +182,11 @@ const generateFix = (node, context, sort) => {
     });
     const commentsBefore = source.getCommentsBefore(property);
     const startIndex = commentsBefore.length > 0 ?
-      commentsBefore[0].start :
-      property.start;
+      commentsBefore[0].range[0] :
+      property.range[0];
     const subString = source.getText().slice(
       startIndex,
-      beforePunctuator.end
+      beforePunctuator.range[1]
     );
 
     nodeText = nodeText.replace(subString, '$' + index);
