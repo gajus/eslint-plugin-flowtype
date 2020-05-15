@@ -1,7 +1,6 @@
 export default {
   invalid: [
     // Always
-
     {
       code: 'type foo = {};',
       errors: [
@@ -137,7 +136,6 @@ export default {
   valid: [
 
     // Always
-
     {
       code: 'type foo = {| |};',
     },
@@ -224,6 +222,12 @@ export default {
           filename?: string;
           function?: {| name: string |};
       }`,
+    },
+
+    // Explicit inexact
+
+    {
+      code: 'type A = { a: string, ... }',
     },
   ],
 };
