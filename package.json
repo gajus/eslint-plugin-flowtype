@@ -10,17 +10,19 @@
   },
   "description": "Flowtype linting rules for ESLint.",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
     "ajv": "^6.12.2",
-    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "eclint": "^2.8.1",
     "eslint": "^7.0.0",
-    "eslint-config-canonical": "^19.0.4",
+    "eslint-config-canonical": "^19.0.5",
     "gitdown": "^3.1.3",
     "glob": "^7.1.6",
     "husky": "^4.2.5",
@@ -60,7 +62,7 @@
     "documentation-add-assertions": "babel-node ./src/bin/addAssertions",
     "format-json": "jsonlint --sort-keys --in-place --indent \"  \" ./src/configs/recommended.json",
     "lint": "eslint ./src ./tests",
-    "test": "mocha --require babel-core/register ./tests/rules/index.js"
+    "test": "mocha --require @babel/register ./tests/rules/index.js"
   },
   "version": "2.30.1"
 }
