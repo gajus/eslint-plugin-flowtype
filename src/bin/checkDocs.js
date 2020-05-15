@@ -44,7 +44,7 @@ const getDocIndexRules = () => {
 const hasCorrectAssertions = (docPath, name) => {
   const content = fs.readFileSync(docPath, 'utf-8');
 
-  const match = /<!-- assertions ([a-zA-Z]+) -->/.exec(content);
+  const match = /<!-- assertions ([A-Za-z]+) -->/.exec(content);
 
   if (match === null) {
     return false;

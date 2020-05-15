@@ -22,7 +22,7 @@ export const getRules = () => {
 export const isFile = (filepath) => {
   try {
     return fs.statSync(filepath).isFile();
-  } catch (error) {
+  } catch {
     return false;
   }
 };
