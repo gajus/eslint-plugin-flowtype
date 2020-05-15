@@ -62,26 +62,6 @@ const create = (context) => {
   return {
     Program (node) {
       const firstToken = node.tokens[0];
-      const addAnnotation = () => {
-        return (fixer) => {
-          let annotation;
-          if (flowStrict) {
-            annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
-          } else {
-            annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
-          }
-
-          return fixer.replaceTextRange([node.range[0], node.range[0]], annotation);
-        };
-      };
-
-      const addStrictAnnotation = () => {
-        return (fixer) => {
-          const annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
-
-          return fixer.replaceTextRange([node.range[0], node.range[0]], annotation);
-        };
-      };
 
       const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {
         return looksLikeFlowFileAnnotation(comment.value);
@@ -92,6 +72,7 @@ const create = (context) => {
           context.report(potentialFlowFileAnnotation, 'Flow file annotation not at the top of the file.');
         }
         const annotationValue = potentialFlowFileAnnotation.value.trim();
+
         if (isFlowFileAnnotation(annotationValue)) {
           if (!isValidAnnotationStyle(potentialFlowFileAnnotation, style)) {
             const annotation = style === 'line' ? '// ' + annotationValue : '/* ' + annotationValue + ' */';
@@ -99,7 +80,10 @@ const create = (context) => {
             context.report({
               fix: (fixer) => {
                 return fixer.replaceTextRange(
-                  [potentialFlowFileAnnotation.range[0], potentialFlowFileAnnotation.range[1]],
+                  [
+                    potentialFlowFileAnnotation.range[0],
+                    potentialFlowFileAnnotation.range[1],
+                  ],
                   annotation,
                 );
               },
@@ -107,15 +91,22 @@ const create = (context) => {
               node: potentialFlowFileAnnotation,
             });
           }
-          if (!noFlowAnnotation(annotationValue) && flowStrict) {
-            if (!isFlowStrict(annotationValue)) {
-              const str = style === 'line' ? '`// @flow strict`' : '`/* @flow strict */`';
-              context.report({
-                fix: addStrictAnnotation(),
-                message: 'Strict Flow file annotation is required, should be ' + str,
-                node,
-              });
-            }
+
+          if (!noFlowAnnotation(annotationValue) && flowStrict && !isFlowStrict(annotationValue)) {
+            const str = style === 'line' ? '`// @flow strict`' : '`/* @flow strict */`';
+
+            context.report({
+              fix: (fixer) => {
+                const annotation = ['line', 'none'].includes(style) ? '// @flow strict' : '/* @flow strict */';
+
+                return fixer.replaceTextRange([
+                  potentialFlowFileAnnotation.range[0],
+                  potentialFlowFileAnnotation.range[1],
+                ], annotation);
+              },
+              message: 'Strict Flow file annotation is required, should be ' + str,
+              node,
+            });
           }
         } else if (checkAnnotationSpelling(annotationValue)) {
           context.report(potentialFlowFileAnnotation, 'Misspelled or malformed Flow file annotation.');
@@ -124,7 +115,24 @@ const create = (context) => {
         }
       } else if (always) {
         context.report({
-          fix: addAnnotation(),
+          fix: (fixer) => {
+            let annotation;
+
+            if (flowStrict) {
+              annotation = ['line', 'none'].includes(style) ? '// @flow strict\n' : '/* @flow strict */\n';
+            } else {
+              annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
+            }
+
+            return fixer
+              .replaceTextRange(
+                [
+                  node.range[0],
+                  node.range[0],
+                ],
+                annotation,
+              );
+          },
           message: 'Flow file annotation is missing.',
           node,
         });

@@ -66,7 +66,7 @@ export default {
       options: [
         'always',
       ],
-      output: '// @flow\na;'
+      output: '// @flow\na;',
     },
     {
       code: '/* @flow */',
