@@ -186,7 +186,7 @@ const generateFix = (node, context, sort) => {
       property.range[0];
     const subString = source.getText().slice(
       startIndex,
-      beforePunctuator.range[1]
+      beforePunctuator.range[1],
     );
 
     nodeText = nodeText.replace(subString, '$' + index);

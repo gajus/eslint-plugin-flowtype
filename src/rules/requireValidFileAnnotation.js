@@ -100,7 +100,7 @@ const create = (context) => {
               fix: (fixer) => {
                 return fixer.replaceTextRange(
                   [potentialFlowFileAnnotation.range[0], potentialFlowFileAnnotation.range[1]],
-                  annotation
+                  annotation,
                 );
               },
               message: 'Flow file annotation style must be `' + annotation + '`',

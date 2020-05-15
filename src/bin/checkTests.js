@@ -58,7 +58,7 @@ const checkTests = (rulesNames) => {
 
     throw new Error(
       'Tests checker encountered an error in: ' + invalidList + '. ' +
-      'Make sure that for every rule you created test suite and included the rule name in `tests/rules/index.js` file.'
+      'Make sure that for every rule you created test suite and included the rule name in `tests/rules/index.js` file.',
     );
   }
 };

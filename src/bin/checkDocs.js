@@ -90,7 +90,7 @@ const checkDocs = (rulesNames) => {
     throw new Error(
       'Docs checker encountered an error in: ' + invalidList + '. ' +
       'Make sure that for every rule you created documentation file with assertions placeholder in camelCase ' +
-      'and included the file path in `.README/README.md` file.'
+      'and included the file path in `.README/README.md` file.',
     );
   }
 };
