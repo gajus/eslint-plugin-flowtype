@@ -5,6 +5,7 @@ export default {
       errors: [
         {message: 'All indexers must be declared with key name.'},
       ],
+      output: 'type foo = { [key: string]: number };',
     },
   ],
   valid: [

@@ -1,12 +1,8 @@
 import _ from 'lodash';
+import naturalCompare from 'string-natural-compare';
 import {
   getParameterName,
 } from '../utilities';
-
-const defaults = {
-  caseSensitive: true,
-  natural: false,
-};
 
 const schema = [
   {
@@ -15,53 +11,23 @@ const schema = [
   },
   {
     additionalProperties: false,
-    properties: {
-      caseSensitive: {
-        type: 'boolean',
-      },
-      natural: {
-        type: 'boolean',
-      },
-    },
     type: 'object',
   },
 ];
 
 /**
- * Functions to compare the order of two strings
- *
- * Based on a similar function from eslint's sort-keys rule.
- * https://github.com/eslint/eslint/blob/master/lib/rules/sort-keys.js
- *
  * @private
  */
-const isValidOrders = {
-  asc (str1, str2) {
-    return str1 <= str2;
+const sorters = {
+  asc: (a, b) => {
+    return naturalCompare(a, b, {
+      caseInsensitive: true,
+    });
   },
-  ascI (str1, str2) {
-    return str1.toLowerCase() <= str2.toLowerCase();
-  },
-  ascIN (str1, str2) {
-    return isValidOrders.naturalCompare(str1.toLowerCase(), str2.toLowerCase()) <= 0;
-  },
-  ascN (str1, str2) {
-    return isValidOrders.naturalCompare(str1, str2) <= 0;
-  },
-  desc (str1, str2) {
-    return isValidOrders.asc(str2, str1);
-  },
-  descI (str1, str2) {
-    return isValidOrders.ascI(str2, str1);
-  },
-  descIN (str1, str2) {
-    return isValidOrders.ascIN(str2, str1);
-  },
-  descN (str1, str2) {
-    return isValidOrders.ascN(str2, str1);
-  },
-  naturalCompare (str1, str2) {
-    return str1.localeCompare(str2, 'en-US', {numeric: true});
+  desc: (a, b) => {
+    return naturalCompare(b, a, {
+      caseInsensitive: true,
+    });
   },
 };
 
@@ -73,8 +39,8 @@ const generateOrderedList = (context, sort, properties) => {
 
     const commentsBefore = source.getCommentsBefore(property);
     const startIndex = commentsBefore.length > 0 ?
-      commentsBefore[0].start :
-      property.start;
+      commentsBefore[0].range[0] :
+      property.range[0];
 
     if (property.type === 'ObjectTypeSpreadProperty' || !property.value) {
       // NOTE: It could but currently does not fix recursive generic type arguments in GenericTypeAnnotation within ObjectTypeSpreadProperty.
@@ -88,7 +54,7 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().slice(startIndex, beforePunctuator.end);
+      const text = source.getText().slice(startIndex, beforePunctuator.range[1]);
 
       return [property, text];
     }
@@ -100,7 +66,8 @@ const generateOrderedList = (context, sort, properties) => {
     });
 
     // Preserve all code until the colon verbatim:
-    const key = source.getText().slice(startIndex, colonToken.start);
+    const key = source.getText().slice(startIndex, colonToken.range[0]);
+
     let value;
 
     if (property.value.type === 'ObjectTypeAnnotation') {
@@ -118,12 +85,17 @@ const generateOrderedList = (context, sort, properties) => {
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
         includeComments: true,
       });
-      const text = source.getText().slice(colonToken.end, beforePunctuator.end);
+      const text = source.getText().slice(colonToken.range[1], beforePunctuator.range[1]);
 
       value = text;
     }
 
-    return [property, name, key, value];
+    return [
+      property,
+      name,
+      key,
+      value,
+    ];
   });
 
   const itemGroups = [[]];
@@ -142,9 +114,11 @@ const generateOrderedList = (context, sort, properties) => {
   const orderedList = [];
   itemGroups.forEach((itemGroup) => {
     if (itemGroup[0] && itemGroup[0].type !== 'ObjectTypeSpreadProperty') {
+      // console.log('itemGroup', itemGroup);
+
       itemGroup
         .sort((first, second) => {
-          return sort(first[1], second[1]) ? -1 : 1;
+          return sort(first[1], second[1]);
         });
     }
     orderedList.push(...itemGroup.map((item) => {
@@ -182,11 +156,11 @@ const generateFix = (node, context, sort) => {
     });
     const commentsBefore = source.getCommentsBefore(property);
     const startIndex = commentsBefore.length > 0 ?
-      commentsBefore[0].start :
-      property.start;
+      commentsBefore[0].range[0] :
+      property.range[0];
     const subString = source.getText().slice(
       startIndex,
-      beforePunctuator.end
+      beforePunctuator.range[1],
     );
 
     nodeText = nodeText.replace(subString, '$' + index);
@@ -201,8 +175,6 @@ const generateFix = (node, context, sort) => {
 
 const create = (context) => {
   const order = _.get(context, ['options', 0], 'asc');
-  const {natural, caseSensitive} = _.get(context, ['options', 1], defaults);
-  const insensitive = caseSensitive === false;
 
   let prev;
   const checkKeyOrder = (node) => {
@@ -219,24 +191,22 @@ const create = (context) => {
         return;
       }
 
-      const isValidOrder = isValidOrders[order + (insensitive ? 'I' : '') + (natural ? 'N' : '')];
+      const sort = sorters[order];
 
-      if (isValidOrder(last, current) === false) {
+      if (sort(last, current) > 0) {
         context.report({
           data: {
             current,
-            insensitive: insensitive ? 'insensitive ' : '',
             last,
-            natural: natural ? 'natural ' : '',
             order,
           },
           fix (fixer) {
-            const nodeText = generateFix(node, context, isValidOrder);
+            const nodeText = generateFix(node, context, sort);
 
             return fixer.replaceText(node, nodeText);
           },
           loc: identifierNode.loc,
-          message: 'Expected type annotations to be in {{natural}}{{insensitive}}{{order}}ending order. "{{current}}" should be before "{{last}}".',
+          message: 'Expected type annotations to be in {{order}}ending order. "{{current}}" should be before "{{last}}".',
           node: identifierNode,
         });
       }

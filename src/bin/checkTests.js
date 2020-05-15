@@ -10,6 +10,7 @@ import {
 const getTestIndexRules = () => {
   const content = fs.readFileSync(path.resolve(__dirname, '../../tests/rules/index.js'), 'utf-8');
 
+  // eslint-disable-next-line unicorn/no-reduce
   const result = content.split('\n').reduce((acc, line) => {
     if (acc.inRulesArray) {
       if (line === '];') {
@@ -58,7 +59,7 @@ const checkTests = (rulesNames) => {
 
     throw new Error(
       'Tests checker encountered an error in: ' + invalidList + '. ' +
-      'Make sure that for every rule you created test suite and included the rule name in `tests/rules/index.js` file.'
+      'Make sure that for every rule you created test suite and included the rule name in `tests/rules/index.js` file.',
     );
   }
 };

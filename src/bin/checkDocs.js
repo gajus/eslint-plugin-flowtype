@@ -44,7 +44,7 @@ const getDocIndexRules = () => {
 const hasCorrectAssertions = (docPath, name) => {
   const content = fs.readFileSync(docPath, 'utf-8');
 
-  const match = /<!-- assertions ([a-zA-Z]+) -->/.exec(content);
+  const match = /<!-- assertions ([A-Za-z]+) -->/.exec(content);
 
   if (match === null) {
     return false;
@@ -90,7 +90,7 @@ const checkDocs = (rulesNames) => {
     throw new Error(
       'Docs checker encountered an error in: ' + invalidList + '. ' +
       'Make sure that for every rule you created documentation file with assertions placeholder in camelCase ' +
-      'and included the file path in `.README/README.md` file.'
+      'and included the file path in `.README/README.md` file.',
     );
   }
 };

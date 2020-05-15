@@ -18,7 +18,7 @@ const create = (context) => {
         globalScope.__defineGeneric(
           ident.name,
           globalScope.set,
-          globalScope.variables
+          globalScope.variables,
         );
         const variable = globalScope.set.get(ident.name);
 

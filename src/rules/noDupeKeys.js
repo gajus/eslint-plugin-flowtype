@@ -52,7 +52,7 @@ const create = (context) => {
       const element = analizeElement(
         property.type === 'ObjectTypeSpreadProperty' ?
           property.argument :
-          property.value
+          property.value,
       );
 
       return {

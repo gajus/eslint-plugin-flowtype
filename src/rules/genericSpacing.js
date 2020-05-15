@@ -26,12 +26,12 @@ const create = (context) => {
       const [opener, firstInnerToken] = sourceCode.getFirstTokens(types, 2);
       const [lastInnerToken, closer] = sourceCode.getLastTokens(types, 2);
 
-      const spacesBefore = firstInnerToken.start - opener.end;
-      const spacesAfter = closer.start - lastInnerToken.end;
+      const spacesBefore = firstInnerToken.range[0] - opener.range[1];
+      const spacesAfter = closer.range[0] - lastInnerToken.range[1];
 
       if (never) {
         if (spacesBefore) {
-          if (sourceCode.text[opener.end] !== '\n') {
+          if (sourceCode.text[opener.range[1]] !== '\n') {
             context.report({
               data: {name: node.id.name},
               fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
@@ -42,7 +42,7 @@ const create = (context) => {
         }
 
         if (spacesAfter) {
-          if (sourceCode.text[closer.start - 1] !== '\n') {
+          if (sourceCode.text[closer.range[0] - 1] !== '\n') {
             context.report({
               data: {name: node.id.name},
               fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter),

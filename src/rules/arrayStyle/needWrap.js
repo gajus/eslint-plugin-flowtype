@@ -1,7 +1,10 @@
 import isSimpleType from './isSimpleType';
 
-const complexTypesWithoutWrap = ['TupleTypeAnnotation', 'ObjectTypeAnnotation'];
+const complexTypesWithoutWrap = new Set([
+  'TupleTypeAnnotation',
+  'ObjectTypeAnnotation',
+]);
 
 export default (node) => {
-  return !isSimpleType(node) && !complexTypesWithoutWrap.includes(node.type);
+  return !isSimpleType(node) && !complexTypesWithoutWrap.has(node.type);
 };

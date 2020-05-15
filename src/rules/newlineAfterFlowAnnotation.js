@@ -25,7 +25,7 @@ const create = (context) => {
         context.getAllComments(),
         (comment) => {
           return looksLikeFlowFileAnnotation(comment.value);
-        }
+        },
       );
 
       if (potentialFlowFileAnnotation) {
@@ -37,7 +37,7 @@ const create = (context) => {
             fix: (fixer) => {
               return fixer.insertTextAfter(
                 potentialFlowFileAnnotation,
-                newline
+                newline,
               );
             },
             message: 'Expected newline after flow annotation',
@@ -48,16 +48,16 @@ const create = (context) => {
         if (never && nextLineIsEmpty) {
           context.report({
             fix: (fixer) => {
-              const lineBreak = sourceCode.text[potentialFlowFileAnnotation.end];
+              const lineBreak = sourceCode.text[potentialFlowFileAnnotation.range[1]];
 
               return fixer.replaceTextRange(
                 [
-                  potentialFlowFileAnnotation.end,
-                  potentialFlowFileAnnotation.end + (
+                  potentialFlowFileAnnotation.range[1],
+                  potentialFlowFileAnnotation.range[1] + (
                     lineBreak === '\r' ? 2 : 1
                   ),
                 ],
-                ''
+                '',
               );
             },
             message: 'Expected no newline after flow annotation',

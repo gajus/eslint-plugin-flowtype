@@ -22,8 +22,8 @@ const create = (context) => {
       const endOfType = sourceCode.getTokenBefore(separator);
       const nextType = sourceCode.getTokenAfter(separator);
 
-      const spaceBefore = separator.start - endOfType.end;
-      const spaceAfter = nextType.start - separator.end;
+      const spaceBefore = separator.range[0] - endOfType.range[1];
+      const spaceAfter = nextType.range[0] - separator.range[1];
 
       const data = {type: node.type === 'UnionTypeAnnotation' ? 'union' : 'intersection'};
 

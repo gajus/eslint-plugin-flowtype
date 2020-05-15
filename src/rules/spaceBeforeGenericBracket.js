@@ -21,7 +21,7 @@ const create = (context) => {
         return;
       }
 
-      const spaceBefore = types.start - node.id.end;
+      const spaceBefore = types.range[0] - node.id.range[1];
 
       if (never && spaceBefore) {
         context.report({

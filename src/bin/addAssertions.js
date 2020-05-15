@@ -61,7 +61,7 @@ const updateDocuments = (assertions) => {
 
   documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
 
-  documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
+  documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/gi, (assertionsBlock) => {
     let exampleBody;
 
     const ruleName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
