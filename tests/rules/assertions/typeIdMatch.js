@@ -1,6 +1,14 @@
 export default {
   invalid: [
     {
+      code: 'opaque type foo = {};',
+      errors: [
+        {
+          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
+        },
+      ],
+    },
+    {
       code: 'type foo = {};',
       errors: [
         {
