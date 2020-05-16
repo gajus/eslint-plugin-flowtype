@@ -124,6 +124,19 @@ const create = (context) => {
               annotation = ['line', 'none'].includes(style) ? '// @flow\n' : '/* @flow */\n';
             }
 
+            const firstComment = node.comments[0];
+
+            if (firstComment && firstComment.type === 'Shebang') {
+              return fixer
+                .replaceTextRange(
+                  [
+                    firstComment.range[1],
+                    firstComment.range[1],
+                  ],
+                  '\n' + annotation.trim(),
+                );
+            }
+
             return fixer
               .replaceTextRange(
                 [

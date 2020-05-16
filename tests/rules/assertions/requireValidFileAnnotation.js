@@ -1,6 +1,30 @@
 export default {
   invalid: [
     {
+      code: '#!/usr/bin/env node',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: '#!/usr/bin/env node\n// @flow',
+    },
+    {
+      code: '#!/usr/bin/env node\na;',
+      errors: [
+        {
+          message: 'Flow file annotation is missing.',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: '#!/usr/bin/env node\n// @flow\na;',
+    },
+    {
       code: ';// @flow',
       errors: [
         {
