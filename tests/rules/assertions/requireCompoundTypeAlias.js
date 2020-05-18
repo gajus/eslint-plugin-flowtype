@@ -1,6 +1,16 @@
 export default {
   invalid: [
     {
+      code: 'const foo: string | null = null;',
+      errors: [{message: 'All union types must be declared with named type alias.'}],
+      options: [
+        'always',
+        {
+          allowNull: false,
+        },
+      ],
+    },
+    {
       code: 'function foo(bar: "A" | "B") {}',
       errors: [{message: 'All union types must be declared with named type alias.'}],
     },
@@ -65,6 +75,18 @@ export default {
     },
   ],
   valid: [
+    {
+      code: 'const foo: string | null = null;',
+    },
+    {
+      code: 'const foo: string | null = null;',
+      options: [
+        'always',
+        {
+          allowNull: true,
+        },
+      ],
+    },
     {
       code: 'type Foo = "A" | "B";',
     },

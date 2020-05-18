@@ -4,7 +4,7 @@ Enforces a consistent naming pattern for type aliases.
 
 #### Options
 
-This rule needs a text RegExp to operate with Its signature is as follows:
+This rule requires a text RegExp:
 
 ```js
 {
