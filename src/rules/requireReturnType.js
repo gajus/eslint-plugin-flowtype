@@ -2,7 +2,10 @@ import _ from 'lodash';
 
 const schema = [
   {
-    enum: ['always'],
+    enum: [
+      'always',
+      'never',
+    ],
     type: 'string',
   },
   {
