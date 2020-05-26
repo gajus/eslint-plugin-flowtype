@@ -57,6 +57,9 @@ const create = (context) => {
   return {
     OpaqueType: checkForSemicolon,
     TypeAlias: checkForSemicolon,
+    TypeAnnotation: (node) => {
+      checkForSemicolon(node.parent);
+    },
   };
 };
 

@@ -1,6 +1,26 @@
 export default {
   invalid: [
     {
+      code: 'class Foo { foo: string }',
+      errors: [
+        {
+          message: 'Missing semicolon.',
+        },
+      ],
+      options: ['always'],
+      output: 'class Foo { foo: string; }',
+    },
+    {
+      code: 'class Foo { foo: string; }',
+      errors: [
+        {
+          message: 'Extra semicolon.',
+        },
+      ],
+      options: ['never'],
+      output: 'class Foo { foo: string }',
+    },
+    {
       code: 'type FooType = {}',
       errors: [
         {
@@ -79,6 +99,14 @@ export default {
     {
       code: 'type FooType = {};',
       options: ['always'],
+    },
+    {
+      code: 'class Foo { foo: string; }',
+      options: ['always'],
+    },
+    {
+      code: 'class Foo { foo: string }',
+      options: ['never'],
     },
     {
       code: 'type FooType = { a: number;\n b: string;\n };',
