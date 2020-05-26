@@ -430,32 +430,6 @@ export default {
     {
       errors: [
         {
-          data: 'never',
-          dataPath: '[0]',
-          keyword: 'enum',
-          message: 'should be equal to one of the allowed values',
-          params: {
-            allowedValues: [
-              'always',
-            ],
-          },
-          parentSchema: {
-            enum: [
-              'always',
-            ],
-            type: 'string',
-          },
-          schema: [
-            'always',
-          ],
-          schemaPath: '#/items/0/enum',
-        },
-      ],
-      options: ['never'],
-    },
-    {
-      errors: [
-        {
           data: {
             excludeOtherStuff: true,
           },
