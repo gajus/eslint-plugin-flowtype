@@ -101,6 +101,10 @@ export default {
       options: ['always'],
     },
     {
+      code: '(foo: string) => {}',
+      options: ['always'],
+    },
+    {
       code: 'class Foo { foo: string; }',
       options: ['always'],
     },
