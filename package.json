@@ -64,5 +64,5 @@
     "lint": "eslint ./src ./tests",
     "test": "mocha --require @babel/register ./tests/rules/index.js"
   },
-  "version": "2.30.1"
+  "version": "0.0.0-development"
 }
