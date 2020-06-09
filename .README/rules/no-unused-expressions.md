@@ -1,7 +1,7 @@
 ### `no-unused-expressions`
 
 An extension of [ESLint's `no-unused-expressions`](https://eslint.org/docs/rules/no-unused-expressions).
-This rule ignores type cast expressions, but otherwise behaves the same as ESLint's
+This rule ignores type cast expressions and optional call expressions, but otherwise behaves the same as ESLint's
 `no-unused-expressions`.
 
 Bare type casts are useful, for example to assert the exhaustiveness of a `switch`:
