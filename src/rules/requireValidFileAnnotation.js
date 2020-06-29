@@ -113,7 +113,7 @@ const create = (context) => {
         } else {
           context.report(potentialFlowFileAnnotation, 'Malformed Flow file annotation.');
         }
-      } else if (always) {
+      } else if (always && !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation')) {
         context.report({
           fix: (fixer) => {
             let annotation;
