@@ -10,9 +10,13 @@ const create = (context) => {
 
   return {
     ExpressionStatement (node) {
-      if (node.expression.type !== 'TypeCastExpression') {
-        coreChecks.ExpressionStatement(node);
+      if (
+        node.expression.type === 'TypeCastExpression' ||
+        node.expression.type === 'OptionalCallExpression'
+      ) {
+        return;
       }
+      coreChecks.ExpressionStatement(node);
     },
   };
 };
