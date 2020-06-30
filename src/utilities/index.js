@@ -9,6 +9,7 @@ export {default as getParameterName} from './getParameterName';
 export {default as getTokenAfterParens} from './getTokenAfterParens';
 export {default as getTokenBeforeParens} from './getTokenBeforeParens';
 export {default as isFlowFile} from './isFlowFile';
+export {default as isNoFlowFile} from './isNoFlowFile';
 export {default as isFlowFileAnnotation} from './isFlowFileAnnotation';
 export {default as iterateFunctionNodes} from './iterateFunctionNodes';
 export {default as quoteName} from './quoteName';

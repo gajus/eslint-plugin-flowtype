@@ -88,7 +88,7 @@ export default {
     recommended,
   },
   rules: _.mapValues(rules, (rule, key) => {
-    if (key === 'no-types-missing-file-annotation') {
+    if (['no-types-missing-file-annotation', 'require-valid-file-annotation'].includes(key)) {
       return rule;
     }
 

@@ -39,6 +39,14 @@ export default {
       ],
     },
     {
+      code: '/* @flow */\n(foo) => { return 1; }',
+      errors: [
+        {
+          message: 'Missing return type annotation.',
+        },
+      ],
+    },
+    {
       code: '(foo): undefined => { return; }',
       errors: [
         {
@@ -691,6 +699,12 @@ export default {
           onlyFilesWithFlowAnnotation: true,
         },
       },
+    },
+    {
+      code: '/* @noflow */\n(foo) => { return 1; }',
+      options: [
+        'always',
+      ],
     },
     {
       code: '(foo) => { return undefined; }',
