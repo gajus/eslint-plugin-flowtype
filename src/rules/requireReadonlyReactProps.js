@@ -21,6 +21,27 @@ const isReactComponent = (node) => {
   );
 };
 
+const isReadOnlyObjectType = (node) => {
+  if (!node || node.type !== 'ObjectTypeAnnotation') {
+    return false;
+  }
+
+  // we consider `{||}` to be ReadOnly since it's exact AND has no props
+  if (node.exact && node.properties.length === 0) {
+    return true;
+  }
+
+  // { +foo: ..., +bar: ..., ... }
+  return node.properties.length > 0 &&
+        node.properties.every((prop) => {
+          return prop.variance && prop.variance.kind === 'plus';
+        });
+};
+
+const isReadOnlyType = (node) => {
+  return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
+};
+
 const create = (context) => {
   const readOnlyTypes = [];
   const foundTypes = [];
@@ -30,27 +51,6 @@ const create = (context) => {
     const id = node.superTypeParameters && node.superTypeParameters.params[0].id;
 
     return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name) && foundTypes.includes(id.name);
-  };
-
-  const isReadOnlyObjectType = (node) => {
-    if (!node || node.type !== 'ObjectTypeAnnotation') {
-      return false;
-    }
-
-    // we consider `{||}` to be ReadOnly since it's exact AND has no props
-    if (node.exact && node.properties.length === 0) {
-      return true;
-    }
-
-    // { +foo: ..., +bar: ..., ... }
-    return node.properties.length > 0 &&
-          node.properties.every((prop) => {
-            return prop.variance && prop.variance.kind === 'plus';
-          });
-  };
-
-  const isReadOnlyType = (node) => {
-    return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
   };
 
   for (const node of context.getSourceCode().ast.body) {
