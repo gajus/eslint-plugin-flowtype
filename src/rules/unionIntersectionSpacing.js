@@ -73,7 +73,12 @@ const create = (context) => {
   };
 };
 
+const meta = {
+  fixable: 'whitespace',
+};
+
 export default {
   create,
+  meta,
   schema,
 };

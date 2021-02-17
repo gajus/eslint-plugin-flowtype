@@ -31,7 +31,12 @@ const create = (context) => {
   }
 };
 
+const meta = {
+  fixable: 'code',
+};
+
 export default {
   create,
+  meta,
   schema,
 };

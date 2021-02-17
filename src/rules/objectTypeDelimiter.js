@@ -64,7 +64,12 @@ const schema = [
   },
 ];
 
+const meta = {
+  fixable: 'code',
+};
+
 export default {
   create,
+  meta,
   schema,
 };

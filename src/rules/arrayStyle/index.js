@@ -78,8 +78,13 @@ export default (defaultConfig, simpleType) => {
     };
   };
 
+  const meta = {
+    fixable: 'code',
+  };
+
   return {
     create,
+    meta,
     schema,
   };
 };
