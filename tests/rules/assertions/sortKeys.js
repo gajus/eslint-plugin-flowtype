@@ -439,6 +439,124 @@ export default {
       `,
     },
     /* eslint-enable no-restricted-syntax */
+
+    // https://github.com/gajus/eslint-plugin-flowtype/issues/455
+    {
+      code: `
+        type FooType = {
+          a(number): void,
+          c: number,
+          b(param: string): number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a(number): void,
+          b(param: string): number,
+          c: number,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b(param: string): number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b(param: string): number,
+          c: number,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "a" should be before "c".'}],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b(param: string): number,
+          c: number,
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'},
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b(param: string): number,
+          c: {
+            x: string,
+            y: boolean,
+            z: number,
+          },
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "k" should be before "l".'},
+        {message: 'Expected type annotations to be in ascending order. "x" should be before "z".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "c".'},
+      ],
+      output: `
+        type FooType = {
+          a: number | string | boolean,
+          b(param: string): number,
+          c: {
+            x: string,
+            y: boolean,
+            z: {
+              j: string,
+              k: boolean,
+              l: number,
+            },
+          },
+        }
+      `,
+    },
   ],
   misconfigured: [
     {
@@ -503,6 +621,14 @@ export default {
           onlyFilesWithFlowAnnotation: true,
         },
       },
+    },
+
+    // https://github.com/gajus/eslint-plugin-flowtype/issues/455
+    {
+      code: 'type FooType = { a: string, b(): number, c: boolean }',
+    },
+    {
+      code: 'type FooType = { a(): string, b: number, c: boolean }',
     },
   ],
 };
