@@ -94,8 +94,6 @@ const meta = {
 
 export default {
   create,
-  meta: {
-    fixable: 'code',
-  },
+  meta,
   schema,
 };
