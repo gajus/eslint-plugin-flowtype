@@ -35,12 +35,10 @@ const create = (context) => {
   };
 };
 
-const meta = {
-  fixable: 'code',
-};
-
 export default {
   create,
-  meta,
+  meta: {
+    fixable: 'code',
+  },
   schema,
 };

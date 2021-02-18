@@ -64,12 +64,10 @@ const schema = [
   },
 ];
 
-const meta = {
-  fixable: 'code',
-};
-
 export default {
   create,
-  meta,
+  meta: {
+    fixable: 'code',
+  },
   schema,
 };

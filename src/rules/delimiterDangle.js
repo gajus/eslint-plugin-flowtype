@@ -15,6 +15,31 @@ const schema = [
   },
 ];
 
+// required for reporting the correct position
+const getLast = (property, indexer) => {
+  if (!property) {
+    return indexer;
+  }
+
+  if (!indexer) {
+    return property;
+  }
+
+  if (property.loc.end.line > indexer.loc.end.line) {
+    return property;
+  }
+
+  if (indexer.loc.end.line > property.loc.end.line) {
+    return indexer;
+  }
+
+  if (property.loc.end.column > indexer.loc.end.column) {
+    return property;
+  }
+
+  return indexer;
+};
+
 const create = (context) => {
   const option = context.options[0] || 'never';
   const interfaceOption = context.options[1] || option;
@@ -97,31 +122,6 @@ const create = (context) => {
     }
   };
 
-  // required for reporting the correct position
-  const getLast = (property, indexer) => {
-    if (!property) {
-      return indexer;
-    }
-
-    if (!indexer) {
-      return property;
-    }
-
-    if (property.loc.end.line > indexer.loc.end.line) {
-      return property;
-    }
-
-    if (indexer.loc.end.line > property.loc.end.line) {
-      return indexer;
-    }
-
-    if (property.loc.end.column > indexer.loc.end.column) {
-      return property;
-    }
-
-    return indexer;
-  };
-
   return {
     ObjectTypeAnnotation (node) {
       evaluate(node, getLast(_.last(node.properties), _.last(node.indexers)));
@@ -133,12 +133,10 @@ const create = (context) => {
   };
 };
 
-const meta = {
-  fixable: 'code',
-};
-
 export default {
   create,
-  meta,
+  meta: {
+    fixable: 'code',
+  },
   schema,
 };

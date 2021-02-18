@@ -5,6 +5,10 @@ const schema = [
   },
 ];
 
+const isSemicolon = (token) => {
+  return token.type === 'Punctuator' && token.value === ';';
+};
+
 const create = (context) => {
   const never = (context.options[0] || 'always') === 'never';
   const sourceCode = context.getSourceCode();
@@ -37,10 +41,6 @@ const create = (context) => {
     });
   };
 
-  const isSemicolon = (token) => {
-    return token.type === 'Punctuator' && token.value === ';';
-  };
-
   const checkForSemicolon = (node) => {
     const lastToken = sourceCode.getLastToken(node);
     const isLastTokenSemicolon = isSemicolon(lastToken);
@@ -65,12 +65,10 @@ const create = (context) => {
   };
 };
 
-const meta = {
-  fixable: 'code',
-};
-
 export default {
   create,
-  meta,
+  meta: {
+    fixable: 'code',
+  },
   schema,
 };

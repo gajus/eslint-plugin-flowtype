@@ -42,7 +42,8 @@ const generateOrderedList = (context, sort, properties) => {
       commentsBefore[0].range[0] :
       property.range[0];
 
-    if (property.type === 'ObjectTypeSpreadProperty' || !property.value) {
+    const isMethodProperty = property.value && property.value.type === 'FunctionTypeAnnotation';
+    if (property.type === 'ObjectTypeSpreadProperty' || !property.value || isMethodProperty) {
       // NOTE: It could but currently does not fix recursive generic type arguments in GenericTypeAnnotation within ObjectTypeSpreadProperty.
 
       // Maintain everything between the start of property including leading comments and the nextPunctuator `,` or `}`:
@@ -218,12 +219,10 @@ const create = (context) => {
   };
 };
 
-const meta = {
-  fixable: 'code',
-};
-
 export default {
   create,
-  meta,
+  meta: {
+    fixable: 'code',
+  },
   schema,
 };
