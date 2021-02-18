@@ -14,35 +14,34 @@ const arrayPairs = (array) => {
 
   return pairs;
 };
-/* eslint-enable */
+
+// Based on http://stackoverflow.com/a/23305385
+
+const stringSimilarity = (str1, str2) => {
+  if (str1.length > 0 && str2.length > 0) {
+    const pairs1 = arrayPairs(str1);
+    const pairs2 = arrayPairs(str2);
+    const unionLen = pairs1.length + pairs2.length;
+    let hitCount;
+
+    hitCount = 0;
+
+    _.forIn(pairs1, (val1) => {
+      _.forIn(pairs2, (val2) => {
+        if (_.isEqual(val1, val2)) {
+          hitCount++;
+        }
+      });
+    });
+
+    if (hitCount > 0) {
+      return 2 * hitCount / unionLen;
+    }
+  }
+
+  return 0;
+};
 
 export default (needle, haystack, weight = 0.5) => {
-  // Based on http://stackoverflow.com/a/23305385
-
-  const stringSimilarity = (str1, str2) => {
-    if (str1.length > 0 && str2.length > 0) {
-      const pairs1 = arrayPairs(str1);
-      const pairs2 = arrayPairs(str2);
-      const unionLen = pairs1.length + pairs2.length;
-      let hitCount;
-
-      hitCount = 0;
-
-      _.forIn(pairs1, (val1) => {
-        _.forIn(pairs2, (val2) => {
-          if (_.isEqual(val1, val2)) {
-            hitCount++;
-          }
-        });
-      });
-
-      if (hitCount > 0) {
-        return 2 * hitCount / unionLen;
-      }
-    }
-
-    return 0;
-  };
-
   return stringSimilarity(needle, haystack) >= Number(weight);
 };
