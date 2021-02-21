@@ -33,6 +33,7 @@
         * [`no-types-missing-file-annotation`](#eslint-plugin-flowtype-rules-no-types-missing-file-annotation)
         * [`no-unused-expressions`](#eslint-plugin-flowtype-rules-no-unused-expressions)
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
+        * [`object-type-curly-spacing`](#eslint-plugin-flowtype-rules-object-type-curly-spacing)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
         * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
@@ -362,10 +363,6 @@ type X = void[]
 
 type X = null[]
 // Message: Use "Array<null>", not "null[]"
-
-type X = string[][]
-// Message: Use "Array<string[]>", not "string[][]"
-// Message: Use "Array<string>", not "string[]"
 
 type X = Promise<{
     foo: string,
@@ -2277,7 +2274,7 @@ export type {A} from "a"
 ### <code>no-unused-expressions</code>
 
 An extension of [ESLint's `no-unused-expressions`](https://eslint.org/docs/rules/no-unused-expressions).
-This rule ignores type cast expressions, but otherwise behaves the same as ESLint's
+This rule ignores type cast expressions and optional call expressions, but otherwise behaves the same as ESLint's
 `no-unused-expressions`.
 
 Bare type casts are useful, for example to assert the exhaustiveness of a `switch`:
@@ -2312,12 +2309,17 @@ The following patterns are considered problems:
 ```js
 foo + 1
 // Message: Expected an assignment or function call and instead saw an expression.
+
+x?.y
+// Message: Expected an assignment or function call and instead saw an expression.
 ```
 
 The following patterns are not considered problems:
 
 ```js
 (foo: number)
+
+x?.y()
 ```
 
 
@@ -2498,6 +2500,90 @@ function foo(thing): Function {}
 
 
 
+<a name="eslint-plugin-flowtype-rules-object-type-curly-spacing"></a>
+### <code>object-type-curly-spacing</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+This rule enforces consistent spacing inside braces of object types.
+
+<a name="eslint-plugin-flowtype-rules-object-type-curly-spacing-options-2"></a>
+#### Options
+
+The rule has a string option:
+
+* `"never"` (default): disallows spacing inside of braces.
+* `"always"`: requires spacing inside of braces.
+
+
+The following patterns are considered problems:
+
+```js
+type obj = { "foo": "bar" }
+// Message: There should be no space after "{"
+// Message: There should be no space before "}"
+
+type obj = {"foo": "bar" }
+// Message: There should be no space before "}"
+
+type obj = { baz: {"foo": "qux"}, bar: 4}
+// Message: There should be no space after "{"
+
+// Options: ["always"]
+type obj = {"foo": "bar"}
+// Message: A space is required after "{".
+// Message: A space is required before "}".
+
+// Options: ["always"]
+type obj = {"foo": "bar" }
+// Message: A space is required after "{".
+
+// Options: ["always"]
+type obj = { baz: {"foo": "qux"}, bar: 4}
+// Message: A space is required before "}".
+// Message: A space is required after "{".
+// Message: A space is required before "}".
+
+// Options: ["always"]
+type obj = { baz: { "foo": "qux" }, bar: 4}
+// Message: A space is required before "}".
+```
+
+The following patterns are not considered problems:
+
+```js
+type obj = {baz: {"foo": "qux"}, bar: 4}
+
+type obj = {foo: {"foo": "qux"}}
+
+type obj = {foo: "bar"}
+
+type obj = {foo: "bar"
+}
+
+type obj = {
+foo: "bar"}
+
+type obj = {
+foo: "bar"}
+
+// Options: ["always"]
+type obj = { baz: { "foo": "qux" }, bar: 4 }
+
+// Options: ["always"]
+type obj = {}
+
+// Options: ["always"]
+type obj = {
+foo: "bar"
+}
+
+// Options: ["always"]
+type obj = { baz: 4 }
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-object-type-delimiter"></a>
 ### <code>object-type-delimiter</code>
 
@@ -2630,21 +2716,43 @@ type Foo = { a: Foo, b: Bar }
 <a name="eslint-plugin-flowtype-rules-require-compound-type-alias"></a>
 ### <code>require-compound-type-alias</code>
 
-Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy&paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
+Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy & paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
 
-<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-2"></a>
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-3"></a>
 #### Options
 
-The rule has a string option:
+The rule has two options:
 
+1. a string option
+
+* `"always"` (default)
 * `"never"`
-* `"always"`
 
-The default value is `"always"`.
+2. an object
+
+```js
+{
+  "rules": {
+    "flowtype/require-compound-type-alias": [
+      2,
+      "always",
+      {
+        "allowNull": true
+      }
+    ]
+  }
+}
+```
+
+* `allowNull` – allows compound types where one of the members is a `null`, e.g. `string | null`.
 
 The following patterns are considered problems:
 
 ```js
+// Options: ["always",{"allowNull":false}]
+const foo: string | null = null;
+// Message: All union types must be declared with named type alias.
+
 function foo(bar: "A" | "B") {}
 // Message: All union types must be declared with named type alias.
 
@@ -2673,6 +2781,11 @@ function foo(bar: { n: number } & { s: string }) {}
 The following patterns are not considered problems:
 
 ```js
+const foo: string | null = null;
+
+// Options: ["always",{"allowNull":true}]
+const foo: string | null = null;
+
 type Foo = "A" | "B";
 
 type Bar = "A" | "B"; function foo(bar: Bar) {}
@@ -2699,7 +2812,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
 
-<a name="eslint-plugin-flowtype-rules-require-exact-type-options-3"></a>
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options-4"></a>
 #### Options
 
 The rule has one string option:
@@ -2744,6 +2857,15 @@ type foo = Array<{bar: string}>;
 (foo: Array<{bar: string}>) => {};
 // Message: Object type must be exact.
 
+// Options: ["always"]
+interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: { name: string };
+      }
+// Message: Object type must be exact.
+
 // Options: ["never"]
 type foo = {| |};
 // Message: Object type must not be exact.
@@ -2762,6 +2884,15 @@ type foo = Array<{| bar: string |}>;
 
 // Options: ["never"]
 (foo: Array<{| bar: string |}>) => {};
+// Message: Object type must not be exact.
+
+// Options: ["never"]
+interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }
 // Message: Object type must not be exact.
 ```
 
@@ -2791,6 +2922,14 @@ type foo = Array<{| bar: string |}>;
 // Options: ["always"]
 type foo = number;
 
+// Options: ["always"]
+interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }
+
 // Options: ["never"]
 type foo = { };
 
@@ -2805,6 +2944,16 @@ type foo = Array<{bar: string}>;
 
 // Options: ["never"]
 type foo = number;
+
+// Options: ["always"]
+interface StackFrame {
+          colno?: number;
+          lineno?: number;
+          filename?: string;
+          function?: {| name: string |};
+      }
+
+type A = { a: string, ... }
 ```
 
 
@@ -2816,7 +2965,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule validates Flow object indexer name.
 
-<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-4"></a>
+<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-5"></a>
 #### Options
 
 The rule has a string option:
@@ -2861,7 +3010,7 @@ type foo = { [string]: number };
 
 This rule enforces explicit inexact object types.
 
-<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-5"></a>
+<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-6"></a>
 #### Options
 
 The rule has one string option:
@@ -2970,7 +3119,7 @@ type foo = number;
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-6"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-7"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3295,7 +3444,7 @@ function Foo(props: {||}) { return <p /> }
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options-7"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-8"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3380,6 +3529,10 @@ The following patterns are considered problems:
 // Message: Missing return type annotation.
 
 (foo) => ({})
+// Message: Missing return type annotation.
+
+/* @flow */
+(foo) => { return 1; }
 // Message: Missing return type annotation.
 
 (foo): undefined => { return; }
@@ -3550,6 +3703,10 @@ const f: fn = (a, b) => { return 42; }
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return 1; }
 
+// Options: ["always"]
+/* @noflow */
+(foo) => { return 1; }
+
 // Options: ["always",{"annotateUndefined":"always"}]
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 (foo) => { return undefined; }
@@ -3649,7 +3806,7 @@ async function * foo(): AsyncIterable<number> { yield 2; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-8"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-9"></a>
 #### Options
 
 The rule has a string option:
@@ -3726,7 +3883,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistent annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-9"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-10"></a>
 #### Options
 
 The rule has a string option:
@@ -3771,6 +3928,15 @@ This rule has an object option:
 The following patterns are considered problems:
 
 ```js
+// Options: ["always"]
+#!/usr/bin/env node
+// Message: Flow file annotation is missing.
+
+// Options: ["always"]
+#!/usr/bin/env node
+a;
+// Message: Flow file annotation is missing.
+
 ;// @flow
 // Message: Flow file annotation not at the top of the file.
 
@@ -3910,7 +4076,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options-10"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-11"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -4007,6 +4173,14 @@ The default value is `'always'`.
 The following patterns are considered problems:
 
 ```js
+// Options: ["always"]
+class Foo { foo: string }
+// Message: Missing semicolon.
+
+// Options: ["never"]
+class Foo { foo: string; }
+// Message: Extra semicolon.
+
 // Options: []
 type FooType = {}
 // Message: Missing semicolon.
@@ -4031,6 +4205,15 @@ type FooType = {};
 
 // Options: ["always"]
 type FooType = {};
+
+// Options: ["always"]
+(foo: string) => {}
+
+// Options: ["always"]
+class Foo { foo: string; }
+
+// Options: ["never"]
+class Foo { foo: string }
 
 // Options: ["always"]
 type FooType = { a: number;
@@ -4058,11 +4241,9 @@ opaque type FooType = {};
 
 _The `--fix` option on the command line automatically fixes problems reported by this rule._
 
-Enforces sorting of Object annotations.
+Enforces natural, case-insensitive sorting of Object annotations.
 
-This rule mirrors ESlint's [sort-keys](http://eslint.org/docs/rules/sort-keys) rule.
-
-<a name="eslint-plugin-flowtype-rules-sort-keys-options-11"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-12"></a>
 #### Options
 
 The first option specifies sort order.
@@ -4070,20 +4251,12 @@ The first option specifies sort order.
 * `"asc"` (default) - enforce ascending sort order.
 * `"desc"` - enforce descending sort order.
 
-The second option takes an object with two possible properties.
-
-* `caseSensitive` - if `true`, enforce case-sensitive sort order. Default is `true`.
-* `natural` - if `true`, enforce [natural sort order](https://en.wikipedia.org/wiki/Natural_sort_order). Default is `false`.
-
 ```js
 {
   "rules": {
     "flowtype/sort-keys": [
       2,
-      "asc", {
-        "caseSensitive": true,
-        "natural": false
-      }
+      "asc"
     ]
   }
 }
@@ -4095,35 +4268,25 @@ The following patterns are considered problems:
 type FooType = { a: number, c: number, b: string }
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
-type FooType = { a: number, b: number, C: number }
-// Message: Expected type annotations to be in ascending order. "C" should be before "b".
-
-type FooType = { 1: number, 2: number, 10: number }
-// Message: Expected type annotations to be in ascending order. "10" should be before "2".
-
 // Options: ["desc"]
 type FooType = { a: number, b: number }
 // Message: Expected type annotations to be in descending order. "b" should be before "a".
 
 // Options: ["desc"]
-type FooType = { C: number, b: number, a: string }
-// Message: Expected type annotations to be in descending order. "b" should be before "C".
+type FooType = { b: number, C: number, a: string }
+// Message: Expected type annotations to be in descending order. "C" should be before "b".
 
-// Options: ["desc"]
-type FooType = { 10: number, 2: number, 1: number }
-// Message: Expected type annotations to be in descending order. "2" should be before "10".
-
-// Options: ["asc",{"caseSensitive":false}]
+// Options: ["asc"]
 type FooType = { a: number, c: number, C: number, b: string }
-// Message: Expected type annotations to be in insensitive ascending order. "b" should be before "C".
+// Message: Expected type annotations to be in ascending order. "b" should be before "C".
 
-// Options: ["asc",{"caseSensitive":false}]
+// Options: ["asc"]
 type FooType = { a: number, C: number, c: number, b: string }
-// Message: Expected type annotations to be in insensitive ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
 
-// Options: ["asc",{"natural":true}]
+// Options: ["asc"]
 type FooType = { 1: number, 10: number, 2: boolean }
-// Message: Expected type annotations to be in natural ascending order. "2" should be before "10".
+// Message: Expected type annotations to be in ascending order. "2" should be before "10".
 
 type FooType = { a: number, c: number, b: string }
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
@@ -4333,6 +4496,66 @@ type FooType = { a: number, c: number, b: string }
       
 // Message: Expected type annotations to be in ascending order. "b" should be before "c".
 // Message: Expected type annotations to be in ascending order. "a" should be before "b".
+
+
+        type FooType = {
+          a(number): void,
+          c: number,
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          a: number | string | boolean,
+          c: number,
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+
+        type FooType = {
+          c: number,
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: number,
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+
+        type FooType = {
+          c: {
+            z: {
+              j: string,
+              l: number,
+              k: boolean,
+            },
+            x: string,
+            y: boolean,
+          },
+          a: number | string | boolean,
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "k" should be before "l".
+// Message: Expected type annotations to be in ascending order. "x" should be before "z".
+// Message: Expected type annotations to be in ascending order. "a" should be before "c".
 ```
 
 The following patterns are not considered problems:
@@ -4342,30 +4565,25 @@ type FooType = { a: number }
 
 type FooType = { a: number, b: number, c: (boolean | number) }
 
-type FooType = { C: number, a: string, b: foo }
+type FooType = { a: string, b: foo, C: number }
 
-type FooType = { 1: number, 10: number, 2: boolean }
+type FooType = { 1: number, 2: boolean, 10: number }
 
 // Options: ["desc"]
 type FooType = { c: number, b: number, a: number }
 
 // Options: ["desc"]
-type FooType = { b: string, a: {}, C: number }
+type FooType = { C: number, b: string, a: {} }
 
 // Options: ["desc"]
-type FooType = { 2: number, 10: number, 1: boolean }
-
-// Options: ["asc",{"caseSensitive":false}]
-type FooType = { a: number, b: number, c: number, C: number }
-
-// Options: ["asc",{"caseSensitive":false}]
-type FooType = { a: number, b: number, C: number, c: number }
-
-// Options: ["asc",{"natural":true}]
-type FooType = { 1:number, 2: number, 10: number }
+type FooType = { 10: number, 2: number, 1: boolean }
 
 // Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
 type FooType = { b: number, a: number }
+
+type FooType = { a: string, b(): number, c: boolean }
+
+type FooType = { a(): string, b: number, c: boolean }
 ```
 
 
@@ -4377,7 +4595,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-12"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-13"></a>
 #### Options
 
 This rule has a string argument.
@@ -5746,10 +5964,10 @@ type foo = {test: number}; type bar = {...$Exact<foo>}
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options-13"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-14"></a>
 #### Options
 
-This rule needs a text RegExp to operate with Its signature is as follows:
+This rule requires a text RegExp:
 
 ```js
 {
@@ -5767,6 +5985,9 @@ This rule needs a text RegExp to operate with Its signature is as follows:
 The following patterns are considered problems:
 
 ```js
+opaque type foo = {};
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+
 type foo = {};
 // Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
 
@@ -5804,7 +6025,7 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
-<a name="eslint-plugin-flowtype-rules-type-import-style-options-14"></a>
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-15"></a>
 #### Options
 
 The rule has a string option:
