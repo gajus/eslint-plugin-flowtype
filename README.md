@@ -2520,14 +2520,23 @@ The following patterns are considered problems:
 
 ```js
 type obj = { "foo": "bar" }
-// Message: There should be no space after "{"
-// Message: There should be no space before "}"
+// Message: There should be no space after "{".
+// Message: There should be no space before "}".
 
 type obj = {"foo": "bar" }
-// Message: There should be no space before "}"
+// Message: There should be no space before "}".
+
+type obj = {"foo": "bar", ... }
+// Message: There should be no space before "}".
+
+type obj = {|"foo": "bar" |}
+// Message: There should be no space before "|}".
+
+type obj = {"foo": "bar", [key: string]: string }
+// Message: There should be no space before "}".
 
 type obj = { baz: {"foo": "qux"}, bar: 4}
-// Message: There should be no space after "{"
+// Message: There should be no space after "{".
 
 // Options: ["always"]
 type obj = {"foo": "bar"}
@@ -2547,6 +2556,18 @@ type obj = { baz: {"foo": "qux"}, bar: 4}
 // Options: ["always"]
 type obj = { baz: { "foo": "qux" }, bar: 4}
 // Message: A space is required before "}".
+
+// Options: ["always"]
+type obj = { "foo": "bar", ...}
+// Message: A space is required before "}".
+
+// Options: ["always"]
+type obj = {|"foo": "bar" |}
+// Message: A space is required after "{|".
+
+// Options: ["always"]
+type obj = {"foo": "bar", [key: string]: string }
+// Message: A space is required after "{".
 ```
 
 The following patterns are not considered problems:

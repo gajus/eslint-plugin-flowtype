@@ -35,8 +35,11 @@ const create = (context) => {
         if (spacesBefore) {
           if (sourceCode.text[opener?.range[1]] !== '\n') {
             context.report({
+              data: {
+                token: opener.value,
+              },
               fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
-              message: 'There should be no space after "{"',
+              message: 'There should be no space after "{{token}}".',
               node,
             });
           }
@@ -44,8 +47,11 @@ const create = (context) => {
         if (spacesAfter) {
           if (sourceCode.text[closer?.range[0] - 1] !== '\n') {
             context.report({
+              data: {
+                token: closer.value,
+              },
               fix: spacingFixers.stripSpacesBefore(closer, spacesAfter),
-              message: 'There should be no space before "}"',
+              message: 'There should be no space before "{{token}}".',
               node,
             });
           }
@@ -53,28 +59,40 @@ const create = (context) => {
       } else {
         if (spacesBefore > 1) {
           context.report({
+            data: {
+              token: opener.value,
+            },
             fix: spacingFixers.stripSpacesAfter(opener, spacesBefore - 1),
-            message: 'Only one space is required after "{".',
+            message: 'Only one space is required after "{{token}}".',
             node,
           });
         } else if (spacesBefore === 0) {
           context.report({
+            data: {
+              token: opener.value,
+            },
             fix: spacingFixers.addSpaceAfter(opener),
-            message: 'A space is required after "{".',
+            message: 'A space is required after "{{token}}".',
             node,
           });
         }
 
         if (spacesAfter > 1) {
           context.report({
+            data: {
+              token: closer.value,
+            },
             fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter - 1),
-            message: 'Only one space is required before "}".',
+            message: 'Only one space is required before "{{token}}".',
             node,
           });
         } else if (spacesAfter === 0) {
           context.report({
+            data: {
+              token: closer.value,
+            },
             fix: spacingFixers.addSpaceAfter(lastInnerToken),
-            message: 'A space is required before "}".',
+            message: 'A space is required before "{{token}}".',
             node,
           });
         }

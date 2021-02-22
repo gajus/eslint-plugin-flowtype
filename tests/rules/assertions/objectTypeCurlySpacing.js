@@ -4,43 +4,43 @@ export default {
     {
       code: 'type obj = { "foo": "bar" }',
       errors: [
-        {message: 'There should be no space after "{"'},
-        {message: 'There should be no space before "}"'},
+        {message: 'There should be no space after "{".'},
+        {message: 'There should be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar"}',
     },
     {
       code: 'type obj = {"foo": "bar" }',
       errors: [
-        {message: 'There should be no space before "}"'},
+        {message: 'There should be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar"}',
     },
     {
       code: 'type obj = {"foo": "bar", ... }',
       errors: [
-        {message: 'There should be no space before "}"'},
+        {message: 'There should be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar", ...}',
     },
     {
       code: 'type obj = {|"foo": "bar" |}',
       errors: [
-        {message: 'There should be no space before "}"'},
+        {message: 'There should be no space before "|}".'},
       ],
       output: 'type obj = {|"foo": "bar"|}',
     },
     {
       code: 'type obj = {"foo": "bar", [key: string]: string }',
       errors: [
-        {message: 'There should be no space before "}"'},
+        {message: 'There should be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar", [key: string]: string}',
     },
     {
       code: 'type obj = { baz: {"foo": "qux"}, bar: 4}',
       errors: [
-        {message: 'There should be no space after "{"'},
+        {message: 'There should be no space after "{".'},
       ],
       output: 'type obj = {baz: {"foo": "qux"}, bar: 4}',
     },
@@ -80,6 +80,30 @@ export default {
       ],
       options: ['always'],
       output: 'type obj = { baz: { "foo": "qux" }, bar: 4 }',
+    },
+    {
+      code: 'type obj = { "foo": "bar", ...}',
+      errors: [
+        {message: 'A space is required before "}".'},
+      ],
+      options: ['always'],
+      output: 'type obj = { "foo": "bar", ... }',
+    },
+    {
+      code: 'type obj = {|"foo": "bar" |}',
+      errors: [
+        {message: 'A space is required after "{|".'},
+      ],
+      options: ['always'],
+      output: 'type obj = {| "foo": "bar" |}',
+    },
+    {
+      code: 'type obj = {"foo": "bar", [key: string]: string }',
+      errors: [
+        {message: 'A space is required after "{".'},
+      ],
+      options: ['always'],
+      output: 'type obj = { "foo": "bar", [key: string]: string }',
     },
   ],
   misconfigured: [
