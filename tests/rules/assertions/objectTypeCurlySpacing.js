@@ -145,6 +145,8 @@ export default {
     {code: 'type obj = {foo: "bar"\n}'},
     {code: 'type obj = {\nfoo: "bar"}'},
     {code: 'type obj = {\nfoo: "bar"}'},
+    {code: 'type obj = {|"foo": "bar"|}'},
+    {code: 'type obj = {"foo": "bar", [key: string]: string}'},
 
     // Always
     {
@@ -161,6 +163,14 @@ export default {
     },
     {
       code: 'type obj = { baz: 4 }',
+      options: ['always'],
+    },
+    {
+      code: 'type obj = {| "foo": "bar" |}',
+      options: ['always'],
+    },
+    {
+      code: 'type obj = { "foo": "bar", [key: string]: string }',
       options: ['always'],
     },
   ],

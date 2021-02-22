@@ -2588,6 +2588,10 @@ foo: "bar"}
 type obj = {
 foo: "bar"}
 
+type obj = {|"foo": "bar"|}
+
+type obj = {"foo": "bar", [key: string]: string}
+
 // Options: ["always"]
 type obj = { baz: { "foo": "qux" }, bar: 4 }
 
@@ -2601,6 +2605,12 @@ foo: "bar"
 
 // Options: ["always"]
 type obj = { baz: 4 }
+
+// Options: ["always"]
+type obj = {| "foo": "bar" |}
+
+// Options: ["always"]
+type obj = { "foo": "bar", [key: string]: string }
 ```
 
 
