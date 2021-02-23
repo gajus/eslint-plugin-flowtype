@@ -28,6 +28,7 @@ const reportingRules = [
   'no-unused-expressions',
   'no-weak-types',
   'no-mixed',
+  'object-type-curly-spacing',
   'object-type-delimiter',
   'require-compound-type-alias',
   'require-inexact-type',

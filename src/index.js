@@ -17,6 +17,7 @@ import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import noMixed from './rules/noMixed';
+import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import requireIndexerName from './rules/requireIndexerName';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
@@ -60,6 +61,7 @@ const rules = {
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
   'no-unused-expressions': noUnusedExpressions,
   'no-weak-types': noWeakTypes,
+  'object-type-curly-spacing': objectTypeCurlySpacing,
   'object-type-delimiter': objectTypeDelimiter,
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
@@ -109,6 +111,7 @@ export default {
     'no-mixed': 0,
     'no-mutable-array': 0,
     'no-weak-types': 0,
+    'object-type-curly-spacing': 0,
     'object-type-delimiter': 0,
     'require-compound-type-alias': 0,
     'require-exact-type': 0,
