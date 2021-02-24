@@ -173,5 +173,13 @@ export default {
       code: 'type obj = { "foo": "bar", [key: string]: string }',
       options: ['always'],
     },
+    {
+      code: 'type obj = {  baz: { "foo": "qux" }, bar: 4  }',
+      options: ['always'],
+    },
+    {
+      code: 'type obj = {\n  baz: { "foo": "qux" }, bar: 4\n}',
+      options: ['always'],
+    },
   ],
 };

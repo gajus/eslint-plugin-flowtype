@@ -57,16 +57,7 @@ const create = (context) => {
           }
         }
       } else {
-        if (spacesBefore > 1) {
-          context.report({
-            data: {
-              token: opener.value,
-            },
-            fix: spacingFixers.stripSpacesAfter(opener, spacesBefore - 1),
-            message: 'Only one space is required after "{{token}}".',
-            node,
-          });
-        } else if (spacesBefore === 0) {
+        if (!spacesBefore) {
           context.report({
             data: {
               token: opener.value,
@@ -77,16 +68,7 @@ const create = (context) => {
           });
         }
 
-        if (spacesAfter > 1) {
-          context.report({
-            data: {
-              token: closer.value,
-            },
-            fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter - 1),
-            message: 'Only one space is required before "{{token}}".',
-            node,
-          });
-        } else if (spacesAfter === 0) {
+        if (!spacesAfter) {
           context.report({
             data: {
               token: closer.value,
