@@ -16,6 +16,7 @@ import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
+import noInternalFlowType from './rules/noInternalFlowType';
 import noMixed from './rules/noMixed';
 import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
@@ -55,6 +56,7 @@ const rules = {
   'no-dupe-keys': noDupeKeys,
   'no-existential-type': noExistentialType,
   'no-flow-fix-me-comments': noFlowFixMeComments,
+  'no-internal-flow-type': noInternalFlowType,
   'no-mixed': noMixed,
   'no-mutable-array': noMutableArray,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
