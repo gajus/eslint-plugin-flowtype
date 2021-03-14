@@ -165,6 +165,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
 {"gitdown": "include", "file": "./rules/no-existential-type.md"}
 {"gitdown": "include", "file": "./rules/no-flow-fix-me-comments.md"}
+{"gitdown": "include", "file": "./rules/no-internal-flow-type.md"}
 {"gitdown": "include", "file": "./rules/no-mixed.md"}
 {"gitdown": "include", "file": "./rules/no-mutable-array.md"}
 {"gitdown": "include", "file": "./rules/no-primitive-constructor-types.md"}
