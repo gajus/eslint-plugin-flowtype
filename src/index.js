@@ -39,6 +39,7 @@ import typeIdMatch from './rules/typeIdMatch';
 import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
+import useReadOnlySpread from './rules/useReadOnlySpread';
 import validSyntax from './rules/validSyntax';
 import spreadExactType from './rules/spreadExactType';
 import arrowParens from './rules/arrowParens';
@@ -85,6 +86,7 @@ const rules = {
   'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
+  'use-read-only-spread': useReadOnlySpread,
   'valid-syntax': validSyntax,
 };
 

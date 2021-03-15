@@ -51,6 +51,7 @@ const reportingRules = [
   'type-import-style',
   'union-intersection-spacing',
   'use-flow-type',
+  'use-read-only-spread',
   'valid-syntax',
 ];
 

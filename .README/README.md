@@ -194,4 +194,5 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/type-import-style.md"}
 {"gitdown": "include", "file": "./rules/union-intersection-spacing.md"}
 {"gitdown": "include", "file": "./rules/use-flow-type.md"}
+{"gitdown": "include", "file": "./rules/use-read-only-spread.md"}
 {"gitdown": "include", "file": "./rules/valid-syntax.md"}
