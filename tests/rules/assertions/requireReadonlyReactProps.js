@@ -166,7 +166,39 @@ export default {
       code: 'type Props = {||}; class Foo extends Component<Props> { }',
     },
     {
+      code: 'type Props = {||}; class Foo extends Component<Props> { }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
+    },
+    {
+      code: 'type Props = {}; class Foo extends Component<Props> { }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
+    },
+    {
       code: 'class Foo extends Component<{||}> { }',
+    },
+    {
+      code: 'class Foo extends Component<{||}> { }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
+    },
+    {
+      code: 'class Foo extends Component<{}> { }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
     },
     {
       code: 'class Foo extends React.Component<UnknownProps> { }',
@@ -193,6 +225,22 @@ export default {
     },
     {
       code: 'function Foo(props: {||}) { return <p /> }',
+    },
+    {
+      code: 'function Foo(props: {||}) { return <p /> }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
+    },
+    {
+      code: 'function Foo(props: {}) { return <p /> }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
     },
   ],
 };
