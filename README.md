@@ -27,6 +27,7 @@
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
         * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
+        * [`no-internal-flow-type`](#eslint-plugin-flowtype-rules-no-internal-flow-type)
         * [`no-mixed`](#eslint-plugin-flowtype-rules-no-mixed)
         * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
@@ -2016,6 +2017,88 @@ const text = 'HELLO';
 // Options: ["TODO [0-9]+"]
 // $FlowFixMe TODO 48
 const text = 'HELLO';
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-no-internal-flow-type"></a>
+### <code>no-internal-flow-type</code>
+
+Warns against using internal Flow types such as `React$Node`, `React$Ref` and others and suggests using public alternatives instead (`React.Node`, `React.Ref`, …).
+
+The following patterns are considered problems:
+
+```js
+type X = React$AbstractComponent<Config, Instance>
+// Message: Type identifier 'React$AbstractComponent' is not allowed. Use 'React.AbstractComponent' instead.
+
+type X = React$ChildrenArray<string>
+// Message: Type identifier 'React$ChildrenArray' is not allowed. Use 'React.ChildrenArray' instead.
+
+type X = React$ComponentType<Props>
+// Message: Type identifier 'React$ComponentType' is not allowed. Use 'React.ComponentType' instead.
+
+type X = React$Config<Prosp, DefaultProps>
+// Message: Type identifier 'React$Config' is not allowed. Use 'React.Config' instead.
+
+type X = React$Element<typeof Component>
+// Message: Type identifier 'React$Element' is not allowed. Use 'React.Element' instead.
+
+type X = React$ElementConfig<typeof Component>
+// Message: Type identifier 'React$ElementConfig' is not allowed. Use 'React.ElementConfig' instead.
+
+type X = React$ElementProps<typeof Component>
+// Message: Type identifier 'React$ElementProps' is not allowed. Use 'React.ElementProps' instead.
+
+type X = React$ElementRef<typeof Component>
+// Message: Type identifier 'React$ElementRef' is not allowed. Use 'React.ElementRef' instead.
+
+type X = React$ElementType
+// Message: Type identifier 'React$ElementType' is not allowed. Use 'React.ElementType' instead.
+
+type X = React$Key
+// Message: Type identifier 'React$Key' is not allowed. Use 'React.Key' instead.
+
+type X = React$Node
+// Message: Type identifier 'React$Node' is not allowed. Use 'React.Node' instead.
+
+type X = React$Ref<typeof Component>
+// Message: Type identifier 'React$Ref' is not allowed. Use 'React.Ref' instead.
+
+type X = React$StatelessFunctionalComponent<Props>
+// Message: Type identifier 'React$StatelessFunctionalComponent' is not allowed. Use 'React.StatelessFunctionalComponent' instead.
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = React.AbstractComponent<Config, Instance>
+
+type X = React.ChildrenArray<string>
+
+type X = React.ComponentType<Props>
+
+type X = React.Config<Props, DefaultProps>
+
+type X = React.Element<typeof Component>
+
+type X = React.ElementConfig<typeof Component>
+
+type X = React.ElementProps<typeof Component>
+
+type X = React.ElementRef<typeof Component>
+
+type X = React.ElementType
+
+type X = React.Key
+
+type X = React.Node
+
+type X = React.Ref<typeof Component>
+
+type X = React.StatelessFunctionalComponent<Props>
+
+type X = React$Rocks
 ```
 
 
