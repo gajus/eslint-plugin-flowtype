@@ -3461,6 +3461,23 @@ class Bar extends React.Component<Props> { }
 ```
 
 
+Optionally, you can enable support for [implicit exact Flow types](https://medium.com/flow-type/on-the-roadmap-exact-objects-by-default-16b72933c5cf) (useful when using `exact_by_default=true` Flow option):
+
+
+```js
+{
+    "rules": {
+        "flowtype/require-readonly-react-props": [
+            2,
+            {
+                "useImplicitExactTypes": true
+            }
+        ]
+    }
+}
+```
+
+
 The following patterns are considered problems:
 
 ```js
@@ -3540,7 +3557,19 @@ type Props = $FlowFixMe; class Foo extends Component<Props> { }
 
 type Props = {||}; class Foo extends Component<Props> { }
 
+// Options: [{"useImplicitExactTypes":true}]
+type Props = {||}; class Foo extends Component<Props> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+type Props = {}; class Foo extends Component<Props> { }
+
 class Foo extends Component<{||}> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+class Foo extends Component<{||}> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+class Foo extends Component<{}> { }
 
 class Foo extends React.Component<UnknownProps> { }
 
@@ -3557,6 +3586,12 @@ function Foo() { return <p /> }
 function Foo(props: $FlowFixMe) { return <p /> }
 
 function Foo(props: {||}) { return <p /> }
+
+// Options: [{"useImplicitExactTypes":true}]
+function Foo(props: {||}) { return <p /> }
+
+// Options: [{"useImplicitExactTypes":true}]
+function Foo(props: {}) { return <p /> }
 ```
 
 
