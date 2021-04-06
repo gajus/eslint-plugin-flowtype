@@ -56,6 +56,7 @@
         * [`type-import-style`](#eslint-plugin-flowtype-rules-type-import-style)
         * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
+        * [`use-read-only-spread`](#eslint-plugin-flowtype-rules-use-read-only-spread)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
 
 
@@ -6426,6 +6427,105 @@ import type A from "a"; type X<B = ComponentType<A>> = { b: B }; let x: X; conso
 
 import type A from "a"; type X<B = A<string>> = { b: B }; let x: X; console.log(x);
 // Additional rules: {"no-unused-vars":1}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-use-read-only-spread"></a>
+### <code>use-read-only-spread</code>
+
+Warns against accidentally creating an object which is no longer read-only because of how spread operator works in Flow. Imagine the following code:
+
+```flow js
+type INode = {|
+  +type: string,
+|};
+
+type Identifier = {|
+  ...INode,
+  +name: string,
+|};
+```
+
+You might expect the identifier name to be read-only, however, that's not true ([flow.org/try](https://flow.org/try/#0C4TwDgpgBAkgcgewCbQLxQN4B8BQUoDUokAXFAM7ABOAlgHYDmANDlgL4DcOOx0MKdYDQBmNCFSjpseKADp58ZBBb4CdAIYBbCGUq1GLdlxwBjBHUpQAHmX4RBIsRKlQN2sgHIPTKL08eoTm4rWV5JKA8AZQALBABXABskVwRgKAAjaAB3WmB1dISIAEIPLhC3NAiY+KSUtMyoHJo8guLSnCA)):
+
+```flow js
+const x: Identifier = { name: '', type: '' };
+
+x.type = 'Should not be writable!'; // No Flow error
+x.name = 'Should not be writable!'; // No Flow error
+```
+
+This rule suggests to use `$ReadOnly<…>` to prevent accidental loss of readonly-ness:
+
+```flow js
+type Identifier = $ReadOnly<{|
+  ...INode,
+  +name: string,
+|}>;
+
+const x: Identifier = { name: '', type: '' };
+
+x.type = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
+x.name = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
+```
+
+The following patterns are considered problems:
+
+```js
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  +aaa: string,
+|};
+// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  +aaa: string,
+  +bbb: string,
+|};
+// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+```
+
+The following patterns are not considered problems:
+
+```js
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  name: string,
+|};
+
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  name: string, // writable on purpose
+  +surname: string,
+|};
+
+type Identifier = {|
+  +name: string,
+|};
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  +name: string,
+|}>;
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  name: string, // writable on purpose
+|}>;
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  -name: string,
+|}>;
 ```
 
 
