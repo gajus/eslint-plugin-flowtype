@@ -1,4 +1,16 @@
-const schema = [];
+import _ from 'lodash';
+
+const schema = [
+  {
+    additionalProperties: false,
+    properties: {
+      useImplicitExactTypes: {
+        type: 'boolean',
+      },
+    },
+    type: 'object',
+  },
+];
 
 const reComponentName = /^(Pure)?Component$/;
 const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/;
@@ -21,14 +33,19 @@ const isReactComponent = (node) => {
   );
 };
 
-const isReadOnlyObjectType = (node) => {
+const isReadOnlyObjectType = (node, {useImplicitExactTypes}) => {
   if (!node || node.type !== 'ObjectTypeAnnotation') {
     return false;
   }
 
-  // we consider `{||}` to be ReadOnly since it's exact AND has no props
-  if (node.exact && node.properties.length === 0) {
-    return true;
+  if (node.properties.length === 0) {
+    // we consider `{}` to be ReadOnly since it's exact AND has no props (when `implicitExactTypes=true`)
+    // we consider `{||}` to be ReadOnly since it's exact AND has no props (when `implicitExactTypes=false`)
+    if (useImplicitExactTypes === true && node.exact === false) {
+      return true;
+    } else if (node.exact === true) {
+      return true;
+    }
   }
 
   // { +foo: ..., +bar: ..., ... }
@@ -38,11 +55,14 @@ const isReadOnlyObjectType = (node) => {
         });
 };
 
-const isReadOnlyType = (node) => {
-  return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right);
+const isReadOnlyType = (node, options) => {
+  return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right, options);
 };
 
 const create = (context) => {
+  const useImplicitExactTypes = _.get(context, ['options', 0, 'useImplicitExactTypes'], false);
+  const options = {useImplicitExactTypes};
+
   const readOnlyTypes = [];
   const foundTypes = [];
   const reportedFunctionalComponents = [];
@@ -72,7 +92,7 @@ const create = (context) => {
 
     if (idName) {
       foundTypes.push(idName);
-      if (isReadOnlyType(typeNode)) {
+      if (isReadOnlyType(typeNode, options)) {
         readOnlyTypes.push(idName);
       }
     }
@@ -89,7 +109,7 @@ const create = (context) => {
         });
       } else if (node.superTypeParameters &&
                 node.superTypeParameters.params[0].type === 'ObjectTypeAnnotation' &&
-                !isReadOnlyObjectType(node.superTypeParameters.params[0])) {
+                !isReadOnlyObjectType(node.superTypeParameters.params[0], options)) {
         context.report({
           message: node.id.name + ' class props must be $ReadOnly',
           node,
@@ -133,7 +153,7 @@ const create = (context) => {
         }
 
         if (typeAnnotation.typeAnnotation.type === 'ObjectTypeAnnotation' &&
-            !isReadOnlyObjectType(typeAnnotation.typeAnnotation)) {
+            !isReadOnlyObjectType(typeAnnotation.typeAnnotation, options)) {
           context.report({
             message: currentNode.id.name + ' component props must be $ReadOnly',
             node,
