@@ -16,6 +16,7 @@ import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
+import noInternalFlowType from './rules/noInternalFlowType';
 import noMixed from './rules/noMixed';
 import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
@@ -39,6 +40,7 @@ import typeIdMatch from './rules/typeIdMatch';
 import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
+import useReadOnlySpread from './rules/useReadOnlySpread';
 import validSyntax from './rules/validSyntax';
 import spreadExactType from './rules/spreadExactType';
 import arrowParens from './rules/arrowParens';
@@ -56,6 +58,7 @@ const rules = {
   'no-dupe-keys': noDupeKeys,
   'no-existential-type': noExistentialType,
   'no-flow-fix-me-comments': noFlowFixMeComments,
+  'no-internal-flow-type': noInternalFlowType,
   'no-mixed': noMixed,
   'no-mutable-array': noMutableArray,
   'no-primitive-constructor-types': noPrimitiveConstructorTypes,
@@ -85,6 +88,7 @@ const rules = {
   'type-import-style': typeImportStyle,
   'union-intersection-spacing': unionIntersectionSpacing,
   'use-flow-type': useFlowType,
+  'use-read-only-spread': useReadOnlySpread,
   'valid-syntax': validSyntax,
 };
 

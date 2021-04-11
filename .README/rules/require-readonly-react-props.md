@@ -79,4 +79,21 @@ class Bar extends React.Component<Props> { }
 ```
 
 
+Optionally, you can enable support for [implicit exact Flow types](https://medium.com/flow-type/on-the-roadmap-exact-objects-by-default-16b72933c5cf) (useful when using `exact_by_default=true` Flow option):
+
+
+```js
+{
+    "rules": {
+        "flowtype/require-readonly-react-props": [
+            2,
+            {
+                "useImplicitExactTypes": true
+            }
+        ]
+    }
+}
+```
+
+
 <!-- assertions requireReadonlyReactProps -->

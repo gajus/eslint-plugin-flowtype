@@ -27,6 +27,7 @@ const reportingRules = [
   'no-types-missing-file-annotation',
   'no-unused-expressions',
   'no-weak-types',
+  'no-internal-flow-type',
   'no-mixed',
   'object-type-curly-spacing',
   'object-type-delimiter',
@@ -51,6 +52,7 @@ const reportingRules = [
   'type-import-style',
   'union-intersection-spacing',
   'use-flow-type',
+  'use-read-only-spread',
   'valid-syntax',
 ];
 

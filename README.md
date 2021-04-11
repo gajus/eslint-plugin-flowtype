@@ -27,6 +27,7 @@
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
         * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
+        * [`no-internal-flow-type`](#eslint-plugin-flowtype-rules-no-internal-flow-type)
         * [`no-mixed`](#eslint-plugin-flowtype-rules-no-mixed)
         * [`no-mutable-array`](#eslint-plugin-flowtype-rules-no-mutable-array)
         * [`no-primitive-constructor-types`](#eslint-plugin-flowtype-rules-no-primitive-constructor-types)
@@ -56,6 +57,7 @@
         * [`type-import-style`](#eslint-plugin-flowtype-rules-type-import-style)
         * [`union-intersection-spacing`](#eslint-plugin-flowtype-rules-union-intersection-spacing)
         * [`use-flow-type`](#eslint-plugin-flowtype-rules-use-flow-type)
+        * [`use-read-only-spread`](#eslint-plugin-flowtype-rules-use-read-only-spread)
         * [`valid-syntax`](#eslint-plugin-flowtype-rules-valid-syntax)
 
 
@@ -2021,6 +2023,88 @@ const text = 'HELLO';
 
 
 
+<a name="eslint-plugin-flowtype-rules-no-internal-flow-type"></a>
+### <code>no-internal-flow-type</code>
+
+Warns against using internal Flow types such as `React$Node`, `React$Ref` and others and suggests using public alternatives instead (`React.Node`, `React.Ref`, …).
+
+The following patterns are considered problems:
+
+```js
+type X = React$AbstractComponent<Config, Instance>
+// Message: Type identifier 'React$AbstractComponent' is not allowed. Use 'React.AbstractComponent' instead.
+
+type X = React$ChildrenArray<string>
+// Message: Type identifier 'React$ChildrenArray' is not allowed. Use 'React.ChildrenArray' instead.
+
+type X = React$ComponentType<Props>
+// Message: Type identifier 'React$ComponentType' is not allowed. Use 'React.ComponentType' instead.
+
+type X = React$Config<Prosp, DefaultProps>
+// Message: Type identifier 'React$Config' is not allowed. Use 'React.Config' instead.
+
+type X = React$Element<typeof Component>
+// Message: Type identifier 'React$Element' is not allowed. Use 'React.Element' instead.
+
+type X = React$ElementConfig<typeof Component>
+// Message: Type identifier 'React$ElementConfig' is not allowed. Use 'React.ElementConfig' instead.
+
+type X = React$ElementProps<typeof Component>
+// Message: Type identifier 'React$ElementProps' is not allowed. Use 'React.ElementProps' instead.
+
+type X = React$ElementRef<typeof Component>
+// Message: Type identifier 'React$ElementRef' is not allowed. Use 'React.ElementRef' instead.
+
+type X = React$ElementType
+// Message: Type identifier 'React$ElementType' is not allowed. Use 'React.ElementType' instead.
+
+type X = React$Key
+// Message: Type identifier 'React$Key' is not allowed. Use 'React.Key' instead.
+
+type X = React$Node
+// Message: Type identifier 'React$Node' is not allowed. Use 'React.Node' instead.
+
+type X = React$Ref<typeof Component>
+// Message: Type identifier 'React$Ref' is not allowed. Use 'React.Ref' instead.
+
+type X = React$StatelessFunctionalComponent<Props>
+// Message: Type identifier 'React$StatelessFunctionalComponent' is not allowed. Use 'React.StatelessFunctionalComponent' instead.
+```
+
+The following patterns are not considered problems:
+
+```js
+type X = React.AbstractComponent<Config, Instance>
+
+type X = React.ChildrenArray<string>
+
+type X = React.ComponentType<Props>
+
+type X = React.Config<Props, DefaultProps>
+
+type X = React.Element<typeof Component>
+
+type X = React.ElementConfig<typeof Component>
+
+type X = React.ElementProps<typeof Component>
+
+type X = React.ElementRef<typeof Component>
+
+type X = React.ElementType
+
+type X = React.Key
+
+type X = React.Node
+
+type X = React.Ref<typeof Component>
+
+type X = React.StatelessFunctionalComponent<Props>
+
+type X = React$Rocks
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-no-mixed"></a>
 ### <code>no-mixed</code>
 
@@ -3446,6 +3530,23 @@ class Bar extends React.Component<Props> { }
 ```
 
 
+Optionally, you can enable support for [implicit exact Flow types](https://medium.com/flow-type/on-the-roadmap-exact-objects-by-default-16b72933c5cf) (useful when using `exact_by_default=true` Flow option):
+
+
+```js
+{
+    "rules": {
+        "flowtype/require-readonly-react-props": [
+            2,
+            {
+                "useImplicitExactTypes": true
+            }
+        ]
+    }
+}
+```
+
+
 The following patterns are considered problems:
 
 ```js
@@ -3525,7 +3626,19 @@ type Props = $FlowFixMe; class Foo extends Component<Props> { }
 
 type Props = {||}; class Foo extends Component<Props> { }
 
+// Options: [{"useImplicitExactTypes":true}]
+type Props = {||}; class Foo extends Component<Props> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+type Props = {}; class Foo extends Component<Props> { }
+
 class Foo extends Component<{||}> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+class Foo extends Component<{||}> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+class Foo extends Component<{}> { }
 
 class Foo extends React.Component<UnknownProps> { }
 
@@ -3542,6 +3655,12 @@ function Foo() { return <p /> }
 function Foo(props: $FlowFixMe) { return <p /> }
 
 function Foo(props: {||}) { return <p /> }
+
+// Options: [{"useImplicitExactTypes":true}]
+function Foo(props: {||}) { return <p /> }
+
+// Options: [{"useImplicitExactTypes":true}]
+function Foo(props: {}) { return <p /> }
 ```
 
 
@@ -6376,6 +6495,105 @@ import type A from "a"; type X<B = ComponentType<A>> = { b: B }; let x: X; conso
 
 import type A from "a"; type X<B = A<string>> = { b: B }; let x: X; console.log(x);
 // Additional rules: {"no-unused-vars":1}
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-use-read-only-spread"></a>
+### <code>use-read-only-spread</code>
+
+Warns against accidentally creating an object which is no longer read-only because of how spread operator works in Flow. Imagine the following code:
+
+```flow js
+type INode = {|
+  +type: string,
+|};
+
+type Identifier = {|
+  ...INode,
+  +name: string,
+|};
+```
+
+You might expect the identifier name to be read-only, however, that's not true ([flow.org/try](https://flow.org/try/#0C4TwDgpgBAkgcgewCbQLxQN4B8BQUoDUokAXFAM7ABOAlgHYDmANDlgL4DcOOx0MKdYDQBmNCFSjpseKADp58ZBBb4CdAIYBbCGUq1GLdlxwBjBHUpQAHmX4RBIsRKlQN2sgHIPTKL08eoTm4rWV5JKA8AZQALBABXABskVwRgKAAjaAB3WmB1dISIAEIPLhC3NAiY+KSUtMyoHJo8guLSnCA)):
+
+```flow js
+const x: Identifier = { name: '', type: '' };
+
+x.type = 'Should not be writable!'; // No Flow error
+x.name = 'Should not be writable!'; // No Flow error
+```
+
+This rule suggests to use `$ReadOnly<…>` to prevent accidental loss of readonly-ness:
+
+```flow js
+type Identifier = $ReadOnly<{|
+  ...INode,
+  +name: string,
+|}>;
+
+const x: Identifier = { name: '', type: '' };
+
+x.type = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
+x.name = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
+```
+
+The following patterns are considered problems:
+
+```js
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  +aaa: string,
+|};
+// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  +aaa: string,
+  +bbb: string,
+|};
+// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+```
+
+The following patterns are not considered problems:
+
+```js
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  name: string,
+|};
+
+type INode = {||};
+type Identifier = {|
+  ...INode,
+  name: string, // writable on purpose
+  +surname: string,
+|};
+
+type Identifier = {|
+  +name: string,
+|};
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  +name: string,
+|}>;
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  name: string, // writable on purpose
+|}>;
+
+type INode = {||};
+type Identifier = $ReadOnly<{|
+  ...INode,
+  -name: string,
+|}>;
 ```
 
 
