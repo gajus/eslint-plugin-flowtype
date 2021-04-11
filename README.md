@@ -2756,44 +2756,44 @@ type Foo = { a: Foo, b: Bar }
 <a name="eslint-plugin-flowtype-rules-quotes"></a>
 ### <code>quotes</code>
 
-Enforces single quotes or double quotes.
+Enforces single quotes or double quotes around string literals.
 
 <a name="eslint-plugin-flowtype-rules-quotes-options-3"></a>
 #### Options
 
 The rule has string options of:
 
-* `"double"` (default) requires double quotes around strings.
-* `"single"` requires single quotes around strings.
+* `"double"` (default) requires double quotes around string literals.
+* `"single"` requires single quotes around string literals.
 
 The following patterns are considered problems:
 
 ```js
 type T = 'hi'
-// Message: Strings must use double quote.
+// Message: String literals must use double quote.
 
 // Options: ["double"]
 type T = { test: 'hello' | 'test' }
-// Message: Strings must use double quote.
-// Message: Strings must use double quote.
+// Message: String literals must use double quote.
+// Message: String literals must use double quote.
 
 // Options: ["double"]
 type T = { test: "hello" | 'test', t: 'hello' }
-// Message: Strings must use double quote.
-// Message: Strings must use double quote.
+// Message: String literals must use double quote.
+// Message: String literals must use double quote.
 
 // Options: ["single"]
 type T = "hi"
-// Message: Strings must use single quote.
+// Message: String literals must use single quote.
 
 // Options: ["single"]
 type T = { test: "hello" | "test" }
-// Message: Strings must use single quote.
-// Message: Strings must use single quote.
+// Message: String literals must use single quote.
+// Message: String literals must use single quote.
 
 // Options: ["single"]
 type T = { test: "hello" | 'test', t: 'hello' }
-// Message: Strings must use single quote.
+// Message: String literals must use single quote.
 ```
 
 The following patterns are not considered problems:

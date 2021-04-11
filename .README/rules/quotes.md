@@ -1,12 +1,12 @@
 ### `quotes`
 
-Enforces single quotes or double quotes.
+Enforces single quotes or double quotes around string literals.
 
 #### Options
 
 The rule has string options of:
 
-* `"double"` (default) requires double quotes around strings.
-* `"single"` requires single quotes around strings.
+* `"double"` (default) requires double quotes around string literals.
+* `"single"` requires single quotes around string literals.
 
 <!-- assertions quotes -->

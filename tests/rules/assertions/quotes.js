@@ -4,7 +4,7 @@ export default {
       code: 'type T = \'hi\'',
       errors: [
         {
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
         },
       ],
       output: 'type T = "hi"',
@@ -13,10 +13,10 @@ export default {
       code: 'type T = { test: \'hello\' | \'test\' }',
       errors: [
         {
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
         },
         {
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
         },
       ],
       options: ['double'],
@@ -26,10 +26,10 @@ export default {
       code: 'type T = { test: "hello" | \'test\', t: \'hello\' }',
       errors: [
         {
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
         },
         {
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
         },
       ],
       options: ['double'],
@@ -39,7 +39,7 @@ export default {
       code: 'type T = "hi"',
       errors: [
         {
-          message: 'Strings must use single quote.',
+          message: 'String literals must use single quote.',
         },
       ],
       options: ['single'],
@@ -49,10 +49,10 @@ export default {
       code: 'type T = { test: "hello" | "test" }',
       errors: [
         {
-          message: 'Strings must use single quote.',
+          message: 'String literals must use single quote.',
         },
         {
-          message: 'Strings must use single quote.',
+          message: 'String literals must use single quote.',
         },
       ],
       options: ['single'],
@@ -62,7 +62,7 @@ export default {
       code: 'type T = { test: "hello" | \'test\', t: \'hello\' }',
       errors: [
         {
-          message: 'Strings must use single quote.',
+          message: 'String literals must use single quote.',
         },
       ],
       options: ['single'],

@@ -24,7 +24,7 @@ const create = (context) => {
               fixer.replaceTextRange([node.range[1] - 1, node.range[1]], '"'),
             ];
           },
-          message: 'Strings must use double quote.',
+          message: 'String literals must use double quote.',
           node,
         });
       } else if (!double && sourceCode.text[node.range[0]] !== '\'') {
@@ -36,7 +36,7 @@ const create = (context) => {
               fixer.replaceTextRange([node.range[1] - 1, node.range[1]], '\''),
             ];
           },
-          message: 'Strings must use single quote.',
+          message: 'String literals must use single quote.',
           node,
         });
       }
