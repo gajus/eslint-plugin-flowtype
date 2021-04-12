@@ -20,6 +20,7 @@ import noInternalFlowType from './rules/noInternalFlowType';
 import noMixed from './rules/noMixed';
 import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
+import quotes from './rules/quotes';
 import requireIndexerName from './rules/requireIndexerName';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
 import requireInexactType from './rules/requireInexactType';
@@ -66,6 +67,7 @@ const rules = {
   'no-weak-types': noWeakTypes,
   'object-type-curly-spacing': objectTypeCurlySpacing,
   'object-type-delimiter': objectTypeDelimiter,
+  quotes,
   'require-compound-type-alias': requireCompoundTypeAlias,
   'require-exact-type': requireExactType,
   'require-indexer-name': requireIndexerName,
@@ -117,6 +119,7 @@ export default {
     'no-weak-types': 0,
     'object-type-curly-spacing': 0,
     'object-type-delimiter': 0,
+    quotes: 0,
     'require-compound-type-alias': 0,
     'require-exact-type': 0,
     'require-parameter-type': 0,

@@ -36,6 +36,7 @@
         * [`no-weak-types`](#eslint-plugin-flowtype-rules-no-weak-types)
         * [`object-type-curly-spacing`](#eslint-plugin-flowtype-rules-object-type-curly-spacing)
         * [`object-type-delimiter`](#eslint-plugin-flowtype-rules-object-type-delimiter)
+        * [`quotes`](#eslint-plugin-flowtype-rules-quotes)
         * [`require-compound-type-alias`](#eslint-plugin-flowtype-rules-require-compound-type-alias)
         * [`require-exact-type`](#eslint-plugin-flowtype-rules-require-exact-type)
         * [`require-indexer-name`](#eslint-plugin-flowtype-rules-require-indexer-name)
@@ -2836,12 +2837,79 @@ type Foo = { a: Foo, b: Bar }
 
 
 
+<a name="eslint-plugin-flowtype-rules-quotes"></a>
+### <code>quotes</code>
+
+Enforces single quotes or double quotes around string literals.
+
+<a name="eslint-plugin-flowtype-rules-quotes-options-3"></a>
+#### Options
+
+The rule has string options of:
+
+* `"double"` (default) requires double quotes around string literals.
+* `"single"` requires single quotes around string literals.
+
+The following patterns are considered problems:
+
+```js
+type T = 'hi'
+// Message: String literals must use double quote.
+
+// Options: ["double"]
+type T = { test: 'hello' | 'test' }
+// Message: String literals must use double quote.
+// Message: String literals must use double quote.
+
+// Options: ["double"]
+type T = { test: "hello" | 'test', t: 'hello' }
+// Message: String literals must use double quote.
+// Message: String literals must use double quote.
+
+// Options: ["single"]
+type T = "hi"
+// Message: String literals must use single quote.
+
+// Options: ["single"]
+type T = { test: "hello" | "test" }
+// Message: String literals must use single quote.
+// Message: String literals must use single quote.
+
+// Options: ["single"]
+type T = { test: "hello" | 'test', t: 'hello' }
+// Message: String literals must use single quote.
+```
+
+The following patterns are not considered problems:
+
+```js
+// Options: ["double"]
+type T = "hi"
+
+// Options: ["double"]
+type T = { test: "hello" | "test" }
+
+// Options: ["double"]
+type T = { test: "hello" | "test", t: "hello" }
+
+// Options: ["single"]
+type FooType = 'hi'
+
+// Options: ["single"]
+type T = { test: 'hello' | 'test' }
+
+// Options: ["single"]
+type T = { test: 'hello' | 'test', t: 'hello' }
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-require-compound-type-alias"></a>
 ### <code>require-compound-type-alias</code>
 
 Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy & paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
 
-<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-3"></a>
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-4"></a>
 #### Options
 
 The rule has two options:
@@ -2935,7 +3003,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
 
-<a name="eslint-plugin-flowtype-rules-require-exact-type-options-4"></a>
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options-5"></a>
 #### Options
 
 The rule has one string option:
@@ -3088,7 +3156,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule validates Flow object indexer name.
 
-<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-5"></a>
+<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-6"></a>
 #### Options
 
 The rule has a string option:
@@ -3133,7 +3201,7 @@ type foo = { [string]: number };
 
 This rule enforces explicit inexact object types.
 
-<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-6"></a>
+<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-7"></a>
 #### Options
 
 The rule has one string option:
@@ -3242,7 +3310,7 @@ type foo = number;
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-7"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-8"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3602,7 +3670,7 @@ function Foo(props: {}) { return <p /> }
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options-8"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-9"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3964,7 +4032,7 @@ async function * foo(): AsyncIterable<number> { yield 2; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-9"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-10"></a>
 #### Options
 
 The rule has a string option:
@@ -4041,7 +4109,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistent annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-10"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-11"></a>
 #### Options
 
 The rule has a string option:
@@ -4234,7 +4302,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options-11"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-12"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -4401,7 +4469,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces natural, case-insensitive sorting of Object annotations.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options-12"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-13"></a>
 #### Options
 
 The first option specifies sort order.
@@ -4753,7 +4821,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-13"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-14"></a>
 #### Options
 
 This rule has a string argument.
@@ -6122,7 +6190,7 @@ type foo = {test: number}; type bar = {...$Exact<foo>}
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options-14"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-15"></a>
 #### Options
 
 This rule requires a text RegExp:
@@ -6183,7 +6251,7 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
-<a name="eslint-plugin-flowtype-rules-type-import-style-options-15"></a>
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-16"></a>
 #### Options
 
 The rule has a string option:
