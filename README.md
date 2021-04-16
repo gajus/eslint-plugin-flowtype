@@ -3451,7 +3451,7 @@ const f: fn = (a, b) => {}
 <a name="eslint-plugin-flowtype-rules-require-readonly-react-props"></a>
 ### <code>require-readonly-react-props</code>
 
-This rule validates that React props are marked as $ReadOnly. React props are immutable and modifying them could lead to unexpected results. Marking prop shapes as $ReadOnly avoids these issues.
+This rule validates that React props are marked as `$ReadOnly`. React props are immutable and modifying them could lead to unexpected results. Marking prop shapes as `$ReadOnly` avoids these issues.
 
 The rule tries its best to work with both class and functional components. For class components, it does a fuzzy check for one of "Component", "PureComponent", "React.Component" and "React.PureComponent". It doesn't actually infer that those identifiers resolve to a proper `React.Component` object.
 
@@ -3574,6 +3574,13 @@ export type Props = {}; class Foo extends Component<Props> { }
 type Props = {| foo: string |}; class Foo extends Component<Props> { }
 // Message: Props must be $ReadOnly
 
+type Props = {| foo: string |} | {| bar: number |}; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
+// Options: [{"useImplicitExactTypes":true}]
+type Props = { foo: string } | { bar: number }; class Foo extends Component<Props> { }
+// Message: Props must be $ReadOnly
+
 type Props = {| +foo: string, ...bar |}; class Foo extends Component<Props> { }
 // Message: Props must be $ReadOnly
 
@@ -3621,6 +3628,11 @@ export type Props = $ReadOnly<{}>; export class Foo extends Component<Props> { }
 type Props = {| +foo: string |}; class Foo extends Component<Props> { }
 
 type Props = {| +foo: string, +bar: number |}; class Foo extends Component<Props> { }
+
+type Props = {| +foo: string |} | {| +bar: number |}; class Foo extends Component<Props> { }
+
+// Options: [{"useImplicitExactTypes":true}]
+type Props = { +foo: string } | { +bar: number }; class Foo extends Component<Props> { }
 
 type Props = $FlowFixMe; class Foo extends Component<Props> { }
 

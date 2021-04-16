@@ -33,6 +33,7 @@ const isReactComponent = (node) => {
   );
 };
 
+// type Props = {| +foo: string |}
 const isReadOnlyObjectType = (node, {useImplicitExactTypes}) => {
   if (!node || node.type !== 'ObjectTypeAnnotation') {
     return false;
@@ -55,8 +56,21 @@ const isReadOnlyObjectType = (node, {useImplicitExactTypes}) => {
         });
 };
 
+// type Props = {| +foo: string |} | {| +bar: number |}
+const isReadOnlyObjectUnionType = (node, options) => {
+  if (!node || node.type !== 'UnionTypeAnnotation') {
+    return false;
+  }
+
+  return node.types.every((type) => {
+    return isReadOnlyObjectType(type, options);
+  });
+};
+
 const isReadOnlyType = (node, options) => {
-  return node.right.id && reReadOnly.test(node.right.id.name) || isReadOnlyObjectType(node.right, options);
+  return node.right.id && reReadOnly.test(node.right.id.name) ||
+    isReadOnlyObjectType(node.right, options) ||
+    isReadOnlyObjectUnionType(node.right, options);
 };
 
 const create = (context) => {
