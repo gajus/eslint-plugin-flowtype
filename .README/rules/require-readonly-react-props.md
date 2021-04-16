@@ -1,6 +1,6 @@
 ### `require-readonly-react-props`
 
-This rule validates that React props are marked as $ReadOnly. React props are immutable and modifying them could lead to unexpected results. Marking prop shapes as $ReadOnly avoids these issues.
+This rule validates that React props are marked as `$ReadOnly`. React props are immutable and modifying them could lead to unexpected results. Marking prop shapes as `$ReadOnly` avoids these issues.
 
 The rule tries its best to work with both class and functional components. For class components, it does a fuzzy check for one of "Component", "PureComponent", "React.Component" and "React.PureComponent". It doesn't actually infer that those identifiers resolve to a proper `React.Component` object.
 
