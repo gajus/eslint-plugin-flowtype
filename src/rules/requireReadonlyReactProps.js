@@ -144,7 +144,7 @@ const create = (context) => {
 
           context.report({
             message: identifier.name + ' must be $ReadOnly',
-            node,
+            node: identifier,
           });
 
           reportedFunctionalComponents.push(identifier);

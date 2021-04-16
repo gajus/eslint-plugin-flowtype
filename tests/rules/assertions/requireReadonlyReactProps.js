@@ -85,9 +85,14 @@ export default {
 
     // functional components
     {
+      //                                           vvvvv
       code: 'type Props = { }; function Foo(props: Props) { return <p /> }',
       errors: [
         {
+          column: 39,
+          endColumn: 44,
+          endLine: 1,
+          line: 1,
           message: 'Props must be $ReadOnly',
         },
       ],
