@@ -48,6 +48,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-flowtype",
   "peerDependencies": {
+    "@babel/eslint-parser": "^7.12.0",
     "eslint": "^7.1.0"
   },
   "repository": {
