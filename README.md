@@ -2620,6 +2620,10 @@ type obj = {|"foo": "bar" |}
 type obj = {"foo": "bar", [key: string]: string }
 // Message: There should be no space before "}".
 
+type obj = {
+"foo": "bar", [key: string]: string }
+// Message: There should be no space before "}".
+
 type obj = { baz: {"foo": "qux"}, bar: 4}
 // Message: There should be no space after "{".
 
@@ -2671,7 +2675,18 @@ type obj = {
 foo: "bar"}
 
 type obj = {
-foo: "bar"}
+foo: "bar"
+}
+
+type obj = {
+foo: "bar",
+ee: "bar",
+}
+
+type obj = {
+foo: "bar",
+ee: "bar",
+             }
 
 type obj = {|"foo": "bar"|}
 
