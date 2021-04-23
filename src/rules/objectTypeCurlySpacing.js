@@ -11,6 +11,10 @@ const meta = {
   fixable: 'code',
 };
 
+const sameLine = (left, right) => {
+  return left.loc.end.line === right.loc.start.line;
+};
+
 const create = (context) => {
   const never = (context?.options[0] ?? 'never') === 'never';
   const sourceCode = context.getSourceCode();
@@ -31,33 +35,18 @@ const create = (context) => {
       const spacesBefore = firstInnerToken.range[0] - opener.range[1];
       const spacesAfter = closer.range[0] - lastInnerToken.range[1];
 
-      if (never) {
-        if (spacesBefore) {
-          if (sourceCode.text[opener?.range[1]] !== '\n') {
-            context.report({
-              data: {
-                token: opener.value,
-              },
-              fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
-              message: 'There should be no space after "{{token}}".',
-              node,
-            });
-          }
-        }
-        if (spacesAfter) {
-          if (sourceCode.text[closer?.range[0] - 1] !== '\n') {
-            context.report({
-              data: {
-                token: closer.value,
-              },
-              fix: spacingFixers.stripSpacesBefore(closer, spacesAfter),
-              message: 'There should be no space before "{{token}}".',
-              node,
-            });
-          }
-        }
-      } else {
-        if (!spacesBefore) {
+      // Check the opening brace
+      if (sameLine(opener, firstInnerToken)) {
+        if (never && spacesBefore) {
+          context.report({
+            data: {
+              token: opener.value,
+            },
+            fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
+            message: 'There should be no space after "{{token}}".',
+            node,
+          });
+        } else if (!never && !spacesBefore) {
           context.report({
             data: {
               token: opener.value,
@@ -67,8 +56,20 @@ const create = (context) => {
             node,
           });
         }
+      }
 
-        if (!spacesAfter) {
+      // Check the closing brace
+      if (sameLine(lastInnerToken, closer)) {
+        if (never && spacesAfter) {
+          context.report({
+            data: {
+              token: closer.value,
+            },
+            fix: spacingFixers.stripSpacesBefore(closer, spacesAfter),
+            message: 'There should be no space before "{{token}}".',
+            node,
+          });
+        } else if (!never && !spacesAfter) {
           context.report({
             data: {
               token: closer.value,
