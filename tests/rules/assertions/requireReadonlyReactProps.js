@@ -67,6 +67,27 @@ export default {
       ],
     },
     {
+      code: 'type Props = {| foo: string |} | {| bar: number |}; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly',
+        },
+      ],
+    },
+    {
+      code: 'type Props = { foo: string } | { bar: number }; class Foo extends Component<Props> { }',
+      errors: [
+        {
+          message: 'Props must be $ReadOnly',
+        },
+      ],
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
+    },
+    {
       code: 'type Props = {| +foo: string, ...bar |}; class Foo extends Component<Props> { }',
       errors: [
         {
@@ -85,9 +106,14 @@ export default {
 
     // functional components
     {
+      //                                           vvvvv
       code: 'type Props = { }; function Foo(props: Props) { return <p /> }',
       errors: [
         {
+          column: 39,
+          endColumn: 44,
+          endLine: 1,
+          line: 1,
           message: 'Props must be $ReadOnly',
         },
       ],
@@ -158,6 +184,17 @@ export default {
     },
     {
       code: 'type Props = {| +foo: string, +bar: number |}; class Foo extends Component<Props> { }',
+    },
+    {
+      code: 'type Props = {| +foo: string |} | {| +bar: number |}; class Foo extends Component<Props> { }',
+    },
+    {
+      code: 'type Props = { +foo: string } | { +bar: number }; class Foo extends Component<Props> { }',
+      options: [
+        {
+          useImplicitExactTypes: true,
+        },
+      ],
     },
     {
       code: 'type Props = $FlowFixMe; class Foo extends Component<Props> { }',
