@@ -38,6 +38,13 @@ export default {
       output: 'type obj = {"foo": "bar", [key: string]: string}',
     },
     {
+      code: 'type obj = {\n"foo": "bar", [key: string]: string }',
+      errors: [
+        {message: 'There should be no space before "}".'},
+      ],
+      output: 'type obj = {\n"foo": "bar", [key: string]: string}',
+    },
+    {
       code: 'type obj = { baz: {"foo": "qux"}, bar: 4}',
       errors: [
         {message: 'There should be no space after "{".'},
@@ -144,7 +151,9 @@ export default {
     {code: 'type obj = {foo: "bar"}'},
     {code: 'type obj = {foo: "bar"\n}'},
     {code: 'type obj = {\nfoo: "bar"}'},
-    {code: 'type obj = {\nfoo: "bar"}'},
+    {code: 'type obj = {\nfoo: "bar"\n}'},
+    {code: 'type obj = {\nfoo: "bar",\nee: "bar",\n}'},
+    {code: 'type obj = {\nfoo: "bar",\nee: "bar",\n             }'},
     {code: 'type obj = {|"foo": "bar"|}'},
     {code: 'type obj = {"foo": "bar", [key: string]: string}'},
 
