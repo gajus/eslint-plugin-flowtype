@@ -6,6 +6,7 @@ import arrayStyleSimpleType from './rules/arrayStyleSimpleType';
 import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
+import enforceLineBreak from './rules/enforceLineBreak';
 import genericSpacing from './rules/genericSpacing';
 import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
@@ -53,6 +54,7 @@ const rules = {
   'boolean-style': booleanStyle,
   'define-flow-type': defineFlowType,
   'delimiter-dangle': delimiterDangle,
+  'enforce-line-break': enforceLineBreak,
   'generic-spacing': genericSpacing,
   'newline-after-flow-annotation': newlineAfterFlowAnnotation,
   'no-dupe-keys': noDupeKeys,
