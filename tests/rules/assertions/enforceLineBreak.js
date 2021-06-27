@@ -1,33 +1,40 @@
 export default {
   invalid: [
     {
-      code: '\ntype baz = 6;\nconst hi = 2;\n',
+      code: 'type baz = 6;\nconst hi = 2;',
       errors: [{
         message: 'Please enter a line below type declaration',
       }],
-      output: '\ntype baz = 6;\n\nconst hi = 2;\n',
+      output: 'type baz = 6;\n\nconst hi = 2;',
     },
     {
-      code: 'type foo = 6;\ntype hi = 2;\n',
-      errors: [{
-        message: 'Please enter a line above type declaration',
-      }],
-      output: 'type foo = 6;\n\ntype hi = 2;\n',
-    },
-    {
-      code: 'type res = 6;\ntype rod = 2;\n',
-      errors: [{
-        message: 'Please enter a line above type declaration',
-      }],
-      output: 'type res = 6;\n\ntype rod = 2;\n',
-    },
-    {
-      code: 'const som = "jes";\n// a comment\ntype fed = "hed";',
+      code: 'const foo = 6;\ntype hi = 2;\n',
       errors: [
         {message: 'Please enter a line above type declaration'},
-        {message: 'Please enter a line below type declaration'},
+      ],
+      output: 'const foo = 6;\n\ntype hi = 2;\n',
+    },
+    {
+      code: 'const som = "jes";\n// a comment\ntype fed = "hed";\n',
+      errors: [
+        {message: 'Please enter a line above type declaration'},
       ],
       output: 'const som = "jes";\n\n// a comment\ntype fed = "hed";\n',
+    },
+    {
+      code: 'type som = "jes";\n// a comment\nconst fed = "hed";\n',
+      errors: [
+        {message: 'Please enter a line below type declaration'},
+      ],
+      output: 'type som = "jes";\n\n// a comment\nconst fed = "hed";\n',
+    },
+    {
+      code: 'type hello = 34;\nconst som = "jes";\ntype fed = "hed";\n',
+      errors: [
+        {message: 'Please enter a line below type declaration'},
+        {message: 'Please enter a line above type declaration'},
+      ],
+      output: 'type hello = 34;\n\nconst som = "jes";\n\ntype fed = "hed";\n',
     },
   ],
   valid: [
@@ -48,8 +55,7 @@ console.log("hello");
 type Y = string | number;
 
 // resting + sleep
-type snooze = "dreaming" | "";
-`,
+type snooze = "dreaming" | "";`,
     },
     {
       code:
@@ -61,6 +67,7 @@ type snooze = "dreaming" | "";
     {
       code:
 `const x = 4;
+const y = 489;
 
 // Some Comment
 type Props = {
@@ -68,9 +75,7 @@ type Props = {
   accountNumber: string | number,
 };
 
-type RoadT = "grass" | "gravel" | "cement";
-
-`,
+type RoadT = "grass" | "gravel" | "cement";`,
     },
   ],
 };

@@ -1671,27 +1671,33 @@ This rule enforces line breaks between type definitions.
 The following patterns are considered problems:
 
 ```js
-
 type baz = 6;
 const hi = 2;
-
 // Message: Please enter a line below type declaration
 
-type foo = 6;
+const foo = 6;
 type hi = 2;
-
-// Message: Please enter a line above type declaration
-
-type res = 6;
-type rod = 2;
 
 // Message: Please enter a line above type declaration
 
 const som = "jes";
 // a comment
 type fed = "hed";
+
 // Message: Please enter a line above type declaration
+
+type som = "jes";
+// a comment
+const fed = "hed";
+
 // Message: Please enter a line below type declaration
+
+type hello = 34;
+const som = "jes";
+type fed = "hed";
+
+// Message: Please enter a line below type declaration
+// Message: Please enter a line above type declaration
 ```
 
 The following patterns are not considered problems:
@@ -1715,13 +1721,13 @@ type Y = string | number;
 // resting + sleep
 type snooze = "dreaming" | "";
 
-
 type Props = {
   accountBalance: string | number,
   accountNumber: string | number,
 };
 
 const x = 4;
+const y = 489;
 
 // Some Comment
 type Props = {
@@ -1730,8 +1736,6 @@ type Props = {
 };
 
 type RoadT = "grass" | "gravel" | "cement";
-
-
 ```
 
 
