@@ -3,36 +3,36 @@ export default {
     {
       code: 'type baz = 6;\nconst hi = 2;',
       errors: [{
-        message: 'Please enter a line below type declaration',
+        message: 'New line required below type declaration',
       }],
       output: 'type baz = 6;\n\nconst hi = 2;',
     },
     {
       code: 'const foo = 6;\ntype hi = 2;\n',
       errors: [
-        {message: 'Please enter a line above type declaration'},
+        {message: 'New line required above type declaration'},
       ],
       output: 'const foo = 6;\n\ntype hi = 2;\n',
     },
     {
       code: 'const som = "jes";\n// a comment\ntype fed = "hed";\n',
       errors: [
-        {message: 'Please enter a line above type declaration'},
+        {message: 'New line required above type declaration'},
       ],
       output: 'const som = "jes";\n\n// a comment\ntype fed = "hed";\n',
     },
     {
       code: 'type som = "jes";\n// a comment\nconst fed = "hed";\n',
       errors: [
-        {message: 'Please enter a line below type declaration'},
+        {message: 'New line required below type declaration'},
       ],
       output: 'type som = "jes";\n\n// a comment\nconst fed = "hed";\n',
     },
     {
       code: 'type hello = 34;\nconst som = "jes";\ntype fed = "hed";\n',
       errors: [
-        {message: 'Please enter a line below type declaration'},
-        {message: 'Please enter a line above type declaration'},
+        {message: 'New line required below type declaration'},
+        {message: 'New line required above type declaration'},
       ],
       output: 'type hello = 34;\n\nconst som = "jes";\n\ntype fed = "hed";\n',
     },

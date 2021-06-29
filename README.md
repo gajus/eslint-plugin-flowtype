@@ -1673,31 +1673,31 @@ The following patterns are considered problems:
 ```js
 type baz = 6;
 const hi = 2;
-// Message: Please enter a line below type declaration
+// Message: New line required below type declaration
 
 const foo = 6;
 type hi = 2;
 
-// Message: Please enter a line above type declaration
+// Message: New line required above type declaration
 
 const som = "jes";
 // a comment
 type fed = "hed";
 
-// Message: Please enter a line above type declaration
+// Message: New line required above type declaration
 
 type som = "jes";
 // a comment
 const fed = "hed";
 
-// Message: Please enter a line below type declaration
+// Message: New line required below type declaration
 
 type hello = 34;
 const som = "jes";
 type fed = "hed";
 
-// Message: Please enter a line below type declaration
-// Message: Please enter a line above type declaration
+// Message: New line required below type declaration
+// Message: New line required above type declaration
 ```
 
 The following patterns are not considered problems:

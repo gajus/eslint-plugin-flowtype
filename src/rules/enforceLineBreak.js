@@ -1,5 +1,9 @@
 const schema = [];
 
+const breakLineMessage = (direction) => {
+  return `New line required ${direction} type declaration`;
+};
+
 const create = (context) => {
   return {
     TypeAlias (node) {
@@ -16,7 +20,7 @@ const create = (context) => {
               fix (fixer) {
                 return fixer.insertTextBeforeRange(node.leadingComments[0].range, '\n');
               },
-              message: 'Please enter a line above type declaration',
+              message: breakLineMessage('above'),
               node,
             });
           }
@@ -27,7 +31,7 @@ const create = (context) => {
               fix (fixer) {
                 return fixer.insertTextBefore(node, '\n');
               },
-              message: 'Please enter a line above type declaration',
+              message: breakLineMessage('above'),
               node,
             });
           }
@@ -41,7 +45,7 @@ const create = (context) => {
             fix (fixer) {
               return fixer.insertTextAfter(node, '\n');
             },
-            message: 'Please enter a line below type declaration',
+            message: breakLineMessage('below'),
             node,
           });
         }
