@@ -22,6 +22,7 @@
         * [`boolean-style`](#eslint-plugin-flowtype-rules-boolean-style)
         * [`define-flow-type`](#eslint-plugin-flowtype-rules-define-flow-type)
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
+        * [`enforce-line-break`](#eslint-plugin-flowtype-rules-enforce-line-break)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
         * [`newline-after-flow-annotation`](#eslint-plugin-flowtype-rules-newline-after-flow-annotation)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
@@ -1658,6 +1659,83 @@ type X = []
 
 // Options: ["only-multiline"]
 type X = []
+```
+
+
+
+<a name="eslint-plugin-flowtype-rules-enforce-line-break"></a>
+### <code>enforce-line-break</code>
+
+This rule enforces line breaks between type definitions.
+
+The following patterns are considered problems:
+
+```js
+type baz = 6;
+const hi = 2;
+// Message: New line required below type declaration
+
+const foo = 6;
+type hi = 2;
+
+// Message: New line required above type declaration
+
+const som = "jes";
+// a comment
+type fed = "hed";
+
+// Message: New line required above type declaration
+
+type som = "jes";
+// a comment
+const fed = "hed";
+
+// Message: New line required below type declaration
+
+type hello = 34;
+const som = "jes";
+type fed = "hed";
+
+// Message: New line required below type declaration
+// Message: New line required above type declaration
+```
+
+The following patterns are not considered problems:
+
+```js
+type gjs = 6;
+
+type gjs = 6;
+
+type hi = 2;
+
+
+type X = 4;
+
+const red = "serpent";
+console.log("hello");
+
+// number or string
+type Y = string | number;
+
+// resting + sleep
+type snooze = "dreaming" | "";
+
+type Props = {
+  accountBalance: string | number,
+  accountNumber: string | number,
+};
+
+const x = 4;
+const y = 489;
+
+// Some Comment
+type Props = {
+  accountBalance: string | number,
+  accountNumber: string | number,
+};
+
+type RoadT = "grass" | "gravel" | "cement";
 ```
 
 
