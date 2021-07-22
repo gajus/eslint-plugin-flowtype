@@ -133,8 +133,9 @@ export default {
 `type X = Promise<
   (foo),
   bar,
-  (((baz))),
+  (((baz)))
 >`},
+    {code: 'type X =  Promise<\r\n    (foo),\r\n    bar,\r\n    (((baz)))\r\n>'},
 
     // Always
 
