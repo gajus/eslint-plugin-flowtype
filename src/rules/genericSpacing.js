@@ -31,7 +31,8 @@ const create = (context) => {
 
       if (never) {
         if (spacesBefore) {
-          if (sourceCode.text[opener.range[1]] !== '\n') {
+          const whiteSpaceBefore = sourceCode.text[opener.range[1]];
+          if (whiteSpaceBefore !== '\n' && whiteSpaceBefore !== '\r') {
             context.report({
               data: {name: node.id.name},
               fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
@@ -42,7 +43,8 @@ const create = (context) => {
         }
 
         if (spacesAfter) {
-          if (sourceCode.text[closer.range[0] - 1] !== '\n') {
+          const whiteSpaceAfter = sourceCode.text[closer.range[0] - 1];
+          if (whiteSpaceAfter !== '\n' && whiteSpaceAfter !== '\r') {
             context.report({
               data: {name: node.id.name},
               fix: spacingFixers.stripSpacesAfter(lastInnerToken, spacesAfter),
