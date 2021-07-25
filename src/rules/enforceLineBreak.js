@@ -12,25 +12,28 @@ const create = (context) => {
         return;
       }
 
+      const exportedType = node.parent.type === 'ExportNamedDeclaration';
+      const leadingComments = exportedType ? node.parent.leadingComments : node.leadingComments;
+
       if (node.loc.start.line !== 1) {
-        if (node.leadingComments && node.leadingComments[0].loc.start.line !== 1) {
-          const lineAboveComment = sourceCode.lines[node.leadingComments[0].loc.start.line - 2];
+        if (leadingComments && leadingComments[0].loc.start.line !== 1) {
+          const lineAboveComment = sourceCode.lines[leadingComments[0].loc.start.line - 2];
           if (lineAboveComment !== '') {
             context.report({
               fix (fixer) {
-                return fixer.insertTextBeforeRange(node.leadingComments[0].range, '\n');
+                return fixer.insertTextBeforeRange(leadingComments[0].range, '\n');
               },
               message: breakLineMessage('above'),
               node,
             });
           }
-        } else if (!node.leadingComments) {
+        } else if (!leadingComments) {
           const isLineAbove = sourceCode.lines[node.loc.start.line - 2];
           if (isLineAbove !== '') {
             context.report({
               fix (fixer) {
                 return fixer.insertTextBefore(
-                  node.parent.type === 'ExportNamedDeclaration' ? node.parent : node,
+                  exportedType ? node.parent : node,
                   '\n',
                 );
               },
