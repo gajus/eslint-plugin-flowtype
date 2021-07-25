@@ -29,7 +29,10 @@ const create = (context) => {
           if (isLineAbove !== '') {
             context.report({
               fix (fixer) {
-                return fixer.insertTextBefore(node, '\n');
+                return fixer.insertTextBefore(
+                  node.parent.type === 'ExportNamedDeclaration' ? node.parent : node,
+                  '\n',
+                );
               },
               message: breakLineMessage('above'),
               node,

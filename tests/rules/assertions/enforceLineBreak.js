@@ -36,6 +36,13 @@ export default {
       ],
       output: 'type hello = 34;\n\nconst som = "jes";\n\ntype fed = "hed";\n',
     },
+    {
+      code: 'const a = 5;\nexport type hello = 34;\n',
+      errors: [
+        {message: 'New line required above type declaration'},
+      ],
+      output: 'const a = 5;\n\nexport type hello = 34;\n',
+    },
   ],
   valid: [
     {
