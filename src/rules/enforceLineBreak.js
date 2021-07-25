@@ -13,10 +13,11 @@ const create = (context) => {
       }
 
       const exportedType = node.parent.type === 'ExportNamedDeclaration';
-      const leadingComments = exportedType ? node.parent.leadingComments : node.leadingComments;
+      const leadingComments = sourceCode.getCommentsBefore(exportedType ? node.parent : node);
+      const hasLeadingComments = leadingComments.length > 0;
 
       if (node.loc.start.line !== 1) {
-        if (leadingComments && leadingComments[0].loc.start.line !== 1) {
+        if (hasLeadingComments && leadingComments[0].loc.start.line !== 1) {
           const lineAboveComment = sourceCode.lines[leadingComments[0].loc.start.line - 2];
           if (lineAboveComment !== '') {
             context.report({
@@ -27,7 +28,7 @@ const create = (context) => {
               node,
             });
           }
-        } else if (!leadingComments) {
+        } else if (!hasLeadingComments) {
           const isLineAbove = sourceCode.lines[node.loc.start.line - 2];
           if (isLineAbove !== '') {
             context.report({
