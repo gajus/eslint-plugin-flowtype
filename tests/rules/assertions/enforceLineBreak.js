@@ -36,6 +36,36 @@ export default {
       ],
       output: 'type hello = 34;\n\nconst som = "jes";\n\ntype fed = "hed";\n',
     },
+    {
+      code: 'const a = 5;\nexport type hello = 34;\n',
+      errors: [
+        {message: 'New line required above type declaration'},
+      ],
+      output: 'const a = 5;\n\nexport type hello = 34;\n',
+    },
+    {
+      code: 'const a = 5;\n// a comment\nexport type hello = 34;\n',
+      errors: [
+        {message: 'New line required above type declaration'},
+      ],
+      output: 'const a = 5;\n\n// a comment\nexport type hello = 34;\n',
+    },
+    {
+      code: `const a = 5;
+/**
+ * a jsdoc block
+ */
+type hello = 34;`,
+      errors: [
+        {message: 'New line required above type declaration'},
+      ],
+      output: `const a = 5;
+
+/**
+ * a jsdoc block
+ */
+type hello = 34;`,
+    },
   ],
   valid: [
     {
@@ -76,6 +106,9 @@ type Props = {
 };
 
 type RoadT = "grass" | "gravel" | "cement";`,
+    },
+    {
+      code: '// @flow\ntype A = string',
     },
   ],
 };

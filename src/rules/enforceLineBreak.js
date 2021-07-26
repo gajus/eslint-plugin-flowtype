@@ -12,24 +12,31 @@ const create = (context) => {
         return;
       }
 
+      const exportedType = node.parent.type === 'ExportNamedDeclaration';
+      const leadingComments = sourceCode.getCommentsBefore(exportedType ? node.parent : node);
+      const hasLeadingComments = leadingComments.length > 0;
+
       if (node.loc.start.line !== 1) {
-        if (node.leadingComments && node.leadingComments[0].loc.start.line !== 1) {
-          const lineAboveComment = sourceCode.lines[node.leadingComments[0].loc.start.line - 2];
+        if (hasLeadingComments && leadingComments[0].loc.start.line !== 1) {
+          const lineAboveComment = sourceCode.lines[leadingComments[0].loc.start.line - 2];
           if (lineAboveComment !== '') {
             context.report({
               fix (fixer) {
-                return fixer.insertTextBeforeRange(node.leadingComments[0].range, '\n');
+                return fixer.insertTextBeforeRange(leadingComments[0].range, '\n');
               },
               message: breakLineMessage('above'),
               node,
             });
           }
-        } else if (!node.leadingComments) {
+        } else if (!hasLeadingComments) {
           const isLineAbove = sourceCode.lines[node.loc.start.line - 2];
           if (isLineAbove !== '') {
             context.report({
               fix (fixer) {
-                return fixer.insertTextBefore(node, '\n');
+                return fixer.insertTextBefore(
+                  exportedType ? node.parent : node,
+                  '\n',
+                );
               },
               message: breakLineMessage('above'),
               node,
