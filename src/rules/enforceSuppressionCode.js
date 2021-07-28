@@ -4,24 +4,24 @@ const schema = [
   },
 ];
 
-const message = (suppression = '$FlowFixMe') => {
+const message = (suppression = '') => {
   return `${suppression} is missing a suppression code`;
 };
 
 const create = (context) => {
   const isMissingSuppressionCode = function (value) {
-    if (value.startsWith('$FlowFixMe') &&
-        !value.startsWith('$FlowFixMe[') &&
-        !value.endsWith(']')) {
-      return '$FlowFixMe';
-    }
-    if (value.startsWith('$FlowExpectedError') &&
-        !value.startsWith('$FlowExpectedError[') &&
-        !value.endsWith(']')) {
-      return '$FlowExpectedError';
-    }
+    const suppressionTypes = ['$FlowFixMe', '$FlowExpectedError'];
 
-    return undefined;
+    let failedType;
+    suppressionTypes.forEach((cur) => {
+      if (value.startsWith(cur) &&
+          !value.startsWith(`${cur}[`) &&
+          !value.endsWith(']')) {
+        failedType = cur;
+      }
+    });
+
+    return failedType;
   };
 
   const handleComment = function (comment) {
