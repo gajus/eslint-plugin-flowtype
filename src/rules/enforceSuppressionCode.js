@@ -10,7 +10,7 @@ const message = (suppression = '') => {
 
 const create = (context) => {
   const isMissingSuppressionCode = function (value) {
-    const suppressionTypes = ['$FlowFixMe', '$FlowExpectedError'];
+    const suppressionTypes = ['$FlowFixMe', '$FlowExpectedError', '$FlowIssue', '$FlowIgnore'];
 
     let failedType;
     suppressionTypes.forEach((cur) => {
@@ -25,10 +25,13 @@ const create = (context) => {
   };
 
   const handleComment = function (comment) {
-    const value = comment.value.trim().split(' ').filter((arg) => {
+    const value = comment.type === 'Block' ?
+      comment.value.replace(/\*/g, '') :
+      comment.value;
+    const suppression = value.trim().split(' ').filter((arg) => {
       return arg.length > 0;
     })[0];
-    const failedType = isMissingSuppressionCode(value);
+    const failedType = isMissingSuppressionCode(suppression);
 
     if (failedType) {
       context.report(comment, message(failedType));

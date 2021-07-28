@@ -16,6 +16,48 @@ export default {
         },
       ],
     },
+    {
+      code: '// $FlowIssue I am doing something evil here\nconst text = \'HELLO\';',
+      errors: [
+        {
+          message: '$FlowIssue is missing a suppression code',
+        },
+      ],
+    },
+    {
+      code: '// $FlowIgnore I am doing something evil here\nconst text = \'HELLO\';',
+      errors: [
+        {
+          message: '$FlowIgnore is missing a suppression code',
+        },
+      ],
+    },
+    {
+      code: '/* $FlowIgnore I am doing something evil here */',
+      errors: [
+        {
+          message: '$FlowIgnore is missing a suppression code',
+        },
+      ],
+    },
+    {
+      code: '{ /* $FlowIgnore I am doing something evil here */ }',
+      errors: [
+        {
+          message: '$FlowIgnore is missing a suppression code',
+        },
+      ],
+    },
+    {
+      code: `/**
+  * $FlowIgnore I am doing something evil here
+  */`,
+      errors: [
+        {
+          message: '$FlowIgnore is missing a suppression code',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -26,6 +68,23 @@ export default {
     },
     {
       code: '// $FlowExpectedError[incompatible-call] TODO 48\nconst text = \'HELLO\';',
+    },
+    {
+      code: '// $FlowIssue[incompatible-call] TODO 48\nconst text = \'HELLO\';',
+    },
+    {
+      code: '// $FlowIgnore[incompatible-call] TODO 48\nconst text = \'HELLO\';',
+    },
+    {
+      code: '/* $FlowIgnore[incompatible-call] TODO 48 */',
+    },
+    {
+      code: `/**
+ * $FlowIgnore[incompatible-call] TODO 48
+ */`,
+    },
+    {
+      code: '/* $FlowIgnore[incompatible-call] TODO 48 */',
     },
   ],
 };
