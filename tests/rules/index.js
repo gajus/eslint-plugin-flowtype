@@ -30,6 +30,7 @@ const reportingRules = [
   'no-weak-types',
   'no-internal-flow-type',
   'no-mixed',
+  'object-type-curly-newline',
   'object-type-curly-spacing',
   'object-type-delimiter',
   'quotes',
