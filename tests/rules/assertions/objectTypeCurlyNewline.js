@@ -32,13 +32,12 @@ export default {
 
     // Always
     {
-      code: 'type obj = { "foo": "bar"\n}',
+      code: 'type obj = {"foo": "bar"\n}',
       errors: [
         {message: 'There should be a newline after opening curly brace'},
       ],
       options: ['always'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {\n"foo": "bar"\n}',
     },
     {
       code: 'type obj = {\n"foo": "bar"}',
@@ -46,8 +45,7 @@ export default {
         {message: 'There should be a newline before closing curly brace'},
       ],
       options: ['always'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {\n"foo": "bar"\n}',
     },
     {
       code: 'type obj = {"foo": "bar"}',
@@ -56,8 +54,7 @@ export default {
         {message: 'There should be a newline before closing curly brace'},
       ],
       options: ['always'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {\n"foo": "bar"\n}',
     },
 
     // Multiline
@@ -67,8 +64,7 @@ export default {
         {message: 'There should be a newline after opening curly brace'},
       ],
       options: ['multiline'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {\n "foo": "bar"\n}',
     },
     {
       code: 'type obj = {\n"foo": "bar"}',
@@ -76,8 +72,7 @@ export default {
         {message: 'There should be a newline before closing curly brace'},
       ],
       options: ['multiline'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {\n"foo": "bar"\n}',
     },
   ],
   valid: [
