@@ -7,8 +7,7 @@ export default {
         {message: 'There should not be a newline before closing curly brace'},
       ],
       options: ['never'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = { "foo": "bar"}',
     },
     {
       code: 'type obj = {\n"foo": "bar" }',
@@ -16,8 +15,7 @@ export default {
         {message: 'There should not be a newline after opening curly brace'},
       ],
       options: ['never'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {"foo": "bar" }',
     },
     {
       code: 'type obj = {\n"foo": "bar"\n}',
@@ -26,8 +24,7 @@ export default {
         {message: 'There should not be a newline before closing curly brace'},
       ],
       options: ['never'],
-
-      // output: 'type obj = {"foo": "bar"}',
+      output: 'type obj = {"foo": "bar"}',
     },
 
     // Always

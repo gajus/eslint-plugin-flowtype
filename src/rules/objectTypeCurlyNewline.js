@@ -1,3 +1,5 @@
+import {spacingFixers} from '../utilities';
+
 const schema = [
   {
     enum: ['always', 'never', 'multiline'],
@@ -58,16 +60,18 @@ const create = (context) => {
         }
       } else if (option === 'never') {
         if (properties[0].loc.start.line !== node.loc.start.line) {
+          const openBrace = sourceCode.getFirstToken(node);
           context.report({
-            // fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
+            fix: spacingFixers.stripSpacesAfter(openBrace, 1),
             message: 'There should not be a newline after opening curly brace',
             node,
           });
         }
 
         if (properties[properties.length - 1].loc.end.line !== node.loc.end.line) {
+          const closingBrace = sourceCode.getLastToken(node);
           context.report({
-            // fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
+            fix: spacingFixers.stripSpacesBefore(closingBrace, 1),
             message: 'There should not be a newline before closing curly brace',
             node,
           });
