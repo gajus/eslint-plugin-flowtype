@@ -4,7 +4,7 @@ export default {
       code: 'interface foo{};',
       errors: [
         {
-          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
+          message: 'Interface identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
         },
       ],
     },
@@ -12,7 +12,7 @@ export default {
       code: 'interface FooType{};',
       errors: [
         {
-          message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/\'.',
+          message: 'Interface identifier \'FooType\' does not match pattern \'/^foo$/\'.',
         },
       ],
       options: [

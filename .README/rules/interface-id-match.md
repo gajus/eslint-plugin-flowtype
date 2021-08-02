@@ -1,4 +1,4 @@
-### `interface-type-id-match`
+### `interface-id-match`
 
 Enforces a consistent naming pattern for interfaces.
 
@@ -9,7 +9,7 @@ This rule requires a text RegExp:
 ```js
 {
     "rules": {
-        "flowtype/interface-type-id-match": [
+        "flowtype/interface-id-match": [
             2,
             "^([A-Z][a-z0-9]*)+Type$"
         ]
@@ -19,4 +19,4 @@ This rule requires a text RegExp:
 
 `'^([A-Z][a-z0-9]*)+Type$$'` is the default pattern.
 
-<!-- assertions interfaceTypeIdMatch -->
+<!-- assertions interfaceIdMatch -->

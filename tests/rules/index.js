@@ -19,7 +19,7 @@ const reportingRules = [
   'delimiter-dangle',
   'enforce-line-break',
   'generic-spacing',
-  'interface-type-id-match',
+  'interface-id-match',
   'newline-after-flow-annotation',
   'no-dupe-keys',
   'no-existential-type',
