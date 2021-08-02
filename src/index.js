@@ -8,6 +8,7 @@ import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
 import enforceLineBreak from './rules/enforceLineBreak';
 import genericSpacing from './rules/genericSpacing';
+import interfaceTypeIdMatch from './rules/interfaceTypeIdMatch';
 import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
 import noExistentialType from './rules/noExistentialType';
@@ -56,6 +57,7 @@ const rules = {
   'delimiter-dangle': delimiterDangle,
   'enforce-line-break': enforceLineBreak,
   'generic-spacing': genericSpacing,
+  'interface-type-id-match': interfaceTypeIdMatch,
   'newline-after-flow-annotation': newlineAfterFlowAnnotation,
   'no-dupe-keys': noDupeKeys,
   'no-existential-type': noExistentialType,
@@ -113,6 +115,7 @@ export default {
     'define-flow-type': 0,
     'delimiter-dangle': 0,
     'generic-spacing': 0,
+    'interface-type-id-match': 0,
     'newline-after-flow-annotation': 0,
     'no-dupe-keys': 0,
     'no-flow-fix-me-comments': 0,

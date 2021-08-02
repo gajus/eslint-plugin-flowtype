@@ -24,6 +24,7 @@
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`enforce-line-break`](#eslint-plugin-flowtype-rules-enforce-line-break)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`interface-type-id-match`](#eslint-plugin-flowtype-rules-interface-type-id-match)
         * [`newline-after-flow-annotation`](#eslint-plugin-flowtype-rules-newline-after-flow-annotation)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
         * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
@@ -108,6 +109,10 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
     "flowtype/generic-spacing": [
       2,
       "never"
+    ],
+    "flowtype/interface-type-id-match": [
+      2,
+      "^([A-Z][a-z0-9]+)+Type$"
     ],
     "flowtype/no-mixed": 2,
     "flowtype/no-primitive-constructor-types": 2,
@@ -1829,7 +1834,53 @@ type X = Promise< (string) >
 type X = Promise< (foo), bar, (((baz))) >
 ```
 
+<a name="eslint-plugin-flowtype-rules-interface-type-id-match"></a>
+### <code>interface-type-id-match</code>
 
+Enforces a consistent naming pattern for interfaces.
+
+<a name="eslint-plugin-flowtype-rules-interface-type-id-match-options-15"></a>
+#### Options
+
+
+This rule requires a text RegExp:
+
+```js
+{
+    "rules": {
+        "flowtype/interface-type-id-match": [
+            2,
+            "^([A-Z][a-z0-9]*)+Type$"
+        ]
+    }
+}
+```
+
+`'^([A-Z][a-z0-9]*)+Type$$'` is the default pattern.
+
+The following patterns are considered problems:
+
+```js
+
+interface foo{};
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+
+// Options: ["^foo$"]
+interface FooType{};
+// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
+```
+
+The following patterns are not considered problems:
+
+```js
+interface FooType{};
+
+// Options: ["^foo$"]
+interface foo {};
+
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+interface foo {};
+```
 
 <a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation"></a>
 ### <code>newline-after-flow-annotation</code>
