@@ -54,6 +54,10 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
       2,
       "never"
     ],
+    "flowtype/interface-id-match": [
+      2,
+      "^([A-Z][a-z0-9]+)+Type$"
+    ],
     "flowtype/no-mixed": 2,
     "flowtype/no-primitive-constructor-types": 2,
     "flowtype/no-types-missing-file-annotation": 2,
@@ -163,6 +167,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/enforce-line-break.md"}
 {"gitdown": "include", "file": "./rules/enforce-suppression-code.md"}
 {"gitdown": "include", "file": "./rules/generic-spacing.md"}
+{"gitdown": "include", "file": "./rules/interface-id-match.md"}
 {"gitdown": "include", "file": "./rules/newline-after-flow-annotation.md"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
 {"gitdown": "include", "file": "./rules/no-existential-type.md"}

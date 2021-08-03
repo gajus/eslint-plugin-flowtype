@@ -20,6 +20,7 @@ const reportingRules = [
   'enforce-line-break',
   'enforce-suppression-code',
   'generic-spacing',
+  'interface-id-match',
   'newline-after-flow-annotation',
   'no-dupe-keys',
   'no-existential-type',

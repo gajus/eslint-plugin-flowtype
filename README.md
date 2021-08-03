@@ -3028,7 +3028,7 @@ The rule has two options:
 }
 ```
 
-* `allowNull` – allows compound types where one of the members is a `null`, e.g. `string | null`.
+* `allowNull` – allows compound types where one of the members is a `null`, e.g. `string | null`.
 
 The following patterns are considered problems:
 
@@ -6717,6 +6717,5 @@ function x(foo: string = "1") {}
 
 function x(foo: Type = bar()) {}
 ```
-
 
 
