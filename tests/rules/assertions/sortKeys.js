@@ -557,6 +557,48 @@ export default {
         }
       `,
     },
+
+    // https://github.com/gajus/eslint-plugin-flowtype/issues/493
+    {
+      code: `
+        export type GroupOrdersResponseType = {|
+          isSuccess: boolean,
+          code: number,
+          message?: string,
+          errorMessage: string,
+          result: {|
+            OrderNumber: string,
+            Orders: GroupOrderSummaryType[],
+            PlacedOn: string,
+            Status: string,
+            ReturnText: string,
+            IncludesLegacyOrder: boolean
+          |}
+        |};
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "code" should be before "isSuccess".'},
+        {message: 'Expected type annotations to be in ascending order. "errorMessage" should be before "message".'},
+        {message: 'Expected type annotations to be in ascending order. "ReturnText" should be before "Status".'},
+        {message: 'Expected type annotations to be in ascending order. "IncludesLegacyOrder" should be before "ReturnText".'},
+      ],
+      output: `
+        export type GroupOrdersResponseType = {|
+          code: number,
+          errorMessage: string,
+          isSuccess: boolean,
+          message?: string,
+          result: {|
+            IncludesLegacyOrder: boolean,
+            OrderNumber: string,
+            Orders: GroupOrderSummaryType[],
+            PlacedOn: string,
+            ReturnText: string,
+            Status: string
+          |}
+        |};
+      `,
+    },
   ],
   misconfigured: [
     {
