@@ -5,7 +5,7 @@ const schema = [
 ];
 
 const message = (suppression = '') => {
-  return `${suppression} is missing a suppression code`;
+  return `${suppression} is missing a suppression error code. Please update this suppression to use an error code: ${suppression}[…]`;
 };
 
 const create = (context) => {

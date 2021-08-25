@@ -4,7 +4,7 @@ export default {
       code: '// $FlowFixMe I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is missing a suppression code',
+          message: '$FlowFixMe is missing a suppression error code. Please update this suppression to use an error code: $FlowFixMe[…]',
         },
       ],
     },
@@ -12,7 +12,7 @@ export default {
       code: '// $FlowExpectedError I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowExpectedError is missing a suppression code',
+          message: '$FlowExpectedError is missing a suppression error code. Please update this suppression to use an error code: $FlowExpectedError[…]',
         },
       ],
     },
@@ -20,7 +20,7 @@ export default {
       code: '// $FlowIssue I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowIssue is missing a suppression code',
+          message: '$FlowIssue is missing a suppression error code. Please update this suppression to use an error code: $FlowIssue[…]',
         },
       ],
     },
@@ -28,7 +28,7 @@ export default {
       code: '// $FlowIgnore I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowIgnore is missing a suppression code',
+          message: '$FlowIgnore is missing a suppression error code. Please update this suppression to use an error code: $FlowIgnore[…]',
         },
       ],
     },
@@ -36,7 +36,7 @@ export default {
       code: '/* $FlowIgnore I am doing something evil here */',
       errors: [
         {
-          message: '$FlowIgnore is missing a suppression code',
+          message: '$FlowIgnore is missing a suppression error code. Please update this suppression to use an error code: $FlowIgnore[…]',
         },
       ],
     },
@@ -44,7 +44,7 @@ export default {
       code: '{ /* $FlowIgnore I am doing something evil here */ }',
       errors: [
         {
-          message: '$FlowIgnore is missing a suppression code',
+          message: '$FlowIgnore is missing a suppression error code. Please update this suppression to use an error code: $FlowIgnore[…]',
         },
       ],
     },
@@ -54,7 +54,7 @@ export default {
   */`,
       errors: [
         {
-          message: '$FlowIgnore is missing a suppression code',
+          message: '$FlowIgnore is missing a suppression error code. Please update this suppression to use an error code: $FlowIgnore[…]',
         },
       ],
     },
