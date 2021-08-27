@@ -49,7 +49,7 @@ const generateOrderedList = (context, sort, properties) => {
       // Maintain everything between the start of property including leading comments and the nextPunctuator `,` or `}`:
       const nextPunctuator = source.getTokenAfter(property, {
         filter: (token) => {
-          return token.type === 'Punctuator';
+          return token.type === 'Punctuator' || token.value === '|}';
         },
       });
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
@@ -80,7 +80,7 @@ const generateOrderedList = (context, sort, properties) => {
       // Maintain everything between the `:` and the next Punctuator `,` or `}`:
       const nextPunctuator = source.getTokenAfter(property, {
         filter: (token) => {
-          return token.type === 'Punctuator';
+          return token.type === 'Punctuator' || token.value === '|}';
         },
       });
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
@@ -149,7 +149,7 @@ const generateFix = (node, context, sort) => {
   node.properties.forEach((property, index) => {
     const nextPunctuator = source.getTokenAfter(property, {
       filter: (token) => {
-        return token.type === 'Punctuator';
+        return token.type === 'Punctuator' || token.value === '|}';
       },
     });
     const beforePunctuator = source.getTokenBefore(nextPunctuator, {
