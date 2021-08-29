@@ -1,7 +1,7 @@
-import {
-  RuleTester,
-} from 'eslint';
-import noUndefRule from 'eslint/lib/rules/no-undef';
+import { RuleTester } from 'eslint';
+import { builtinRules } from 'eslint/use-at-your-own-risk';
+
+const noUndefRule = builtinRules.get('no-undef');
 
 const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
@@ -198,7 +198,7 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
   });
 
   ruleTester.run('no-undef must not trigger an error in these cases', noUndefRule, {
@@ -209,7 +209,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
   });
 
   ruleTester.run('no-undef must trigger an error when define-flow-type is not used in these cases', noUndefRule, {

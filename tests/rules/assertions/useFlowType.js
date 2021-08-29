@@ -1,8 +1,8 @@
-import {
-  RuleTester,
-} from 'eslint';
-import noUnusedVarsRule from 'eslint/lib/rules/no-unused-vars';
+import { RuleTester } from 'eslint';
+import { builtinRules } from 'eslint/use-at-your-own-risk';
 import useFlowType from '../../../src/rules/useFlowType';
+
+const noUnusedVarsRule = builtinRules.get('no-unused-vars');
 
 const VALID_WITH_USE_FLOW_TYPE = [
   {
@@ -92,7 +92,7 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
   });
 
   ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
@@ -103,7 +103,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
   });
 
   ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
@@ -117,7 +117,7 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
     rules: {
       'use-flow-type': 1,
     },

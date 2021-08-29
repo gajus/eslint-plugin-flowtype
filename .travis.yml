@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - node
-  - 10
+  - 12
 before_install:
   - npm config set depth 0
 notifications:

@@ -60,7 +60,7 @@ const reportingRules = [
   'valid-syntax',
 ];
 
-const parser = require.resolve('babel-eslint');
+const parser = require.resolve('@babel/eslint-parser');
 const ajv = new Ajv({
   verbose: true,
 });
