@@ -57,7 +57,7 @@ const generateOrderedList = (context, sort, properties) => {
       });
       const text = source.getText().slice(startIndex, beforePunctuator.range[1]);
 
-      return [property, text];
+      return [property, name, text];
     }
 
     const colonToken = source.getTokenBefore(property.value, {
@@ -123,8 +123,8 @@ const generateOrderedList = (context, sort, properties) => {
         });
     }
     orderedList.push(...itemGroup.map((item) => {
-      if (item.length === 2) {
-        return item[1];
+      if (item.length === 3) {
+        return item[2];
       }
 
       return item[2] + ':' + item[3];

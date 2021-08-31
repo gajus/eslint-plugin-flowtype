@@ -557,6 +557,29 @@ export default {
         }
       `,
     },
+    {
+      code: `
+        type FooType = {
+          /* preserves block comment before a */
+          a: number | string | boolean,
+          /* preserves block comment before c */
+          c: number,
+          /* preserves block comment before b */
+          b(param: string): number,
+        }
+      `,
+      errors: [{message: 'Expected type annotations to be in ascending order. "b" should be before "c".'}],
+      output: `
+        type FooType = {
+          /* preserves block comment before a */
+          a: number | string | boolean,
+          /* preserves block comment before b */
+          b(param: string): number,
+          /* preserves block comment before c */
+          c: number,
+        }
+      `,
+    },
 
     // https://github.com/gajus/eslint-plugin-flowtype/issues/493
     {
