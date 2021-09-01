@@ -20,6 +20,7 @@ import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
 import noInternalFlowType from './rules/noInternalFlowType';
 import noMixed from './rules/noMixed';
+import objectTypeCurlyNewline from './rules/objectTypeCurlyNewline';
 import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import quotes from './rules/quotes';
@@ -69,6 +70,7 @@ const rules = {
   'no-types-missing-file-annotation': noTypesMissingFileAnnotation,
   'no-unused-expressions': noUnusedExpressions,
   'no-weak-types': noWeakTypes,
+  'object-type-curly-newline': objectTypeCurlyNewline,
   'object-type-curly-spacing': objectTypeCurlySpacing,
   'object-type-delimiter': objectTypeDelimiter,
   quotes,
