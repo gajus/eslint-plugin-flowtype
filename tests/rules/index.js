@@ -46,6 +46,7 @@ const reportingRules = [
   'require-variable-type',
   'semi',
   'sort-keys',
+  'sort-type-union-intersection-members',
   'space-after-type-colon',
   'space-before-generic-bracket',
   'space-before-type-colon',

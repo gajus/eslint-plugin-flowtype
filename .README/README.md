@@ -193,6 +193,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/require-variable-type.md"}
 {"gitdown": "include", "file": "./rules/semi.md"}
 {"gitdown": "include", "file": "./rules/sort-keys.md"}
+{"gitdown": "include", "file": "./rules/sort-type-union-intersection-members.md"}
 {"gitdown": "include", "file": "./rules/space-after-type-colon.md"}
 {"gitdown": "include", "file": "./rules/space-before-generic-bracket.md"}
 {"gitdown": "include", "file": "./rules/space-before-type-colon.md"}
