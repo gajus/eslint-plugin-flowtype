@@ -48,7 +48,7 @@ export default (defaultConfig, simpleType) => {
       GenericTypeAnnotation (node) {
         if (node.id.name === 'Array') {
           // Don't report on un-parameterized Array annotations. There are valid cases for this,
-          // but regardless, we should not crash when encountering them.
+          // but regardless, we must NOT crash when encountering them.
           if (node.typeParameters && node.typeParameters.params.length === 1) {
             const elementTypeNode = node.typeParameters.params[0];
             const rawElementType = context.getSourceCode().getText(elementTypeNode);

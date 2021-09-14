@@ -441,9 +441,9 @@ export default {
           data: {
             excludeOtherStuff: true,
           },
-          dataPath: '[1]',
+          instancePath: '/1',
           keyword: 'additionalProperties',
-          message: 'should NOT have additional properties',
+          message: 'must NOT have additional properties',
           params: {
             additionalProperty: 'excludeOtherStuff',
           },
@@ -491,7 +491,7 @@ export default {
       errors: [
         {
           data: 'often',
-          dataPath: '[1].annotateUndefined',
+          instancePath: '/1/annotateUndefined',
           keyword: 'enum',
           message: 'must be equal to one of the allowed values',
           params: {
@@ -526,7 +526,7 @@ export default {
       errors: [
         {
           data: 'everything',
-          dataPath: '[1].excludeArrowFunctions',
+          instancePath: '/1/excludeArrowFunctions',
           keyword: 'enum',
           message: 'must be equal to one of the allowed values',
           params: {
@@ -557,7 +557,7 @@ export default {
       errors: [
         {
           data: '^foo',
-          dataPath: '[1].excludeMatching',
+          instancePath: '/1/excludeMatching',
           keyword: 'type',
           message: 'must be array',
           params: {
@@ -579,7 +579,7 @@ export default {
       errors: [
         {
           data: false,
-          dataPath: '[1].includeOnlyMatching[0]',
+          instancePath: '/1/includeOnlyMatching/0',
           keyword: 'type',
           message: 'must be string',
           params: {

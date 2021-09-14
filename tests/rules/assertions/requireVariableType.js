@@ -53,9 +53,9 @@ export default {
           data: {
             excludeOtherStuff: true,
           },
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'additionalProperties',
-          message: 'should NOT have additional properties',
+          message: 'must NOT have additional properties',
           params: {
             additionalProperty: 'excludeOtherStuff',
           },
@@ -93,7 +93,7 @@ export default {
       errors: [
         {
           data: 99,
-          dataPath: '[0].excludeVariableMatch',
+          instancePath: '/0/excludeVariableMatch',
           keyword: 'type',
           message: 'must be string',
           params: {
@@ -114,9 +114,9 @@ export default {
           data: {
             declare: false,
           },
-          dataPath: '[0].excludeVariableTypes',
+          instancePath: '/0/excludeVariableTypes',
           keyword: 'additionalProperties',
-          message: 'should NOT have additional properties',
+          message: 'must NOT have additional properties',
           params: {
             additionalProperty: 'declare',
           },
@@ -145,7 +145,7 @@ export default {
       errors: [
         {
           data: 'yes',
-          dataPath: '[0].excludeVariableTypes.let',
+          instancePath: '/0/excludeVariableTypes/let',
           keyword: 'type',
           message: 'must be boolean',
           params: {

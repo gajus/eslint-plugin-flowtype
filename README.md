@@ -6625,8 +6625,8 @@ You might expect the identifier name to be read-only, however, that's not true (
 ```flow js
 const x: Identifier = { name: '', type: '' };
 
-x.type = 'Should not be writable!'; // No Flow error
-x.name = 'Should not be writable!'; // No Flow error
+x.type = 'must NOT be writable!'; // No Flow error
+x.name = 'must NOT be writable!'; // No Flow error
 ```
 
 This rule suggests to use `$ReadOnly<…>` to prevent accidental loss of readonly-ness:
@@ -6639,8 +6639,8 @@ type Identifier = $ReadOnly<{|
 
 const x: Identifier = { name: '', type: '' };
 
-x.type = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
-x.name = 'Should not be writable!'; // $FlowExpectedError[cannot-write]
+x.type = 'must NOT be writable!'; // $FlowExpectedError[cannot-write]
+x.name = 'must NOT be writable!'; // $FlowExpectedError[cannot-write]
 ```
 
 The following patterns are considered problems:

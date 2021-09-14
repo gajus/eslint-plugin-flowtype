@@ -209,7 +209,7 @@ export default {
   //     errors: [
   //       {
   //         keyword: 'enum',
-  //         dataPath: '[0]',
+  //         instancePath: '/0',
   //         schemaPath: '#/items/0/enum',
   //         params: {
   //           allowedValues: [

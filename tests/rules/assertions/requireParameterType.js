@@ -142,9 +142,9 @@ export default {
           data: {
             excludeOtherStuff: true,
           },
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'additionalProperties',
-          message: 'should NOT have additional properties',
+          message: 'must NOT have additional properties',
           params: {
             additionalProperty: 'excludeOtherStuff',
           },
@@ -174,7 +174,7 @@ export default {
       errors: [
         {
           data: 'everything',
-          dataPath: '[0].excludeArrowFunctions',
+          instancePath: '/0/excludeArrowFunctions',
           keyword: 'enum',
           message: 'must be equal to one of the allowed values',
           params: {
@@ -205,7 +205,7 @@ export default {
       errors: [
         {
           data: 3,
-          dataPath: '[0].excludeParameterMatch',
+          instancePath: '/0/excludeParameterMatch',
           keyword: 'type',
           message: 'must be string',
           params: {

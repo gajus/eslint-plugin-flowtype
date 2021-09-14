@@ -33,7 +33,7 @@ export default {
       errors: [
         {
           data: 7,
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'type',
           message: 'must be string',
           params: {
