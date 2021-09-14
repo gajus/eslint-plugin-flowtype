@@ -233,7 +233,7 @@ export default {
           data: 'irrelevant',
           dataPath: '[0].Object',
           keyword: 'type',
-          message: 'should be boolean',
+          message: 'must be boolean',
           params: {
             type: 'boolean',
           },

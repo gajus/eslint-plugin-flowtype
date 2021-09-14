@@ -1122,7 +1122,7 @@ const MISCONFIGURED = [
         data: 'from time to time',
         dataPath: '[0]',
         keyword: 'enum',
-        message: 'should be equal to one of the allowed values',
+        message: 'must be equal to one of the allowed values',
         params: {
           allowedValues: [
             'always',
@@ -1178,7 +1178,7 @@ const MISCONFIGURED = [
         data: 'why not?',
         dataPath: '[1].allowLineBreak',
         keyword: 'type',
-        message: 'should be boolean',
+        message: 'must be boolean',
         params: {
           type: 'boolean',
         },

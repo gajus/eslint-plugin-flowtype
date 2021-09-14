@@ -217,7 +217,7 @@ export default {
   //             'as-needed'
   //           ]
   //         },
-  //         message: 'should be equal to one of the allowed values',
+  //         message: 'must be equal to one of the allowed values',
   //         schema: [
   //           'always',
   //           'as-needed'

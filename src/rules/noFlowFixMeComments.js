@@ -4,7 +4,7 @@ const schema = [
   },
 ];
 
-const message = '$FlowFixMe is treated as `any` and should be fixed.';
+const message = '$FlowFixMe is treated as `any` and must be fixed.';
 
 const isIdentifier = function (node, name) {
   return node && node.type === 'Identifier' && node.name.match(name);

@@ -207,7 +207,7 @@ const create = (context) => {
             return fixer.replaceText(node, nodeText);
           },
           loc: identifierNode.loc,
-          message: 'Expected type annotations to be in {{order}}ending order. "{{current}}" should be before "{{last}}".',
+          message: 'Expected type annotations to be in {{order}}ending order. "{{current}}" must be before "{{last}}".',
           node: identifierNode,
         });
       }

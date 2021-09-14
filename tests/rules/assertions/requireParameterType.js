@@ -176,7 +176,7 @@ export default {
           data: 'everything',
           dataPath: '[0].excludeArrowFunctions',
           keyword: 'enum',
-          message: 'should be equal to one of the allowed values',
+          message: 'must be equal to one of the allowed values',
           params: {
             allowedValues: [
               false,
@@ -207,7 +207,7 @@ export default {
           data: 3,
           dataPath: '[0].excludeParameterMatch',
           keyword: 'type',
-          message: 'should be string',
+          message: 'must be string',
           params: {
             type: 'string',
           },

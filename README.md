@@ -2067,26 +2067,26 @@ The following patterns are considered problems:
 ```js
 // $FlowFixMe I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and should be fixed.
+// Message: $FlowFixMe is treated as `any` and must be fixed.
 
 // Options: ["TODO [0-9]+"]
 // $FlowFixMe I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
 
 // Options: ["TODO [0-9]+"]
 // $FlowFixMe TODO abc 47 I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
 
 // $$FlowFixMeProps I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and should be fixed.
+// Message: $FlowFixMe is treated as `any` and must be fixed.
 
 // Options: ["TODO [0-9]+"]
 // $FlowFixMeProps I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and should be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
 ```
 
 The following patterns are not considered problems:
@@ -2683,27 +2683,27 @@ The following patterns are considered problems:
 
 ```js
 type obj = { "foo": "bar" }
-// Message: There should be no space after "{".
-// Message: There should be no space before "}".
+// Message: There must be no space after "{".
+// Message: There must be no space before "}".
 
 type obj = {"foo": "bar" }
-// Message: There should be no space before "}".
+// Message: There must be no space before "}".
 
 type obj = {"foo": "bar", ... }
-// Message: There should be no space before "}".
+// Message: There must be no space before "}".
 
 type obj = {|"foo": "bar" |}
-// Message: There should be no space before "|}".
+// Message: There must be no space before "|}".
 
 type obj = {"foo": "bar", [key: string]: string }
-// Message: There should be no space before "}".
+// Message: There must be no space before "}".
 
 type obj = {
 "foo": "bar", [key: string]: string }
-// Message: There should be no space before "}".
+// Message: There must be no space before "}".
 
 type obj = { baz: {"foo": "qux"}, bar: 4}
-// Message: There should be no space after "{".
+// Message: There must be no space after "{".
 
 // Options: ["always"]
 type obj = {"foo": "bar"}
@@ -4152,28 +4152,28 @@ The following patterns are considered problems:
 ```js
 const foo = 3;
 type Foo = number;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 
 const foo = 3;
 opaque type Foo = number;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 
 const foo = 3;
 export type Foo = number;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 
 const foo = 3;
 export opaque type Foo = number;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 
 const foo = 3;
 type Foo = number | string;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 
 import bar from "./bar";
 const foo = 3;
 type Foo = number;
-// Message: All type declaration should be at the top of the file, after any import declarations.
+// Message: All type declaration must be at the top of the file, after any import declarations.
 ```
 
 The following patterns are not considered problems:
@@ -4308,7 +4308,7 @@ a;
 
 // Options: ["always",{"annotationStyle":"line","strict":true}]
 // @flow
-// Message: Strict Flow file annotation is required, should be `// @flow strict`
+// Message: Strict Flow file annotation is required, must be `// @flow strict`
 
 // Options: ["always",{"annotationStyle":"line"}]
 /* @noflow */
@@ -4334,7 +4334,7 @@ a;
 // @flow
 a;
 b;
-// Message: Strict Flow file annotation is required, should be `// @flow strict`
+// Message: Strict Flow file annotation is required, must be `// @flow strict`
 
 // Options: ["never",{"annotationStyle":"line"}]
 /* @flow */
@@ -4597,30 +4597,30 @@ The following patterns are considered problems:
 
 ```js
 type FooType = { a: number, c: number, b: string }
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 // Options: ["desc"]
 type FooType = { a: number, b: number }
-// Message: Expected type annotations to be in descending order. "b" should be before "a".
+// Message: Expected type annotations to be in descending order. "b" must be before "a".
 
 // Options: ["desc"]
 type FooType = { b: number, C: number, a: string }
-// Message: Expected type annotations to be in descending order. "C" should be before "b".
+// Message: Expected type annotations to be in descending order. "C" must be before "b".
 
 // Options: ["asc"]
 type FooType = { a: number, c: number, C: number, b: string }
-// Message: Expected type annotations to be in ascending order. "b" should be before "C".
+// Message: Expected type annotations to be in ascending order. "b" must be before "C".
 
 // Options: ["asc"]
 type FooType = { a: number, C: number, c: number, b: string }
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 // Options: ["asc"]
 type FooType = { 1: number, 10: number, 2: boolean }
-// Message: Expected type annotations to be in ascending order. "2" should be before "10".
+// Message: Expected type annotations to be in ascending order. "2" must be before "10".
 
 type FooType = { a: number, c: number, b: string }
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4628,8 +4628,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4637,8 +4637,8 @@ type FooType = { a: number, c: number, b: string }
           c: $ReadOnlyMap<string, number>,
           b: Map<string, Array<Map<string, number>>>,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4663,12 +4663,12 @@ type FooType = { a: number, c: number, b: string }
             },
           }>>>,
         }
-      
-// Message: Expected type annotations to be in ascending order. "x" should be before "y".
-// Message: Expected type annotations to be in ascending order. "k" should be before "l".
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
-// Message: Expected type annotations to be in ascending order. "x" should be before "y".
-// Message: Expected type annotations to be in ascending order. "k" should be before "l".
+
+// Message: Expected type annotations to be in ascending order. "x" must be before "y".
+// Message: Expected type annotations to be in ascending order. "k" must be before "l".
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
+// Message: Expected type annotations to be in ascending order. "x" must be before "y".
+// Message: Expected type annotations to be in ascending order. "k" must be before "l".
 
 
         type FooType = {
@@ -4677,8 +4677,8 @@ type FooType = { a: number, c: number, b: string }
           c: string,
           b: number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4690,9 +4690,9 @@ type FooType = { a: number, c: number, b: string }
           e: string,
           d: number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
-// Message: Expected type annotations to be in ascending order. "d" should be before "e".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
+// Message: Expected type annotations to be in ascending order. "d" must be before "e".
 
 
         type FooType = {
@@ -4701,8 +4701,8 @@ type FooType = { a: number, c: number, b: string }
           c: string,
           b: number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4718,8 +4718,8 @@ type FooType = { a: number, c: number, b: string }
           b: number,
           dWithoutComma: boolean
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4727,8 +4727,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4736,8 +4736,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4745,8 +4745,8 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4754,8 +4754,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4763,8 +4763,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4772,8 +4772,8 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
         type FooType = {
@@ -4785,9 +4785,9 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "x" should be before "z".
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "x" must be before "z".
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
         type FooType = {
@@ -4803,10 +4803,10 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "k" should be before "l".
-// Message: Expected type annotations to be in ascending order. "x" should be before "z".
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "k" must be before "l".
+// Message: Expected type annotations to be in ascending order. "x" must be before "z".
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
         type FooType = {
@@ -4814,9 +4814,9 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
-// Message: Expected type annotations to be in ascending order. "a" should be before "b".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
+// Message: Expected type annotations to be in ascending order. "a" must be before "b".
 
 
         type FooType = {|
@@ -4824,9 +4824,9 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
-// Message: Expected type annotations to be in ascending order. "a" should be before "b".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
+// Message: Expected type annotations to be in ascending order. "a" must be before "b".
 
 
         type FooType = {
@@ -4834,8 +4834,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b(param: string): number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4843,8 +4843,8 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b(param: string): number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "b" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
         type FooType = {
@@ -4852,8 +4852,8 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
         type FooType = {
@@ -4865,9 +4865,9 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "x" should be before "z".
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "x" must be before "z".
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
         type FooType = {
@@ -4883,10 +4883,10 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-      
-// Message: Expected type annotations to be in ascending order. "k" should be before "l".
-// Message: Expected type annotations to be in ascending order. "x" should be before "z".
-// Message: Expected type annotations to be in ascending order. "a" should be before "c".
+
+// Message: Expected type annotations to be in ascending order. "k" must be before "l".
+// Message: Expected type annotations to be in ascending order. "x" must be before "z".
+// Message: Expected type annotations to be in ascending order. "a" must be before "c".
 ```
 
 The following patterns are not considered problems:
@@ -5004,7 +5004,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo: 
+(foo:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
@@ -6651,7 +6651,7 @@ type Identifier = {|
   ...INode,
   +aaa: string,
 |};
-// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+// Message: Flow type with spread property and all readonly properties must be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
 
 type INode = {||};
 type Identifier = {|
@@ -6659,7 +6659,7 @@ type Identifier = {|
   +aaa: string,
   +bbb: string,
 |};
-// Message: Flow type with spread property and all readonly properties should be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
+// Message: Flow type with spread property and all readonly properties must be wrapped in '$ReadOnly<…>' to prevent accidental loss of readonly-ness.
 ```
 
 The following patterns are not considered problems:

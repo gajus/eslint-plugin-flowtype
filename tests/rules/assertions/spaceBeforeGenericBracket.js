@@ -36,7 +36,7 @@ export default {
           data: 'whenever',
           dataPath: '[0]',
           keyword: 'enum',
-          message: 'should be equal to one of the allowed values',
+          message: 'must be equal to one of the allowed values',
           params: {
             allowedValues: [
               'always',

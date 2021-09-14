@@ -22,7 +22,7 @@ const getColon = (context, objectTypeProperty) => {
 // 1) type X = { foo(): A; }
 // 2) type X = { foo: () => A; }
 // the above have identical ASTs (save for their ranges)
-// case 1 doesn't have a type annotation colon and should be ignored
+// case 1 doesn't have a type annotation colon and must be ignored
 const isShortPropertyFunction = (objectTypeProperty) => {
   return objectTypeProperty.value.type === 'FunctionTypeAnnotation' && objectTypeProperty.range[0] === objectTypeProperty.value.range[0];
 };

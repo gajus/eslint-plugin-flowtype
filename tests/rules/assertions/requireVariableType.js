@@ -95,7 +95,7 @@ export default {
           data: 99,
           dataPath: '[0].excludeVariableMatch',
           keyword: 'type',
-          message: 'should be string',
+          message: 'must be string',
           params: {
             type: 'string',
           },
@@ -147,7 +147,7 @@ export default {
           data: 'yes',
           dataPath: '[0].excludeVariableTypes.let',
           keyword: 'type',
-          message: 'should be boolean',
+          message: 'must be boolean',
           params: {
             type: 'boolean',
           },
