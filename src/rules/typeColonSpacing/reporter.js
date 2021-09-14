@@ -1,4 +1,6 @@
-import {spacingFixers} from '../../utilities';
+import {
+  spacingFixers,
+} from '../../utilities';
 
 const hasLineBreak = (direction, colon, context) => {
   const sourceCode = context.getSourceCode();

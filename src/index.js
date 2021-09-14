@@ -1,8 +1,8 @@
-/* eslint-disable import/max-dependencies */
 import _ from 'lodash';
 import recommended from './configs/recommended.json';
 import arrayStyleComplexType from './rules/arrayStyleComplexType';
 import arrayStyleSimpleType from './rules/arrayStyleSimpleType';
+import arrowParens from './rules/arrowParens';
 import booleanStyle from './rules/booleanStyle';
 import defineFlowType from './rules/defineFlowType';
 import delimiterDangle from './rules/delimiterDangle';
@@ -13,20 +13,20 @@ import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
 import noExistentialType from './rules/noExistentialType';
 import noFlowFixMeComments from './rules/noFlowFixMeComments';
+import noInternalFlowType from './rules/noInternalFlowType';
+import noMixed from './rules/noMixed';
 import noMutableArray from './rules/noMutableArray';
 import noPrimitiveConstructorTypes from './rules/noPrimitiveConstructorTypes';
 import noTypesMissingFileAnnotation from './rules/noTypesMissingFileAnnotation';
 import noUnusedExpressions from './rules/noUnusedExpressions';
 import noWeakTypes from './rules/noWeakTypes';
-import noInternalFlowType from './rules/noInternalFlowType';
-import noMixed from './rules/noMixed';
 import objectTypeCurlySpacing from './rules/objectTypeCurlySpacing';
 import objectTypeDelimiter from './rules/objectTypeDelimiter';
 import quotes from './rules/quotes';
-import requireIndexerName from './rules/requireIndexerName';
 import requireCompoundTypeAlias from './rules/requireCompoundTypeAlias';
-import requireInexactType from './rules/requireInexactType';
 import requireExactType from './rules/requireExactType';
+import requireIndexerName from './rules/requireIndexerName';
+import requireInexactType from './rules/requireInexactType';
 import requireParameterType from './rules/requireParameterType';
 import requireReadonlyReactProps from './rules/requireReadonlyReactProps';
 import requireReturnType from './rules/requireReturnType';
@@ -39,15 +39,16 @@ import sortTypeUnionIntersectionMembers from './rules/sortTypeUnionIntersectionM
 import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
+import spreadExactType from './rules/spreadExactType';
 import typeIdMatch from './rules/typeIdMatch';
 import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
 import useFlowType from './rules/useFlowType';
 import useReadOnlySpread from './rules/useReadOnlySpread';
 import validSyntax from './rules/validSyntax';
-import spreadExactType from './rules/spreadExactType';
-import arrowParens from './rules/arrowParens';
-import {checkFlowFileAnnotation} from './utilities';
+import {
+  checkFlowFileAnnotation,
+} from './utilities';
 
 const rules = {
   'array-style-complex-type': arrayStyleComplexType,

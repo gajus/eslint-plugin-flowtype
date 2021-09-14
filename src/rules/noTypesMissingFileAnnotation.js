@@ -1,4 +1,6 @@
-import {isFlowFile} from '../utilities';
+import {
+  isFlowFile,
+} from '../utilities';
 
 /**
  * Disallows the use for flow types without a valid file annotation.

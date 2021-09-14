@@ -1,4 +1,6 @@
-import {spacingFixers, getTokenAfterParens} from '../utilities';
+import {
+  spacingFixers, getTokenAfterParens,
+} from '../utilities';
 
 const schema = [
   {

@@ -14,7 +14,7 @@ const create = (context) => {
 
       if (ref.identifier.name === ident.name) {
         // use "__defineGeneric" since we don't have a reference to "escope.Variable"
-        // eslint-disable-next-line no-underscore-dangle
+
         globalScope.__defineGeneric(
           ident.name,
           globalScope.set,

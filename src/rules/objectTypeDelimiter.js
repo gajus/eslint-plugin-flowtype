@@ -37,16 +37,14 @@ const create = (context) => {
       lastToken = parentTokens[parentTokens.indexOf(lastToken) + 1];
     }
 
-    if (lastToken.type === 'Punctuator') {
-      if (lastToken.value === BAD.char) {
-        context.report({
-          fix (fixer) {
-            return fixer.replaceText(lastToken, GOOD.char);
-          },
-          message: 'Prefer ' + GOOD.name + 's to ' + BAD.name + 's in object and class types',
-          node: lastToken,
-        });
-      }
+    if (lastToken.type === 'Punctuator' && lastToken.value === BAD.char) {
+      context.report({
+        fix (fixer) {
+          return fixer.replaceText(lastToken, GOOD.char);
+        },
+        message: 'Prefer ' + GOOD.name + 's to ' + BAD.name + 's in object and class types',
+        node: lastToken,
+      });
     }
   };
 

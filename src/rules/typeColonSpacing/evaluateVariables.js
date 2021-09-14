@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import {getParameterName, quoteName} from '../../utilities';
+import {
+  getParameterName, quoteName,
+} from '../../utilities';
 
 export default (context, report) => {
   const sourceCode = context.getSourceCode();

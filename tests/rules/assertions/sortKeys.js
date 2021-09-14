@@ -40,7 +40,6 @@ export default {
       errors: [{message: 'Expected type annotations to be in ascending order. "b" must be before "c".'}],
       output: 'type FooType = { a: number, b: string, c: number }',
     },
-    /* eslint-disable no-restricted-syntax */
     {
       code: `
         type FooType = {
@@ -438,7 +437,6 @@ export default {
         |}
       `,
     },
-    /* eslint-enable no-restricted-syntax */
 
     // https://github.com/gajus/eslint-plugin-flowtype/issues/455
     {

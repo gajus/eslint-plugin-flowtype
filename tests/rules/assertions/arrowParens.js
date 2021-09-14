@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 const type = 'ArrowFunctionExpression';
 
 export default {
@@ -285,11 +284,9 @@ export default {
       options: ['as-needed'],
       parserOptions: {ecmaVersion: 8}},
     {code: '(a: T) => a',
-      options: ['as-needed'],
-    },
+      options: ['as-needed']},
     {code: '(a): T => a',
-      options: ['as-needed'],
-    },
+      options: ['as-needed']},
 
     // "as-needed", { "requireForBlockBody": true }
     {code: '() => {}',

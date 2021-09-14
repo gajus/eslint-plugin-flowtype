@@ -1,11 +1,11 @@
 import assert from 'assert';
-import {
-  camelCase,
-} from 'lodash';
 import Ajv from 'ajv';
 import {
   RuleTester,
 } from 'eslint';
+import {
+  camelCase,
+} from 'lodash';
 import plugin from '../../src';
 
 const ruleTester = new RuleTester();
@@ -65,7 +65,7 @@ const ajv = new Ajv({
 });
 
 for (const ruleName of reportingRules) {
-  // eslint-disable-next-line global-require, import/no-dynamic-require
+  // eslint-disable-next-line import/no-dynamic-require
   const assertions = require('./assertions/' + camelCase(ruleName));
 
   if (assertions.misconfigured) {

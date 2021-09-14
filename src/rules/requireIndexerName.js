@@ -1,4 +1,6 @@
-import {getParameterName} from '../utilities';
+import {
+  getParameterName,
+} from '../utilities';
 
 const schema = [
   {

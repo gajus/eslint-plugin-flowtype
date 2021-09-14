@@ -1,7 +1,8 @@
-import {getParameterName, quoteName} from '../../utilities';
+import {
+  getParameterName, quoteName,
+} from '../../utilities';
 
 const getColon = (context, objectTypeProperty) => {
-  // eslint-disable-next-line init-declarations
   let tokenIndex = 1;
 
   if (objectTypeProperty.optional) {
