@@ -35,6 +35,7 @@ import requireValidFileAnnotation from './rules/requireValidFileAnnotation';
 import requireVariableType from './rules/requireVariableType';
 import semi from './rules/semi';
 import sortKeys from './rules/sortKeys';
+import sortTypeUnionIntersectionMembers from './rules/sortTypeUnionIntersectionMembers';
 import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
@@ -84,6 +85,7 @@ const rules = {
   'require-variable-type': requireVariableType,
   semi,
   'sort-keys': sortKeys,
+  'sort-type-union-intersection-members': sortTypeUnionIntersectionMembers,
   'space-after-type-colon': spaceAfterTypeColon,
   'space-before-generic-bracket': spaceBeforeGenericBracket,
   'space-before-type-colon': spaceBeforeTypeColon,
@@ -133,6 +135,7 @@ export default {
     'require-variable-type': 0,
     semi: 0,
     'sort-keys': 0,
+    'sort-type-union-intersection-members': 0,
     'space-after-type-colon': 0,
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
