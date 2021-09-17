@@ -11,6 +11,7 @@ import genericSpacing from './rules/genericSpacing';
 import interfaceIdMatch from './rules/interfaceIdMatch';
 import newlineAfterFlowAnnotation from './rules/newlineAfterFlowAnnotation';
 import noDupeKeys from './rules/noDupeKeys';
+import noDuplicateTypeUnionIntersectionMembers from './rules/noDuplicateTypeUnionIntersectionMembers';
 import noExistentialType from './rules/noExistentialType';
 import noFlowFixMeComments from './rules/noFlowFixMeComments';
 import noInternalFlowType from './rules/noInternalFlowType';
@@ -62,6 +63,7 @@ const rules = {
   'interface-id-match': interfaceIdMatch,
   'newline-after-flow-annotation': newlineAfterFlowAnnotation,
   'no-dupe-keys': noDupeKeys,
+  'no-duplicate-type-union-intersection-members': noDuplicateTypeUnionIntersectionMembers,
   'no-existential-type': noExistentialType,
   'no-flow-fix-me-comments': noFlowFixMeComments,
   'no-internal-flow-type': noInternalFlowType,
@@ -121,6 +123,7 @@ export default {
     'interface-id-match': 0,
     'newline-after-flow-annotation': 0,
     'no-dupe-keys': 0,
+    'no-duplicate-type-union-intersection-members': 0,
     'no-flow-fix-me-comments': 0,
     'no-mixed': 0,
     'no-mutable-array': 0,

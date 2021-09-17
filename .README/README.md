@@ -169,6 +169,7 @@ When `true`, only checks files with a [`@flow` annotation](http://flowtype.org/d
 {"gitdown": "include", "file": "./rules/interface-id-match.md"}
 {"gitdown": "include", "file": "./rules/newline-after-flow-annotation.md"}
 {"gitdown": "include", "file": "./rules/no-dupe-keys.md"}
+{"gitdown": "include", "file": "./rules/no-duplicate-type-union-intersection-members.md"}
 {"gitdown": "include", "file": "./rules/no-existential-type.md"}
 {"gitdown": "include", "file": "./rules/no-flow-fix-me-comments.md"}
 {"gitdown": "include", "file": "./rules/no-internal-flow-type.md"}
