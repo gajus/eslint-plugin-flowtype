@@ -22,6 +22,7 @@ const reportingRules = [
   'interface-id-match',
   'newline-after-flow-annotation',
   'no-dupe-keys',
+  'no-duplicate-type-union-intersection-members',
   'no-existential-type',
   'no-flow-fix-me-comments',
   'no-mutable-array',
