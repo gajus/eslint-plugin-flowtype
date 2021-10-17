@@ -41,3 +41,5 @@ You can disable checking union types using `checkUnions`.
   }
 }
 ```
+
+<!-- assertions noDuplicateTypeUnionIntersectionMembers -->

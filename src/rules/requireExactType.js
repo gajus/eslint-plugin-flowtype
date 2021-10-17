@@ -21,7 +21,7 @@ const create = (context) => {
         inexact,
       } = node;
 
-      if (node.parent.type !== 'InterfaceDeclaration' && always && !exact && !inexact && indexers.length === 0) {
+      if (!['DeclareClass', 'InterfaceDeclaration'].includes(node.parent.type) && always && !exact && !inexact && indexers.length === 0) {
         context.report({
           fix: (fixer) => {
             return [

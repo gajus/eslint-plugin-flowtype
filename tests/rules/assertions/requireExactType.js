@@ -184,6 +184,15 @@ export default {
           function?: {| name: string |};
       }`,
     },
+    {
+      code: `declare class MyEvent extends Event {
+        key: string
+      }`,
+      options: ['always'],
+      output: `declare class MyEvent extends Event {
+        key: string
+      }`,
+    },
 
     // Never
 
