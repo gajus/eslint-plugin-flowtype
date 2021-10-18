@@ -24,8 +24,10 @@
         * [`delimiter-dangle`](#eslint-plugin-flowtype-rules-delimiter-dangle)
         * [`enforce-line-break`](#eslint-plugin-flowtype-rules-enforce-line-break)
         * [`generic-spacing`](#eslint-plugin-flowtype-rules-generic-spacing)
+        * [`interface-id-match`](#eslint-plugin-flowtype-rules-interface-id-match)
         * [`newline-after-flow-annotation`](#eslint-plugin-flowtype-rules-newline-after-flow-annotation)
         * [`no-dupe-keys`](#eslint-plugin-flowtype-rules-no-dupe-keys)
+        * [`no-duplicate-type-union-intersection-members`](#eslint-plugin-flowtype-rules-no-duplicate-type-union-intersection-members)
         * [`no-existential-type`](#eslint-plugin-flowtype-rules-no-existential-type)
         * [`no-flow-fix-me-comments`](#eslint-plugin-flowtype-rules-no-flow-fix-me-comments)
         * [`no-internal-flow-type`](#eslint-plugin-flowtype-rules-no-internal-flow-type)
@@ -50,6 +52,7 @@
         * [`require-variable-type`](#eslint-plugin-flowtype-rules-require-variable-type)
         * [`semi`](#eslint-plugin-flowtype-rules-semi)
         * [`sort-keys`](#eslint-plugin-flowtype-rules-sort-keys)
+        * [`sort-type-union-intersection-members`](#eslint-plugin-flowtype-rules-sort-type-union-intersection-members)
         * [`space-after-type-colon`](#eslint-plugin-flowtype-rules-space-after-type-colon)
         * [`space-before-generic-bracket`](#eslint-plugin-flowtype-rules-space-before-generic-bracket)
         * [`space-before-type-colon`](#eslint-plugin-flowtype-rules-space-before-type-colon)
@@ -108,6 +111,10 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
     "flowtype/generic-spacing": [
       2,
       "never"
+    ],
+    "flowtype/interface-id-match": [
+      2,
+      "^([A-Z][a-z0-9]+)+Type$"
     ],
     "flowtype/no-mixed": 2,
     "flowtype/no-primitive-constructor-types": 2,
@@ -1698,6 +1705,24 @@ type fed = "hed";
 
 // Message: New line required below type declaration
 // Message: New line required above type declaration
+
+const a = 5;
+export type hello = 34;
+
+// Message: New line required above type declaration
+
+const a = 5;
+// a comment
+export type hello = 34;
+
+// Message: New line required above type declaration
+
+const a = 5;
+/**
+ * a jsdoc block
+ */
+type hello = 34;
+// Message: New line required above type declaration
 ```
 
 The following patterns are not considered problems:
@@ -1736,6 +1761,9 @@ type Props = {
 };
 
 type RoadT = "grass" | "gravel" | "cement";
+
+// @flow
+type A = string
 ```
 
 
@@ -1816,7 +1844,13 @@ type X = Promise<(foo), bar, (((baz)))>
 type X = Promise<
   (foo),
   bar,
-  (((baz))),
+  (((baz)))
+>
+
+type X =  Promise<
+    (foo),
+    bar,
+    (((baz)))
 >
 
 // Options: ["always"]
@@ -1831,12 +1865,60 @@ type X = Promise< (foo), bar, (((baz))) >
 
 
 
+<a name="eslint-plugin-flowtype-rules-interface-id-match"></a>
+### <code>interface-id-match</code>
+
+Enforces a consistent naming pattern for interfaces.
+
+<a name="eslint-plugin-flowtype-rules-interface-id-match-options"></a>
+#### Options
+
+This rule requires a text RegExp:
+
+```js
+{
+    "rules": {
+        "flowtype/interface-id-match": [
+            2,
+            "^([A-Z][a-z0-9]*)+Type$"
+        ]
+    }
+}
+```
+
+`'^([A-Z][a-z0-9]*)+Type$$'` is the default pattern.
+
+The following patterns are considered problems:
+
+```js
+interface foo{};
+// Message: Interface identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+
+// Options: ["^foo$"]
+interface FooType{};
+// Message: Interface identifier 'FooType' does not match pattern '/^foo$/'.
+```
+
+The following patterns are not considered problems:
+
+```js
+interface FooType {};
+
+// Options: ["^foo$"]
+interface foo {};
+
+// Settings: {"flowtype":{"onlyFilesWithFlowAnnotation":true}}
+interface foo {};
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation"></a>
 ### <code>newline-after-flow-annotation</code>
 
 This rule requires an empty line after the Flow annotation.
 
-<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation-options"></a>
+<a name="eslint-plugin-flowtype-rules-newline-after-flow-annotation-options-1"></a>
 #### Options
 
 The rule has a string option:
@@ -2003,6 +2085,84 @@ export interface Foo { get foo(): boolean; get bar(): string; }
 
 
 
+<a name="eslint-plugin-flowtype-rules-no-duplicate-type-union-intersection-members"></a>
+### <code>no-duplicate-type-union-intersection-members</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Checks for duplicate members of a type union/intersection.
+
+<a name="eslint-plugin-flowtype-rules-no-duplicate-type-union-intersection-members-options-2"></a>
+#### Options
+
+You can disable checking intersection types using `checkIntersections`.
+
+* `true` (default) - check for duplicate members of intersection members.
+* `false` - do not check for duplicate members of intersection members.
+
+```js
+{
+  "rules": {
+    "flowtype/no-duplicate-type-union-intersection-members": [
+      2,
+      {
+        "checkIntersections": true
+      }
+    ]
+  }
+}
+```
+
+You can disable checking union types using `checkUnions`.
+
+* `true` (default) - check for duplicate members of union members.
+* `false` - do not check for duplicate members of union members.
+
+```js
+{
+  "rules": {
+    "flowtype/no-duplicate-type-union-intersection-members": [
+      2,
+      {
+        "checkUnions": true
+      }
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type A = 1 | 2 | 3 | 1;
+// Message: Duplicate union member found "1".
+
+type B = 'foo' | 'bar' | 'foo';
+// Message: Duplicate union member found "'foo'".
+
+type C = A | B | A | B;
+// Message: Duplicate union member found "A".
+// Message: Duplicate union member found "B".
+
+type C = A & B & A & B;
+// Message: Duplicate intersection member found "A".
+// Message: Duplicate intersection member found "B".
+```
+
+The following patterns are not considered problems:
+
+```js
+type A = 1 | 2 | 3;
+
+type B = 'foo' | 'bar';
+
+type C = A | B;
+
+type C = A & B;
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-no-existential-type"></a>
 ### <code>no-existential-type</code>
 
@@ -2046,7 +2206,7 @@ Disallows `$FlowFixMe` comment suppressions.
 
 This is especially useful as a warning to ensure instances of `$FlowFixMe` in your codebase get fixed over time.
 
-<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options-1"></a>
+<a name="eslint-plugin-flowtype-rules-no-flow-fix-me-comments-options-3"></a>
 #### Options
 
 This rule takes an optional RegExp that comments a text RegExp that makes the supression valid.
@@ -2670,7 +2830,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule enforces consistent spacing inside braces of object types.
 
-<a name="eslint-plugin-flowtype-rules-object-type-curly-spacing-options-2"></a>
+<a name="eslint-plugin-flowtype-rules-object-type-curly-spacing-options-4"></a>
 #### Options
 
 The rule has a string option:
@@ -2935,7 +3095,7 @@ type Foo = { a: Foo, b: Bar }
 
 Enforces single quotes or double quotes around string literals.
 
-<a name="eslint-plugin-flowtype-rules-quotes-options-3"></a>
+<a name="eslint-plugin-flowtype-rules-quotes-options-5"></a>
 #### Options
 
 The rule has string options of:
@@ -3002,7 +3162,7 @@ type T = { test: 'hello' | 'test', t: 'hello' }
 
 Requires to make a type alias for all [union](https://flow.org/en/docs/types/unions/) and [intersection](https://flow.org/en/docs/types/intersections/) types. If these are used in "raw" forms it might be tempting to just copy & paste them around the code. However, this brings sort of a source code pollution and unnecessary changes on several parts when these compound types need to be changed.
 
-<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-4"></a>
+<a name="eslint-plugin-flowtype-rules-require-compound-type-alias-options-6"></a>
 #### Options
 
 The rule has two options:
@@ -3028,7 +3188,7 @@ The rule has two options:
 }
 ```
 
-* `allowNull` – allows compound types where one of the members is a `null`, e.g. `string | null`.
+* `allowNull` – allows compound types where one of the members is a `null`, e.g. `string | null`.
 
 The following patterns are considered problems:
 
@@ -3096,7 +3256,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule enforces [exact object types](https://flow.org/en/docs/types/objects/#toc-exact-object-types).
 
-<a name="eslint-plugin-flowtype-rules-require-exact-type-options-5"></a>
+<a name="eslint-plugin-flowtype-rules-require-exact-type-options-7"></a>
 #### Options
 
 The rule has one string option:
@@ -3214,6 +3374,11 @@ interface StackFrame {
           function?: {| name: string |};
       }
 
+// Options: ["always"]
+declare class MyEvent extends Event {
+        key: string
+      }
+
 // Options: ["never"]
 type foo = { };
 
@@ -3249,7 +3414,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 This rule validates Flow object indexer name.
 
-<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-6"></a>
+<a name="eslint-plugin-flowtype-rules-require-indexer-name-options-8"></a>
 #### Options
 
 The rule has a string option:
@@ -3294,7 +3459,7 @@ type foo = { [string]: number };
 
 This rule enforces explicit inexact object types.
 
-<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-7"></a>
+<a name="eslint-plugin-flowtype-rules-require-inexact-type-options-9"></a>
 #### Options
 
 The rule has one string option:
@@ -3403,7 +3568,7 @@ type foo = number;
 
 Requires that all function parameters have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-8"></a>
+<a name="eslint-plugin-flowtype-rules-require-parameter-type-options-10"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -3775,7 +3940,7 @@ function Foo(props: {}) { return <p /> }
 
 Requires that functions have return type annotation.
 
-<a name="eslint-plugin-flowtype-rules-require-return-type-options-9"></a>
+<a name="eslint-plugin-flowtype-rules-require-return-type-options-11"></a>
 #### Options
 
 You can skip all arrow functions by providing the `excludeArrowFunctions` option with `true`.
@@ -4137,7 +4302,7 @@ async function * foo(): AsyncIterable<number> { yield 2; }
 
 Requires all type declarations to be at the top of the file, after any import declarations.
 
-<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-10"></a>
+<a name="eslint-plugin-flowtype-rules-require-types-at-top-options-12"></a>
 #### Options
 
 The rule has a string option:
@@ -4214,7 +4379,7 @@ This rule validates Flow file annotations.
 
 This rule can optionally report missing or missed placed annotations, common typos (e.g. `// @floww`), and enforce a consistent annotation style.
 
-<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-11"></a>
+<a name="eslint-plugin-flowtype-rules-require-valid-file-annotation-options-13"></a>
 #### Options
 
 The rule has a string option:
@@ -4407,7 +4572,7 @@ a;
 
 Requires that all variable declarators have type annotations.
 
-<a name="eslint-plugin-flowtype-rules-require-variable-type-options-12"></a>
+<a name="eslint-plugin-flowtype-rules-require-variable-type-options-14"></a>
 #### Options
 
 You can exclude variables that match a certain regex by using `excludeVariableMatch`.
@@ -4574,7 +4739,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces natural, case-insensitive sorting of Object annotations.
 
-<a name="eslint-plugin-flowtype-rules-sort-keys-options-13"></a>
+<a name="eslint-plugin-flowtype-rules-sort-keys-options-15"></a>
 #### Options
 
 The first option specifies sort order.
@@ -4628,7 +4793,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4637,7 +4802,7 @@ type FooType = { a: number, c: number, b: string }
           c: $ReadOnlyMap<string, number>,
           b: Map<string, Array<Map<string, number>>>,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4663,7 +4828,7 @@ type FooType = { a: number, c: number, b: string }
             },
           }>>>,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "x" must be before "y".
 // Message: Expected type annotations to be in ascending order. "k" must be before "l".
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
@@ -4677,7 +4842,7 @@ type FooType = { a: number, c: number, b: string }
           c: string,
           b: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4690,7 +4855,7 @@ type FooType = { a: number, c: number, b: string }
           e: string,
           d: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 // Message: Expected type annotations to be in ascending order. "d" must be before "e".
 
@@ -4701,7 +4866,7 @@ type FooType = { a: number, c: number, b: string }
           c: string,
           b: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4718,7 +4883,7 @@ type FooType = { a: number, c: number, b: string }
           b: number,
           dWithoutComma: boolean
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4727,7 +4892,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4736,7 +4901,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4745,7 +4910,7 @@ type FooType = { a: number, c: number, b: string }
           c: ?number,
           b: string,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4754,7 +4919,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4763,7 +4928,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4772,7 +4937,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
@@ -4785,7 +4950,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "x" must be before "z".
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
@@ -4803,7 +4968,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b: (param: string) => number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "k" must be before "l".
 // Message: Expected type annotations to be in ascending order. "x" must be before "z".
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
@@ -4814,7 +4979,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 // Message: Expected type annotations to be in ascending order. "a" must be before "b".
 
@@ -4824,7 +4989,7 @@ type FooType = { a: number, c: number, b: string }
           -b: number,
           a: number,
         |}
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 // Message: Expected type annotations to be in ascending order. "a" must be before "b".
 
@@ -4834,7 +4999,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b(param: string): number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4843,7 +5008,7 @@ type FooType = { a: number, c: number, b: string }
           c: number,
           b(param: string): number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "b" must be before "c".
 
 
@@ -4852,7 +5017,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
 
@@ -4865,7 +5030,7 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "x" must be before "z".
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
 
@@ -4883,10 +5048,43 @@ type FooType = { a: number, c: number, b: string }
           a: number | string | boolean,
           b(param: string): number,
         }
-
+      
 // Message: Expected type annotations to be in ascending order. "k" must be before "l".
 // Message: Expected type annotations to be in ascending order. "x" must be before "z".
 // Message: Expected type annotations to be in ascending order. "a" must be before "c".
+
+
+        type FooType = {
+          /* preserves block comment before a */
+          a: number | string | boolean,
+          /* preserves block comment before c */
+          c: number,
+          /* preserves block comment before b */
+          b(param: string): number,
+        }
+      
+// Message: Expected type annotations to be in ascending order. "b" must be before "c".
+
+
+        export type GroupOrdersResponseType = {|
+          isSuccess: boolean,
+          code: number,
+          message?: string,
+          errorMessage: string,
+          result: {|
+            OrderNumber: string,
+            Orders: GroupOrderSummaryType[],
+            PlacedOn: string,
+            Status: string,
+            ReturnText: string,
+            IncludesLegacyOrder: boolean
+          |}
+        |};
+      
+// Message: Expected type annotations to be in ascending order. "code" must be before "isSuccess".
+// Message: Expected type annotations to be in ascending order. "errorMessage" must be before "message".
+// Message: Expected type annotations to be in ascending order. "ReturnText" must be before "Status".
+// Message: Expected type annotations to be in ascending order. "IncludesLegacyOrder" must be before "ReturnText".
 ```
 
 The following patterns are not considered problems:
@@ -4919,6 +5117,188 @@ type FooType = { a(): string, b: number, c: boolean }
 
 
 
+<a name="eslint-plugin-flowtype-rules-sort-type-union-intersection-members"></a>
+### <code>sort-type-union-intersection-members</code>
+
+_The `--fix` option on the command line automatically fixes problems reported by this rule._
+
+Enforces that members of a type union/intersection are sorted alphabetically.
+
+<a name="eslint-plugin-flowtype-rules-sort-type-union-intersection-members-options-16"></a>
+#### Options
+
+You can specify the sort order using `order`.
+
+* `"asc"` (default) - enforce ascending sort order.
+* `"desc"` - enforce descending sort order.
+
+```js
+{
+  "rules": {
+    "flowtype/sort-type-union-intersection-members": [
+      2,
+      {
+        "order": "asc"
+      }
+    ]
+  }
+}
+```
+
+You can disable checking intersection types using `checkIntersections`.
+
+* `true` (default) - enforce sort order of intersection members.
+* `false` - do not enforce sort order of intersection members.
+
+```js
+{
+  "rules": {
+    "flowtype/sort-type-union-intersection-members": [
+      2,
+      {
+        "checkIntersections": true
+      }
+    ]
+  }
+}
+```
+
+You can disable checking union types using `checkUnions`.
+
+* `true` (default) - enforce sort order of union members.
+* `false` - do not enforce sort order of union members.
+
+```js
+{
+  "rules": {
+    "flowtype/sort-type-union-intersection-members": [
+      2,
+      {
+        "checkUnions": true
+      }
+    ]
+  }
+}
+```
+
+You can specify the ordering of groups using `groupOrder`.
+
+Each member of the type is placed into a group, and then the rule sorts alphabetically within each group.
+The ordering of groups is determined by this option.
+
+* `keyword` - Keyword types (`any`, `string`, etc)
+* `named` - Named types (`A`, `A['prop']`, `B[]`, `Array<C>`)
+* `literal` - Literal types (`1`, `'b'`, `true`, etc)
+* `function` - Function types (`() => void`)
+* `object` - Object types (`{ a: string }`, `{ [key: string]: number }`)
+* `tuple` - Tuple types (`[A, B, C]`)
+* `intersection` - Intersection types (`A & B`)
+* `union` - Union types (`A | B`)
+* `nullish` - `null` and `undefined`
+
+```js
+{
+  "rules": {
+    "flowtype/sort-type-union-intersection-members": [
+      2,
+      {
+        "groupOrder": [
+          'keyword',
+          'named',
+          'literal',
+          'function',
+          'object',
+          'tuple',
+          'intersection',
+          'union',
+          'nullish',
+        ]
+      }
+    ]
+  }
+}
+```
+
+The following patterns are considered problems:
+
+```js
+type T1 = B | A;
+// Message: Expected union members to be in ascending order. "A" should be before "B".
+
+type T2 = { b: string } & { a: string };
+// Message: Expected intersection members to be in ascending order. "{ a: string }" should be before "{ b: string }".
+
+type T3 = [1, 2, 4] & [1, 2, 3];
+// Message: Expected intersection members to be in ascending order. "[1, 2, 3]" should be before "[1, 2, 4]".
+
+
+        type T4 =
+          | [1, 2, 4]
+          | [1, 2, 3]
+          | { b: string }
+          | { a: string }
+          | (() => void)
+          | (() => string)
+          | 'b'
+          | 'a'
+          | 'b'
+          | 'a'
+          | string[]
+          | number[]
+          | B
+          | A
+          | string
+          | any;
+      
+// Message: Expected union members to be in ascending order. "[1, 2, 3]" should be before "[1, 2, 4]".
+// Message: Expected union members to be in ascending order. "{ b: string }" should be before "[1, 2, 3]".
+// Message: Expected union members to be in ascending order. "{ a: string }" should be before "{ b: string }".
+// Message: Expected union members to be in ascending order. "() => void" should be before "{ a: string }".
+// Message: Expected union members to be in ascending order. "() => string" should be before "() => void".
+// Message: Expected union members to be in ascending order. "'b'" should be before "() => string".
+// Message: Expected union members to be in ascending order. "'a'" should be before "'b'".
+// Message: Expected union members to be in ascending order. "'b'" should be before "'a'".
+// Message: Expected union members to be in ascending order. "'a'" should be before "'b'".
+// Message: Expected union members to be in ascending order. "string[]" should be before "'a'".
+// Message: Expected union members to be in ascending order. "number[]" should be before "string[]".
+// Message: Expected union members to be in ascending order. "B" should be before "number[]".
+// Message: Expected union members to be in ascending order. "A" should be before "B".
+// Message: Expected union members to be in ascending order. "string" should be before "A".
+// Message: Expected union members to be in ascending order. "any" should be before "string".
+```
+
+The following patterns are not considered problems:
+
+```js
+type T1 = A | B;
+
+type T2 = { a: string } & { b: string };
+
+type T3 = [1, 2, 3] & [1, 2, 4];
+
+
+        type T4 =
+          | any
+          | string
+          | A
+          | B
+          | number[]
+          | string[]
+          | 'a'
+          | 'a'
+          | 'b'
+          | 'b'
+          | (() => string)
+          | (() => void)
+          | { a: string }
+          | { b: string }
+          | [1, 2, 3]
+          | [1, 2, 4];
+      
+```
+
+
+
 <a name="eslint-plugin-flowtype-rules-space-after-type-colon"></a>
 ### <code>space-after-type-colon</code>
 
@@ -4926,7 +5306,7 @@ _The `--fix` option on the command line automatically fixes problems reported by
 
 Enforces consistent spacing after the type annotation colon.
 
-<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-14"></a>
+<a name="eslint-plugin-flowtype-rules-space-after-type-colon-options-17"></a>
 #### Options
 
 This rule has a string argument.
@@ -5004,7 +5384,7 @@ The following patterns are considered problems:
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
-(foo:
+(foo: 
 { a: string, b: number }) => {}
 // Message: There must not be a line break after "foo" parameter type annotation colon.
 
@@ -6295,7 +6675,7 @@ type foo = {test: number}; type bar = {...$Exact<foo>}
 
 Enforces a consistent naming pattern for type aliases.
 
-<a name="eslint-plugin-flowtype-rules-type-id-match-options-15"></a>
+<a name="eslint-plugin-flowtype-rules-type-id-match-options-18"></a>
 #### Options
 
 This rule requires a text RegExp:
@@ -6356,7 +6736,7 @@ import {type T, type U, type V} from '...';
 import type {T, U, V} from '...';
 ```
 
-<a name="eslint-plugin-flowtype-rules-type-import-style-options-16"></a>
+<a name="eslint-plugin-flowtype-rules-type-import-style-options-19"></a>
 #### Options
 
 The rule has a string option:
@@ -6717,5 +7097,6 @@ function x(foo: string = "1") {}
 
 function x(foo: Type = bar()) {}
 ```
+
 
 
