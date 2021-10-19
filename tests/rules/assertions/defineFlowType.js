@@ -2,6 +2,7 @@ import {
   RuleTester,
 } from 'eslint';
 import noUndefRule from 'eslint/lib/rules/no-undef';
+import defineFlowType from '../../../src/rules/defineFlowType';
 
 const VALID_WITH_DEFINE_FLOW_TYPE = [
   {
@@ -146,6 +147,26 @@ type Foo = $ReadOnly<{}>`,
       },
     },
   },
+
+  /**
+   * There is unobvious behavior.
+   * We used Foo type and it became global variable.
+   * noUndefRule will not pay attention to Foo variable with defineFlowType.
+   * It can be fixed with ignoreTypes option
+ */
+  {
+    code: `
+type A = {foo: Foo};
+
+Foo()
+`,
+
+    // There are two errors one for type another for global var
+    errors: [
+      '\'Foo\' is not defined.',
+      '\'Foo\' is not defined.',
+    ],
+  },
 ];
 
 const ALWAYS_INVALID = [
@@ -216,6 +237,32 @@ const ALWAYS_VALID = [
     invalid: [
       ...ALWAYS_INVALID,
       ...VALID_WITH_DEFINE_FLOW_TYPE,
+    ],
+    valid: [],
+  });
+}
+
+{
+  const ruleTester = new RuleTester({
+    parser: require.resolve('babel-eslint'),
+    rules: {
+      'define-flow-type': [1, {ignoreTypes: ['Foo']}],
+    },
+  });
+
+  ruleTester.defineRule('define-flow-type', defineFlowType);
+  ruleTester.run('no-undef must trigger an error when define-flow-type is used with ignoreTypes option', noUndefRule, {
+    invalid: [
+      {
+        code: `
+type A = {foo: Foo};
+Foo();
+`,
+        errors: [
+          '\'Foo\' is not defined.',
+          '\'Foo\' is not defined.',
+        ],
+      },
     ],
     valid: [],
   });
