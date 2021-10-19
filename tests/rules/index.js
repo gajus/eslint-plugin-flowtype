@@ -1,11 +1,11 @@
 import assert from 'assert';
-import {
-  camelCase,
-} from 'lodash';
 import Ajv from 'ajv';
 import {
   RuleTester,
 } from 'eslint';
+import {
+  camelCase,
+} from 'lodash';
 import plugin from '../../src';
 
 const ruleTester = new RuleTester();
@@ -23,6 +23,7 @@ const reportingRules = [
   'interface-id-match',
   'newline-after-flow-annotation',
   'no-dupe-keys',
+  'no-duplicate-type-union-intersection-members',
   'no-existential-type',
   'no-flow-fix-me-comments',
   'no-mutable-array',
@@ -47,6 +48,7 @@ const reportingRules = [
   'require-variable-type',
   'semi',
   'sort-keys',
+  'sort-type-union-intersection-members',
   'space-after-type-colon',
   'space-before-generic-bracket',
   'space-before-type-colon',
@@ -65,7 +67,7 @@ const ajv = new Ajv({
 });
 
 for (const ruleName of reportingRules) {
-  // eslint-disable-next-line global-require, import/no-dynamic-require
+  // eslint-disable-next-line import/no-dynamic-require
   const assertions = require('./assertions/' + camelCase(ruleName));
 
   if (assertions.misconfigured) {

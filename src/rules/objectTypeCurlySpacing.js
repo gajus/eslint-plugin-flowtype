@@ -1,4 +1,6 @@
-import {spacingFixers} from '../utilities';
+import {
+  spacingFixers,
+} from '../utilities';
 
 const schema = [
   {
@@ -43,7 +45,7 @@ const create = (context) => {
               token: opener.value,
             },
             fix: spacingFixers.stripSpacesAfter(opener, spacesBefore),
-            message: 'There should be no space after "{{token}}".',
+            message: 'There must be no space after "{{token}}".',
             node,
           });
         } else if (!never && !spacesBefore) {
@@ -66,7 +68,7 @@ const create = (context) => {
               token: closer.value,
             },
             fix: spacingFixers.stripSpacesBefore(closer, spacesAfter),
-            message: 'There should be no space before "{{token}}".',
+            message: 'There must be no space before "{{token}}".',
             node,
           });
         } else if (!never && !spacesAfter) {

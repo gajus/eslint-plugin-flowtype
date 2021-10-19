@@ -131,7 +131,6 @@ const VALID_WITH_DEFINE_FLOW_TYPE = [
 
   // This tests to ensure we have a robust handling of @flow comments
   {
-    // eslint-disable-next-line no-restricted-syntax
     code: `
 /**
 * Copyright 2019 no corp

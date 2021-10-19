@@ -1,7 +1,7 @@
 const meta = {
   messages: {
     readonlySpread:
-      'Flow type with spread property and all readonly properties should be ' +
+      'Flow type with spread property and all readonly properties must be ' +
     'wrapped in \'$ReadOnly<…>\' to prevent accidental loss of readonly-ness.',
   },
 };

@@ -946,9 +946,9 @@ const MISCONFIGURED = [
     errors: [
       {
         data: 'occasionally',
-        dataPath: '[0]',
+        instancePath: '/0',
         keyword: 'enum',
-        message: 'should be equal to one of the allowed values',
+        message: 'must be equal to one of the allowed values',
         params: {
           allowedValues: [
             'always',

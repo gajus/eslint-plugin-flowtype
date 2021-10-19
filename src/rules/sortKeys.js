@@ -49,7 +49,7 @@ const generateOrderedList = (context, sort, properties) => {
       // Maintain everything between the start of property including leading comments and the nextPunctuator `,` or `}`:
       const nextPunctuator = source.getTokenAfter(property, {
         filter: (token) => {
-          return token.type === 'Punctuator';
+          return token.type === 'Punctuator' || token.value === '|}';
         },
       });
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
@@ -57,7 +57,7 @@ const generateOrderedList = (context, sort, properties) => {
       });
       const text = source.getText().slice(startIndex, beforePunctuator.range[1]);
 
-      return [property, text];
+      return [property, name, text];
     }
 
     const colonToken = source.getTokenBefore(property.value, {
@@ -80,7 +80,7 @@ const generateOrderedList = (context, sort, properties) => {
       // Maintain everything between the `:` and the next Punctuator `,` or `}`:
       const nextPunctuator = source.getTokenAfter(property, {
         filter: (token) => {
-          return token.type === 'Punctuator';
+          return token.type === 'Punctuator' || token.value === '|}';
         },
       });
       const beforePunctuator = source.getTokenBefore(nextPunctuator, {
@@ -123,8 +123,8 @@ const generateOrderedList = (context, sort, properties) => {
         });
     }
     orderedList.push(...itemGroup.map((item) => {
-      if (item.length === 2) {
-        return item[1];
+      if (item.length === 3) {
+        return item[2];
       }
 
       return item[2] + ':' + item[3];
@@ -149,7 +149,7 @@ const generateFix = (node, context, sort) => {
   node.properties.forEach((property, index) => {
     const nextPunctuator = source.getTokenAfter(property, {
       filter: (token) => {
-        return token.type === 'Punctuator';
+        return token.type === 'Punctuator' || token.value === '|}';
       },
     });
     const beforePunctuator = source.getTokenBefore(nextPunctuator, {
@@ -207,7 +207,7 @@ const create = (context) => {
             return fixer.replaceText(node, nodeText);
           },
           loc: identifierNode.loc,
-          message: 'Expected type annotations to be in {{order}}ending order. "{{current}}" should be before "{{last}}".',
+          message: 'Expected type annotations to be in {{order}}ending order. "{{current}}" must be before "{{last}}".',
           node: identifierNode,
         });
       }

@@ -4,50 +4,50 @@ export default {
     {
       code: 'type obj = { "foo": "bar" }',
       errors: [
-        {message: 'There should be no space after "{".'},
-        {message: 'There should be no space before "}".'},
+        {message: 'There must be no space after "{".'},
+        {message: 'There must be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar"}',
     },
     {
       code: 'type obj = {"foo": "bar" }',
       errors: [
-        {message: 'There should be no space before "}".'},
+        {message: 'There must be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar"}',
     },
     {
       code: 'type obj = {"foo": "bar", ... }',
       errors: [
-        {message: 'There should be no space before "}".'},
+        {message: 'There must be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar", ...}',
     },
     {
       code: 'type obj = {|"foo": "bar" |}',
       errors: [
-        {message: 'There should be no space before "|}".'},
+        {message: 'There must be no space before "|}".'},
       ],
       output: 'type obj = {|"foo": "bar"|}',
     },
     {
       code: 'type obj = {"foo": "bar", [key: string]: string }',
       errors: [
-        {message: 'There should be no space before "}".'},
+        {message: 'There must be no space before "}".'},
       ],
       output: 'type obj = {"foo": "bar", [key: string]: string}',
     },
     {
       code: 'type obj = {\n"foo": "bar", [key: string]: string }',
       errors: [
-        {message: 'There should be no space before "}".'},
+        {message: 'There must be no space before "}".'},
       ],
       output: 'type obj = {\n"foo": "bar", [key: string]: string}',
     },
     {
       code: 'type obj = { baz: {"foo": "qux"}, bar: 4}',
       errors: [
-        {message: 'There should be no space after "{".'},
+        {message: 'There must be no space after "{".'},
       ],
       output: 'type obj = {baz: {"foo": "qux"}, bar: 4}',
     },
@@ -118,9 +118,9 @@ export default {
       errors: [
         {
           data: 'sometimes',
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'enum',
-          message: 'should be equal to one of the allowed values',
+          message: 'must be equal to one of the allowed values',
           params: {
             allowedValues: [
               'always',

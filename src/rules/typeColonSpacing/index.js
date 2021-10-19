@@ -1,10 +1,10 @@
-import reporter from './reporter';
+import evaluateFunctions from './evaluateFunctions';
 import evaluateObjectTypeIndexer from './evaluateObjectTypeIndexer';
 import evaluateObjectTypeProperty from './evaluateObjectTypeProperty';
 import evaluateTypeCastExpression from './evaluateTypeCastExpression';
 import evaluateTypical from './evaluateTypical';
-import evaluateFunctions from './evaluateFunctions';
 import evaluateVariables from './evaluateVariables';
+import reporter from './reporter';
 
 export default (direction, context, options) => {
   const report = reporter(direction, context, options);

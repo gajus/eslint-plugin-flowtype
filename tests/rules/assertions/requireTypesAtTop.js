@@ -2,27 +2,27 @@ export default {
   invalid: [
     {
       code: 'const foo = 3;\ntype Foo = number;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
     {
       code: 'const foo = 3;\nopaque type Foo = number;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
     {
       code: 'const foo = 3;\nexport type Foo = number;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
     {
       code: 'const foo = 3;\nexport opaque type Foo = number;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
     {
       code: 'const foo = 3;\ntype Foo = number | string;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
     {
       code: 'import bar from "./bar";\nconst foo = 3;\ntype Foo = number;',
-      errors: [{message: 'All type declaration should be at the top of the file, after any import declarations.'}],
+      errors: [{message: 'All type declaration must be at the top of the file, after any import declarations.'}],
     },
   ],
   misconfigured: [
@@ -30,9 +30,9 @@ export default {
       errors: [
         {
           data: 'sometimes',
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'enum',
-          message: 'should be equal to one of the allowed values',
+          message: 'must be equal to one of the allowed values',
           params: {
             allowedValues: [
               'always',

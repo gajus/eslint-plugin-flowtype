@@ -200,9 +200,9 @@ export default {
           data: {
             nonExistentWeakType: false,
           },
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'additionalProperties',
-          message: 'should NOT have additional properties',
+          message: 'must NOT have additional properties',
           params: {
             additionalProperty: 'nonExistentWeakType',
           },
@@ -231,9 +231,9 @@ export default {
       errors: [
         {
           data: 'irrelevant',
-          dataPath: '[0].Object',
+          instancePath: '/0/Object',
           keyword: 'type',
-          message: 'should be boolean',
+          message: 'must be boolean',
           params: {
             type: 'boolean',
           },

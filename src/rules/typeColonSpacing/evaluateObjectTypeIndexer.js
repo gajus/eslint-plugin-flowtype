@@ -1,4 +1,6 @@
-import {getTokenAfterParens, getTokenBeforeParens} from '../../utilities';
+import {
+  getTokenAfterParens, getTokenBeforeParens,
+} from '../../utilities';
 
 export default (context, report) => {
   const sourceCode = context.getSourceCode();

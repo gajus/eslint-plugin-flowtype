@@ -4,8 +4,8 @@
  * @file This script is used to inline assertions into the README.md documents.
  */
 
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import glob from 'glob';
 import _ from 'lodash';
 
@@ -43,7 +43,7 @@ const getAssertions = () => {
   });
 
   const assertionCodes = _.map(assertionFiles, (filePath) => {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
+    // eslint-disable-next-line import/no-dynamic-require
     const codes = require(filePath);
 
     return {

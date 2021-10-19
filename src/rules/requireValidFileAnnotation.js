@@ -104,7 +104,7 @@ const create = (context) => {
                   potentialFlowFileAnnotation.range[1],
                 ], annotation);
               },
-              message: 'Strict Flow file annotation is required, should be ' + str,
+              message: 'Strict Flow file annotation is required, must be ' + str,
               node,
             });
           }

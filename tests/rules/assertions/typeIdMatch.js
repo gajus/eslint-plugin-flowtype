@@ -33,9 +33,9 @@ export default {
       errors: [
         {
           data: 7,
-          dataPath: '[0]',
+          instancePath: '/0',
           keyword: 'type',
-          message: 'should be string',
+          message: 'must be string',
           params: {
             type: 'string',
           },

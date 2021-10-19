@@ -7,7 +7,7 @@ type Identifier = {|
   +aaa: string,
 |};`,
       errors: [{
-        message: 'Flow type with spread property and all readonly properties should be wrapped in \'$ReadOnly<…>\' to prevent accidental loss of readonly-ness.',
+        message: 'Flow type with spread property and all readonly properties must be wrapped in \'$ReadOnly<…>\' to prevent accidental loss of readonly-ness.',
       }],
     },
     {
@@ -18,7 +18,7 @@ type Identifier = {|
   +bbb: string,
 |};`,
       errors: [{
-        message: 'Flow type with spread property and all readonly properties should be wrapped in \'$ReadOnly<…>\' to prevent accidental loss of readonly-ness.',
+        message: 'Flow type with spread property and all readonly properties must be wrapped in \'$ReadOnly<…>\' to prevent accidental loss of readonly-ness.',
       }],
     },
   ],

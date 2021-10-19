@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 const type = 'ArrowFunctionExpression';
 
 export default {
@@ -209,7 +208,7 @@ export default {
   //     errors: [
   //       {
   //         keyword: 'enum',
-  //         dataPath: '[0]',
+  //         instancePath: '/0',
   //         schemaPath: '#/items/0/enum',
   //         params: {
   //           allowedValues: [
@@ -217,7 +216,7 @@ export default {
   //             'as-needed'
   //           ]
   //         },
-  //         message: 'should be equal to one of the allowed values',
+  //         message: 'must be equal to one of the allowed values',
   //         schema: [
   //           'always',
   //           'as-needed'
@@ -285,11 +284,9 @@ export default {
       options: ['as-needed'],
       parserOptions: {ecmaVersion: 8}},
     {code: '(a: T) => a',
-      options: ['as-needed'],
-    },
+      options: ['as-needed']},
     {code: '(a): T => a',
-      options: ['as-needed'],
-    },
+      options: ['as-needed']},
 
     // "as-needed", { "requireForBlockBody": true }
     {code: '() => {}',
