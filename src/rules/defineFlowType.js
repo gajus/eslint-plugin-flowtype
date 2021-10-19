@@ -1,7 +1,22 @@
-const schema = [];
+const schema = [
+  {
+    properties: {
+      ignoreTypes: {
+        items: {
+          type: 'string',
+        },
+        type: 'array',
+      },
+    },
+    type: 'object',
+  },
+];
 
 const create = (context) => {
   let globalScope;
+
+  const [firstOption] = context.options;
+  const ignoreTypes = firstOption ? firstOption.ignoreTypes : [];
 
   // do nearly the same thing that eslint does for config globals
   // https://github.com/eslint/eslint/blob/v2.0.0/lib/eslint.js#L118-L194
@@ -11,6 +26,10 @@ const create = (context) => {
     // start from the right since we're going to remove items from the array
     for (ii = globalScope.through.length - 1; ii >= 0; ii--) {
       const ref = globalScope.through[ii];
+
+      if (ignoreTypes.includes(ident.name)) {
+        return;
+      }
 
       if (ref.identifier.name === ident.name) {
         // use "__defineGeneric" since we don't have a reference to "escope.Variable"
