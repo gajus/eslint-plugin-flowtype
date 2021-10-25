@@ -1,6 +1,12 @@
 {
-  "extends": "canonical",
+  "extends": [
+    "canonical",
+    "plugin:eslint-plugin/recommended"
+  ],
   "rules": {
+    "eslint-plugin/require-meta-schema": 0,
+    "eslint-plugin/require-meta-type": 0,
+
     "unicorn/prevent-abbreviations": 0
   }
 }
