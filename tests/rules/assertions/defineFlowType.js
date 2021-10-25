@@ -1,7 +1,11 @@
 import {
   RuleTester,
 } from 'eslint';
-import noUndefRule from 'eslint/lib/rules/no-undef';
+import {
+  getBuiltinRule,
+} from '../../../src/utilities/getBuiltinRule';
+
+const noUndefRule = getBuiltinRule('no-undef');
 
 const VALID_WITH_DEFINE_FLOW_TYPE = [
   {

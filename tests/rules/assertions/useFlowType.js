@@ -1,8 +1,12 @@
 import {
   RuleTester,
 } from 'eslint';
-import noUnusedVarsRule from 'eslint/lib/rules/no-unused-vars';
 import useFlowType from '../../../src/rules/useFlowType';
+import {
+  getBuiltinRule,
+} from '../../../src/utilities/getBuiltinRule';
+
+const noUnusedVarsRule = getBuiltinRule('no-unused-vars');
 
 const VALID_WITH_USE_FLOW_TYPE = [
   {

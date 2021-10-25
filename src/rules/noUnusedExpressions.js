@@ -1,12 +1,16 @@
 // A wrapper around ESLint's core rule no-unused-expressions, additionally ignores type cast
 // expressions.
 
-import coreNOE from 'eslint/lib/rules/no-unused-expressions';
+import {
+  getBuiltinRule,
+} from '../utilities/getBuiltinRule';
 
-const meta = coreNOE.meta;
+const noUnusedExpressionsRule = getBuiltinRule('no-unused-expressions');
+
+const meta = noUnusedExpressionsRule.meta;
 
 const create = (context) => {
-  const coreChecks = coreNOE.create(context);
+  const coreChecks = noUnusedExpressionsRule.create(context);
 
   return {
     ExpressionStatement (node) {
