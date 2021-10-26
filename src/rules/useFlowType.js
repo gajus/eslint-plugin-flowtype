@@ -4,6 +4,7 @@ const create = (context) => {
   const markTypeAsUsed = (node) => {
     context.markVariableAsUsed(node.id.name);
   };
+
   const markTypeAsUsedWithGenericType = (node) => {
     let typeId;
     let scope;

@@ -13,9 +13,9 @@ const inlineType = (type) => {
 
   if (inlined.length <= 50) {
     return inlined;
-  } else {
-    return 'Type';
   }
+
+  return 'Type';
 };
 
 export default (defaultConfig, simpleType) => {
@@ -64,9 +64,9 @@ export default (defaultConfig, simpleType) => {
               fix (fixer) {
                 if (needWrap(elementTypeNode)) {
                   return fixer.replaceText(node, '(' + rawElementType + ')[]');
-                } else {
-                  return fixer.replaceText(node, rawElementType + '[]');
                 }
+
+                return fixer.replaceText(node, rawElementType + '[]');
               },
               message: 'Use "{{ wrappedType }}[]", not "Array<{{ type }}>"',
               node,

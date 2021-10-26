@@ -13,6 +13,7 @@ const groups = {
 
 // eslint-disable-next-line complexity
 const getGroup = (node) => {
+  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'FunctionTypeAnnotation':
     return groups.function;
@@ -61,6 +62,7 @@ const fallbackSort = (a, b) => {
   if (a < b) {
     return -1;
   }
+
   if (a > b) {
     return 1;
   }

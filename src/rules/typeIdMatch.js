@@ -11,10 +11,12 @@ const create = (context) => {
     const typeIdentifierName = typeAliasNode.id.name;
 
     if (!pattern.test(typeIdentifierName)) {
-      context.report(typeAliasNode, 'Type identifier \'{{name}}\' does not match pattern \'{{pattern}}\'.', {
+      context.report({data: {
         name: typeIdentifierName,
         pattern: pattern.toString(),
-      });
+      },
+      message: 'Type identifier \'{{name}}\' does not match pattern \'{{pattern}}\'.',
+      node: typeAliasNode});
     }
   };
 

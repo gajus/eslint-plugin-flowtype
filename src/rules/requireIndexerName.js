@@ -28,9 +28,9 @@ const create = (context) => {
         }
       },
     };
-  } else {
-    return {};
   }
+
+  return {};
 };
 
 export default {

@@ -22,14 +22,14 @@ const create = (context) => {
       const sourceCode = context.getSourceCode();
 
       const potentialFlowFileAnnotation = _.find(
-        context.getAllComments(),
+        context.getSourceCode().getAllComments(),
         (comment) => {
           return looksLikeFlowFileAnnotation(comment.value);
         },
       );
 
       if (potentialFlowFileAnnotation) {
-        const line = potentialFlowFileAnnotation.loc.end.line;
+        const {line} = potentialFlowFileAnnotation.loc.end;
         const nextLineIsEmpty = sourceCode.lines[line] === '';
 
         if (!never && !nextLineIsEmpty) {

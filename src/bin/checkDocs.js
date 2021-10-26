@@ -27,12 +27,13 @@ const getDocIndexRules = () => {
 
     if (match === null) {
       return null;
-    } else {
-      return match[1].replace('./rules/', '').replace('.md', '');
     }
-  }).filter((rule) => {
-    return rule !== null;
-  });
+
+    return match[1].replace('./rules/', '').replace('.md', '');
+  })
+    .filter((rule) => {
+      return rule !== null;
+    });
 
   if (rules.length === 0) {
     throw new Error('Docs checker is broken - it could not extract rules from docs index file.');
@@ -48,9 +49,9 @@ const hasCorrectAssertions = (docPath, name) => {
 
   if (match === null) {
     return false;
-  } else {
-    return match[1] === name;
   }
+
+  return match[1] === name;
 };
 
 /**

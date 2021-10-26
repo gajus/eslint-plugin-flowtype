@@ -9,9 +9,9 @@ export default (context, report, typeForMessage) => {
   const getColon = (node, typeAnnotation) => {
     if (node.type === 'FunctionTypeParam') {
       return sourceCode.getFirstToken(node, node.optional ? 2 : 1);
-    } else {
-      return sourceCode.getFirstToken(typeAnnotation);
     }
+
+    return sourceCode.getFirstToken(typeAnnotation);
   };
 
   return (node) => {

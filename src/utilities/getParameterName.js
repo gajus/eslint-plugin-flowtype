@@ -56,9 +56,9 @@ export default (identifierNode, context) => {
     const colonOrBrace = context.getSourceCode().getTokenAfter(id);
     if (colonOrBrace.value === ':') {
       return id.value;
-    } else {
-      return null;
     }
+
+    return null;
   }
 
   if (identifierNode.type === 'FunctionTypeParam') {
@@ -70,10 +70,11 @@ export default (identifierNode, context) => {
 
     if (identifierNode.typeAnnotation) {
       return text.replace(context.getSourceCode().getText(identifierNode.typeAnnotation), '').trim();
-    } else {
-      return text;
     }
+
+    return text;
   }
+
   if (_.get(identifierNode, 'left.type') === 'ObjectPattern') {
     return context.getSourceCode().getText(identifierNode.left);
   }

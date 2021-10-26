@@ -11,9 +11,9 @@ const isEmptyArrayLiteral = (node) => {
 const isEmptyArrayInstance = (node) => {
   if (_.get(node, 'init.type') === 'NewExpression' || _.get(node, 'init.type') === 'CallExpression') {
     return _.get(node, 'init.callee.name') === 'Array' && _.get(node, 'init.arguments.length') === 0;
-  } else {
-    return false;
   }
+
+  return false;
 };
 
 const isAnnotationOfEmptyArrayInit = (node) => {
@@ -22,9 +22,9 @@ const isAnnotationOfEmptyArrayInit = (node) => {
     const isVariableDeclaration = _.get(parent, 'type') === 'VariableDeclarator';
 
     return isVariableDeclaration && (isEmptyArrayLiteral(parent) || isEmptyArrayInstance(parent));
-  } else {
-    return false;
   }
+
+  return false;
 };
 
 const create = (context) => {

@@ -44,7 +44,9 @@ const isReadOnlyObjectType = (node, {useImplicitExactTypes}) => {
     // we consider `{||}` to be ReadOnly since it's exact AND has no props (when `implicitExactTypes=false`)
     if (useImplicitExactTypes === true && node.exact === false) {
       return true;
-    } else if (node.exact === true) {
+    }
+
+    if (node.exact === true) {
       return true;
     }
   }

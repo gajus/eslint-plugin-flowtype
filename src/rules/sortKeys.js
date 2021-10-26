@@ -123,6 +123,7 @@ const generateOrderedList = (context, sort, properties) => {
           return sort(first[1], second[1]);
         });
     }
+
     orderedList.push(...itemGroup.map((item) => {
       if (item.length === 3) {
         return item[2];

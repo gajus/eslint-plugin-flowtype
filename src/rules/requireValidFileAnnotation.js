@@ -63,14 +63,15 @@ const create = (context) => {
     Program (node) {
       const firstToken = node.tokens[0];
 
-      const potentialFlowFileAnnotation = _.find(context.getAllComments(), (comment) => {
+      const potentialFlowFileAnnotation = _.find(context.getSourceCode().getAllComments(), (comment) => {
         return looksLikeFlowFileAnnotation(comment.value);
       });
 
       if (potentialFlowFileAnnotation) {
         if (firstToken && firstToken.range[0] < potentialFlowFileAnnotation.range[0]) {
-          context.report(potentialFlowFileAnnotation, 'Flow file annotation not at the top of the file.');
+          context.report({message: 'Flow file annotation not at the top of the file.', node: potentialFlowFileAnnotation});
         }
+
         const annotationValue = potentialFlowFileAnnotation.value.trim();
 
         if (isFlowFileAnnotation(annotationValue)) {
@@ -109,9 +110,9 @@ const create = (context) => {
             });
           }
         } else if (checkAnnotationSpelling(annotationValue)) {
-          context.report(potentialFlowFileAnnotation, 'Misspelled or malformed Flow file annotation.');
+          context.report({message: 'Misspelled or malformed Flow file annotation.', node: potentialFlowFileAnnotation});
         } else {
-          context.report(potentialFlowFileAnnotation, 'Malformed Flow file annotation.');
+          context.report({message: 'Malformed Flow file annotation.', node: potentialFlowFileAnnotation});
         }
       } else if (always && !_.get(context, 'settings.flowtype.onlyFilesWithFlowAnnotation')) {
         context.report({

@@ -27,6 +27,7 @@ const create = (context) => {
             hasSpread = true;
           }
         }
+
         if (hasSpread === true && shouldThrow === true) {
           context.report({
             messageId: 'readonlySpread',

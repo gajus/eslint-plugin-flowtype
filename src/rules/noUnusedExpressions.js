@@ -7,7 +7,7 @@ import {
 
 const noUnusedExpressionsRule = getBuiltinRule('no-unused-expressions');
 
-const meta = noUnusedExpressionsRule.meta;
+const {meta} = noUnusedExpressionsRule;
 
 const create = (context) => {
   const coreChecks = noUnusedExpressionsRule.create(context);
@@ -20,6 +20,7 @@ const create = (context) => {
       ) {
         return;
       }
+
       // eslint-disable-next-line @babel/new-cap
       coreChecks.ExpressionStatement(node);
     },

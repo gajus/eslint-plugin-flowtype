@@ -26,7 +26,10 @@ const create = (context) => {
     const value = comment.value.trim();
 
     if (/\$FlowFixMe/u.test(value) && !passesExtraRegex(value)) {
-      context.report(comment, message + extraMessage);
+      context.report({
+        message: message + extraMessage,
+        node: comment,
+      });
     }
   };
 

@@ -7,9 +7,9 @@ const hasLineBreak = (direction, colon, context) => {
 
   if (direction === 'before') {
     return colon.loc.start.line !== sourceCode.getTokenBefore(colon).loc.end.line;
-  } else {
-    return sourceCode.getTokenAfter(colon).loc.start.line !== colon.loc.end.line;
   }
+
+  return sourceCode.getTokenAfter(colon).loc.start.line !== colon.loc.end.line;
 };
 
 const getSpaces = (direction, colon, context) => {
@@ -17,9 +17,9 @@ const getSpaces = (direction, colon, context) => {
 
   if (direction === 'before') {
     return colon.range[0] - sourceCode.getTokenBefore(colon).range[1];
-  } else {
-    return sourceCode.getTokenAfter(colon).range[0] - colon.range[1];
   }
+
+  return sourceCode.getTokenAfter(colon).range[0] - colon.range[1];
 };
 
 export default (direction, context, {always, allowLineBreak}) => {

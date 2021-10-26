@@ -89,6 +89,7 @@ const create = (context) => {
     } else {
       selector = 'id.name';
     }
+
     const identifierName = _.get(functionNode, selector);
 
     const checkRegExp = (regex) => {
@@ -129,14 +130,14 @@ const create = (context) => {
     const returnType = functionNode.returnType || isArrow && _.get(functionNode, 'parent.id.typeAnnotation');
 
     if (isFunctionReturnUndefined && isReturnTypeAnnotationUndefined && annotateUndefined === 'never') {
-      context.report(functionNode, 'Must not annotate undefined return type.');
+      context.report({message: 'Must not annotate undefined return type.', node: functionNode});
     } else if (isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined && annotateUndefined === 'always') {
-      context.report(functionNode, 'Must annotate undefined return type.');
+      context.report({message: 'Must annotate undefined return type.', node: functionNode});
     } else if (
       (annotateUndefined === 'always-enforce' || !isFunctionReturnUndefined && !isReturnTypeAnnotationUndefined) &&
         annotateReturn && !returnType && !shouldFilterNode(functionNode)
     ) {
-      context.report(functionNode, 'Missing return type annotation.');
+      context.report({message: 'Missing return type annotation.', node: functionNode});
     }
   };
 

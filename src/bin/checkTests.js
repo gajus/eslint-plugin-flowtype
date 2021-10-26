@@ -28,7 +28,7 @@ const getTestIndexRules = () => {
     rules: [],
   });
 
-  const rules = result.rules;
+  const {rules} = result;
 
   if (rules.length === 0) {
     throw new Error('Tests checker is broken - it could not extract rules from test index file.');
