@@ -6,7 +6,7 @@ const arrayPairs = (array) => {
   let ii = 0;
   const length = array.length - 1;
   let letter = array[0];
-  const pairs = new Array(length < 0 ? 0 : length);
+  const pairs = Array.from({length: length < 0 ? 0 : length});
 
   while (ii < length) {
     pairs[ii] = [letter, letter = array[++ii]];

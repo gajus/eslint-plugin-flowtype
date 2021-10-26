@@ -39,8 +39,8 @@ const getTestIndexRules = () => {
 
 /**
  * Performed checks:
- *  - file `/tests/rules/assertions/<rule>.js` exists
- *  - rule is included in `reportingRules` variable in `/tests/rules/index.js`
+ * - file `/tests/rules/assertions/<rule>.js` exists
+ * - rule is included in `reportingRules` variable in `/tests/rules/index.js`
  */
 const checkTests = (rulesNames) => {
   const testIndexRules = getTestIndexRules();
