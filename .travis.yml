@@ -14,3 +14,5 @@ after_success:
   - export NODE_ENV=production
   - npm run build
   - semantic-release
+cache:
+  npm: false
