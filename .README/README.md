@@ -10,24 +10,15 @@
 
 ## Installation
 
-1. Install [ESLint](https://www.github.com/eslint/eslint).
-1. Install [`babel-eslint`](https://github.com/babel/babel-eslint) parser (ESLint parser [does not support type annotations](https://github.com/eslint/eslint/issues/2157)).
-1. Install [`eslint-plugin-flowtype`](https://github.com/gajus/eslint-plugin-flowtype) plugin.
-
-<!-- -->
-
-```sh
+```bash
 npm install eslint --save-dev
-npm install babel-eslint --save-dev
+npm install @babel/eslint-parser --save-dev
 npm install eslint-plugin-flowtype --save-dev
-
-# Or all at once:
-npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 ```
 
 ## Configuration
 
-1. Set `parser` property to `babel-eslint`.
+1. Set `parser` property to `@babel/eslint-parser`.
 1. Add `plugins` section and specify `eslint-plugin-flowtype` as a plugin.
 1. Enable rules.
 
@@ -35,7 +26,7 @@ npm install eslint babel-eslint eslint-plugin-flowtype --save-dev
 
 ```json
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "plugins": [
     "flowtype"
   ],

@@ -96,7 +96,13 @@ const ALWAYS_VALID = [
  */
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
+    parserOptions: {
+      babelOptions: {
+        plugins: ['@babel/plugin-syntax-flow'],
+      },
+      requireConfigFile: false,
+    },
   });
 
   ruleTester.run('no-unused-vars must not trigger an error in these cases', noUnusedVarsRule, {
@@ -107,7 +113,13 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
+    parserOptions: {
+      babelOptions: {
+        plugins: ['@babel/plugin-syntax-flow'],
+      },
+      requireConfigFile: false,
+    },
   });
 
   ruleTester.run('no-unused-vars must trigger an error in these cases', noUnusedVarsRule, {
@@ -121,7 +133,13 @@ const ALWAYS_VALID = [
 
 {
   const ruleTester = new RuleTester({
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
+    parserOptions: {
+      babelOptions: {
+        plugins: ['@babel/plugin-syntax-flow'],
+      },
+      requireConfigFile: false,
+    },
     rules: {
       'use-flow-type': 1,
     },

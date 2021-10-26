@@ -8,7 +8,17 @@ import {
 } from 'lodash';
 import plugin from '../../src';
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parserOptions: {
+    babelOptions: {
+      plugins: [
+        '@babel/plugin-transform-react-jsx',
+        '@babel/plugin-syntax-flow'
+      ],
+    },
+    requireConfigFile: false,
+  },
+});
 
 const reportingRules = [
   'array-style-complex-type',
@@ -60,7 +70,7 @@ const reportingRules = [
   'valid-syntax',
 ];
 
-const parser = require.resolve('babel-eslint');
+const parser = require.resolve('@babel/eslint-parser');
 const ajv = new Ajv({
   verbose: true,
 });

@@ -1,5 +1,13 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint",
+  "parserOptions": {
+    "babelOptions": {
+      "plugins": [
+        "@babel/plugin-transform-react-jsx",
+        "@babel/plugin-syntax-flow"
+      ]
+    }
+  },
   "plugins": [
     "flowtype"
   ],
