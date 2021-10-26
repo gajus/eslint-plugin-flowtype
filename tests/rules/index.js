@@ -76,7 +76,6 @@ const ajv = new Ajv({
 });
 
 for (const ruleName of reportingRules) {
-  // eslint-disable-next-line import/no-dynamic-require
   const assertions = require('./assertions/' + camelCase(ruleName));
 
   if (assertions.misconfigured) {

@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-
 /**
  * Adopted from https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/rules/utils/get-builtin-rule.js.
  */

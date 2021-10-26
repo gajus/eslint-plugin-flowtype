@@ -9,6 +9,5 @@ export default (cb, context) => {
     return () => {};
   }
 
-  // eslint-disable-next-line promise/prefer-await-to-callbacks -- not a promise callback
   return cb(context);
 };
