@@ -3,7 +3,7 @@ import _ from 'lodash';
 const schema = [];
 
 const create = (context) => {
-  const regex = /^(Boolean|Number|String)$/;
+  const regex = /^(Boolean|Number|String)$/u;
 
   return {
     GenericTypeAnnotation: (node) => {

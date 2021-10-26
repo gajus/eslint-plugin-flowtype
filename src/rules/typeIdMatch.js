@@ -5,7 +5,7 @@ const schema = [
 ];
 
 const create = (context) => {
-  const pattern = new RegExp(context.options[0] || '^([A-Z][a-z0-9]*)+Type$');
+  const pattern = new RegExp(context.options[0] || '^([A-Z][a-z0-9]*)+Type$', 'u');
 
   const checkType = (typeAliasNode) => {
     const typeIdentifierName = typeAliasNode.id.name;

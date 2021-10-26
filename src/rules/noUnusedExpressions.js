@@ -20,6 +20,7 @@ const create = (context) => {
       ) {
         return;
       }
+      // eslint-disable-next-line @babel/new-cap
       coreChecks.ExpressionStatement(node);
     },
   };

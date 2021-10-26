@@ -11,7 +11,7 @@ const isIdentifier = function (node, name) {
 };
 
 const create = (context) => {
-  const allowedPattern = context.options[0] ? new RegExp(context.options[0]) : null;
+  const allowedPattern = context.options[0] ? new RegExp(context.options[0], 'u') : null;
   const extraMessage = allowedPattern ? ' Fix it or match `' + allowedPattern.toString() + '`.' : '';
 
   const passesExtraRegex = function (value) {
@@ -25,14 +25,14 @@ const create = (context) => {
   const handleComment = function (comment) {
     const value = comment.value.trim();
 
-    if (value.match(/\$FlowFixMe/) && !passesExtraRegex(value)) {
+    if (value.match(/\$FlowFixMe/u) && !passesExtraRegex(value)) {
       context.report(comment, message + extraMessage);
     }
   };
 
   return {
     GenericTypeAnnotation (node) {
-      if (isIdentifier(node.id, /\$FlowFixMe/)) {
+      if (isIdentifier(node.id, /\$FlowFixMe/u)) {
         context.report({
           message,
           node: node.id,

@@ -12,8 +12,8 @@ const schema = [
   },
 ];
 
-const reComponentName = /^(Pure)?Component$/;
-const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/;
+const reComponentName = /^(Pure)?Component$/u;
+const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/u;
 
 const isReactComponent = (node) => {
   if (!node.superClass) {

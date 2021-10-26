@@ -19,8 +19,8 @@
  */
 
 const simpleTypePatterns = [
-  /^(?:Any|Array|Boolean|Generic|Mixed|Number|String|Void)TypeAnnotation$/,
-  /.+LiteralTypeAnnotation$/,
+  /^(?:Any|Array|Boolean|Generic|Mixed|Number|String|Void)TypeAnnotation$/u,
+  /.+LiteralTypeAnnotation$/u,
 ];
 
 export default (node) => {

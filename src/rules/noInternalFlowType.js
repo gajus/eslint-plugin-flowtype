@@ -22,7 +22,7 @@ const ReactComponents = [
 const create = (context) => {
   return {
     Identifier (node) {
-      const match = node.name.match(/^React\$(?<internalTypeName>.+)/);
+      const match = node.name.match(/^React\$(?<internalTypeName>.+)/u);
       if (match !== null && match.groups !== null && match.groups !== undefined) {
         const {internalTypeName} = match.groups;
         if (ReactComponents.includes(internalTypeName)) {

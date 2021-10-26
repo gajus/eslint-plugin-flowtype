@@ -22,7 +22,7 @@ const schema = [
 
 const create = iterateFunctionNodes((context) => {
   const skipArrows = _.get(context, 'options[0].excludeArrowFunctions');
-  const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'));
+  const excludeParameterMatch = new RegExp(_.get(context, 'options[0].excludeParameterMatch', 'a^'), 'u');
 
   return (functionNode) => {
     // It is save to ignore FunctionTypeAnnotation nodes in this rule.

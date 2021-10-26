@@ -23,7 +23,7 @@ const getDocIndexRules = () => {
   const content = fs.readFileSync(path.resolve(__dirname, '../../.README/README.md'), 'utf-8');
 
   const rules = content.split('\n').map((line) => {
-    const match = /^{"gitdown": "include", "file": "([^"]+)"}$/.exec(line);
+    const match = /^{"gitdown": "include", "file": "([^"]+)"}$/u.exec(line);
 
     if (match === null) {
       return null;
@@ -44,7 +44,7 @@ const getDocIndexRules = () => {
 const hasCorrectAssertions = (docPath, name) => {
   const content = fs.readFileSync(docPath, 'utf-8');
 
-  const match = /<!-- assertions ([A-Za-z]+) -->/.exec(content);
+  const match = /<!-- assertions ([A-Za-z]+) -->/u.exec(content);
 
   if (match === null) {
     return false;

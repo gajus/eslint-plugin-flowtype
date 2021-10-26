@@ -9,7 +9,7 @@ const schema = [
 ];
 
 const inlineType = (type) => {
-  const inlined = type.replace(/\s+/g, ' ');
+  const inlined = type.replace(/\s+/ug, ' ');
 
   if (inlined.length <= 50) {
     return inlined;

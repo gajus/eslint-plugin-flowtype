@@ -38,7 +38,7 @@ const create = (context) => {
     return () => {};
   }
 
-  const excludeVariableMatch = new RegExp(_.get(context, 'options[0].excludeVariableMatch', 'a^'));
+  const excludeVariableMatch = new RegExp(_.get(context, 'options[0].excludeVariableMatch', 'a^'), 'u');
   const excludeVariableTypes = _.get(context, 'options[0].excludeVariableTypes', {});
 
   return {

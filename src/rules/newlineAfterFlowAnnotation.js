@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const looksLikeFlowFileAnnotation = (comment) => {
-  return /@(?:no)?flo/i.test(comment);
+  return /@(?:no)?flo/ui.test(comment);
 };
 
 const schema = [

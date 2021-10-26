@@ -36,7 +36,7 @@ const schema = [
 ];
 
 const makeRegExp = (str) => {
-  return new RegExp(str);
+  return new RegExp(str, 'u');
 };
 
 const isUndefinedReturnType = (returnNode) => {

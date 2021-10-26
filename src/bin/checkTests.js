@@ -15,7 +15,7 @@ const getTestIndexRules = () => {
       if (line === '];') {
         acc.inRulesArray = false;
       } else {
-        acc.rules.push(line.replace(/^\s*'([^']+)',?$/, '$1'));
+        acc.rules.push(line.replace(/^\s*'([^']+)',?$/u, '$1'));
       }
     } else if (line === 'const reportingRules = [') {
       acc.inRulesArray = true;

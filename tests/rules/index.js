@@ -13,7 +13,7 @@ const ruleTester = new RuleTester({
     babelOptions: {
       plugins: [
         '@babel/plugin-transform-react-jsx',
-        '@babel/plugin-syntax-flow'
+        '@babel/plugin-syntax-flow',
       ],
     },
     requireConfigFile: false,

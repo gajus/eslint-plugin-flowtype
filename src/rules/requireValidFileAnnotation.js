@@ -10,7 +10,7 @@ const defaults = {
 };
 
 const looksLikeFlowFileAnnotation = (comment) => {
-  return /@(?:no)?flo/i.test(comment);
+  return /@(?:no)?flo/ui.test(comment);
 };
 
 const isValidAnnotationStyle = (node, style) => {
@@ -22,15 +22,15 @@ const isValidAnnotationStyle = (node, style) => {
 };
 
 const checkAnnotationSpelling = (comment) => {
-  return /@[a-z]+\b/.test(comment) && fuzzyStringMatch(comment.replace(/no/i, ''), '@flow', 0.2);
+  return /@[a-z]+\b/u.test(comment) && fuzzyStringMatch(comment.replace(/no/ui, ''), '@flow', 0.2);
 };
 
 const isFlowStrict = (comment) => {
-  return /^@flow\sstrict\b/.test(comment);
+  return /^@flow\sstrict\b/u.test(comment);
 };
 
 const noFlowAnnotation = (comment) => {
-  return /^@noflow\b/.test(comment);
+  return /^@noflow\b/u.test(comment);
 };
 
 const schema = [
