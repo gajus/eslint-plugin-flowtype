@@ -10,7 +10,7 @@ const create = (context) => {
     ObjectTypeAnnotation (node) {
       const {properties} = node;
 
-      properties.forEach((property) => {
+      for (const property of properties) {
         const {type} = property;
         if (type === 'ObjectTypeSpreadProperty') {
           const {argument: {type: argumentType, id: argumentId}} = property;
@@ -22,7 +22,7 @@ const create = (context) => {
             });
           }
         }
-      });
+      }
     },
   };
 };

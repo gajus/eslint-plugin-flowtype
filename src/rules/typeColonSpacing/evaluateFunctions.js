@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   iterateFunctionNodes,
 } from '../../utilities';
@@ -10,7 +9,10 @@ export default iterateFunctionNodes((context, report) => {
   const checkReturnType = evaluateReturnType(context, report);
 
   return (functionNode) => {
-    _.forEach(functionNode.params, checkParam);
+    for (const param of functionNode.params) {
+      checkParam(param);
+    }
+
     checkReturnType(functionNode);
   };
 });

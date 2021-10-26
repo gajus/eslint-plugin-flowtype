@@ -12,7 +12,7 @@ const create = (context) => {
     ObjectTypeAnnotation (node) {
       const {inexact, exact} = node;
 
-      if (!node.hasOwnProperty('inexact')) {
+      if (!Object.prototype.hasOwnProperty.call(node, 'inexact')) {
         return;
       }
 

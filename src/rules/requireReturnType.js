@@ -48,7 +48,9 @@ const create = (context) => {
   const annotateUndefined = _.get(context, 'options[1].annotateUndefined') || 'never';
   const skipArrows = _.get(context, 'options[1].excludeArrowFunctions') || false;
 
+  // eslint-disable-next-line unicorn/no-array-callback-reference
   const excludeMatching = _.get(context, 'options[1].excludeMatching', []).map(makeRegExp);
+  // eslint-disable-next-line unicorn/no-array-callback-reference
   const includeOnlyMatching = _.get(context, 'options[1].includeOnlyMatching', []).map(makeRegExp);
 
   const targetNodes = [];

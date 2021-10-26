@@ -101,7 +101,8 @@ const generateOrderedList = (context, sort, properties) => {
 
   const itemGroups = [[]];
   let itemGroupIndex = 0;
-  items.forEach((item) => {
+
+  for (const item of items) {
     if (item[0].type === 'ObjectTypeSpreadProperty') {
       ++itemGroupIndex;
       itemGroups[itemGroupIndex] = [item];
@@ -110,10 +111,10 @@ const generateOrderedList = (context, sort, properties) => {
     } else {
       itemGroups[itemGroupIndex].push(item);
     }
-  });
+  }
 
   const orderedList = [];
-  itemGroups.forEach((itemGroup) => {
+  for (const itemGroup of itemGroups) {
     if (itemGroup[0] && itemGroup[0].type !== 'ObjectTypeSpreadProperty') {
       // console.log('itemGroup', itemGroup);
 
@@ -129,7 +130,7 @@ const generateOrderedList = (context, sort, properties) => {
 
       return item[2] + ':' + item[3];
     }));
-  });
+  }
 
   return orderedList;
 };
@@ -146,7 +147,7 @@ const generateFix = (node, context, sort) => {
 
   nodeText = originalSubstring;
 
-  node.properties.forEach((property, index) => {
+  for (const [index, property] of node.properties.entries()) {
     const nextPunctuator = source.getTokenAfter(property, {
       filter: (token) => {
         return token.type === 'Punctuator' || token.value === '|}';
@@ -165,11 +166,11 @@ const generateFix = (node, context, sort) => {
     );
 
     nodeText = nodeText.replace(subString, '$' + index);
-  });
+  }
 
-  newTypes.forEach((item, index) => {
+  for (const [index, item] of newTypes.entries()) {
     nodeText = nodeText.replace('$' + index, item);
-  });
+  }
 
   return nodeText;
 };
@@ -181,7 +182,8 @@ const create = (context) => {
   const checkKeyOrder = (node) => {
     prev = null;
 
-    _.forEach(node.properties, (identifierNode) => {
+    // eslint-disable-next-line unicorn/no-array-for-each
+    node.properties.forEach((identifierNode) => {
       const current = getParameterName(identifierNode, context);
       const last = prev;
 

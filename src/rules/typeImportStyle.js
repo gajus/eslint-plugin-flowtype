@@ -19,14 +19,14 @@ const create = (context) => {
     return {
       ImportDeclaration (node) {
         if (node.importKind !== 'type') {
-          node.specifiers.forEach((specifier) => {
+          for (const specifier of node.specifiers) {
             if (specifier.importKind === 'type') {
               context.report({
                 message: 'Unexpected type import',
                 node,
               });
             }
-          });
+          }
         }
       },
     };

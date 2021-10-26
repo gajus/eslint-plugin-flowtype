@@ -9,7 +9,7 @@ export default (context, report) => {
   return (node) => {
     const declarations = _.get(node, 'declarations', []);
 
-    _.forEach(declarations, (leaf) => {
+    for (const leaf of declarations) {
       const typeAnnotation = _.get(leaf, 'id.typeAnnotation');
 
       if (typeAnnotation) {
@@ -20,6 +20,6 @@ export default (context, report) => {
           type: node.kind + ' type annotation',
         });
       }
-    });
+    }
   };
 };

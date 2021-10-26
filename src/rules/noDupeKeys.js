@@ -68,7 +68,7 @@ const create = (context) => {
     // filter out complex object types, like ObjectTypeSpreadProperty
     const identifierNodes = _.filter(node.properties, {type: 'ObjectTypeProperty'});
 
-    _.forEach(identifierNodes, (identifierNode) => {
+    for (const identifierNode of identifierNodes) {
       const needle = {name: getParameterName(identifierNode, context)};
 
       if (identifierNode.value.type === 'FunctionTypeAnnotation') {
@@ -86,7 +86,7 @@ const create = (context) => {
       } else {
         haystack.push(needle);
       }
-    });
+    }
   };
 
   return {

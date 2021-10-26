@@ -23,9 +23,9 @@ const formatCodeSnippet = (setup) => {
   paragraphs.push(setup.code);
 
   if (setup.errors) {
-    setup.errors.forEach((message) => {
+    for (const message of setup.errors) {
       paragraphs.push('// Message: ' + message.message);
-    });
+    }
   }
 
   if (setup.rules) {

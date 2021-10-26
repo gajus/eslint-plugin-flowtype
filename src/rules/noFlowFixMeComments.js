@@ -25,7 +25,7 @@ const create = (context) => {
   const handleComment = function (comment) {
     const value = comment.value.trim();
 
-    if (value.match(/\$FlowFixMe/u) && !passesExtraRegex(value)) {
+    if (/\$FlowFixMe/u.test(value) && !passesExtraRegex(value)) {
       context.report(comment, message + extraMessage);
     }
   };
@@ -41,13 +41,14 @@ const create = (context) => {
     },
 
     Program () {
-      context
+      for (const comment of context
         .getSourceCode()
         .getAllComments()
-        .filter((comment) => {
-          return comment.type === 'Block' || comment.type === 'Line';
-        })
-        .forEach(handleComment);
+        .filter((node) => {
+          return node.type === 'Block' || node.type === 'Line';
+        })) {
+        handleComment(comment);
+      }
     },
   };
 };

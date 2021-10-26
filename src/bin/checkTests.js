@@ -10,6 +10,7 @@ import {
 const getTestIndexRules = () => {
   const content = fs.readFileSync(path.resolve(__dirname, '../../tests/rules/index.js'), 'utf-8');
 
+  // eslint-disable-next-line unicorn/no-array-reduce
   const result = content.split('\n').reduce((acc, line) => {
     if (acc.inRulesArray) {
       if (line === '];') {

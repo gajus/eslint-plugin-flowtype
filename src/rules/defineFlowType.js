@@ -68,9 +68,9 @@ const create = (context) => {
       globalScope = context.getScope();
     },
     TypeParameterDeclaration (node) {
-      node.params.forEach((param) => {
+      for (const param of node.params) {
         makeDefined(param);
-      });
+      }
     },
   };
 };

@@ -15,9 +15,9 @@ const create = (context) => {
   const always = (context.options[0] || 'always') === 'always';
 
   const check = (node) => {
-    node.types.forEach((type, index) => {
+    for (const [index, type] of node.types.entries()) {
       if (index + 1 === node.types.length) {
-        return;
+        continue;
       }
 
       const separator = getTokenAfterParens(sourceCode, type);
@@ -66,7 +66,7 @@ const create = (context) => {
           });
         }
       }
-    });
+    }
   };
 
   return {

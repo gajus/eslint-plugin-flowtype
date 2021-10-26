@@ -9,7 +9,7 @@ const schema = [];
 
 const create = iterateFunctionNodes((context) => {
   return (functionNode) => {
-    _.forEach(functionNode.params, (identifierNode) => {
+    for (const identifierNode of functionNode.params) {
       const nodeType = _.get(identifierNode, 'type');
       const isAssignmentPattern = nodeType === 'AssignmentPattern';
       const hasTypeAnnotation = Boolean(_.get(identifierNode, 'typeAnnotation'));
@@ -24,7 +24,7 @@ const create = iterateFunctionNodes((context) => {
           node: identifierNode,
         });
       }
-    });
+    }
   };
 });
 

@@ -34,19 +34,19 @@ const create = (context) => {
     DeclareVariable: markTypeAsUsed,
     GenericTypeAnnotation: markTypeAsUsedWithGenericType,
     TypeParameterDeclaration (node) {
-      node.params.forEach((param) => {
+      for (const param of node.params) {
         if (param.default && param.default.typeParameters) {
           if (param.default.type === 'GenericTypeAnnotation') {
             markTypeAsUsedWithGenericType(param.default);
           }
 
-          param.default.typeParameters.params.forEach((typeParameterNode) => {
+          for (const typeParameterNode of param.default.typeParameters.params) {
             if (typeParameterNode.type === 'GenericTypeAnnotation') {
               markTypeAsUsedWithGenericType(typeParameterNode);
             }
-          });
+          }
         }
-      });
+      }
     },
   };
 };
