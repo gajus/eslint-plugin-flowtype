@@ -22,7 +22,6 @@
     "ajv": "^8.6.3",
     "babel-plugin-add-module-exports": "^1.0.4",
     "chai": "^4.3.4",
-    "eclint": "^2.8.1",
     "eslint": "^8.1.0",
     "eslint-plugin-eslint-plugin": "^4.0.1",
     "gitdown": "^3.1.4",
@@ -38,7 +37,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json && eclint fix ./src/**/* ./tests/**/*"
+      "pre-commit": "npm run check-docs && npm run check-tests && npm run lint && npm run test && npm run build && npm run format-json"
     }
   },
   "keywords": [
