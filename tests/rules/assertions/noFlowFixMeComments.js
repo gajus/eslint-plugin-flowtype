@@ -12,7 +12,7 @@ export default {
       code: '// $FlowFixMe I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.',
+          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.',
         },
       ],
       options: [
@@ -23,7 +23,7 @@ export default {
       code: '// $FlowFixMe TODO abc 47 I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.',
+          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.',
         },
       ],
       options: [
@@ -42,7 +42,7 @@ export default {
       code: '// $FlowFixMeProps I am doing something evil here\nconst text = \'HELLO\';',
       errors: [
         {
-          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.',
+          message: '$FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.',
         },
       ],
       options: [

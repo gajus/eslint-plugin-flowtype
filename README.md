@@ -1882,11 +1882,11 @@ The following patterns are considered problems:
 
 ```js
 interface foo{};
-// Message: Interface identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+// Message: Interface identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/u'.
 
 // Options: ["^foo$"]
 interface FooType{};
-// Message: Interface identifier 'FooType' does not match pattern '/^foo$/'.
+// Message: Interface identifier 'FooType' does not match pattern '/^foo$/u'.
 ```
 
 The following patterns are not considered problems:
@@ -2222,12 +2222,12 @@ const text = 'HELLO';
 // Options: ["TODO [0-9]+"]
 // $FlowFixMe I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.
 
 // Options: ["TODO [0-9]+"]
 // $FlowFixMe TODO abc 47 I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.
 
 // $$FlowFixMeProps I am doing something evil here
 const text = 'HELLO';
@@ -2236,7 +2236,7 @@ const text = 'HELLO';
 // Options: ["TODO [0-9]+"]
 // $FlowFixMeProps I am doing something evil here
 const text = 'HELLO';
-// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/`.
+// Message: $FlowFixMe is treated as `any` and must be fixed. Fix it or match `/TODO [0-9]+/u`.
 ```
 
 The following patterns are not considered problems:
@@ -6687,14 +6687,14 @@ The following patterns are considered problems:
 
 ```js
 opaque type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/u'.
 
 type foo = {};
-// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/'.
+// Message: Type identifier 'foo' does not match pattern '/^([A-Z][a-z0-9]*)+Type$/u'.
 
 // Options: ["^foo$"]
 type FooType = {};
-// Message: Type identifier 'FooType' does not match pattern '/^foo$/'.
+// Message: Type identifier 'FooType' does not match pattern '/^foo$/u'.
 ```
 
 The following patterns are not considered problems:

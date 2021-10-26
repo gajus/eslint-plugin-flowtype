@@ -4,7 +4,7 @@ export default {
       code: 'opaque type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
+          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/u\'.',
         },
       ],
     },
@@ -12,7 +12,7 @@ export default {
       code: 'type foo = {};',
       errors: [
         {
-          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/\'.',
+          message: 'Type identifier \'foo\' does not match pattern \'/^([A-Z][a-z0-9]*)+Type$/u\'.',
         },
       ],
     },
@@ -20,7 +20,7 @@ export default {
       code: 'type FooType = {};',
       errors: [
         {
-          message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/\'.',
+          message: 'Type identifier \'FooType\' does not match pattern \'/^foo$/u\'.',
         },
       ],
       options: [
