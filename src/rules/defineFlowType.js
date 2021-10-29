@@ -34,6 +34,9 @@ const create = (context) => {
   };
 
   return {
+    // NOTE: For future contributors, if you ever need to add support for a new identifier,
+    // use `Identifier(node) {}` to find out which identifiers should be handled.
+
     ClassImplements (node) {
       makeDefined(node.id);
     },
@@ -41,6 +44,18 @@ const create = (context) => {
       makeDefined(node.id);
     },
     DeclareTypeAlias (node) {
+      makeDefined(node.id);
+    },
+    EnumDeclaration (node) {
+      makeDefined(node.id);
+    },
+    EnumDefaultedMember (node) {
+      makeDefined(node.id);
+    },
+    EnumNumberMember (node) {
+      makeDefined(node.id);
+    },
+    EnumStringMember (node) {
       makeDefined(node.id);
     },
     GenericTypeAnnotation (node) {

@@ -12,6 +12,7 @@ const ruleTester = new RuleTester({
   parserOptions: {
     babelOptions: {
       plugins: [
+        'babel-plugin-transform-flow-enums',
         '@babel/plugin-transform-react-jsx',
         '@babel/plugin-syntax-flow',
       ],

@@ -150,6 +150,34 @@ type Foo = $ReadOnly<{}>`,
       },
     },
   },
+
+  // Enum types
+  {
+    code: 'enum Status { Active, Paused }',
+    errors: [
+      '\'Status\' is not defined.',
+      '\'Active\' is not defined.',
+      '\'Paused\' is not defined.',
+    ],
+  },
+  {
+    // eslint-disable-next-line quotes
+    code: `enum Status { Active = 'active', Paused = 'paused' }`,
+    errors: [
+      '\'Status\' is not defined.',
+      '\'Active\' is not defined.',
+      '\'Paused\' is not defined.',
+    ],
+  },
+  {
+    // eslint-disable-next-line quotes
+    code: `enum Status { Active = 1, Paused = 2 }`,
+    errors: [
+      '\'Status\' is not defined.',
+      '\'Active\' is not defined.',
+      '\'Paused\' is not defined.',
+    ],
+  },
 ];
 
 const ALWAYS_INVALID = [
@@ -205,7 +233,10 @@ const ALWAYS_VALID = [
     parser: require.resolve('@babel/eslint-parser'),
     parserOptions: {
       babelOptions: {
-        plugins: ['@babel/plugin-syntax-flow'],
+        plugins: [
+          'babel-plugin-transform-flow-enums',
+          '@babel/plugin-syntax-flow',
+        ],
       },
       requireConfigFile: false,
     },
@@ -222,7 +253,10 @@ const ALWAYS_VALID = [
     parser: require.resolve('@babel/eslint-parser'),
     parserOptions: {
       babelOptions: {
-        plugins: ['@babel/plugin-syntax-flow'],
+        plugins: [
+          'babel-plugin-transform-flow-enums',
+          '@babel/plugin-syntax-flow',
+        ],
       },
       requireConfigFile: false,
     },
