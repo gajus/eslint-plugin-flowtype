@@ -15,8 +15,8 @@
     "@babel/eslint-parser": "^7.15.8",
     "@babel/node": "^7.15.8",
     "@babel/plugin-proposal-object-rest-spread": "^7.15.6",
-    "@babel/plugin-syntax-flow": "^7.14.5",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@babel/plugin-syntax-flow": "^7.16.0",
+    "@babel/plugin-syntax-jsx": "^7.16.0",
     "@babel/preset-env": "^7.15.8",
     "@babel/register": "^7.15.3",
     "ajv": "^8.6.3",
@@ -52,7 +52,7 @@
   "name": "eslint-plugin-flowtype",
   "peerDependencies": {
     "@babel/plugin-syntax-flow": "^7.14.5",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@babel/plugin-syntax-jsx": "^7.16.0",
     "eslint": "^8.1.0"
   },
   "repository": {
