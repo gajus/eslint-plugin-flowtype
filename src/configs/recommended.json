@@ -1,9 +1,9 @@
 {
-  "parser": "@babel/eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "babelOptions": {
       "plugins": [
-        "@babel/plugin-transform-react-jsx",
+        "@babel/plugin-syntax-jsx",
         "@babel/plugin-syntax-flow"
       ]
     }
