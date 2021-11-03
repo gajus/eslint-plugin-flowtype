@@ -35,6 +35,7 @@ const reportingRules = [
   'no-duplicate-type-union-intersection-members',
   'no-existential-type',
   'no-flow-fix-me-comments',
+  'no-flow-fix-me-in-strict-files',
   'no-mutable-array',
   'no-primitive-constructor-types',
   'no-types-missing-file-annotation',
