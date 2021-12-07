@@ -1,5 +1,13 @@
 const FLOW_STRICT_MATCHER = /^\s*@(?:no)?flow\s*strict(?:-local)?\s*$/u;
 
+// Possibly move these to a central config?
+const suppressionCommentPrefixes = [
+  '$FlowFixMe',
+  '$FlowExpectedError',
+  '$FlowIssue',
+  '$FlowIgnore',
+];
+
 const isStrictFlowFile = (context) => {
   return context
     .getAllComments()
@@ -26,11 +34,15 @@ const create = (context) => {
           return node.type === 'Block' || node.type === 'Line';
         });
 
-      for (const comment of comments) {
-        if (/\$FlowFixMe/iu.test(comment.value)) {
+      for (const commentNode of comments) {
+        const comment = commentNode.value.trimStart();
+        const match = suppressionCommentPrefixes.some((prefix) => {
+          return comment.startsWith(prefix);
+        });
+        if (match) {
           context.report({
             message,
-            node: comment,
+            node: commentNode,
           });
         }
       }
