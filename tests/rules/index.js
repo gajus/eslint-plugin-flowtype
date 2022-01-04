@@ -62,6 +62,7 @@ const reportingRules = [
   'space-before-generic-bracket',
   'space-before-type-colon',
   'spread-exact-type',
+  'type-annotation-spacing',
   'type-id-match',
   'type-import-style',
   'union-intersection-spacing',

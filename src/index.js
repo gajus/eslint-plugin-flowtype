@@ -41,6 +41,7 @@ import spaceAfterTypeColon from './rules/spaceAfterTypeColon';
 import spaceBeforeGenericBracket from './rules/spaceBeforeGenericBracket';
 import spaceBeforeTypeColon from './rules/spaceBeforeTypeColon';
 import spreadExactType from './rules/spreadExactType';
+import typeAnnotationSpacing from './rules/typeAnnotationSpacing';
 import typeIdMatch from './rules/typeIdMatch';
 import typeImportStyle from './rules/typeImportStyle';
 import unionIntersectionSpacing from './rules/unionIntersectionSpacing';
@@ -81,6 +82,7 @@ const rules = {
   'require-indexer-name': requireIndexerName,
   'require-inexact-type': requireInexactType,
   'require-parameter-type': requireParameterType,
+  'type-annotation-spacing': typeAnnotationSpacing,
   'require-readonly-react-props': requireReadonlyReactProps,
   'require-return-type': requireReturnType,
   'require-types-at-top': requireTypesAtTop,
@@ -141,6 +143,7 @@ export default {
     'sort-keys': 0,
     'sort-type-union-intersection-members': 0,
     'space-after-type-colon': 0,
+    'type-annotation-spacing': 0,
     'space-before-generic-bracket': 0,
     'space-before-type-colon': 0,
     'spread-exact-type': 0,
