@@ -7,6 +7,12 @@ export default {
       }],
     },
     {
+      code: 'function foo(thing): * {}',
+      errors: [{
+        message: 'Unexpected use of weak type "*"',
+      }],
+    },
+    {
       code: 'function foo(thing): Promise<any> {}',
       errors: [{
         message: 'Unexpected use of weak type "any"',
@@ -58,6 +64,12 @@ export default {
       code: '(foo: any) => {}',
       errors: [{
         message: 'Unexpected use of weak type "any"',
+      }],
+    },
+    {
+      code: '(foo: *) => {}',
+      errors: [{
+        message: 'Unexpected use of weak type "*"',
       }],
     },
     {
@@ -192,6 +204,15 @@ export default {
         Object: false,
       }],
     },
+    {
+      code: 'type W = *; type X = any; type Y = Function; type Z = Object',
+      errors: [{message: 'Unexpected use of weak type "*"'}],
+      options: [{
+        any: false,
+        Object: false,
+        Function: false,
+      }],
+    },
   ],
   misconfigured: [
     {
@@ -209,6 +230,9 @@ export default {
           parentSchema: {
             additionalProperties: false,
             properties: {
+              '*': {
+                type: 'boolean',
+              },
               any: {
                 type: 'boolean',
               },

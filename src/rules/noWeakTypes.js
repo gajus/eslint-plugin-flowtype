@@ -4,6 +4,9 @@ const schema = [
   {
     additionalProperties: false,
     properties: {
+      '*': {
+        type: 'boolean',
+      },
       any: {
         type: 'boolean',
       },
@@ -40,6 +43,7 @@ const genericTypeEvaluator = (context, {checkFunction, checkObject}) => {
 
 const create = (context) => {
   const checkAny = _.get(context, 'options[0].any', true) === true;
+  const checkExists = _.get(context, 'options[0].*', true) === true;
   const checkFunction = _.get(context, 'options[0].Function', true) === true;
   const checkObject = _.get(context, 'options[0].Object', true) === true;
 
@@ -47,6 +51,10 @@ const create = (context) => {
 
   if (checkAny) {
     checks.AnyTypeAnnotation = reportWeakType(context, 'any');
+  }
+
+  if (checkExists) {
+    checks.ExistsTypeAnnotation = reportWeakType(context, '*');
   }
 
   if (checkFunction || checkObject) {

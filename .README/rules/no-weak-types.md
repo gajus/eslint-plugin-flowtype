@@ -12,6 +12,7 @@ about `Object` and `Function`:
 {
     "rules": {
         "flowtype/no-weak-types": [2, {
+            "*": false,
             "any": false,
             "Object": true,
             "Function": true
@@ -24,6 +25,7 @@ about `Object` and `Function`:
 {
     "rules": {
         "flowtype/no-weak-types": [2, {
+            "*": false,
             "any": false
         }]
     }
