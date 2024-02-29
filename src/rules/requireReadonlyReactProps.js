@@ -14,6 +14,7 @@ const schema = [
 
 const reComponentName = /^(Pure)?Component$/u;
 const reReadOnly = /^\$(ReadOnly|FlowFixMe)$/u;
+const reReadOnlyTypeScript = /^(Readonly|$FlowFixMe)$/u;
 
 const isReactComponent = (node) => {
   if (!node.superClass) {
@@ -69,15 +70,20 @@ const isReadOnlyObjectUnionType = (node, options) => {
   });
 };
 
+const isReadOnlyName = (name, {useExperimentalTypeScriptSyntax}) => {
+  return useExperimentalTypeScriptSyntax ? reReadOnlyTypeScript.test(name) : reReadOnly.test(name);
+};
+
 const isReadOnlyType = (node, options) => {
-  return node.right.id && reReadOnly.test(node.right.id.name) ||
+  return node.right.id && isReadOnlyName(node.right.id.name, options) ||
     isReadOnlyObjectType(node.right, options) ||
     isReadOnlyObjectUnionType(node.right, options);
 };
 
 const create = (context) => {
   const useImplicitExactTypes = _.get(context, ['options', 0, 'useImplicitExactTypes'], false);
-  const options = {useImplicitExactTypes};
+  const useExperimentalTypeScriptSyntax = _.get(context, ['options', 0, 'useExperimentalTypeScriptSyntax'], false);
+  const options = {useImplicitExactTypes, useExperimentalTypeScriptSyntax};
 
   const readOnlyTypes = [];
   const foundTypes = [];
@@ -86,7 +92,7 @@ const create = (context) => {
   const isReadOnlyClassProp = (node) => {
     const id = node.superTypeParameters && node.superTypeParameters.params[0].id;
 
-    return id && !reReadOnly.test(id.name) && !readOnlyTypes.includes(id.name) && foundTypes.includes(id.name);
+    return id && !isReadOnlyName(id.name, options) && !readOnlyTypes.includes(id.name) && foundTypes.includes(id.name);
   };
 
   for (const node of context.getSourceCode().ast.body) {
@@ -153,7 +159,7 @@ const create = (context) => {
         if ((identifier = typeAnnotation.typeAnnotation.id) &&
             foundTypes.includes(identifier.name) &&
             !readOnlyTypes.includes(identifier.name) &&
-            !reReadOnly.test(identifier.name)) {
+            !isReadOnlyName(identifier.name, options)) {
           if (reportedFunctionalComponents.includes(identifier)) {
             return;
           }
